@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard ADMIN - GOBEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb}
+body{font-family:Roboto;background:var(--light);min-height:100vh}
+.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:260px;z-index:1000;transition:.3s;overflow-y:auto}
+.sidebar-header{padding:24px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sidebar-logo{font-family:Exo;font-weight:800;font-size:26px;color:#fff;letter-spacing:-0.5px}
+.sidebar-menu{padding:16px 0}
+.menu-item{display:flex;align-items:center;gap:12px;padding:12px 24px;color:rgba(255,255,255,0.7);text-decoration:none;transition:.2s;border-left:3px solid transparent}
+.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}
+.menu-item i{font-size:18px}
+.main{margin-left:260px;padding:24px;transition:.3s}
+.topbar{background:#fff;padding:16px 24px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:24px;display:flex;justify-content:space-between;align-items:center}
+.stat-card{background:#fff;border-radius:16px;padding:20px;border:1px solid #eef2f6;transition:.3s;height:100%}
+.stat-card:hover{box-shadow:0 10px 40px rgba(10,47,94,0.08);transform:translateY(-2px)}
+.stat-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px}
+.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:8px 20px;border:2px solid var(--accent);font-size:13px}
+.btn-main:hover{background:#e6a517;border-color:#e6a517;color:var(--primary)}
+@media(max-width:991px){.sidebar{transform:translateX(-100%)}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}
+</style>
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="sidebar-logo">GOBEX</div>
+<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);">ADMIN PANEL</div>
+<div class="mt-3 small" style="color:rgba(255,255,255,0.5);"><i class="bi bi-person-circle me-1"></i><span id="adminUser">admin</span><br><small id="loginTime"></small></div>
+</div>
+<div class="sidebar-menu">
+<a href="dashboard.html" class="menu-item active"><i class="bi bi-speedometer2"></i> Dashboard</a>
+<a href="boutique-admin.html" class="menu-item"><i class="bi bi-cart3"></i> Boutique & Produits</a>
+<a href="services-admin.html" class="menu-item"><i class="bi bi-briefcase"></i> Services</a>
+<a href="commandes.html" class="menu-item"><i class="bi bi-bag-check"></i> Commandes WhatsApp</a>
+<a href="contenu.html" class="menu-item"><i class="bi bi-pencil-square"></i> Contenu Site</a>
+<a href="partenaires.html" class="menu-item"><i class="bi bi-people"></i> Partenaires</a>
+<a href="parametres.html" class="menu-item"><i class="bi bi-gear"></i> Paramètres</a>
+<div style="padding:16px 24px;margin-top:20px;border-top:1px solid rgba(255,255,255,0.1);">
+<a href="../index.html" class="menu-item" style="padding-left:0;border:0;"><i class="bi bi-globe"></i> Voir le site</a>
+<a href="#" onclick="logout()" class="menu-item" style="padding-left:0;border:0;color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+</div>
+</div>
+</div>
+
+<!-- Main -->
+<div class="main">
+<div class="topbar">
+<div class="d-flex align-items-center gap-3">
+<button class="btn btn-light d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button>
+<div><h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;">Dashboard</h5><small class="text-muted">Bienvenue, gérez votre site GOBEX</small></div>
+</div>
+<div class="d-flex gap-2">
+<a href="../boutique.html" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill"><i class="bi bi-eye me-1"></i> Voir boutique</a>
+<a href="boutique-admin.html" class="btn btn-main btn-sm rounded-pill"><i class="bi bi-plus-lg me-1"></i> Nouveau produit</a>
+</div>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+<div class="col-md-3 col-6"><div class="stat-card"><div class="stat-icon" style="background:#fff3d0;color:#FFB81C;"><i class="bi bi-cart3"></i></div><h3 class="mb-1" id="totalProducts">9</h3><p class="small text-muted mb-0">Produits boutique</p><small class="text-success"><i class="bi bi-arrow-up"></i> +2 ce mois</small></div></div>
+<div class="col-md-3 col-6"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#4caf50;"><i class="bi bi-bag-check"></i></div><h3 class="mb-1">47</h3><p class="small text-muted mb-0">Commandes WhatsApp</p><small class="text-success"><i class="bi bi-arrow-up"></i> +12 cette semaine</small></div></div>
+<div class="col-md-3 col-6"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#2196f3;"><i class="bi bi-people"></i></div><h3 class="mb-1">500+</h3><p class="small text-muted mb-0">Clients</p><small class="text-muted">Total</small></div></div>
+<div class="col-md-3 col-6"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#e91e63;"><i class="bi bi-currency-dollar"></i></div><h3 class="mb-1">2.4M</h3><p class="small text-muted mb-0">FCFA revenus boutique</p><small class="text-success">+18% ce mois</small></div></div>
+</div>
+
+<div class="row g-3">
+<div class="col-lg-8">
+<div class="stat-card">
+<div class="d-flex justify-content-between align-items-center mb-3"><h6 class="mb-0" style="font-family:Exo;font-weight:700;">Produits récents</h6><a href="boutique-admin.html" class="btn btn-sm btn-light rounded-pill">Gérer</a></div>
+<div class="table-responsive">
+<table class="table table-hover small">
+<thead class="table-light"><tr><th>Produit</th><th>Prix</th><th>Catégorie</th><th>Statut</th></tr></thead>
+<tbody id="recentProducts">
+<tr><td><i class="bi bi-box me-2"></i>PERFECTO Facturation PRO</td><td>75 000 FCFA</td><td><span class="badge bg-warning text-dark">Logiciel</span></td><td><span class="badge bg-success">Actif</span></td></tr>
+<tr><td><i class="bi bi-box me-2"></i>Pack Business Plan</td><td>25 000 FCFA</td><td><span class="badge bg-info">Document</span></td><td><span class="badge bg-success">Actif</span></td></tr>
+<tr><td><i class="bi bi-box me-2"></i>Guide Fiscalité Bénin</td><td>10 000 FCFA</td><td><span class="badge bg-primary">Formation</span></td><td><span class="badge bg-success">Actif</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="stat-card mb-3">
+<h6 style="font-family:Exo;font-weight:700;">Actions rapides</h6>
+<div class="d-grid gap-2 mt-3">
+<a href="boutique-admin.html" class="btn btn-main rounded-pill"><i class="bi bi-plus-lg me-2"></i>Ajouter produit</a>
+<a href="contenu.html" class="btn btn-outline-dark rounded-pill"><i class="bi bi-pencil me-2"></i>Modifier contenu accueil</a>
+<a href="partenaires.html" class="btn btn-outline-dark rounded-pill"><i class="bi bi-people me-2"></i>Gérer partenaires</a>
+<button class="btn btn-light rounded-pill" onclick="exportData()"><i class="bi bi-download me-2"></i>Exporter données</button>
+</div>
+</div>
+<div class="stat-card">
+<h6 style="font-family:Exo;font-weight:700;">Infos site</h6>
+<div class="small mt-3">
+<p class="mb-2"><i class="bi bi-geo-alt me-2 text-muted"></i>Carrefour 02 Manguiers, Abomey-Calavi</p>
+<p class="mb-2"><i class="bi bi-telephone me-2 text-muted"></i>+229 97 739 046</p>
+<p class="mb-2"><i class="bi bi-envelope me-2 text-muted"></i>contact@gobex.bj</p>
+<p class="mb-0"><i class="bi bi-file-text me-2 text-muted"></i>IFU: 1201502844807</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row mt-4">
+<div class="col-12">
+<div class="stat-card" style="background:linear-gradient(135deg,#0A2F5E 0%,#143d75 100%);color:#fff;">
+<div class="row align-items-center">
+<div class="col-md-8"><h5 class="text-white"><i class="bi bi-lightbulb me-2 text-warning"></i>Comment fonctionne l'ADMIN ?</h5><p class="small text-white-50 mb-0">Ce panel admin utilise localStorage (stockage navigateur). Vos modifications de produits sont sauvegardées localement et s'affichent instantanément sur la boutique. Pour une vraie base de données, il faudra connecter un backend (Firebase, Supabase, ou API PHP). En attendant, vous pouvez exporter vos données en JSON.</p></div>
+<div class="col-md-4 text-md-end mt-3 mt-md-0"><button class="btn btn-warning rounded-pill" onclick="alert('Fonctionnalité : Pour passer en vrai backend, contactez votre développeur. Exportez d\\'abord vos données !')"><i class="bi bi-info-circle me-2"></i>En savoir plus</button></div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+function checkAuth(){
+  if(localStorage.getItem('gobex_admin_auth')!=='true'){
+    window.location.href='index.html';
+  }
+  document.getElementById('adminUser').textContent = localStorage.getItem('gobex_admin_user')||'admin';
+  const t = localStorage.getItem('gobex_admin_login_time');
+  if(t){ document.getElementById('loginTime').textContent = 'Connecté: '+ new Date(t).toLocaleString('fr-FR'); }
+  // Update product count
+  const products = JSON.parse(localStorage.getItem('gobex_products')||'null');
+  if(products){ document.getElementById('totalProducts').textContent = products.length; }
+}
+function logout(){
+  localStorage.removeItem('gobex_admin_auth');
+  localStorage.removeItem('gobex_admin_user');
+  window.location.href='index.html';
+}
+function exportData(){
+  const data = {
+    products: JSON.parse(localStorage.getItem('gobex_products')||'[]'),
+    settings: JSON.parse(localStorage.getItem('gobex_settings')||'{}'),
+    exportDate: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download='gobex-backup-'+new Date().toISOString().split('T')[0]+'.json'; a.click();
+}
+checkAuth();
+</script>
+</body>
+</html>

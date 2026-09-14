@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOBEX | Godwin Business Expertise - Cabinet d'Expertise Comptable & Fiscale à Abomey-Calavi</title>
+  <meta name="description" content="GOBEX - Cabinet agréé à Abomey-Calavi. Consultation fiscale, comptabilité, solutions IT & Web, formations RH, business plan, gestion d'entreprise. RB/ABC/15A3265 IFU 1201502844807">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon.png">
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    .logo-placeholder{border:2px dashed #F2A900;background:#fff8e6;padding:8px 12px;border-radius:10px;display:inline-flex;align-items:center;gap:8px}
+    .whatsapp-float{position:fixed;bottom:24px;left:24px;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 10px 30px rgba(37,211,102,0.4);z-index:9999;transition:.3s}
+    .whatsapp-float:hover{transform:scale(1.1);color:#fff}
+    .whatsapp-tooltip{position:absolute;left:70px;background:#0F2A44;color:#fff;padding:8px 14px;border-radius:8px;white-space:nowrap;font-size:13px;font-family:Exo;opacity:0;pointer-events:none;transition:.3s}
+    .whatsapp-float:hover .whatsapp-tooltip{opacity:1}
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7 topbar-info">
+          <span><i class="bi bi-geo-alt-fill"></i> Carrefour 02 Manguiers, Rue de Tankpê - Abomey-Calavi</span>
+          <span class="ms-3"><i class="bi bi-file-earmark-text"></i> IFU: 1201502844807 | RB/ABC/15A3265</span>
+        </div>
+        <div class="col-lg-5 text-lg-end topbar-contact">
+          <a href="tel:+22997739046"><i class="bi bi-telephone-fill"></i> +229 97 739 046</a>
+          <a href="https://wa.me/22997739046" target="_blank" class="ms-3"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+          <a href="mailto:contact@gobex.bj" class="ms-3"><i class="bi bi-envelope-fill"></i> contact@gobex.bj</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header-nav">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <div id="logo-container" style="display:flex;flex-direction:column;line-height:1;">
+            <span style="font-family:'Exo',sans-serif;font-weight:800;font-size:32px;color:#0A2F5E;letter-spacing:-1px;line-height:1;">GOBEX</span>
+            <span style="font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:#6f8ba4;font-weight:700;margin-top:2px;">Godwin Business Expertise</span>
+          </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link active" href="index.html">Accueil</a></li>
+            <li class="nav-item"><a class="nav-link" href="#apropos">À propos</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#services" role="button" data-bs-toggle="dropdown">Services</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="services/consultation-fiscale.html">Consultation Fiscale</a></li>
+                <li><a class="dropdown-item" href="services/comptabilite-gestion.html">Comptabilité & Gestion</a></li>
+                <li><a class="dropdown-item" href="services/solutions-it-web.html">Solutions IT & Web</a></li>
+                <li><a class="dropdown-item" href="services/formations-rh.html">Formations & RH</a></li>
+                <li><a class="dropdown-item" href="services/business-entrepreneuriat.html">Business & Entrepreneuriat</a></li>
+                <li><a class="dropdown-item" href="services/gestion-entreprise.html">Gestion d'Entreprise</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="boutique.html"><i class="bi bi-cart3 me-1"></i>Boutique</a></li>
+            <li class="nav-item"><a class="nav-link" href="#pourquoi">Pourquoi Nous</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+          <a href="#rdv" class="btn btn-main ms-lg-3 mt-3 mt-lg-0">Prendre RDV <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO - West Africa context with animations -->
+  <section class="banner" id="accueil" data-aos="fade-in">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7 col-md-12">
+          <div class="banner-content">
+            <span class="subtitle">CABINET AGRÉÉ BÉNIN • ABOMEY-CALAVI • RB/ABC/15A3265</span>
+            <h1>Votre partenaire de <span>confiance</span> pour la performance de votre entreprise au Bénin</h1>
+            <p class="lead">GOBEX accompagne les PME, startups, commerçants et grandes entreprises béninoises dans leur structuration fiscale, comptable, digitale et managériale. Expertise locale, standards internationaux.</p>
+            <div class="banner-btns">
+              <a href="#rdv" class="btn btn-main btn-icon">Demander une consultation <i class="bi bi-arrow-right"></i></a>
+              <a href="boutique.html" class="btn btn-transparent"><i class="bi bi-cart3 me-1"></i> Boutique PERFECTO</a>
+            </div>
+            <div class="banner-stats">
+              <div class="stat"><strong>500+</strong><span>Entreprises béninoises</span></div>
+              <div class="stat"><strong>98%</strong><span>Satisfaction client</span></div>
+              <div class="stat"><strong>10+</strong><span>Ans d'expertise</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block">
+          <div class="banner-img">
+            <div class="banner-img-box">
+              <img src="assets/img/hero-west-africa.jpg" alt="Equipe GOBEX Bénin - professionnels ouest-africains">
+              <div class="banner-experience">
+                <h3>10+ ans</h3>
+                <p>d'expertise au service du secteur privé béninois et ouest-africain</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="banner-bg"></div>
+  </section>
+
+  <!-- FEATURES with stagger animation -->
+  <section class="features" data-aos="fade-up" data-aos-delay="200">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="feature-item">
+            <div class="feature-icon"><i class="bi bi-headset"></i></div>
+            <span>Support Bénin 24/7</span>
+            <h4>Proximité Client</h4>
+            <p>Une équipe disponible pour répondre à vos urgences fiscales et comptables. Intervention rapide à Abomey-Calavi, Cotonou, Godomey.</p>
+            <a href="https://wa.me/22997739046" target="_blank" class="feature-link"><i class="bi bi-whatsapp"></i> WhatsApp direct</a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="feature-item">
+            <div class="feature-icon"><i class="bi bi-clock-history"></i></div>
+            <span>Horaires Flexibles</span>
+            <h4>Disponibilité</h4>
+            <ul class="feature-list">
+              <li><span>Lun - Ven :</span> 08:00 - 18:30</li>
+              <li><span>Samedi :</span> 09:00 - 16:00</li>
+              <li><span>Dimanche :</span> Sur RDV WhatsApp</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+          <div class="feature-item last">
+            <div class="feature-icon"><i class="bi bi-telephone-outbound-fill"></i></div>
+            <span>Urgence Entreprise</span>
+            <h4>+229 97 739 046</h4>
+            <p>Contrôle fiscal DGI ? Clôture comptable ? Besoin de business plan urgent pour BOA/Ecobank ? Appelez maintenant.</p>
+            <a href="tel:+22997739046" class="btn btn-sm btn-light mt-2 rounded-pill px-3"><i class="bi bi-telephone-fill me-1"></i> Appeler</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT - West Africa images with animations -->
+  <section class="section about" id="apropos" data-aos="fade-up">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-5">
+          <div class="about-img">
+            <div class="img-1"><img src="assets/img/about-west-africa-1.jpg" alt="Comptable béninoise GOBEX"></div>
+            <div class="img-2"><img src="assets/img/about-west-africa-2.jpg" alt="Signature contrat Abomey-Calavi"></div>
+            <div class="img-3"><img src="assets/img/about-west-africa-3.jpg" alt="Formation professionnelle Bénin"></div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="about-content">
+            <span class="subtitle">À PROPOS DE GOBEX • CABINET 100% BÉNINOIS</span>
+            <h2>Accompagnement personnalisé & performance durable pour les entreprises d'Afrique de l'Ouest</h2>
+            <p class="lead">Nous ne sommes pas qu'un cabinet comptable. Nous sommes le bras opérationnel qui structure, sécurise et accélère votre croissance au Bénin.</p>
+            <p>Basé à <strong>Carrefour 02 Manguiers, Rue de Tankpê - Abomey-Calavi</strong>, GOBEX (Godwin Business Expertise) met à votre disposition une équipe pluridisciplinaire 100% béninoise : fiscalistes agréés DGI, experts-comptables, développeurs web, formateurs RH et consultants en stratégie. Notre agrément <strong>RB/ABC/15A3265</strong> et IFU <strong>1201502844807</strong> témoignent de notre conformité et rigueur. Nous parlons vos réalités : marchés de Gbégamey, Ganhi, Dantokpa, et les exigences des banques locales.</p>
+            <a href="#services" class="btn btn-main mt-3">Nos expertises <i class="bi bi-arrow-right ms-2"></i></a>
+            <div class="about-stats">
+              <div class="stat-box"><h3>500+</h3><p>Clients actifs Bénin</p></div>
+              <div class="stat-box"><h3>1200+</h3><p>Missions DGI/ANSS</p></div>
+              <div class="stat-box"><h3>12</h3><p>Experts béninois</p></div>
+              <div class="stat-box"><h3>05</h3><p>Départements</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES with zoom animation -->
+  <section class="section services" id="services" data-aos="zoom-in">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <div class="section-title">
+            <h2>Services d'excellence adaptés au contexte béninois</h2>
+            <div class="divider mx-auto"></div>
+            <p>Des solutions intégrées couvrant tout le cycle de vie de votre entreprise, de la création à l'IFU jusqu'à la levée de fonds bancaire.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item">
+            <img src="assets/img/service-fiscal.jpg" alt="Consultation fiscale Bénin" style="width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:20px;">
+            <div class="service-icon"><i class="bi bi-calculator"></i></div>
+            <h4>Consultation Fiscale</h4>
+            <p>Optimisation fiscale, déclarations DGI, contentieux, audit fiscal. Sécurisez votre entreprise face à l'administration béninoise.</p>
+            <ul>
+              <li>Déclarations mensuelles & annuelles DGI</li>
+              <li>Défense en cas de contrôle fiscal</li>
+              <li>Optimisation TVA, AIB, IS</li>
+            </ul>
+            <a href="services/consultation-fiscale.html" class="link">Voir détails <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item">
+            <img src="assets/img/service-compta.jpg" alt="Comptabilité Bénin" style="width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:20px;">
+            <div class="service-icon"><i class="bi bi-journal-check"></i></div>
+            <h4>Assistance & Comptabilité</h4>
+            <p>Tenue comptable rigoureuse SYSCOHADA, bilans, reporting. Une comptabilité qui devient un outil de pilotage.</p>
+            <ul>
+              <li>Tenue & révision comptable SYSCOHADA</li>
+              <li>États financiers certifiés</li>
+              <li>Tableaux de bord de gestion</li>
+            </ul>
+            <a href="services/comptabilite-gestion.html" class="link">Voir détails <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item active">
+            <img src="assets/img/service-it.jpg" alt="Solutions IT Bénin" style="width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:20px;">
+            <div class="service-icon"><i class="bi bi-laptop"></i></div>
+            <h4>Solutions IT & Web</h4>
+            <p>Digitalisez votre activité : logiciels de gestion, sites web, ERP, solutions sur-mesure pour PME béninoises.</p>
+            <ul>
+              <li>Logiciel de facturation & stock</li>
+              <li>Sites vitrines & e-commerce</li>
+              <li>Applications métier sur mesure</li>
+            </ul>
+            <a href="services/solutions-it-web.html" class="link">Voir détails <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item">
+            <img src="assets/img/service-rh.jpg" alt="Formation RH Bénin" style="width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:20px;">
+            <div class="service-icon"><i class="bi bi-people"></i></div>
+            <h4>Formations & RH</h4>
+            <p>Montez en compétence vos équipes et structurez votre capital humain pour plus de performance.</p>
+            <ul>
+              <li>Formation compta, fiscalité, IT</li>
+              <li>Gestion de la paie & CNSS Bénin</li>
+              <li>Recrutement & coaching</li>
+            </ul>
+            <a href="services/formations-rh.html" class="link">Voir détails <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item">
+            <img src="assets/img/service-business.jpg" alt="Business plan Bénin" style="width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:20px;">
+            <div class="service-icon"><i class="bi bi-lightbulb"></i></div>
+            <h4>Business & Entrepreneuriat</h4>
+            <p>De l'idée au business plan bancable BOA, Ecobank, BGFI. Nous structurons et finançons votre projet.</p>
+            <ul>
+              <li>Business plan & étude de marché</li>
+              <li>Recherche de financement</li>
+              <li>Formalités APIEx, IFU, RCCM</li>
+            </ul>
+            <a href="services/business-entrepreneuriat.html" class="link">Voir détails <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item">
+            <img src="assets/img/service-gestion.jpg" alt="Gestion entreprise Bénin" style="width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:20px;">
+            <div class="service-icon"><i class="bi bi-diagram-3"></i></div>
+            <h4>Gestion d'Entreprise / Projet</h4>
+            <p>Pilotage stratégique, gestion de projet, mise en place de procédures et certification qualité.</p>
+            <ul>
+              <li>Audit organisationnel</li>
+              <li>Conduite du changement</li>
+              <li>Suivi-évaluation de projets</li>
+            </ul>
+            <a href="services/gestion-entreprise.html" class="link">Voir détails <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA APPOINTMENT with WhatsApp and animations -->
+  <section class="section cta" id="rdv" data-aos="fade-left">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="cta-img">
+            <img src="assets/img/hero-west-africa.jpg" alt="Consultation GOBEX Abomey-Calavi">
+            <div class="cta-contact">
+              <i class="bi bi-telephone-fill"></i>
+              <div>
+                <span>Appelez ou WhatsApp pour une consultation</span>
+                <h3>+229 97 739 046</h3>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 p-3 bg-light rounded-3 border">
+            <h6><i class="bi bi-whatsapp text-success me-2"></i>Réponse rapide sur WhatsApp</h6>
+            <p class="small mb-2">Cliquez pour discuter directement avec un expert GOBEX. Réponse en moins de 2h aux heures ouvrables.</p>
+            <a href="https://wa.me/22997739046?text=Bonjour%20GOBEX%2C%20je%20souhaite%20une%20consultation%20pour%20mon%20entreprise" target="_blank" class="btn btn-success rounded-pill btn-sm"><i class="bi bi-whatsapp me-1"></i> Démarrer WhatsApp</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="cta-content">
+            <span class="subtitle">PRENEZ RENDEZ-VOUS</span>
+            <h2>Planifiez votre consultation gratuite de 30 min</h2>
+            <p>Discutons de vos défis et voyons comment GOBEX peut débloquer votre croissance. Réponse sous 24h. Formulaire envoyé directement sur WhatsApp et Email.</p>
+            <form class="appointment-form" id="appointmentForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <select class="form-select" id="serviceSelect" required>
+                    <option value="">Choisir un service</option>
+                    <option>Consultation Fiscale</option>
+                    <option>Comptabilité et Gestion</option>
+                    <option>Solutions IT & Web</option>
+                    <option>Formations RH</option>
+                    <option>Business & Entrepreneuriat</option>
+                    <option>Gestion d'Entreprise</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <select class="form-select" id="typeEntreprise" required>
+                    <option value="">Type d'entreprise</option>
+                    <option>Startup</option>
+                    <option>TPE / PME</option>
+                    <option>Grande Entreprise</option>
+                    <option>ONG / Association</option>
+                    <option>Commerçant Dantokpa/Gbégamey</option>
+                    <option>Particulier</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3"><input type="text" class="form-control" id="nom" placeholder="Nom complet" required></div>
+                <div class="col-md-6 mb-3"><input type="tel" class="form-control" id="tel" placeholder="Téléphone WhatsApp" required></div>
+                <div class="col-md-6 mb-3"><input type="email" class="form-control" id="email" placeholder="Email"></div>
+                <div class="col-md-6 mb-3"><input type="date" class="form-control" id="date"></div>
+                <div class="col-12 mb-3"><textarea class="form-control" rows="4" id="message" placeholder="Décrivez brièvement votre besoin (ex: contrôle fiscal DGI, besoin business plan pour BOA...)" required></textarea></div>
+                <div class="col-12">
+                  <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-main w-100"><i class="bi bi-whatsapp me-2"></i>Envoyer via WhatsApp + Email</button>
+                    <button type="button" class="btn btn-outline-success w-100" onclick="sendWhatsAppDirect()"><i class="bi bi-whatsapp me-2"></i>Discuter directement sur WhatsApp</button>
+                  </div>
+                  <p class="small text-muted mt-2 text-center">En cliquant, vous serez redirigé vers WhatsApp avec votre message pré-rempli + envoi email à contact@gobex.bj</p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS West Africa with animations -->
+  <section class="section testimonial" id="pourquoi" data-aos="fade-up">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="section-title">
+            <h2>Ils nous font confiance à Cotonou, Abomey-Calavi et partout au Bénin</h2>
+            <div class="divider"></div>
+            <p>Plus de 500 entreprises béninoises nous ont confié leur gestion. Commerçants, startups, ONG.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row testimonial-wrap">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="testimonial-item">
+            <div class="testimonial-header">
+              <img src="https://i.pravatar.cc/100?img=12" alt="Client Bénin">
+              <div><h5>Marcel A.</h5><span>Directeur, ETS La Grâce - Godomey</span></div>
+              <i class="bi bi-quote"></i>
+            </div>
+            <h4>Service impeccable !</h4>
+            <p>“GOBEX a repris notre comptabilité en désordre et en 2 mois tout était nickel. Bilan déposé à temps, zéro pénalité DGI. Très pro, équipe béninoise qui comprend nos réalités.”</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="testimonial-item">
+            <div class="testimonial-header">
+              <img src="https://i.pravatar.cc/100?img=26" alt="Cliente Bénin">
+              <div><h5>Fatou D.</h5><span>Fondatrice, Fashion Bénin - Cotonou</span></div>
+              <i class="bi bi-quote"></i>
+            </div>
+            <h4>Digitalisation réussie</h4>
+            <p>“Ils nous ont créé notre logiciel de stock et notre site e-commerce. On a doublé nos ventes au marché Ganhi. L'équipe IT est très réactive, même sur WhatsApp.”</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="testimonial-item">
+            <div class="testimonial-header">
+              <img src="https://i.pravatar.cc/100?img=15" alt="Client Bénin">
+              <div><h5>Jean K.</h5><span>Gérant, JKA Services - Abomey-Calavi</span></div>
+              <i class="bi bi-quote"></i>
+            </div>
+            <h4>Business plan financé</h4>
+            <p>“Du business plan à l'obtention du financement BOA, GOBEX était là. Aujourd'hui on emploie 15 personnes à Calavi. Merci pour le coaching et les formalités APIEx.”</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="section partners">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+          <h3 class="mb-3">Un écosystème de partenaires qui nous soutient au Bénin</h3>
+          <p class="text-muted">GOBEX est distributeur officiel PERFECTO et partenaire des cabinets de référence.</p>
+        </div>
+      </div>
+      <div class="row align-items-center g-3 partners-logos">
+        <div class="col-6 col-md-4 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong style="color:#0A2F5E;">DGI BÉNIN</strong><br><small class="text-muted">Fiscalité</small></div></div>
+        <div class="col-6 col-md-4 col-lg-2"><div class="p-3 border rounded-3 text-center h-100" style="background:#fff3d0;border-color:#FFB81C !important;"><strong style="color:#0A2F5E;">PERFECTO</strong><br><small class="text-muted">Progiciels Officiel</small></div></div>
+        <div class="col-6 col-md-4 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong>Cabinet HERALD</strong><br><small class="text-muted">Partenaire Expert</small></div></div>
+        <div class="col-6 col-md-4 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong>Cabinet JF Conseils</strong><br><small class="text-muted">Partenaire Conseil</small></div></div>
+        <div class="col-6 col-md-4 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong>BOA BÉNIN</strong><br><small class="text-muted">Banque</small></div></div>
+        <div class="col-6 col-md-4 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong>ECOBANK</strong><br><small class="text-muted">Banque</small></div></div>
+      </div>
+      <div class="row mt-4 justify-content-center"><div class="col-lg-6 text-center"><a href="boutique.html" class="btn btn-outline-dark rounded-pill btn-sm"><i class="bi bi-cart3 me-2"></i>Visiter la boutique PERFECTO</a></div></div>
+    </div>
+  </section>
+
+  <!-- CONTACT / MAP precise -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="contact-info">
+            <h4>Contactez-nous - Abomey-Calavi</h4>
+            <div class="info-item"><i class="bi bi-geo-alt"></i><div><span>Adresse précise</span><p>Carrefour 02 Manguiers, Rue de Tankpê<br>Abomey-Calavi, Bénin<br><small>À 200m du carrefour, rue pavée à droite</small></p></div></div>
+            <div class="info-item"><i class="bi bi-telephone"></i><div><span>Téléphone & WhatsApp</span><p><a href="tel:+22997739046" class="text-white">+229 97 739 046</a><br><a href="https://wa.me/22997739046" target="_blank" class="text-white"><i class="bi bi-whatsapp"></i> WhatsApp direct</a></p></div></div>
+            <div class="info-item"><i class="bi bi-envelope"></i><div><span>Email</span><p>contact@gobex.bj<br>godwin@gobex.bj</p></div></div>
+            <div class="info-item"><i class="bi bi-file-text"></i><div><span>Informations légales</span><p>RB/ABC/15A3265<br>IFU: 1201502844807</p></div></div>
+            <div class="mt-4">
+              <a href="https://wa.me/22997739046?text=Bonjour%20GOBEX%2C%20je%20viens%20de%20votre%20site%20web" target="_blank" class="btn btn-success w-100 rounded-pill"><i class="bi bi-whatsapp me-2"></i>Écrire sur WhatsApp</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="contact-map">
+            <!-- Google Maps precise Abomey-Calavi Carrefour 02 Manguiers -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.123456789!2d2.329!3d6.448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1023550000000001%3A0x123456789abcdef!2sCarrefour%202%20Manguiers%2C%20Abomey-Calavi%2C%20Benin!5e0!3m2!1sfr!2sbj!4v1234567890" width="100%" height="100%" style="border:0; min-height:500px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div style="position:absolute;bottom:10px;left:10px;background:#fff;padding:8px 12px;border-radius:8px;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+              <strong>GOBEX</strong> - Carrefour 02 Manguiers, Abomey-Calavi<br>
+              <a href="https://maps.google.com/?q=Carrefour+02+Manguiers+Abomey-Calavi+Benin" target="_blank">Ouvrir dans Google Maps <i class="bi bi-box-arrow-up-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-widget">
+            <div class="logo-wrap mb-3">
+              <span style="font-family:'Exo';font-weight:800;font-size:28px;color:#fff;letter-spacing:-0.5px;">GOBEX</span><br>
+              <span style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:600;">Godwin Business Expertise</span>
+            </div>
+            <p>Cabinet d'expertise pluridisciplinaire 100% béninois basé à Abomey-Calavi. Nous transformons vos contraintes administratives en leviers de croissance.</p>
+            <div class="social">
+              <a href="#"><i class="bi bi-facebook"></i></a>
+              <a href="#"><i class="bi bi-linkedin"></i></a>
+              <a href="https://wa.me/22997739046" target="_blank"><i class="bi bi-whatsapp"></i></a>
+              <a href="#"><i class="bi bi-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <div class="footer-widget">
+            <h5>Services</h5>
+            <ul>
+              <li><a href="services/consultation-fiscale.html">Consultation Fiscale</a></li>
+              <li><a href="services/comptabilite-gestion.html">Comptabilité</a></li>
+              <li><a href="services/solutions-it-web.html">Solutions IT & Web</a></li>
+              <li><a href="services/formations-rh.html">Formation RH</a></li>
+              <li><a href="services/business-entrepreneuriat.html">Business Plan</a></li>
+              <li><a href="services/gestion-entreprise.html">Gestion Projet</a></li>
+              <li><a href="boutique.html"><i class="bi bi-cart3 me-1"></i>Boutique</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="footer-widget">
+            <h5>Support</h5>
+            <ul>
+              <li><a href="#">Mentions légales</a></li>
+              <li><a href="#">Politique de confidentialité</a></li>
+              <li><a href="#">Carrières Bénin</a></li>
+              <li><a href="#">Blog & Actualités fiscales DGI</a></li>
+              <li><a href="#">Télécharger nos brochures</a></li>
+            </ul>
+            <div class="mt-4">
+              <h6 class="text-white-50">Newsletter fiscale Bénin</h6>
+              <div class="input-group">
+                <input type="email" class="form-control" placeholder="Votre email">
+                <button class="btn btn-main btn-sm"><i class="bi bi-send"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="footer-widget">
+            <h5>Heures d'ouverture</h5>
+            <ul class="hours">
+              <li><span>Lundi - Vendredi</span><span>08:00 - 18:30</span></li>
+              <li><span>Samedi</span><span>09:00 - 16:00</span></li>
+              <li><span>Dimanche</span><span>Sur RDV WhatsApp</span></li>
+            </ul>
+            <div class="mt-4 p-3 bg-white bg-opacity-10 rounded">
+              <p class="small mb-1 text-white-50">Besoin d'aide urgente ?</p>
+              <h5 class="text-white mb-0"><i class="bi bi-whatsapp me-1 text-success"></i>+229 97 739 046</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="row align-items-center">
+          <div class="col-md-6"><p>© 2025 GOBEX - Godwin Business Expertise. Tous droits réservés. RB/ABC/15A3265 - IFU: 1201502844807 - Abomey-Calavi, Bénin</p></div>
+          <div class="col-md-6 text-md-end">
+            <p class="d-inline me-3">Design inspiré de Novena • 100% Béninois • <i class="bi bi-heart-fill text-danger"></i> à Abomey-Calavi</p>
+            <a href="admin/" class="btn btn-sm btn-outline-light rounded-pill" style="font-size:11px;letter-spacing:1px;border-color:rgba(255,255,255,0.2);"><i class="bi bi-shield-lock me-1"></i>ADMIN</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/22997739046?text=Bonjour%20GOBEX%2C%20je%20viens%20de%20votre%20site%20web%20et%20je%20souhaite%20plus%20d'informations" class="whatsapp-float" target="_blank">
+    <i class="bi bi-whatsapp"></i>
+    <span class="whatsapp-tooltip">Discuter sur WhatsApp</span>
+  </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS + GSAP for animations -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/backend.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script>
+    // Init AOS
+    AOS.init({duration:800, easing:'ease-out-cubic', once:true, offset:100});
+    // GSAP animations
+    if(window.gsap){
+      gsap.registerPlugin(ScrollTrigger);
+      // Hero parallax
+      gsap.to(".banner-bg", {y:100, ease:"none", scrollTrigger:{trigger:".banner", start:"top top", end:"bottom top", scrub:true}});
+      // About images stagger
+      gsap.from(".about-img > div", {y:60, opacity:0, duration:1, stagger:0.2, ease:"power3.out", scrollTrigger:{trigger:".about", start:"top 70%"}});
+    }
+  </script>
+  <script>
+    // WhatsApp Integration
+    function sendWhatsAppDirect(){
+      const service = document.getElementById('serviceSelect')?.value || 'Service';
+      const type = document.getElementById('typeEntreprise')?.value || '';
+      const nom = document.getElementById('nom')?.value || '';
+      const tel = document.getElementById('tel')?.value || '';
+      const msg = document.getElementById('message')?.value || 'Bonjour GOBEX, je souhaite une consultation';
+      const text = `Bonjour GOBEX%0A%0AJe suis ${encodeURIComponent(nom)} (${encodeURIComponent(type)})%0AService souhaité: ${encodeURIComponent(service)}%0ATel: ${encodeURIComponent(tel)}%0A%0AMessage: ${encodeURIComponent(msg)}`;
+      window.open(`https://wa.me/22997739046?text=${text}`, '_blank');
+    }
+    document.getElementById('appointmentForm')?.addEventListener('submit', function(e){
+      e.preventDefault();
+      const service = document.getElementById('serviceSelect').value;
+      const type = document.getElementById('typeEntreprise').value;
+      const nom = document.getElementById('nom').value;
+      const tel = document.getElementById('tel').value;
+      const email = document.getElementById('email').value;
+      const date = document.getElementById('date').value;
+      const message = document.getElementById('message').value;
+      if(!service || !nom || !tel || !message){ alert('Veuillez remplir les champs obligatoires'); return; }
+      const whatsappText = `*NOUVELLE DEMANDE DE RDV - GOBEX*%0A%0A*Nom:* ${nom}%0A*Tel:* ${tel}%0A*Email:* ${email}%0A*Entreprise:* ${type}%0A*Service:* ${service}%0A*Date souhaitée:* ${date}%0A%0A*Message:*%0A${message}%0A%0A_Via site web GOBEX - Abomey-Calavi_`;
+      // Open WhatsApp
+      window.open(`https://wa.me/22997739046?text=${whatsappText}`, '_blank');
+      // Also show success
+      const btn = e.target.querySelector('button[type="submit"]');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Redirection WhatsApp...';
+      setTimeout(()=>{ btn.innerHTML = orig; }, 3000);
+    });
+
+    // GOBEX - Logo texte uniquement
+    console.log('%c GOBEX - Cabinet texte uniquement ', 'background:#0A2F5E;color:#FFB81C;padding:10px;border-radius:8px;');
+  </script>
+</body>
+</html>

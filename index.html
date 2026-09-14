@@ -11,8 +11,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" type="image/png" href="assets/img/logo.png">
-  <link rel="apple-touch-icon" href="assets/img/logo.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon.png">
   <style>
     .logo-placeholder{border:2px dashed #F2A900;background:#fff8e6;padding:8px 12px;border-radius:10px;display:inline-flex;align-items:center;gap:8px}
     .whatsapp-float{position:fixed;bottom:24px;left:24px;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 10px 30px rgba(37,211,102,0.4);z-index:9999;transition:.3s}
@@ -45,12 +45,9 @@
     <nav class="navbar navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="index.html">
-          <div id="logo-container" style="display:flex;align-items:center;gap:12px;">
-            <img src="assets/img/logo.png" alt="GOBEX Logo officiel" style="height:52px; width:auto; object-fit:contain;" id="main-logo-icon">
-            <div style="display:flex;flex-direction:column;line-height:1;">
-              <span style="font-family:'Exo',sans-serif;font-weight:800;font-size:28px;color:#0A2F5E;letter-spacing:-0.5px;">GOBEX</span>
-              <span style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#6f8ba4;font-weight:600;">Godwin Business Expertise</span>
-            </div>
+          <div id="logo-container" style="display:flex;flex-direction:column;line-height:1;">
+            <span style="font-family:'Exo',sans-serif;font-weight:800;font-size:32px;color:#0A2F5E;letter-spacing:-1px;line-height:1;">GOBEX</span>
+            <span style="font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:#6f8ba4;font-weight:700;margin-top:2px;">Godwin Business Expertise</span>
           </div>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -461,9 +458,9 @@
       <div class="row">
         <div class="col-lg-4 col-md-6">
           <div class="footer-widget">
-            <div class="logo-wrap mb-3" style="display:flex;align-items:center;gap:12px;">
-              <img src="assets/img/logo.png" alt="GOBEX" style="height:48px; filter:brightness(0) invert(1);">
-              <div><span style="font-family:'Exo';font-weight:800;font-size:24px;color:#fff;">GOBEX</span><br><span style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.6);">Godwin Business Expertise</span></div>
+            <div class="logo-wrap mb-3">
+              <span style="font-family:'Exo';font-weight:800;font-size:28px;color:#fff;letter-spacing:-0.5px;">GOBEX</span><br>
+              <span style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:600;">Godwin Business Expertise</span>
             </div>
             <p>Cabinet d'expertise pluridisciplinaire 100% béninois basé à Abomey-Calavi. Nous transformons vos contraintes administratives en leviers de croissance.</p>
             <div class="social">
@@ -569,8 +566,8 @@
       setTimeout(()=>{ btn.innerHTML = orig; }, 3000);
     });
 
-    // Logo replacement helper
-    console.log('%c GOBEX - Pour remplacer le logo, mettez votre fichier dans assets/img/logo.png et changez le src dans index.html ', 'background:#0F2A44;color:#F2A900;padding:10px;border-radius:8px;');
+    // GOBEX - Logo texte uniquement
+    console.log('%c GOBEX - Cabinet texte uniquement ', 'background:#0A2F5E;color:#FFB81C;padding:10px;border-radius:8px;');
   </script>
 </body>
 </html>

@@ -9,25 +9,26 @@
   Text: #6F8BA4 / #223A66
 */
 
+/* Charte officielle extraite du logo fourni par client */
 :root{
-  --primary:#0F2A44;
-  --primary-dark:#0a1d2f;
-  --primary-light:#1a3a5f;
-  --accent:#F2A900;
-  --accent-dark:#d69400;
+  --primary:#0A2F5E; /* Bleu nuit officiel logo GOBEX */
+  --primary-dark:#071f3e;
+  --primary-light:#143d75;
+  --accent:#FFB81C; /* Jaune or officiel logo GOBEX */
+  --accent-dark:#e6a517;
   --accent-light:#fff3d0;
-  --novena-red:#e12454; /* keep for reference, but we use accent */
-  --cta:#e67e22;
-  --cta-dark:#cf6d17;
+  --novena-red:#e12454;
+  --cta:#FFB81C;
+  --cta-dark:#e6a517;
   --light-bg:#f4f7fb;
   --gray:#f8f9fa;
   --text:#6f8ba4;
-  --heading:#0F2A44;
-  --heading2:#223a66;
+  --heading:#0A2F5E;
+  --heading2:#0A2F5E;
   --border:#eef2f6;
   --white:#ffffff;
-  --shadow:0 10px 40px rgba(15,42,68,0.08);
-  --shadow-lg:0 20px 60px rgba(15,42,68,0.12);
+  --shadow:0 10px 40px rgba(10,47,94,0.08);
+  --shadow-lg:0 20px 60px rgba(10,47,94,0.12);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -90,7 +91,7 @@ img{max-width:100%}
 }
 .btn-main{
   background:var(--accent);
-  color:#fff;
+  color:var(--primary);
   font-family:'Exo',sans-serif;
   font-weight:700;
   font-size:14px;
@@ -99,15 +100,15 @@ img{max-width:100%}
   padding:13px 28px;
   border-radius:50px;
   border:2px solid var(--accent);
-  box-shadow:0 8px 20px rgba(242,169,0,0.25);
+  box-shadow:0 8px 20px rgba(255,184,28,0.3);
   transition:.3s;
 }
 .btn-main:hover{
   background:var(--accent-dark);
   border-color:var(--accent-dark);
-  color:#fff;
+  color:var(--primary);
   transform:translateY(-2px);
-  box-shadow:0 12px 28px rgba(242,169,0,0.35);
+  box-shadow:0 12px 28px rgba(255,184,28,0.4);
 }
 .btn-main.btn-icon i{
   background:#fff;
@@ -172,7 +173,7 @@ img{max-width:100%}
   position:absolute;
   bottom:6px;left:0;
   width:100%;height:8px;
-  background:rgba(242,169,0,0.2);
+  background:rgba(255,184,28,0.25);
   z-index:-1;
 }
 .banner .lead{
@@ -541,7 +542,7 @@ img{max-width:100%}
 .appointment-form textarea.form-control{height:auto;padding-top:14px}
 .appointment-form .form-control:focus,.appointment-form .form-select:focus{
   border-color:var(--accent);
-  box-shadow:0 0 0 4px rgba(242,169,0,0.12);
+  box-shadow:0 0 0 4px rgba(255,184,28,0.18);
 }
 
 /* Testimonial */

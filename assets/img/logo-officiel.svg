@@ -1,0 +1,45 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- GOBEX Official Logo - Reconstructed from original -->
+  <!-- Colors from original: Yellow #FFB81C, Dark Blue #0A2F5E -->
+  <g>
+    <!-- Yellow top part -->
+    <path d="M 20 120 
+             Q 80 20, 160 20
+             Q 230 20, 260 80
+             L 285 130
+             L 295 160
+             L 300 250
+             Q 280 200, 250 150
+             L 220 100
+             Q 180 40, 140 80
+             Q 110 110, 130 140
+             L 20 120 Z" 
+          fill="#FFB81C"/>
+    <!-- Blue bottom part -->
+    <path d="M 20 125
+             Q 80 220, 160 280
+             Q 220 310, 260 270
+             L 240 240
+             Q 200 270, 160 240
+             Q 120 210, 140 160
+             Q 160 120, 200 140
+             L 230 160
+             L 250 190
+             L 260 250
+             Q 260 310, 230 340
+             L 200 360
+             L 160 360
+             L 140 340
+             L 140 280
+             Q 180 280, 210 260
+             Q 230 240, 220 210
+             Q 180 230, 140 230
+             Q 80 230, 40 190
+             Q 10 150, 20 125 Z"
+          fill="#0A2F5E"/>
+    <!-- Small triangles on right -->
+    <path d="M 270 40 L 300 80 L 270 80 Z" fill="#0A2F5E"/>
+    <path d="M 300 60 L 330 140 L 270 140 Z" fill="#FFB81C"/>
+    <path d="M 280 150 L 340 250 L 280 200 Z" fill="#0A2F5E"/>
+  </g>
+</svg>

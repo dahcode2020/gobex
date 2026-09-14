@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/favicon.png">
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
     .logo-placeholder{border:2px dashed #F2A900;background:#fff8e6;padding:8px 12px;border-radius:10px;display:inline-flex;align-items:center;gap:8px}
     .whatsapp-float{position:fixed;bottom:24px;left:24px;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 10px 30px rgba(37,211,102,0.4);z-index:9999;transition:.3s}
@@ -78,8 +80,8 @@
     </nav>
   </header>
 
-  <!-- HERO - West Africa context -->
-  <section class="banner" id="accueil">
+  <!-- HERO - West Africa context with animations -->
+  <section class="banner" id="accueil" data-aos="fade-in">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-7 col-md-12">
@@ -114,8 +116,8 @@
     <div class="banner-bg"></div>
   </section>
 
-  <!-- FEATURES -->
-  <section class="features">
+  <!-- FEATURES with stagger animation -->
+  <section class="features" data-aos="fade-up" data-aos-delay="200">
     <div class="container">
       <div class="row">
         <div class="col-lg-4 col-md-6">
@@ -152,8 +154,8 @@
     </div>
   </section>
 
-  <!-- ABOUT - West Africa images -->
-  <section class="section about" id="apropos">
+  <!-- ABOUT - West Africa images with animations -->
+  <section class="section about" id="apropos" data-aos="fade-up">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-5">
@@ -182,8 +184,8 @@
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="section services" id="services">
+  <!-- SERVICES with zoom animation -->
+  <section class="section services" id="services" data-aos="zoom-in">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
@@ -283,8 +285,8 @@
     </div>
   </section>
 
-  <!-- CTA APPOINTMENT with WhatsApp -->
-  <section class="section cta" id="rdv">
+  <!-- CTA APPOINTMENT with WhatsApp and animations -->
+  <section class="section cta" id="rdv" data-aos="fade-left">
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
@@ -353,8 +355,8 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS West Africa -->
-  <section class="section testimonial" id="pourquoi">
+  <!-- TESTIMONIALS West Africa with animations -->
+  <section class="section testimonial" id="pourquoi" data-aos="fade-up">
     <div class="container">
       <div class="row">
         <div class="col-lg-7">
@@ -540,7 +542,25 @@
   </a>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS + GSAP for animations -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/backend.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script>
+    // Init AOS
+    AOS.init({duration:800, easing:'ease-out-cubic', once:true, offset:100});
+    // GSAP animations
+    if(window.gsap){
+      gsap.registerPlugin(ScrollTrigger);
+      // Hero parallax
+      gsap.to(".banner-bg", {y:100, ease:"none", scrollTrigger:{trigger:".banner", start:"top top", end:"bottom top", scrub:true}});
+      // About images stagger
+      gsap.from(".about-img > div", {y:60, opacity:0, duration:1, stagger:0.2, ease:"power3.out", scrollTrigger:{trigger:".about", start:"top 70%"}});
+    }
+  </script>
   <script>
     // WhatsApp Integration
     function sendWhatsAppDirect(){

@@ -710,3 +710,60 @@ img{max-width:100%}
 /* Animations */
 .feature-item,.service-item,.testimonial-item{animation:fadeUp .6s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== ADVANCED ANIMATIONS - GOBEX ===== */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeInRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes zoomIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes typing{from{width:0}to{width:100%}}
+@keyframes blink{0%,50%{border-color:transparent}51%,100%{border-color:var(--accent)}}
+
+/* Reveal classes */
+.reveal{opacity:0;transition:all 0.8s cubic-bezier(0.2,0.8,0.2,1)}
+.reveal.revealed{opacity:1}
+.reveal-up{transform:translateY(40px)}
+.reveal-down{transform:translateY(-40px)}
+.reveal-left{transform:translateX(-40px)}
+.reveal-right{transform:translateX(40px)}
+.reveal-zoom{transform:scale(0.9)}
+.reveal.revealed.reveal-up,.reveal.revealed.reveal-down{transform:translateY(0)}
+.reveal.revealed.reveal-left,.reveal.revealed.reveal-right{transform:translateX(0)}
+.reveal.revealed.reveal-zoom{transform:scale(1)}
+
+/* Product card 3D hover */
+.product-card{transform-style:preserve-3d;transition:transform 0.3s, box-shadow 0.3s, border-color 0.3s}
+.product-card:hover{box-shadow:0 25px 70px rgba(10,47,94,0.18)}
+
+/* Service card shine effect */
+.service-item{position:relative;overflow:hidden}
+.service-item:after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(120deg,transparent,rgba(255,255,255,0.3),transparent);transform:rotate(25deg) translateX(-100%);transition:transform 0.6s}
+.service-item:hover:after{transform:rotate(25deg) translateX(100%)}
+
+/* Button shine */
+.btn-main{position:relative;overflow:hidden}
+.btn-main:before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.5s}
+.btn-main:hover:before{left:100%}
+
+/* Loading skeleton */
+.skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+
+/* Scroll progress handled in JS */
+
+/* AOS-like */
+[data-aos]{opacity:0;transition:all 0.8s cubic-bezier(0.2,0.8,0.2,1)}
+[data-aos].aos-animate{opacity:1}
+[data-aos="fade-up"]{transform:translateY(40px)}
+[data-aos="fade-up"].aos-animate{transform:translateY(0)}
+[data-aos="fade-down"]{transform:translateY(-40px)}
+[data-aos="fade-down"].aos-animate{transform:translateY(0)}
+[data-aos="fade-left"]{transform:translateX(-40px)}
+[data-aos="fade-left"].aos-animate{transform:translateX(0)}
+[data-aos="fade-right"]{transform:translateX(40px)}
+[data-aos="fade-right"].aos-animate{transform:translateX(0)}
+[data-aos="zoom-in"]{transform:scale(0.9)}
+[data-aos="zoom-in"].aos-animate{transform:scale(1)}

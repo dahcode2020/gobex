@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM GOBEX - Gestion Clients A à Z</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb;--success:#25D366}
+body{font-family:Roboto;background:var(--light);min-height:100vh}
+.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px;z-index:1000;overflow-y:auto}
+.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sidebar-logo{font-family:Exo;font-weight:800;font-size:24px;color:#fff}
+.menu-section{padding:12px 24px 4px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);font-weight:700;margin-top:12px}
+.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.7);text-decoration:none;border-left:3px solid transparent;font-size:14px;transition:.2s}
+.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}
+.menu-item i{font-size:16px;width:20px}
+.main{margin-left:280px;padding:20px}
+.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.stat-card{background:#fff;border-radius:16px;padding:18px;border:1px solid #eef2f6;transition:.3s;height:100%}
+.stat-card:hover{box-shadow:0 10px 40px rgba(10,47,94,0.08);transform:translateY(-2px)}
+.stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:8px 18px;border:2px solid var(--accent);font-size:12px}
+.btn-main:hover{background:#e6a517;border-color:#e6a517}
+.kpi-card{background:linear-gradient(135deg,var(--primary) 0%,#143d75 100%);color:#fff;border-radius:16px;padding:20px;position:relative;overflow:hidden}
+.kpi-card:after{content:'';position:absolute;top:-30%;right:-20%;width:80%;height:80%;background:rgba(255,184,28,0.1);border-radius:50%}
+.pipeline-col{background:#fff;border-radius:12px;padding:12px;min-height:400px;border:1px solid #eef2f6}
+.pipeline-header{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 12px;border-radius:8px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.client-card{background:#fff;border:1px solid #eef2f6;border-radius:10px;padding:12px;margin-bottom:10px;cursor:grab;transition:.2s;border-left:3px solid var(--accent)}
+.client-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.08);transform:translateY(-2px)}
+@media(max-width:991px){.sidebar{transform:translateX(-100%)}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="sidebar-logo">GOBEX CRM</div>
+<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);">Cabinet Management A-Z</div>
+<div class="mt-3"><span class="badge bg-warning text-dark" style="font-size:10px;"><i class="bi bi-shield-check me-1"></i>ADMIN</span> <small style="color:rgba(255,255,255,0.5);" id="adminUser">admin</small></div>
+</div>
+
+<div class="menu-section">CRM Principal</div>
+<a href="crm.html" class="menu-item active"><i class="bi bi-grid-1x2"></i> Dashboard CRM</a>
+<a href="crm-clients.html" class="menu-item"><i class="bi bi-people"></i> Clients & Prospects</a>
+<a href="crm-pipeline.html" class="menu-item"><i class="bi bi-kanban"></i> Pipeline Ventes</a>
+<a href="crm-dossiers.html" class="menu-item"><i class="bi bi-folder2-open"></i> Dossiers & Missions</a>
+
+<div class="menu-section">Gestion Cabinet</div>
+<a href="crm-facturation.html" class="menu-item"><i class="bi bi-receipt"></i> Devis & Facturation</a>
+<a href="crm-tasks.html" class="menu-item"><i class="bi bi-check2-square"></i> Tâches & Automatisations</a>
+<a href="crm-calendrier.html" class="menu-item"><i class="bi bi-calendar3"></i> Calendrier & RDV</a>
+<a href="crm-documents.html" class="menu-item"><i class="bi bi-file-earmark-text"></i> Documents</a>
+
+<div class="menu-section">Prévision & Traitement</div>
+<a href="crm-prevision.html" class="menu-item"><i class="bi bi-graph-up-arrow"></i> Prévisions & CA</a>
+<a href="crm-automations.html" class="menu-item"><i class="bi bi-robot"></i> Automatisations</a>
+<a href="crm-reporting.html" class="menu-item"><i class="bi bi-bar-chart"></i> Reporting</a>
+
+<div class="menu-section">Boutique & Site</div>
+<a href="boutique-admin.html" class="menu-item"><i class="bi bi-cart3"></i> Boutique</a>
+<a href="dashboard.html" class="menu-item"><i class="bi bi-speedometer2"></i> Dashboard Principal</a>
+<a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Voir site</a>
+<a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+</div>
+
+<div class="main">
+<div class="topbar">
+<div class="d-flex align-items-center gap-3">
+<button class="btn btn-light d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button>
+<div><h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;">CRM GOBEX - Vue d'ensemble</h5><small class="text-muted">Gestion clients de A à Z • Prévision • Traitement • Automatisations</small></div>
+</div>
+<div class="d-flex gap-2">
+<button class="btn btn-light btn-sm rounded-pill" onclick="alert('Raccourci: Ctrl+K pour recherche rapide client')"><i class="bi bi-search me-1"></i> Recherche</button>
+<a href="crm-clients.html" class="btn btn-main rounded-pill"><i class="bi bi-person-plus me-1"></i> Nouveau client</a>
+</div>
+</div>
+
+<!-- KPIs -->
+<div class="row g-3 mb-4">
+<div class="col-lg-3 col-md-6"><div class="kpi-card"><div class="d-flex justify-content-between align-items-start"><div><p class="small mb-1" style="color:rgba(255,255,255,0.7);">CA Prévisionnel (Mois)</p><h3 class="mb-1 text-white">8.5M FCFA</h3><small class="text-warning"><i class="bi bi-arrow-up"></i> +22% vs mois dernier</small></div><div class="stat-icon" style="background:rgba(255,184,28,0.2);color:#FFB81C;"><i class="bi bi-currency-dollar"></i></div></div><div class="mt-3"><div class="progress" style="height:4px;background:rgba(255,255,255,0.2);"><div class="progress-bar bg-warning" style="width:75%;"></div></div><small style="color:rgba(255,255,255,0.5);">Objectif 12M FCFA</small></div></div></div>
+<div class="col-lg-3 col-md-6"><div class="stat-card"><div class="d-flex justify-content-between"><div><p class="small text-muted mb-1">Clients Actifs</p><h3 class="mb-1" style="color:#0A2F5E;">127</h3><small class="text-success"><i class="bi bi-arrow-up"></i> +8 ce mois</small></div><div class="stat-icon" style="background:#e3f2fd;color:#2196f3;"><i class="bi bi-people"></i></div></div><div class="mt-3 d-flex gap-2"><span class="badge bg-success">98% fidélisés</span><span class="badge bg-light text-dark">12 prospects</span></div></div></div>
+<div class="col-lg-3 col-md-6"><div class="stat-card"><div class="d-flex justify-content-between"><div><p class="small text-muted mb-1">Dossiers en cours</p><h3 class="mb-1" style="color:#0A2F5E;">34</h3><small class="text-warning"><i class="bi bi-exclamation-circle"></i> 5 urgents</small></div><div class="stat-icon" style="background:#fff3d0;color:#FFB81C;"><i class="bi bi-folder2-open"></i></div></div><div class="mt-2"><small class="text-muted">Fiscal: 12 | Compta: 15 | Juridique: 7</small></div></div></div>
+<div class="col-lg-3 col-md-6"><div class="stat-card"><div class="d-flex justify-content-between"><div><p class="small text-muted mb-1">Tâches & Échéances</p><h3 class="mb-1" style="color:#0A2F5E;">18</h3><small class="text-danger"><i class="bi bi-alarm"></i> 3 en retard</small></div><div class="stat-icon" style="background:#fce4ec;color:#e91e63;"><i class="bi bi-check2-square"></i></div></div><div class="mt-2"><div class="d-flex gap-1"><span class="badge bg-danger">3 retard</span><span class="badge bg-warning text-dark">7 aujourd'hui</span><span class="badge bg-light text-dark">8 à venir</span></div></div></div></div>
+</div>
+
+<!-- Pipeline Kanban Preview -->
+<div class="row g-3 mb-4">
+<div class="col-12"><div class="stat-card">
+<div class="d-flex justify-content-between align-items-center mb-3"><h6 class="mb-0" style="font-family:Exo;font-weight:700;">Pipeline Ventes - Aperçu</h6><a href="crm-pipeline.html" class="btn btn-sm btn-light rounded-pill">Voir Kanban complet</a></div>
+<div class="row g-2">
+<div class="col"><div class="pipeline-col"><div class="pipeline-header" style="background:#e3f2fd;color:#1976d2;"><span>Prospects</span><span class="badge bg-primary">12</span></div><div class="client-card" style="border-left-color:#2196f3;"><strong>ETS La Grâce</strong><br><small class="text-muted">Godomey • Compta + Fiscal</small><br><small class="text-warning">• Relance prévue demain</small></div><div class="client-card" style="border-left-color:#2196f3;"><strong>Fashion Bénin</strong><br><small class="text-muted">Cotonou • Boutique</small></div></div></div>
+<div class="col"><div class="pipeline-col"><div class="pipeline-header" style="background:#fff3d0;color:#f57c00;"><span>Devis Envoyé</span><span class="badge bg-warning text-dark">8</span></div><div class="client-card" style="border-left-color:#FFB81C;"><strong>JKA Services</strong><br><small class="text-muted">Calavi • 450k FCFA</small><br><small class="text-success">• Vu il y a 2h</small></div></div></div>
+<div class="col"><div class="pipeline-col"><div class="pipeline-header" style="background:#e8f5e9;color:#388e3c;"><span>Client Actif</span><span class="badge bg-success">127</span></div><div class="client-card" style="border-left-color:#4caf50;"><strong>BOA Bénin - Agence</strong><br><small class="text-muted">Contrat annuel</small><br><small>• Facturation mensuelle</small></div></div></div>
+<div class="col"><div class="pipeline-col"><div class="pipeline-header" style="background:#fce4ec;color:#c2185b;"><span>Facturation</span><span class="badge bg-danger">5</span></div><div class="client-card" style="border-left-color:#e91e63;"><strong>5 factures en attente</strong><br><small class="text-muted">2.1M FCFA à encaisser</small></div></div></div>
+</div>
+</div></div>
+</div>
+
+<!-- Automatisations & Alertes -->
+<div class="row g-3 mb-4">
+<div class="col-lg-6">
+<div class="stat-card">
+<h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-robot me-2 text-warning"></i>Automatisations Actives</h6>
+<div class="mt-3">
+<div class="d-flex justify-content-between align-items-center p-2 border rounded-3 mb-2"><div><strong class="small">Relance Devis Auto (J+3)</strong><br><small class="text-muted">WhatsApp auto si devis non signé</small></div><div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div></div>
+<div class="d-flex justify-content-between align-items-center p-2 border rounded-3 mb-2"><div><strong class="small">Alerte Échéance DGI</strong><br><small class="text-muted">Rappel TVA/AIB 3 jours avant</small></div><div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div></div>
+<div class="d-flex justify-content-between align-items-center p-2 border rounded-3 mb-2"><div><strong class="small">Relance Facture Impayée (J+7)</strong><br><small class="text-muted">Email + WhatsApp auto</small></div><div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div></div>
+<div class="d-flex justify-content-between align-items-center p-2 border rounded-3"><div><strong class="small">Bienvenue Nouveau Client</strong><br><small class="text-muted">Message + docs onboarding</small></div><div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div></div>
+</div>
+<a href="crm-automations.html" class="btn btn-outline-dark btn-sm rounded-pill mt-3 w-100"><i class="bi bi-gear me-1"></i> Gérer automatisations</a>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="stat-card">
+<h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-alarm me-2 text-danger"></i>Alertes & Échéances Critiques (Bénin)</h6>
+<div class="mt-3">
+<div class="d-flex gap-3 p-2 rounded-3 mb-2" style="background:#ffebee;border-left:3px solid #f44336;"><div><i class="bi bi-exclamation-triangle-fill text-danger"></i></div><div><strong class="small">TVA Mai - 5 clients</strong><br><small class="text-muted">Échéance 10 Juin - DGI Bénin - Pénalités si retard</small><br><button class="btn btn-sm btn-danger rounded-pill mt-1" style="font-size:11px;">Traiter maintenant</button></div></div>
+<div class="d-flex gap-3 p-2 rounded-3 mb-2" style="background:#fff3e0;border-left:3px solid #ff9800;"><div><i class="bi bi-clock-fill text-warning"></i></div><div><strong class="small">CNSS - Déclarations 8 entreprises</strong><br><small class="text-muted">Échéance 15 Juin</small></div></div>
+<div class="d-flex gap-3 p-2 rounded-3" style="background:#e8f5e9;border-left:3px solid #4caf50;"><div><i class="bi bi-check-circle-fill text-success"></i></div><div><strong class="small">Bilans annuels - 3 déposés cette semaine</strong><br><small class="text-muted">12 restants avant 30 Juin</small></div></div>
+</div>
+<a href="crm-tasks.html" class="btn btn-main btn-sm rounded-pill mt-3 w-100"><i class="bi bi-list-task me-1"></i> Voir toutes les tâches</a>
+</div>
+</div>
+</div>
+
+<!-- Prévision -->
+<div class="row g-3">
+<div class="col-lg-8"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;">Prévision CA 6 mois - Outil de prévoyance</h6><canvas id="previsionChart" height="120"></canvas><div class="row mt-3 text-center"><div class="col-4"><small class="text-muted">CA Réalisé</small><br><strong>18.5M FCFA</strong></div><div class="col-4"><small class="text-muted">Prévision 3 mois</small><br><strong class="text-warning">28M FCFA</strong></div><div class="col-4"><small class="text-muted">Objectif Annuel</small><br><strong>120M FCFA</strong><br><div class="progress mt-1" style="height:4px;"><div class="progress-bar bg-warning" style="width:62%;"></div></div></div></div></div></div>
+<div class="col-lg-4"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;">Top Clients (CA)</h6><div class="mt-3"><div class="d-flex justify-content-between align-items-center mb-3"><div><strong class="small">ETS La Grâce</strong><br><small class="text-muted">Godomey</small></div><div class="text-end"><strong>2.4M</strong><br><small class="text-success">+12%</small></div></div><div class="d-flex justify-content-between align-items-center mb-3"><div><strong class="small">Fashion Bénin</strong><br><small class="text-muted">Cotonou</small></div><div class="text-end"><strong>1.8M</strong><br><small class="text-success">+8%</small></div></div><div class="d-flex justify-content-between align-items-center"><div><strong class="small">JKA Services</strong><br><small class="text-muted">Calavi</small></div><div class="text-end"><strong>1.2M</strong><br><small class="text-warning">stable</small></div></div></div><a href="crm-clients.html" class="btn btn-outline-dark btn-sm rounded-pill mt-3 w-100">Voir tous clients</a></div></div>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../assets/js/backend.js"></script>
+<script>
+if(localStorage.getItem('gobex_admin_auth')!=='true'){window.location.href='index.html';}
+document.getElementById('adminUser').textContent=localStorage.getItem('gobex_admin_user')||'admin';
+
+// Chart Prévision
+const ctx = document.getElementById('previsionChart').getContext('2d');
+new Chart(ctx, {
+  type:'line',
+  data:{
+    labels:['Jan','Fév','Mar','Avr','Mai','Juin (prév)','Juil (prév)','Août (prév)'],
+    datasets:[
+      {label:'CA Réalisé', data:[3.2,4.1,3.8,5.2,4.8,6.5,null,null], borderColor:'#0A2F5E', backgroundColor:'rgba(10,47,94,0.1)', tension:0.4, fill:true},
+      {label:'Prévision', data:[null,null,null,null,null,6.5,8.5,9.2], borderColor:'#FFB81C', backgroundColor:'rgba(255,184,28,0.1)', borderDash:[5,5], tension:0.4, fill:true}
+    ]
+  },
+  options:{responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, ticks:{callback:v=>v+'M'}}}}
+});
+
+function logout(){localStorage.removeItem('gobex_admin_auth');window.location.href='index.html';}
+</script>
+</body>
+</html>

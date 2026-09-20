@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Client - Nouveau - CRM GOBEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb}
+body{font-family:Roboto;background:var(--light);color:#333}
+.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px;overflow-y:auto;z-index:100}
+.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sidebar-logo{font-family:Exo;font-weight:800;font-size:24px;color:#fff}
+.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.7);text-decoration:none;border-left:3px solid transparent;font-size:14px;transition:.2s}
+.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}
+.main{margin-left:280px;padding:20px}
+.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.card-gobex{background:#fff;border-radius:16px;border:1px solid #eef2f6;box-shadow:0 4px 20px rgba(0,0,0,0.03);margin-bottom:20px;overflow:hidden}
+.card-gobex .card-header-gobex{background:var(--primary);color:#fff;padding:14px 20px;font-family:Exo;font-weight:700;font-size:14px;letter-spacing:0.5px;display:flex;align-items:center;gap:10px}
+.card-gobex .card-header-gobex.accent{background:var(--accent);color:var(--primary)}
+.card-body-gobex{padding:20px}
+.form-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--primary);margin-bottom:4px}
+.form-control,.form-select{border-radius:10px;border:1px solid #e2e8f0;font-size:14px;padding:10px 14px}
+.form-control:focus,.form-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,184,28,0.15)}
+.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:10px 22px;border:2px solid var(--accent);font-size:13px}
+.btn-main:hover{background:#e6a517;border-color:#e6a517;color:var(--primary)}
+.btn-dark-gobex{background:var(--primary);color:#fff;border-radius:50px;padding:10px 22px;font-weight:600;border:2px solid var(--primary);font-size:13px}
+.btn-dark-gobex:hover{background:#071f3e;color:#fff}
+.required::after{content:" *";color:#e11d48}
+.badge-service{border:1px solid #e2e8f0;background:#fff;padding:8px 14px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:6px;margin:4px}
+.badge-service.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.badge-service.active i{color:var(--accent)}
+.preview-panel{background:#fff;border-radius:16px;border:2px solid var(--primary);overflow:hidden;position:sticky;top:20px}
+.preview-header{background:var(--primary);color:#fff;padding:12px 16px;font-family:Exo;font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.preview-body{padding:20px;font-size:13px;line-height:1.5;max-height:75vh;overflow-y:auto}
+.preview-body h5{font-family:Exo;font-weight:800;color:var(--primary);font-size:16px;margin-bottom:12px;border-bottom:2px solid var(--accent);padding-bottom:8px}
+.preview-table{width:100%;border-collapse:collapse;margin-bottom:12px}
+.preview-table td{padding:6px 8px;border:1px solid #e2e8f0;vertical-align:top;font-size:12px}
+.preview-table td:first-child{background:#f8fafc;font-weight:700;width:35%;color:var(--primary);font-size:11px;text-transform:uppercase;letter-spacing:0.5px}
+.signature-box{border:2px dashed #cbd5e1;border-radius:12px;padding:20px;text-align:center;margin-top:16px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between}
+.signature-line{border-top:1px solid #333;margin-top:40px;padding-top:8px;font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.conditional{display:none}
+.conditional.show{display:block}
+@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}.preview-panel{position:static;max-height:none;margin-top:20px}}
+
+/* PRINT STYLES - PDF */
+@media print{
+  body *{visibility:hidden}
+  #printArea, #printArea *{visibility:visible}
+  #printArea{position:absolute;left:0;top:0;width:100%;margin:0;padding:20px;background:#fff}
+  .no-print{display:none !important}
+  .sidebar{display:none !important}
+  .main{margin-left:0 !important;padding:0 !important}
+  .preview-panel{border:none !important;box-shadow:none !important;position:static !important}
+  .preview-body{max-height:none !important;overflow:visible !important}
+  @page{margin:15mm;size:A4}
+  .signature-box{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="sidebar" id="sidebar">
+<div class="sidebar-header"><div class="sidebar-logo">GOBEX CRM</div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);">Fiche Client Exhaustive</div></div>
+<a href="crm.html" class="menu-item"><i class="bi bi-grid-1x2"></i> Dashboard CRM</a>
+<a href="crm-clients.html" class="menu-item active"><i class="bi bi-people"></i> Clients & Prospects</a>
+<a href="crm-client-form.html" class="menu-item active" style="background:rgba(255,184,28,0.15);border-left-color:#FFB81C;color:#FFB81C;"><i class="bi bi-person-plus"></i> Nouvelle Fiche Client</a>
+<a href="crm-pipeline.html" class="menu-item"><i class="bi bi-kanban"></i> Pipeline</a>
+<a href="crm-dossiers.html" class="menu-item"><i class="bi bi-folder2-open"></i> Dossiers</a>
+<a href="crm-facturation.html" class="menu-item"><i class="bi bi-receipt"></i> Facturation</a>
+<a href="crm-tasks.html" class="menu-item"><i class="bi bi-check2-square"></i> Tâches</a>
+<a href="crm-prevision.html" class="menu-item"><i class="bi bi-graph-up-arrow"></i> Prévisions</a>
+<a href="crm-automations.html" class="menu-item"><i class="bi bi-robot"></i> Automatisations</a>
+<div style="margin-top:20px;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px">
+<a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Voir site</a>
+<a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+</div>
+</div>
+
+<div class="main">
+<div class="topbar no-print">
+<div>
+<h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-person-badge me-2 text-warning"></i>Fiche d'Enregistrement Client - GOBEX</h5>
+<small class="text-muted">Formulaire exhaustif • Aperçu live • Impression PDF avec signature & cachet</small>
+</div>
+<div class="d-flex gap-2">
+<button class="btn btn-light btn-sm rounded-pill d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button>
+<a href="crm-clients.html" class="btn btn-light btn-sm rounded-pill"><i class="bi bi-arrow-left me-1"></i> Retour liste</a>
+<button class="btn btn-dark-gobex btn-sm rounded-pill" onclick="resetForm()"><i class="bi bi-arrow-counterclockwise me-1"></i> Réinitialiser</button>
+</div>
+</div>
+
+<div class="row">
+<!-- FORM COL -->
+<div class="col-lg-7 no-print">
+<form id="ficheClientForm">
+
+<!-- 1. Profil du client -->
+<div class="card-gobex">
+<div class="card-header-gobex"><i class="bi bi-person-vcard"></i> 1. Profil du client</div>
+<div class="card-body-gobex">
+<div class="row g-3">
+<div class="col-md-6">
+<label class="form-label required">Type de client</label>
+<div class="d-flex flex-wrap gap-2 mt-1">
+<label class="badge-service active" data-type="Particulier"><input type="radio" name="typeClient" value="Particulier" checked hidden><i class="bi bi-person"></i> Particulier</label>
+<label class="badge-service" data-type="Entreprise individuelle"><input type="radio" name="typeClient" value="Entreprise individuelle" hidden><i class="bi bi-shop"></i> Entreprise individuelle</label>
+<label class="badge-service" data-type="Personne morale"><input type="radio" name="typeClient" value="Personne morale" hidden><i class="bi bi-building"></i> Personne morale</label>
+</div>
+</div>
+<div class="col-md-3"><label class="form-label">Date</label><input type="date" id="dateFiche" class="form-control"></div>
+<div class="col-md-3"><label class="form-label">Référence interne</label><input type="text" id="refInterne" class="form-control" placeholder="GOBEX-2025-001" readonly></div>
+<div class="col-md-4"><label class="form-label">Statut CRM</label><select id="crmStatus" class="form-select"><option value="Prospect" selected>Prospect</option><option value="Actif">Actif</option><option value="Inactif">Inactif</option></select></div>
+<div class="col-md-4"><label class="form-label">Source</label><select id="crmSource" class="form-select"><option>Bouche à oreille</option><option>Facebook</option><option>Google</option><option>WhatsApp</option><option>Site web</option><option>Partenaire HERALD</option><option>Partenaire JF Conseils</option><option>BOA / Ecobank</option><option>Autre</option></select></div>
+<div class="col-md-4"><label class="form-label">Régime fiscal (Bénin)</label><select id="regimeFiscal" class="form-select"><option value="REEL">Réel</option><option value="RME">RME</option><option value="Entreprenant">Entreprenant</option><option value="Non assujetti">Non assujetti</option></select></div>
+</div>
+</div>
+</div>
+
+<!-- 2. Services demandés -->
+<div class="card-gobex">
+<div class="card-header-gobex accent"><i class="bi bi-briefcase"></i> 2. Services demandés</div>
+<div class="card-body-gobex">
+<p class="small text-muted mb-2">Cochez tous les services concernés (fusion avec CRM existant)</p>
+<div class="d-flex flex-wrap" id="servicesContainer">
+<label class="badge-service" data-service="Conseil fiscal"><input type="checkbox" value="Conseil fiscal" hidden><i class="bi bi-calculator"></i> Conseil fiscal</label>
+<label class="badge-service" data-service="Assistance comptable"><input type="checkbox" value="Assistance comptable" hidden><i class="bi bi-journal-check"></i> Assistance comptable</label>
+<label class="badge-service" data-service="GRH & Paie"><input type="checkbox" value="GRH & Paie" hidden><i class="bi bi-people"></i> GRH & Paie</label>
+<label class="badge-service" data-service="Solutions IT, Web & IA"><input type="checkbox" value="Solutions IT, Web & IA" hidden><i class="bi bi-laptop"></i> Solutions IT, Web & IA</label>
+<label class="badge-service" data-service="Formations"><input type="checkbox" value="Formations" hidden><i class="bi bi-mortarboard"></i> Formations</label>
+<label class="badge-service" data-service="Gestion d'entreprise"><input type="checkbox" value="Gestion d'entreprise" hidden><i class="bi bi-diagram-3"></i> Gestion d'entreprise</label>
+<label class="badge-service" data-service="Business Plan"><input type="checkbox" value="Business Plan" hidden><i class="bi bi-lightbulb"></i> Business Plan</label>
+<label class="badge-service" data-service="Création entreprise"><input type="checkbox" value="Création entreprise" hidden><i class="bi bi-file-earmark-plus"></i> Création entreprise (APIEx, IFU, RCCM)</label>
+<label class="badge-service" data-service="Logiciel PERFECTO"><input type="checkbox" value="Logiciel PERFECTO" hidden><i class="bi bi-box-seam"></i> Logiciel PERFECTO</label>
+<label class="badge-service" data-service="Autres"><input type="checkbox" value="Autres" hidden><i class="bi bi-three-dots"></i> Autres</label>
+</div>
+<input type="text" id="serviceAutreDetail" class="form-control mt-3" placeholder="Précisez si Autres..." style="display:none;">
+</div>
+</div>
+
+<!-- 3. Coordonnées du particulier (visible si Particulier ou Entreprise individuelle) -->
+<div class="card-gobex conditional show" id="blockParticulier">
+<div class="card-header-gobex"><i class="bi bi-person"></i> 3. Coordonnées du particulier</div>
+<div class="card-body-gobex">
+<div class="row g-3">
+<div class="col-md-8"><label class="form-label required">Nom et prénoms</label><input type="text" id="partNom" class="form-control" placeholder="Ex: DOSSOU Godwin"></div>
+<div class="col-md-4"><label class="form-label">Profession</label><input type="text" id="partProfession" class="form-control" placeholder="Commerçant, Entrepreneur..."></div>
+<div class="col-md-4"><label class="form-label required">Téléphone</label><input type="tel" id="partTel" class="form-control" placeholder="+229 97 739 046"></div>
+<div class="col-md-4"><label class="form-label">WhatsApp</label><input type="tel" id="partWhatsapp" class="form-control" placeholder="22997739046"></div>
+<div class="col-md-4"><label class="form-label">Email</label><input type="email" id="partEmail" class="form-control" placeholder="client@email.bj"></div>
+<div class="col-12"><label class="form-label">Adresse complète</label><input type="text" id="partAdresse" class="form-control" placeholder="Quartier, Rue, Ville - Bénin"></div>
+<div class="col-md-6"><label class="form-label">N° pièce d'identité</label><input type="text" id="partPieceId" class="form-control" placeholder="CNI / Passeport"></div>
+<div class="col-md-6"><label class="form-label">CNSS (si applicable)</label><input type="text" id="partCnss" class="form-control" placeholder="N° CNSS"></div>
+</div>
+</div>
+</div>
+
+<!-- 4. Coordonnées de l'entreprise (visible si Entreprise individuelle ou Personne morale) -->
+<div class="card-gobex conditional" id="blockEntreprise">
+<div class="card-header-gobex"><i class="bi bi-building"></i> 4. Coordonnées de l'entreprise</div>
+<div class="card-body-gobex">
+<div class="row g-3">
+<div class="col-md-8"><label class="form-label required">Dénomination / Nom commercial</label><input type="text" id="entDenomination" class="form-control" placeholder="ETS La Grâce, SARL Fashion Bénin..."></div>
+<div class="col-md-4"><label class="form-label">Forme juridique</label><select id="entForme" class="form-select"><option value="ETS">ETS (Entreprise individuelle)</option><option value="SARL">SARL</option><option value="SARL-U">SARL-U</option><option value="SA">SA</option><option value="SAS">SAS</option><option value="SASU">SASU</option><option value="ONG">ONG / Association</option><option value="GIE">GIE</option><option value="SCI">SCI</option><option value="Autre">Autre</option></select></div>
+<div class="col-md-4"><label class="form-label">RCCM</label><input type="text" id="entRccm" class="form-control" placeholder="RB/ABC/15A3265"></div>
+<div class="col-md-4"><label class="form-label">IFU</label><input type="text" id="entIfu" class="form-control" placeholder="1201502844807"></div>
+<div class="col-md-4"><label class="form-label">CNSS Employeur</label><input type="text" id="entCnss" class="form-control" placeholder="N° CNSS employeur"></div>
+<div class="col-md-6"><label class="form-label">Activité principale</label><input type="text" id="entActivite" class="form-control" placeholder="Commerce général, BTP, Prestation..."></div>
+<div class="col-md-3"><label class="form-label">CA Annuel (FCFA)</label><input type="number" id="entCa" class="form-control" placeholder="5000000"></div>
+<div class="col-md-3"><label class="form-label">Nbre employés</label><input type="number" id="entEmployes" class="form-control" placeholder="5"></div>
+</div>
+</div>
+</div>
+
+<!-- 5. Coordonnées du siège social (visible si entreprise) -->
+<div class="card-gobex conditional" id="blockSiege">
+<div class="card-header-gobex"><i class="bi bi-geo-alt"></i> 5. Coordonnées du siège social</div>
+<div class="card-body-gobex">
+<div class="row g-3">
+<div class="col-12"><label class="form-label required">Adresse du siège social</label><input type="text" id="siegeAdresse" class="form-control" placeholder="Carrefour 02 Manguiers, Rue de Tankpê, Abomey-Calavi"></div>
+<div class="col-md-4"><label class="form-label">Boîte postale</label><input type="text" id="siegeBp" class="form-control" placeholder="BP 123 Cotonou"></div>
+<div class="col-md-4"><label class="form-label">Téléphone du siège</label><input type="tel" id="siegeTel" class="form-control" placeholder="+229 21 00 00 00"></div>
+<div class="col-md-4"><label class="form-label">Email du siège</label><input type="email" id="siegeEmail" class="form-control" placeholder="siege@entreprise.bj"></div>
+</div>
+</div>
+</div>
+
+<!-- 6. Représentant légal / gérant -->
+<div class="card-gobex">
+<div class="card-header-gobex"><i class="bi bi-person-badge"></i> 6. Représentant légal / gérant</div>
+<div class="card-body-gobex">
+<div class="row g-3">
+<div class="col-md-6"><label class="form-label required">Nom et prénoms</label><input type="text" id="repNom" class="form-control" placeholder="Nom du gérant / représentant"></div>
+<div class="col-md-6"><label class="form-label required">Qualité / Fonction</label><input type="text" id="repQualite" class="form-control" placeholder="Gérant, DG, Président, Fondateur..."></div>
+<div class="col-md-4"><label class="form-label">Téléphone</label><input type="tel" id="repTel" class="form-control" placeholder="+229 97..."></div>
+<div class="col-md-4"><label class="form-label">WhatsApp</label><input type="tel" id="repWhatsapp" class="form-control" placeholder="22997..."></div>
+<div class="col-md-4"><label class="form-label">Email</label><input type="email" id="repEmail" class="form-control" placeholder="gerant@entreprise.bj"></div>
+</div>
+</div>
+</div>
+
+<!-- 7. Besoin et attestation -->
+<div class="card-gobex">
+<div class="card-header-gobex accent"><i class="bi bi-file-text"></i> 7. Besoin et attestation sur l'honneur</div>
+<div class="card-body-gobex">
+<div class="row g-3">
+<div class="col-12"><label class="form-label">Description du besoin (détaillé)</label><textarea id="besoinDesc" class="form-control" rows="4" placeholder="Ex: Contrôle fiscal DGI en cours, besoin assistance comptable mensuelle, création logiciel de facturation avec IFU, business plan pour BOA 10M..."></textarea></div>
+<div class="col-12"><label class="form-label">Pièces communiquées ou à fournir</label><textarea id="besoinPieces" class="form-control" rows="3" placeholder="Ex: RCCM, IFU, relevés bancaires 6 mois, contrats, factures, CNI gérant, statuts..."></textarea></div>
+<div class="col-12">
+<div class="form-check p-3 border rounded-3 bg-light">
+<input class="form-check-input" type="checkbox" id="attestationCheck">
+<label class="form-check-label small fw-bold" for="attestationCheck">
+Je soussigné(e), atteste sur l'honneur l'exactitude des informations fournies et autorise GOBEX à les utiliser pour l'étude et l'exécution de la mission. Je m'engage à signaler tout changement.
+</label>
+</div>
+</div>
+<div class="col-12">
+<label class="form-label">Notes internes CRM (non imprimé - historique, alertes, préférences)</label>
+<textarea id="notesInternes" class="form-control" rows="2" placeholder="Ex: Client recommandé par HERALD, bon payeur, urgent, à relancer J+3..."></textarea>
+</div>
+</div>
+</div>
+</div>
+
+<div class="d-flex gap-2 mb-4">
+<button type="button" class="btn btn-dark-gobex" onclick="saveToCRM()"><i class="bi bi-save me-2"></i>Enregistrer au CRM</button>
+<button type="button" class="btn btn-main" onclick="updatePreview()"><i class="bi bi-eye me-2"></i>Actualiser aperçu</button>
+<button type="button" class="btn btn-outline-dark rounded-pill" onclick="window.print()"><i class="bi bi-printer me-2"></i>Imprimer / PDF</button>
+</div>
+
+</form>
+</div>
+
+<!-- PREVIEW COL -->
+<div class="col-lg-5">
+<div class="preview-panel" id="printArea">
+<div class="preview-header no-print">
+<span><i class="bi bi-file-earmark-pdf me-2"></i>Aperçu avant impression PDF</span>
+<span class="badge bg-warning text-dark" id="previewType">Particulier</span>
+</div>
+<div class="preview-body" id="previewBody">
+<!-- Dynamic preview will be injected here -->
+<div class="text-center py-5 text-muted">
+<i class="bi bi-file-earmark-text" style="font-size:48px;opacity:0.2"></i>
+<p class="mt-3">Remplissez le formulaire pour voir l'aperçu live de la fiche client imprimable</p>
+</div>
+</div>
+<div class="p-3 border-top bg-light d-flex gap-2 no-print">
+<button class="btn btn-main w-100" onclick="window.print()"><i class="bi bi-download me-2"></i>Télécharger / Imprimer en PDF</button>
+<button class="btn btn-outline-dark rounded-pill" onclick="updatePreview()"><i class="bi bi-arrow-clockwise"></i></button>
+</div>
+</div>
+
+<div class="card-gobex mt-3 no-print">
+<div class="card-body-gobex small">
+<h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-info-circle me-2 text-warning"></i>Comment imprimer en PDF ?</h6>
+<ol class="mb-0 ps-3">
+<li>Cliquez sur <strong>Imprimer / PDF</strong></li>
+<li>Dans la fenêtre d'impression, choisissez <strong>Enregistrer au format PDF</strong></li>
+<li>Les zones de signature et cachet restent vierges pour signature manuscrite</li>
+<li>Pour les entreprises : signature + cachet obligatoire</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+if(localStorage.getItem('gobex_admin_auth')!=='true'){ window.location.href='index.html'; }
+
+// Init date and ref
+document.getElementById('dateFiche').valueAsDate = new Date();
+function generateRef(){
+  const count = JSON.parse(localStorage.getItem('gobex_crm_clients')||'[]').length + 1;
+  const year = new Date().getFullYear();
+  const ref = `GOBEX-${year}-${String(count).padStart(3,'0')}`;
+  document.getElementById('refInterne').value = ref;
+  return ref;
+}
+generateRef();
+
+// Type client toggle
+document.querySelectorAll('[data-type]').forEach(el=>{
+  el.addEventListener('click', function(){
+    document.querySelectorAll('[data-type]').forEach(e=>e.classList.remove('active'));
+    this.classList.add('active');
+    this.querySelector('input').checked = true;
+    toggleBlocks(this.dataset.type);
+    updatePreview();
+  });
+});
+function toggleBlocks(type){
+  const blockPart = document.getElementById('blockParticulier');
+  const blockEnt = document.getElementById('blockEntreprise');
+  const blockSiege = document.getElementById('blockSiege');
+  if(type==='Particulier'){
+    blockPart.classList.add('show');
+    blockEnt.classList.remove('show');
+    blockSiege.classList.remove('show');
+  }else if(type==='Entreprise individuelle'){
+    blockPart.classList.add('show');
+    blockEnt.classList.add('show');
+    blockSiege.classList.add('show');
+  }else{ // Personne morale
+    blockPart.classList.remove('show');
+    blockEnt.classList.add('show');
+    blockSiege.classList.add('show');
+  }
+  document.getElementById('previewType').textContent = type;
+}
+
+// Services toggle
+document.querySelectorAll('[data-service]').forEach(el=>{
+  el.addEventListener('click', function(){
+    this.classList.toggle('active');
+    const cb = this.querySelector('input');
+    cb.checked = !cb.checked;
+    if(this.dataset.service==='Autres'){
+      document.getElementById('serviceAutreDetail').style.display = cb.checked ? 'block' : 'none';
+    }
+    updatePreview();
+  });
+});
+
+// Live update on input
+document.querySelectorAll('input, textarea, select').forEach(el=>{
+  el.addEventListener('input', ()=>{ clearTimeout(window.previewTimeout); window.previewTimeout = setTimeout(updatePreview, 500); });
+  el.addEventListener('change', updatePreview);
+});
+
+function getFormData(){
+  const typeClient = document.querySelector('input[name="typeClient"]:checked')?.value || 'Particulier';
+  const services = Array.from(document.querySelectorAll('[data-service].active')).map(e=>e.dataset.service);
+  const autreDetail = document.getElementById('serviceAutreDetail').value;
+  if(autreDetail && services.includes('Autres')) services[services.indexOf('Autres')] = `Autres: ${autreDetail}`;
+  return {
+    ref: document.getElementById('refInterne').value,
+    date: document.getElementById('dateFiche').value,
+    typeClient,
+    crmStatus: document.getElementById('crmStatus').value,
+    crmSource: document.getElementById('crmSource').value,
+    regimeFiscal: document.getElementById('regimeFiscal').value,
+    services,
+    // Particulier
+    partNom: document.getElementById('partNom').value,
+    partProfession: document.getElementById('partProfession').value,
+    partTel: document.getElementById('partTel').value,
+    partWhatsapp: document.getElementById('partWhatsapp').value,
+    partEmail: document.getElementById('partEmail').value,
+    partAdresse: document.getElementById('partAdresse').value,
+    partPieceId: document.getElementById('partPieceId').value,
+    partCnss: document.getElementById('partCnss').value,
+    // Entreprise
+    entDenomination: document.getElementById('entDenomination').value,
+    entForme: document.getElementById('entForme').value,
+    entRccm: document.getElementById('entRccm').value,
+    entIfu: document.getElementById('entIfu').value,
+    entCnss: document.getElementById('entCnss').value,
+    entActivite: document.getElementById('entActivite').value,
+    entCa: document.getElementById('entCa').value,
+    entEmployes: document.getElementById('entEmployes').value,
+    // Siege
+    siegeAdresse: document.getElementById('siegeAdresse').value,
+    siegeBp: document.getElementById('siegeBp').value,
+    siegeTel: document.getElementById('siegeTel').value,
+    siegeEmail: document.getElementById('siegeEmail').value,
+    // Representant
+    repNom: document.getElementById('repNom').value,
+    repQualite: document.getElementById('repQualite').value,
+    repTel: document.getElementById('repTel').value,
+    repWhatsapp: document.getElementById('repWhatsapp').value,
+    repEmail: document.getElementById('repEmail').value,
+    // Besoin
+    besoinDesc: document.getElementById('besoinDesc').value,
+    besoinPieces: document.getElementById('besoinPieces').value,
+    attestation: document.getElementById('attestationCheck').checked,
+    notesInternes: document.getElementById('notesInternes').value
+  };
+}
+
+function updatePreview(){
+  const d = getFormData();
+  const preview = document.getElementById('previewBody');
+  const dateFormatted = d.date ? new Date(d.date).toLocaleDateString('fr-FR') : new Date().toLocaleDateString('fr-FR');
+  
+  let html = `
+  <div class="text-center mb-3">
+    <div style="font-family:Exo;font-weight:800;font-size:26px;color:#0A2F5E;letter-spacing:-0.5px;">GOBEX</div>
+    <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#6f8ba4;font-weight:700;">Godwin Business Expertise</div>
+    <div style="font-size:10px;color:#6f8ba4;margin-top:6px;">Carrefour 02 Manguiers, Rue de Tankpê, Abomey-Calavi, Bénin<br>RCCM N°RB/ABC/15A3265 · IFU 1201502844807 · +229 97 739 046 · godwinexpertise@gmail.com</div>
+    <div style="margin-top:12px;padding:8px;background:#0A2F5E;color:#fff;border-radius:8px;font-family:Exo;font-weight:700;letter-spacing:1px;">FICHE D'ENREGISTREMENT CLIENT</div>
+  </div>
+
+  <table class="preview-table">
+    <tr><td>Type client</td><td><strong>${d.typeClient}</strong> • Statut CRM: ${d.crmStatus} • Régime: ${d.regimeFiscal}</td></tr>
+    <tr><td>Date / Réf</td><td>${dateFormatted} • ${d.ref} • Source: ${d.crmSource}</td></tr>
+    <tr><td>Services demandés</td><td>${d.services.length? d.services.join(', ') : '<span class="text-muted">—</span>'}</td></tr>
+  </table>
+  `;
+
+  if(d.typeClient==='Particulier' || d.typeClient==='Entreprise individuelle'){
+    html += `
+    <h5><i class="bi bi-person me-2"></i>Coordonnées du particulier</h5>
+    <table class="preview-table">
+      <tr><td>Nom et prénoms</td><td><strong>${d.partNom || '—'}</strong> ${d.partProfession? `• ${d.partProfession}`:''}</td></tr>
+      <tr><td>Téléphone / WhatsApp</td><td>${d.partTel || '—'} ${d.partWhatsapp? `• WhatsApp: ${d.partWhatsapp}`:''}</td></tr>
+      <tr><td>Email</td><td>${d.partEmail || '—'}</td></tr>
+      <tr><td>Adresse complète</td><td>${d.partAdresse || '—'}</td></tr>
+      <tr><td>Pièce d'identité / CNSS</td><td>${d.partPieceId || '—'} ${d.partCnss? `• CNSS: ${d.partCnss}`:''}</td></tr>
+    </table>
+    `;
+  }
+
+  if(d.typeClient!=='Particulier'){
+    html += `
+    <h5><i class="bi bi-building me-2"></i>Coordonnées de l'entreprise</h5>
+    <table class="preview-table">
+      <tr><td>Dénomination</td><td><strong>${d.entDenomination || '—'}</strong> • Forme: ${d.entForme}</td></tr>
+      <tr><td>RCCM / IFU</td><td>RCCM: ${d.entRccm || '—'} • IFU: ${d.entIfu || '—'} • CNSS: ${d.entCnss || '—'}</td></tr>
+      <tr><td>Activité principale</td><td>${d.entActivite || '—'}</td></tr>
+      <tr><td>CA Annuel / Employés</td><td>${d.entCa? Number(d.entCa).toLocaleString()+' FCFA' : '—'} • ${d.entEmployes? d.entEmployes+' employés' : '—'}</td></tr>
+    </table>
+
+    <h5><i class="bi bi-geo-alt me-2"></i>Siège social</h5>
+    <table class="preview-table">
+      <tr><td>Adresse siège</td><td>${d.siegeAdresse || '—'}</td></tr>
+      <tr><td>BP / Téléphone / Email</td><td>${d.siegeBp || '—'} • ${d.siegeTel || '—'} • ${d.siegeEmail || '—'}</td></tr>
+    </table>
+    `;
+  }
+
+  html += `
+  <h5><i class="bi bi-person-badge me-2"></i>Représentant légal / Gérant</h5>
+  <table class="preview-table">
+    <tr><td>Nom et prénoms / Qualité</td><td><strong>${d.repNom || '—'}</strong> • ${d.repQualite || '—'}</td></tr>
+    <tr><td>Téléphone / WhatsApp / Email</td><td>${d.repTel || '—'} ${d.repWhatsapp? `• WA: ${d.repWhatsapp}`:''} • ${d.repEmail || '—'}</td></tr>
+  </table>
+
+  <h5><i class="bi bi-file-text me-2"></i>Besoin et pièces</h5>
+  <table class="preview-table">
+    <tr><td>Description du besoin</td><td>${d.besoinDesc ? d.besoinDesc.replace(/\n/g,'<br>') : '<span class="text-muted">—</span>'}</td></tr>
+    <tr><td>Pièces communiquées</td><td>${d.besoinPieces ? d.besoinPieces.replace(/\n/g,'<br>') : '<span class="text-muted">—</span>'}</td></tr>
+    <tr><td>Attestation sur l'honneur</td><td>${d.attestation? '<span style="color:green;font-weight:700;">✓ Oui, attesté</span>' : '<span style="color:#e11d48;">✗ Non cochée</span>'} – Je soussigné(e), atteste sur l'honneur l'exactitude des informations fournies et autorise GOBEX à les utiliser pour l'étude et l'exécution de la mission.</td></tr>
+  </table>
+
+  <div style="margin-top:16px;padding:10px;background:#fff3d0;border:1px solid #FFB81C;border-radius:8px;font-size:11px;">
+    <strong>Notes internes CRM (non contractuel, non imprimé sur version client si vide) :</strong> ${d.notesInternes || '—'}
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-6">
+      <div class="signature-box">
+        <div>
+          <strong style="font-size:12px;">Signature du client</strong><br>
+          <small class="text-muted">${d.typeClient==='Particulier' ? 'Particulier' : d.typeClient==='Entreprise individuelle' ? 'Entrepreneur individuel' : 'Représentant légal'}</small><br>
+          <small class="text-muted">Précédée de "Lu et approuvé"</small>
+        </div>
+        <div class="signature-line">Signature + Date</div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="signature-box">
+        <div>
+          <strong style="font-size:12px;">${d.typeClient==='Particulier' ? 'Pour GOBEX' : 'Cachet de l\'entreprise'}</strong><br>
+          <small class="text-muted">${d.typeClient==='Particulier' ? 'Signature et cachet GOBEX' : 'Obligatoire pour entreprises'}</small><br>
+          <small class="text-muted">${d.typeClient!=='Particulier' ? 'Signature + Cachet' : ''}</small>
+        </div>
+        <div class="signature-line">${d.typeClient==='Particulier' ? 'GOBEX - Signature' : 'Cachet + Signature'}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4" style="font-size:10px;color:#6f8ba4;border-top:1px solid #e2e8f0;padding-top:10px;">
+    GOBEX – Godwin Business Expertise • Carrefour 02 Manguiers, Rue de Tankpê, Abomey-Calavi, Bénin<br>
+    RB/ABC/15A3265 • IFU 1201502844807 • +229 97 739 046 • Document généré le ${new Date().toLocaleString('fr-FR')} • ${d.ref}
+  </div>
+  `;
+
+  preview.innerHTML = html;
+}
+
+function saveToCRM(){
+  const d = getFormData();
+  if(!d.attestation){ if(!confirm("Attestation sur l'honneur non cochée. Continuer quand même ?")) return; }
+  // Validation minimale
+  if(d.typeClient==='Particulier' && !d.partNom){ alert("Nom et prénoms du particulier obligatoire"); return; }
+  if(d.typeClient!=='Particulier' && !d.entDenomination){ alert("Dénomination entreprise obligatoire"); return; }
+  if(!d.repNom){ alert("Nom du représentant légal obligatoire"); return; }
+
+  // Construire objet compatible avec ancien CRM
+  const clients = JSON.parse(localStorage.getItem('gobex_crm_clients')||'[]');
+  const newClient = {
+    // Nouveau format exhaustif
+    ...d,
+    // Compatibilité ancien CRM
+    name: d.typeClient==='Particulier' ? d.partNom : d.entDenomination,
+    type: d.entForme || (d.typeClient==='Particulier' ? 'Particulier' : 'ETS'),
+    regime: d.regimeFiscal,
+    ifu: d.entIfu || '',
+    rccm: d.entRccm || '',
+    cnss: d.entCnss || d.partCnss || '',
+    contact: d.repNom || d.partNom,
+    phone: d.partTel || d.siegeTel || d.repTel,
+    whatsapp: d.partWhatsapp || d.repWhatsapp || d.siegeTel,
+    email: d.partEmail || d.siegeEmail || d.repEmail,
+    address: d.siegeAdresse || d.partAdresse,
+    ca: parseInt(d.entCa)||0,
+    status: d.crmStatus,
+    source: d.crmSource,
+    notes: `Services: ${d.services.join(', ')} | Besoin: ${d.besoinDesc} | Pièces: ${d.besoinPieces} | Interne: ${d.notesInternes}`,
+    dateCreation: d.date,
+    ref: d.ref
+  };
+  clients.push(newClient);
+  localStorage.setItem('gobex_crm_clients', JSON.stringify(clients));
+  alert(`Client ${newClient.name} enregistré avec succès ! Réf: ${d.ref}`);
+  // Option: rediriger vers liste
+  if(confirm("Aller à la liste des clients ?")) window.location.href='crm-clients.html';
+  else generateRef();
+}
+
+function resetForm(){
+  if(confirm("Réinitialiser tout le formulaire ?")){
+    document.getElementById('ficheClientForm').reset();
+    document.querySelectorAll('[data-service]').forEach(e=>e.classList.remove('active'));
+    document.querySelectorAll('[data-type]').forEach(e=>e.classList.remove('active'));
+    document.querySelector('[data-type="Particulier"]').classList.add('active');
+    document.getElementById('dateFiche').valueAsDate = new Date();
+    generateRef();
+    toggleBlocks('Particulier');
+    document.getElementById('serviceAutreDetail').style.display='none';
+    updatePreview();
+  }
+}
+function logout(){localStorage.removeItem('gobex_admin_auth');window.location.href='index.html';}
+
+function fillFormFromData(c){
+  if(!c) return;
+  // Type client
+  document.querySelectorAll('[data-type]').forEach(e=>e.classList.remove('active'));
+  const typeEl = document.querySelector(`[data-type="${c.typeClient||'Particulier'}"]`);
+  if(typeEl){ typeEl.classList.add('active'); typeEl.querySelector('input').checked=true; }
+  toggleBlocks(c.typeClient||'Particulier');
+  document.getElementById('refInterne').value = c.ref||generateRef();
+  document.getElementById('dateFiche').value = c.date|| new Date().toISOString().split('T')[0];
+  document.getElementById('crmStatus').value = c.status||c.crmStatus||'Prospect';
+  document.getElementById('crmSource').value = c.source||c.crmSource||'Bouche à oreille';
+  document.getElementById('regimeFiscal').value = c.regime||c.regimeFiscal||'REEL';
+  // Services
+  document.querySelectorAll('[data-service]').forEach(e=>{
+    const svc = e.dataset.service;
+    const has = (c.services && (Array.isArray(c.services)? c.services.includes(svc) : c.services.includes(svc))) || (c.notes && c.notes.includes(svc));
+    if(has){ e.classList.add('active'); e.querySelector('input').checked=true; }
+  });
+  // Particulier
+  document.getElementById('partNom').value = c.partNom||c.name||'';
+  document.getElementById('partProfession').value = c.partProfession||'';
+  document.getElementById('partTel').value = c.partTel||c.phone||'';
+  document.getElementById('partWhatsapp').value = c.partWhatsapp||c.whatsapp||'';
+  document.getElementById('partEmail').value = c.partEmail||c.email||'';
+  document.getElementById('partAdresse').value = c.partAdresse||c.address||'';
+  document.getElementById('partPieceId').value = c.partPieceId||'';
+  document.getElementById('partCnss').value = c.partCnss||c.cnss||'';
+  // Entreprise
+  document.getElementById('entDenomination').value = c.entDenomination||c.name||'';
+  document.getElementById('entForme').value = c.entForme||c.type||'ETS';
+  document.getElementById('entRccm').value = c.entRccm||c.rccm||'';
+  document.getElementById('entIfu').value = c.entIfu||c.ifu||'';
+  document.getElementById('entCnss').value = c.entCnss||c.cnss||'';
+  document.getElementById('entActivite').value = c.entActivite||'';
+  document.getElementById('entCa').value = c.entCa||c.ca||'';
+  document.getElementById('entEmployes').value = c.entEmployes||'';
+  // Siege
+  document.getElementById('siegeAdresse').value = c.siegeAdresse||c.address||'';
+  document.getElementById('siegeBp').value = c.siegeBp||'';
+  document.getElementById('siegeTel').value = c.siegeTel||c.phone||'';
+  document.getElementById('siegeEmail').value = c.siegeEmail||c.email||'';
+  // Rep
+  document.getElementById('repNom').value = c.repNom||c.contact||'';
+  document.getElementById('repQualite').value = c.repQualite||'';
+  document.getElementById('repTel').value = c.repTel||'';
+  document.getElementById('repWhatsapp').value = c.repWhatsapp||c.whatsapp||'';
+  document.getElementById('repEmail').value = c.repEmail||'';
+  // Besoin
+  document.getElementById('besoinDesc').value = c.besoinDesc||c.notes||'';
+  document.getElementById('besoinPieces').value = c.besoinPieces||'';
+  document.getElementById('attestationCheck').checked = c.attestation||false;
+  document.getElementById('notesInternes').value = c.notesInternes||'';
+  updatePreview();
+}
+
+// Check edit mode from URL or localStorage
+(function(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const editIdx = urlParams.get('edit');
+  let editData = null;
+  if(editIdx!==null){
+    const stored = localStorage.getItem('gobex_edit_client_data');
+    if(stored){ try{ editData = JSON.parse(stored); }catch(e){} }
+    // Also try from main list
+    if(!editData){
+      const all = JSON.parse(localStorage.getItem('gobex_crm_clients')||'[]');
+      editData = all[parseInt(editIdx)];
+    }
+    if(editData){
+      window.editIndex = parseInt(editIdx);
+      // Change title
+      document.querySelector('.topbar h5').innerHTML = '<i class="bi bi-pencil-square me-2 text-warning"></i>Modifier Fiche Client - '+ (editData.name||'') + ' <span class="badge bg-primary ms-2">'+(editData.ref||'')+'</span>';
+      fillFormFromData(editData);
+    }
+  }
+})();
+
+// Override saveToCRM to handle edit
+const originalSaveToCRM = saveToCRM;
+saveToCRM = function(){
+  const d = getFormData();
+  if(!d.attestation){ if(!confirm("Attestation sur l'honneur non cochée. Continuer quand même ?")) return; }
+  if(d.typeClient==='Particulier' && !d.partNom){ alert("Nom et prénoms du particulier obligatoire"); return; }
+  if(d.typeClient!=='Particulier' && !d.entDenomination){ alert("Dénomination entreprise obligatoire"); return; }
+  if(!d.repNom){ alert("Nom du représentant légal obligatoire"); return; }
+
+  const clients = JSON.parse(localStorage.getItem('gobex_crm_clients')||'[]');
+  const newClient = {
+    ...d,
+    name: d.typeClient==='Particulier' ? d.partNom : d.entDenomination,
+    type: d.entForme || (d.typeClient==='Particulier' ? 'Particulier' : 'ETS'),
+    regime: d.regimeFiscal,
+    ifu: d.entIfu || '',
+    rccm: d.entRccm || '',
+    cnss: d.entCnss || d.partCnss || '',
+    contact: d.repNom || d.partNom,
+    phone: d.partTel || d.siegeTel || d.repTel,
+    whatsapp: d.partWhatsapp || d.repWhatsapp || d.siegeTel,
+    email: d.partEmail || d.siegeEmail || d.repEmail,
+    address: d.siegeAdresse || d.partAdresse,
+    ca: parseInt(d.entCa)||0,
+    status: d.crmStatus,
+    source: d.crmSource,
+    notes: `Services: ${d.services.join(', ')} | Besoin: ${d.besoinDesc} | Pièces: ${d.besoinPieces} | Interne: ${d.notesInternes}`,
+    dateCreation: d.date,
+    ref: d.ref
+  };
+
+  if(window.editIndex!==undefined && window.editIndex!==null){
+    clients[window.editIndex] = newClient;
+    localStorage.setItem('gobex_crm_clients', JSON.stringify(clients));
+    alert(`Client ${newClient.name} modifié avec succès ! Réf: ${d.ref}`);
+    localStorage.removeItem('gobex_edit_client_data');
+    localStorage.removeItem('gobex_edit_client_index');
+    window.location.href='crm-clients.html';
+  } else {
+    clients.push(newClient);
+    localStorage.setItem('gobex_crm_clients', JSON.stringify(clients));
+    alert(`Client ${newClient.name} enregistré avec succès ! Réf: ${d.ref}`);
+    if(confirm("Aller à la liste des clients ?")) window.location.href='crm-clients.html';
+    else generateRef();
+  }
+}
+
+// Initial preview
+toggleBlocks('Particulier');
+updatePreview();
+</script>
+</body>
+</html>

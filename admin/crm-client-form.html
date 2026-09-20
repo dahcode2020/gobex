@@ -423,13 +423,19 @@ function forceRegenerateRef(){
 // Génération initiale
 generateRef();
 
-// Type client toggle
+// Type client toggle - fix label double toggle
 document.querySelectorAll('[data-type]').forEach(el=>{
-  el.addEventListener('click', function(){
+  el.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
     document.querySelectorAll('[data-type]').forEach(e=>e.classList.remove('active'));
     this.classList.add('active');
-    this.querySelector('input').checked = true;
+    const radio = this.querySelector('input');
+    if(radio) radio.checked = true;
     toggleBlocks(this.dataset.type);
+    if(window.editIndex===undefined){
+      generateRef(true);
+    }
     updatePreview();
   });
 });
@@ -453,17 +459,32 @@ function toggleBlocks(type){
   document.getElementById('previewType').textContent = type;
 }
 
-// Services toggle
+// Services toggle - FIX: prevent label double toggle, ensure preview updates
 document.querySelectorAll('[data-service]').forEach(el=>{
-  el.addEventListener('click', function(){
-    this.classList.toggle('active');
+  el.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
     const cb = this.querySelector('input');
+    if(!cb) return;
     cb.checked = !cb.checked;
+    this.classList.toggle('active', cb.checked);
     if(this.dataset.service==='Autres'){
       document.getElementById('serviceAutreDetail').style.display = cb.checked ? 'block' : 'none';
     }
+    // Force preview update immediately
     updatePreview();
   });
+  // Also handle direct checkbox change (accessibility)
+  const cb = el.querySelector('input');
+  if(cb){
+    cb.addEventListener('change', function(){
+      el.classList.toggle('active', this.checked);
+      if(el.dataset.service==='Autres'){
+        document.getElementById('serviceAutreDetail').style.display = this.checked ? 'block' : 'none';
+      }
+      updatePreview();
+    });
+  }
 });
 
 // Live update on input + auto ref generation (sauf en mode édition où ref est préservée)

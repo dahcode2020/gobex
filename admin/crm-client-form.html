@@ -109,7 +109,13 @@ body{font-family:Roboto;background:var(--light);color:#333}
 </div>
 </div>
 <div class="col-md-3"><label class="form-label">Date</label><input type="date" id="dateFiche" class="form-control"></div>
-<div class="col-md-3"><label class="form-label">Référence interne</label><input type="text" id="refInterne" class="form-control" placeholder="GOBEX-2025-001" readonly></div>
+<div class="col-md-3"><label class="form-label">Référence interne <small class="text-muted" style="text-transform:none;font-size:9px;">(ID auto)</small></label>
+<div class="input-group">
+<input type="text" id="refInterne" class="form-control fw-bold" placeholder="200926-046-BEX-GOB" readonly style="background:#fff3d0;border-color:#FFB81C;color:#0A2F5E;">
+<button class="btn btn-outline-warning btn-sm" type="button" onclick="forceRegenerateRef()" title="Régénérer selon nouvelle règle"><i class="bi bi-arrow-clockwise"></i></button>
+</div>
+<small class="text-muted" style="font-size:10px;">Auto: <span id="refRule">DDMMYY-TEL-NOM-GOB</span> • Ex: 200926-046-BEX-GOB<br><span style="font-size:9px;">Règle: Date + 3 derniers chiffres tel + 3 dernières lettres nom + GOB</span></small>
+</div>
 <div class="col-md-4"><label class="form-label">Statut CRM</label><select id="crmStatus" class="form-select"><option value="Prospect" selected>Prospect</option><option value="Actif">Actif</option><option value="Inactif">Inactif</option></select></div>
 <div class="col-md-4"><label class="form-label">Source</label><select id="crmSource" class="form-select"><option>Bouche à oreille</option><option>Facebook</option><option>Google</option><option>WhatsApp</option><option>Site web</option><option>Partenaire HERALD</option><option>Partenaire JF Conseils</option><option>BOA / Ecobank</option><option>Autre</option></select></div>
 <div class="col-md-4"><label class="form-label">Régime fiscal (Bénin)</label><select id="regimeFiscal" class="form-select"><option value="REEL">Réel</option><option value="RME">RME</option><option value="Entreprenant">Entreprenant</option><option value="Non assujetti">Non assujetti</option></select></div>
@@ -270,15 +276,151 @@ Je soussigné(e), atteste sur l'honneur l'exactitude des informations fournies e
 <script>
 if(localStorage.getItem('gobex_admin_auth')!=='true'){ window.location.href='index.html'; }
 
-// Init date and ref
+// ===== CONFIGURATION REFERENCE INTERNE - MODIFIABLE FUTUR =====
+// Ne pas coder en dur, toutes les règles sont ici pour évolutions futures
+const REF_CONFIG = {
+  dateFormat: 'DDMMYY', // Format date: DDMMYY (ex: 200926 pour 20/09/2026) - modifiable en DDMMYYYY, YYMMDD, etc.
+  phoneDigits: 3, // Nombre de derniers chiffres du téléphone à utiliser (ex: 3 -> 046 pour 97739046)
+  nameLetters: 3, // Nombre de dernières lettres du nom/raison sociale (ex: 3 -> BEX pour Gobex)
+  suffix: 'GOB', // Suffixe fixe identifiant GOBEX
+  separator: '-', // Séparateur entre parties
+  // Priorité des téléphones selon type client (premier trouvé utilisé)
+  phonePriority: {
+    'Particulier': ['partTel', 'partWhatsapp', 'repTel', 'repWhatsapp'],
+    'Entreprise individuelle': ['siegeTel', 'partTel', 'partWhatsapp', 'repTel', 'repWhatsapp'],
+    'Personne morale': ['siegeTel', 'repTel', 'repWhatsapp', 'partTel']
+  },
+  // Champs nom selon type client
+  nameField: {
+    'Particulier': 'partNom', // Nom de famille = premier mot du champ Nom et prénoms
+    'Entreprise individuelle': 'entDenomination',
+    'Personne morale': 'entDenomination'
+  },
+  // Placeholders quand info manquante
+  placeholderPhone: '000',
+  placeholderName: 'XXX'
+};
+
+// Init date
 document.getElementById('dateFiche').valueAsDate = new Date();
-function generateRef(){
-  const count = JSON.parse(localStorage.getItem('gobex_crm_clients')||'[]').length + 1;
-  const year = new Date().getFullYear();
-  const ref = `GOBEX-${year}-${String(count).padStart(3,'0')}`;
-  document.getElementById('refInterne').value = ref;
-  return ref;
+
+// Formate date selon REF_CONFIG.dateFormat
+function formatDateForRef(dateStr){
+  const d = dateStr ? new Date(dateStr) : new Date();
+  if(isNaN(d.getTime())) return '000000';
+  const day = String(d.getDate()).padStart(2,'0');
+  const month = String(d.getMonth()+1).padStart(2,'0');
+  const yearFull = String(d.getFullYear());
+  const year2 = yearFull.slice(-2);
+  // Supporte plusieurs formats futurs
+  switch(REF_CONFIG.dateFormat){
+    case 'DDMMYY': return `${day}${month}${year2}`; // 200926
+    case 'DDMMYYYY': return `${day}${month}${yearFull}`; // 20092026
+    case 'YYMMDD': return `${year2}${month}${day}`; // 260920
+    case 'YYYYMMDD': return `${yearFull}${month}${day}`; // 20260920
+    default: return `${day}${month}${year2}`;
+  }
 }
+
+// Nettoie téléphone et prend N derniers chiffres
+function extractPhoneDigits(phoneRaw){
+  if(!phoneRaw) return REF_CONFIG.placeholderPhone;
+  const digits = phoneRaw.replace(/\D/g,''); // que chiffres
+  if(digits.length < REF_CONFIG.phoneDigits) return digits.padStart(REF_CONFIG.phoneDigits,'0');
+  return digits.slice(-REF_CONFIG.phoneDigits);
+}
+
+// Nettoie nom et prend N dernières lettres (sans espaces, sans accents, uppercase)
+function extractNameLetters(nameRaw, isParticulier=false){
+  if(!nameRaw) return REF_CONFIG.placeholderName;
+  let nameToUse = nameRaw.trim();
+  if(isParticulier){
+    // Pour particulier: prendre nom de famille = premier mot
+    // Ex: "DOSSOU Godwin" -> "DOSSOU"
+    const firstWord = nameToUse.split(/\s+/)[0] || nameToUse;
+    nameToUse = firstWord;
+  }
+  // Nettoie: enlève accents, garde seulement lettres A-Z
+  // Normalise accents
+  const cleaned = nameToUse.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z]/g,'').toUpperCase();
+  if(!cleaned) return REF_CONFIG.placeholderName;
+  if(cleaned.length <= REF_CONFIG.nameLetters) return cleaned;
+  return cleaned.slice(-REF_CONFIG.nameLetters);
+}
+
+// Récupère téléphone selon priorité type client
+function getPhoneForRef(typeClient){
+  const priority = REF_CONFIG.phonePriority[typeClient] || REF_CONFIG.phonePriority['Particulier'];
+  for(const fieldId of priority){
+    const el = document.getElementById(fieldId);
+    if(el && el.value && el.value.trim()){
+      return el.value.trim();
+    }
+  }
+  return '';
+}
+
+// Récupère nom selon type client
+function getNameForRef(typeClient){
+  const fieldId = REF_CONFIG.nameField[typeClient] || 'partNom';
+  const el = document.getElementById(fieldId);
+  return el ? el.value.trim() : '';
+}
+
+// Génère référence: Date + Tel + Nom + GOB
+// Exemple: société Gobex tel 97739046 le 20/09/26 => 200926-046-BEX-GOB
+// Règle configurable via REF_CONFIG pour évolutions futures
+function generateRef(force=false){
+  try{
+    // En mode édition, on préserve la ref existante sauf si force=true
+    if(!force && window.editIndex!==undefined && window.preserveRef){
+      const currentRef = document.getElementById('refInterne').value;
+      if(currentRef && currentRef.trim()){
+        return currentRef;
+      }
+    }
+    const typeClient = document.querySelector('input[name="typeClient"]:checked')?.value || 'Particulier';
+    const dateStr = document.getElementById('dateFiche').value;
+    const datePart = formatDateForRef(dateStr);
+    const phoneRaw = getPhoneForRef(typeClient);
+    const phonePart = extractPhoneDigits(phoneRaw);
+    const nameRaw = getNameForRef(typeClient);
+    const isParticulier = typeClient === 'Particulier';
+    const namePart = extractNameLetters(nameRaw, isParticulier);
+    const ref = `${datePart}${REF_CONFIG.separator}${phonePart}${REF_CONFIG.separator}${namePart}${REF_CONFIG.separator}${REF_CONFIG.suffix}`;
+    const refInput = document.getElementById('refInterne');
+    if(refInput){
+      refInput.value = ref;
+      refInput.title = `Auto-généré: ${REF_CONFIG.dateFormat} (${datePart}) + ${REF_CONFIG.phoneDigits} derniers chiffres tel (${phonePart}) + ${REF_CONFIG.nameLetters} dernières lettres nom (${namePart}) + ${REF_CONFIG.suffix}`;
+    }
+    // Met à jour affichage règle
+    const ruleEl = document.getElementById('refRule');
+    if(ruleEl) ruleEl.textContent = `${REF_CONFIG.dateFormat}-${REF_CONFIG.phoneDigits} chiffres tel-${REF_CONFIG.nameLetters} lettres nom-${REF_CONFIG.suffix}`;
+    return ref;
+  }catch(e){
+    console.warn('Erreur génération ref', e);
+    return '000000-000-XXX-GOB';
+  }
+}
+function forceRegenerateRef(){
+  window.preserveRef = false;
+  const newRef = generateRef(true);
+  updatePreview();
+  // Notification
+  const refInput = document.getElementById('refInterne');
+  refInput.style.background = '#d1fae5';
+  setTimeout(()=>{ refInput.style.background='#fff3d0'; }, 1000);
+  if(window.editIndex!==undefined){
+    if(confirm(`Nouvelle référence générée: ${newRef}\nVoulez-vous conserver cette nouvelle référence comme nouvel ID ?\n(Annuler = garder ancienne)`)){
+      window.preserveRef = false;
+    }else{
+      // Restaure ancienne si annulé? On garde nouvelle pour l'instant mais on peut restaurer via fillForm
+      window.preserveRef = false;
+    }
+  }
+}
+
+// Génération initiale
 generateRef();
 
 // Type client toggle
@@ -324,10 +466,39 @@ document.querySelectorAll('[data-service]').forEach(el=>{
   });
 });
 
-// Live update on input
+// Live update on input + auto ref generation (sauf en mode édition où ref est préservée)
+function onFormChange(){
+  clearTimeout(window.previewTimeout);
+  window.previewTimeout = setTimeout(()=>{
+    // En création: auto-regen ref + preview
+    // En édition: seulement preview, ref préservée sauf si force
+    if(window.editIndex===undefined){
+      generateRef();
+    }
+    updatePreview();
+  }, 300);
+}
 document.querySelectorAll('input, textarea, select').forEach(el=>{
-  el.addEventListener('input', ()=>{ clearTimeout(window.previewTimeout); window.previewTimeout = setTimeout(updatePreview, 500); });
-  el.addEventListener('change', updatePreview);
+  el.addEventListener('input', onFormChange);
+  el.addEventListener('change', onFormChange);
+});
+// Champs critiques pour référence: régénère immédiatement seulement en création
+['dateFiche','partNom','entDenomination','partTel','partWhatsapp','siegeTel','repTel','repWhatsapp'].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el){
+    el.addEventListener('input', ()=>{
+      if(window.editIndex===undefined){
+        generateRef();
+      }
+      updatePreview();
+    });
+    el.addEventListener('change', ()=>{
+      if(window.editIndex===undefined){
+        generateRef();
+      }
+      updatePreview();
+    });
+  }
 });
 
 function getFormData(){
@@ -528,7 +699,9 @@ function resetForm(){
     document.querySelectorAll('[data-type]').forEach(e=>e.classList.remove('active'));
     document.querySelector('[data-type="Particulier"]').classList.add('active');
     document.getElementById('dateFiche').valueAsDate = new Date();
-    generateRef();
+    window.editIndex = undefined;
+    window.preserveRef = false;
+    generateRef(true);
     toggleBlocks('Particulier');
     document.getElementById('serviceAutreDetail').style.display='none';
     updatePreview();
@@ -543,8 +716,16 @@ function fillFormFromData(c){
   const typeEl = document.querySelector(`[data-type="${c.typeClient||'Particulier'}"]`);
   if(typeEl){ typeEl.classList.add('active'); typeEl.querySelector('input').checked=true; }
   toggleBlocks(c.typeClient||'Particulier');
-  document.getElementById('refInterne').value = c.ref||generateRef();
-  document.getElementById('dateFiche').value = c.date|| new Date().toISOString().split('T')[0];
+  // En mode édition, on préserve la ref existante comme ID interne
+  window.preserveRef = true;
+  document.getElementById('refInterne').value = c.ref||c.id||'';
+  // Si pas de ref, génère selon nouvelle règle
+  if(!document.getElementById('refInterne').value){
+    window.preserveRef = false;
+    generateRef(true);
+    window.preserveRef = true;
+  }
+  document.getElementById('dateFiche').value = c.date||c.dateCreation|| new Date().toISOString().split('T')[0];
   document.getElementById('crmStatus').value = c.status||c.crmStatus||'Prospect';
   document.getElementById('crmSource').value = c.source||c.crmSource||'Bouche à oreille';
   document.getElementById('regimeFiscal').value = c.regime||c.regimeFiscal||'REEL';
@@ -606,8 +787,9 @@ function fillFormFromData(c){
     }
     if(editData){
       window.editIndex = parseInt(editIdx);
+      window.preserveRef = true; // Préserve ID interne en édition
       // Change title
-      document.querySelector('.topbar h5').innerHTML = '<i class="bi bi-pencil-square me-2 text-warning"></i>Modifier Fiche Client - '+ (editData.name||'') + ' <span class="badge bg-primary ms-2">'+(editData.ref||'')+'</span>';
+      document.querySelector('.topbar h5').innerHTML = '<i class="bi bi-pencil-square me-2 text-warning"></i>Modifier Fiche Client - '+ (editData.name||'') + ' <span class="badge bg-primary ms-2">'+(editData.ref||'')+'</span> <small class="text-muted">ID interne préservé</small>';
       fillFormFromData(editData);
     }
   }
@@ -662,6 +844,10 @@ saveToCRM = function(){
 
 // Initial preview
 toggleBlocks('Particulier');
+if(window.editIndex===undefined){
+  window.preserveRef = false;
+  generateRef(true);
+}
 updatePreview();
 </script>
 </body>

@@ -250,7 +250,17 @@ function seedDossiers(){
   ];
   saveDossiers();
 }
-function saveDossiers(){ localStorage.setItem('gobex_exec_dossiers', JSON.stringify(dossiers)); renderAll(); updateKPI(); }
+function renderAll(){
+  try{ if(typeof renderRecentReception==='function') renderRecentReception(); }catch(e){ console.warn('renderRecentReception',e); }
+  try{ if(typeof renderOverview==='function' && document.getElementById('kanbanOverview')) renderOverview(); }catch(e){ console.warn('renderOverview',e); }
+  try{ if(typeof renderDossiers==='function' && document.getElementById('dossiersGrid')) renderDossiers(); }catch(e){ console.warn('renderDossiers',e); }
+  try{ if(typeof renderAffectation==='function' && document.getElementById('affectTable')) renderAffectation(); }catch(e){ console.warn('renderAffectation',e); }
+  try{ if(typeof renderWorkspaces==='function' && document.getElementById('workspaceDeptTabs')) renderWorkspaces(); }catch(e){ console.warn('renderWorkspaces',e); }
+  try{ if(typeof renderValidation==='function' && document.getElementById('validationList')) renderValidation(); }catch(e){ console.warn('renderValidation',e); }
+  try{ if(typeof renderSecretariat==='function' && document.getElementById('secDevis')) renderSecretariat(); }catch(e){ console.warn('renderSecretariat',e); }
+  try{ if(typeof updateKPI==='function') updateKPI(); }catch(e){ console.warn('updateKPI',e); }
+}
+function saveDossiers(){ localStorage.setItem('gobex_exec_dossiers', JSON.stringify(dossiers)); renderAll(); }
 
 function updateKPI(){
   document.getElementById('sbTotalDossiers').textContent=dossiers.length;

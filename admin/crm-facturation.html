@@ -1,25 +1,580 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Facturation - CRM GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb}body{font-family:Roboto;background:var(--light)}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px}.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{font-family:Exo;font-weight:800;font-size:24px;color:#fff}.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.7);text-decoration:none;border-left:3px solid transparent;font-size:14px}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}.main{margin-left:280px;padding:20px}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:20px}.stat-card{background:#fff;border-radius:16px;padding:18px;border:1px solid #eef2f6}.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:8px 18px;border:2px solid var(--accent);font-size:12px}@media(max-width:991px){.sidebar{transform:translateX(-100%)}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}</style></head><body>
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Facturation - CRM GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb}body{font-family:Roboto;background:var(--light)}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px;overflow-y:auto;z-index:100}.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{font-family:Exo;font-weight:800;font-size:24px;color:#fff}.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.7);text-decoration:none;border-left:3px solid transparent;font-size:14px;transition:.2s}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}.main{margin-left:280px;padding:20px}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:18px;border:1px solid #eef2f6}.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:8px 18px;border:2px solid var(--accent);font-size:12px;transition:.2s}.btn-main:hover{background:#e6a517;border-color:#e6a517;color:var(--primary)}.btn-dark-gobex{background:var(--primary);color:#fff;border-radius:50px;padding:8px 18px;font-weight:600;border:2px solid var(--primary);font-size:12px}.btn-dark-gobex:hover{background:#071f3e;color:#fff}.btn-primary-gobex{background:var(--primary);color:#fff;border-radius:50px;padding:8px 18px;font-weight:700;border:2px solid var(--primary);font-size:12px}.btn-primary-gobex:hover{background:#071f3e;color:#fff}.nav-pills .nav-link{border-radius:50px;font-size:13px;font-weight:600;color:#6b7280}.nav-pills .nav-link.active{background:var(--primary);color:#fff}.table-hover tbody tr:hover{background:#f8fafc}.line-row input{font-size:13px}.totals-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px}.badge-statut{font-size:10px;letter-spacing:0.5px;text-transform:uppercase;padding:5px 10px;border-radius:50px;font-weight:700}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}</style></head><body>
 <div class="sidebar" id="sidebar"><div class="sidebar-header"><div class="sidebar-logo">GOBEX CRM</div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);">Devis & Facturation</div></div>
-<a href="crm.html" class="menu-item"><i class="bi bi-grid-1x2"></i> Dashboard</a><a href="crm-clients.html" class="menu-item"><i class="bi bi-people"></i> Clients</a><a href="crm-facturation.html" class="menu-item active"><i class="bi bi-receipt"></i> Facturation</a><a href="crm-dossiers.html" class="menu-item"><i class="bi bi-folder2-open"></i> Dossiers</a><a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Voir site</a><a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a></div>
-<div class="main">
-<div class="topbar"><div><h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;">Devis & Facturation - Cabinet Bénin</h5><small class="text-muted">Devis, factures, avoirs, relances auto • Conforme SYSCOHADA + DGI</small></div><div class="d-flex gap-2"><button class="btn btn-light btn-sm d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button><button class="btn btn-main rounded-pill"><i class="bi bi-plus-lg me-1"></i> Nouveau devis</button><button class="btn btn-primary rounded-pill btn-sm"><i class="bi bi-plus-lg me-1"></i> Nouvelle facture</button></div></div>
+<a href="crm.html" class="menu-item"><i class="bi bi-grid-1x2"></i> Dashboard CRM</a>
+<a href="crm-clients.html" class="menu-item"><i class="bi bi-people"></i> Clients & Prospects</a>
+<a href="crm-client-form.html" class="menu-item" style="background:rgba(255,184,28,0.12);border-left-color:#FFB81C;color:#FFB81C;"><i class="bi bi-person-plus"></i> Nouvelle Fiche Client</a>
+<a href="crm-pipeline.html" class="menu-item"><i class="bi bi-kanban"></i> Pipeline</a>
+<a href="crm-dossiers.html" class="menu-item"><i class="bi bi-folder2-open"></i> Dossiers</a>
+<a href="crm-facturation.html" class="menu-item active"><i class="bi bi-receipt"></i> Devis & Facturation</a>
+<a href="crm-tasks.html" class="menu-item"><i class="bi bi-check2-square"></i> Tâches</a>
+<a href="crm-prevision.html" class="menu-item"><i class="bi bi-graph-up-arrow"></i> Prévisions</a>
+<a href="crm-automations.html" class="menu-item"><i class="bi bi-robot"></i> Automatisations</a>
+<a href="crm-calendrier.html" class="menu-item"><i class="bi bi-calendar3"></i> Calendrier</a>
+<a href="crm-documents.html" class="menu-item"><i class="bi bi-file-earmark-text"></i> Documents</a>
+<a href="crm-reporting.html" class="menu-item"><i class="bi bi-bar-chart"></i> Reporting</a>
+<div style="margin-top:20px;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px">
+<a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Voir site</a>
+<a href="dashboard.html" class="menu-item"><i class="bi bi-speedometer2"></i> Dashboard Site</a>
+<a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+</div></div>
 
-<div class="row g-3 mb-4"><div class="col-md-3"><div class="stat-card text-center"><h5>2.1M FCFA</h5><small class="text-muted">Factures en attente</small><br><small class="text-danger">5 factures</small></div></div><div class="col-md-3"><div class="stat-card text-center"><h5>8.5M FCFA</h5><small class="text-muted">Encaissé ce mois</small><br><small class="text-success">+22%</small></div></div><div class="col-md-3"><div class="stat-card text-center"><h5>12</h5><small class="text-muted">Devis en cours</small><br><small class="text-warning">3 à relancer</small></div></div><div class="col-md-3"><div class="stat-card text-center"><h5>68%</h5><small class="text-muted">Taux conversion devis</small></div></div></div>
+<div class="main">
+<div class="topbar"><div><h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-receipt me-2 text-warning"></i>Devis & Facturation - Cabinet Bénin</h5><small class="text-muted">Devis, factures, avoirs, relances auto • Conforme SYSCOHADA + DGI Bénin (TVA 18% • AIB 1%/5% • IFU obligatoire)</small></div><div class="d-flex gap-2 flex-wrap"><button class="btn btn-light btn-sm rounded-pill d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button><button class="btn btn-main rounded-pill" onclick="openDevisModal()"><i class="bi bi-file-earmark-text me-1"></i> Nouveau devis</button><button class="btn btn-primary-gobex rounded-pill" onclick="openFactureModal()"><i class="bi bi-receipt me-1"></i> Nouvelle facture</button></div></div>
+
+<div class="alert alert-success d-flex gap-2 small mb-3" style="border-radius:12px;background:#e8f5e9;border-color:#a5d6a7;"><i class="bi bi-check-circle-fill text-success" style="font-size:18px;"></i><div><strong>Boutons activés !</strong> Créez vos devis et factures en 1 clic. Les documents sont liés aux clients, calcul TVA/AIB automatique, aperçu PDF imprimable avec IFU/RCCM GOBEX et mentions DGI. Convertissez un devis accepté en facture en 1 clic.</div></div>
+
+<div class="row g-3 mb-4">
+<div class="col-md-3"><div class="stat-card text-center"><div class="d-flex justify-content-center mb-1"><span class="badge bg-danger" id="factEnAttenteCount">0</span></div><h5 class="mb-0" style="color:#dc3545;" id="factEnAttenteMontant">0 FCFA</h5><small class="text-muted">Factures en attente</small><br><small class="text-danger" id="factEnRetardInfo">0 en retard</small></div></div>
+<div class="col-md-3"><div class="stat-card text-center"><div class="d-flex justify-content-center mb-1"><span class="badge bg-success">Encaissé</span></div><h5 class="mb-0" style="color:#2e7d32;" id="factEncaisse">0 FCFA</h5><small class="text-muted">Encaissé ce mois</small><br><small class="text-success" id="factEncaisseInfo">—</small></div></div>
+<div class="col-md-3"><div class="stat-card text-center"><div class="d-flex justify-content-center mb-1"><span class="badge bg-warning text-dark" id="devisEnCoursCount">0</span></div><h5 class="mb-0" id="devisEnCoursMontant">0 FCFA</h5><small class="text-muted">Devis en cours</small><br><small class="text-warning" id="devisARelancer">0 à relancer</small></div></div>
+<div class="col-md-3"><div class="stat-card text-center"><div class="d-flex justify-content-center mb-1"><span class="badge bg-primary">Conversion</span></div><h5 class="mb-0" id="tauxConversion">0%</h5><small class="text-muted">Taux conversion devis → facture</small><div class="progress mt-2" style="height:6px;"><div class="progress-bar bg-warning" id="tauxBar" style="width:0%"></div></div></div></div>
+</div>
 
 <div class="stat-card">
-<div class="d-flex justify-content-between align-items-center mb-3"><h6 class="mb-0" style="font-family:Exo;font-weight:700;">Factures récentes</h6><div class="d-flex gap-2"><input type="text" class="form-control form-control-sm" placeholder="Rechercher facture..." style="width:200px;"><select class="form-select form-select-sm" style="width:130px;"><option>Tous statuts</option><option>Payée</option><option>En attente</option><option>En retard</option></select></div></div>
-<div class="table-responsive"><table class="table table-hover small"><thead class="table-light"><tr><th>N° Facture</th><th>Client</th><th>Montant</th><th>Date</th><th>Échéance</th><th>Statut</th><th>Actions</th></tr></thead><tbody>
-<tr><td><strong>FACT-2025-045</strong></td><td>ETS La Grâce</td><td>450 000 FCFA</td><td>01/06/2025</td><td>10/06/2025</td><td><span class="badge bg-danger">En retard</span></td><td><button class="btn btn-sm btn-warning rounded-pill"><i class="bi bi-whatsapp"></i> Relancer</button></td></tr>
-<tr><td>FACT-2025-044</td><td>Fashion Bénin</td><td>800 000 FCFA</td><td>28/05/2025</td><td>15/06/2025</td><td><span class="badge bg-warning text-dark">En attente</span></td><td><button class="btn btn-sm btn-light">Voir</button></td></tr>
-<tr><td>FACT-2025-043</td><td>JKA Services</td><td>1 200 000 FCFA</td><td>20/05/2025</td><td>20/06/2025</td><td><span class="badge bg-success">Payée</span></td><td><span class="text-success"><i class="bi bi-check-circle-fill"></i></span></td></tr>
-</tbody></table></div>
+<ul class="nav nav-pills mb-3 gap-2" role="tablist">
+  <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#paneFactures" type="button"><i class="bi bi-receipt me-1"></i> Factures <span class="badge bg-light text-dark border ms-1" id="badgeFactures">0</span></button></li>
+  <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#paneDevis" type="button"><i class="bi bi-file-earmark-text me-1"></i> Devis <span class="badge bg-light text-dark border ms-1" id="badgeDevis">0</span></button></li>
+</ul>
+<div class="tab-content">
+<!-- FACTURES PANE -->
+<div class="tab-pane fade show active" id="paneFactures">
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+<div class="d-flex gap-2 flex-wrap align-items-center">
+<input type="text" id="searchFacture" class="form-control form-control-sm" placeholder="Rechercher N°, client, montant..." style="width:220px;" oninput="renderFactures()">
+<select id="filterFactureStatut" class="form-select form-select-sm" style="width:160px;" onchange="renderFactures()"><option value="all">Tous statuts</option><option>Payée</option><option>En attente</option><option>En retard</option><option>Partiellement payée</option><option>Brouillon</option><option>Annulée</option></select>
+<select id="filterFactureClient" class="form-select form-select-sm" style="width:180px;" onchange="renderFactures()"><option value="all">Tous clients</option></select>
+</div>
+<div class="d-flex gap-2">
+<button class="btn btn-sm btn-outline-dark rounded-pill" onclick="exportFactures()"><i class="bi bi-download me-1"></i> Export</button>
+<button class="btn btn-sm btn-primary-gobex rounded-pill" onclick="openFactureModal()"><i class="bi bi-plus-lg me-1"></i> Nouvelle facture</button>
+</div>
+</div>
+<div class="table-responsive"><table class="table table-hover small align-middle"><thead class="table-light"><tr><th>N° Facture</th><th>Client</th><th>Montant TTC</th><th>Date</th><th>Échéance</th><th>Statut</th><th style="min-width:260px;">Actions</th></tr></thead><tbody id="facturesTable"></tbody></table></div>
+<div id="facturesEmpty" class="text-center py-4 d-none text-muted"><i class="bi bi-receipt-cutoff" style="font-size:40px;opacity:0.2"></i><p class="mt-2 small">Aucune facture — cliquez sur <strong>Nouvelle facture</strong></p></div>
+</div>
+<!-- DEVIS PANE -->
+<div class="tab-pane fade" id="paneDevis">
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+<div class="d-flex gap-2 flex-wrap align-items-center">
+<input type="text" id="searchDevis" class="form-control form-control-sm" placeholder="Rechercher devis, client..." style="width:220px;" oninput="renderDevis()">
+<select id="filterDevisStatut" class="form-select form-select-sm" style="width:170px;" onchange="renderDevis()"><option value="all">Tous statuts</option><option>Brouillon</option><option>Envoyé</option><option>Vu - Non signé</option><option>Accepté</option><option>Refusé</option><option>Facturé</option></select>
+<select id="filterDevisClient" class="form-select form-select-sm" style="width:180px;" onchange="renderDevis()"><option value="all">Tous clients</option></select>
+</div>
+<div class="d-flex gap-2">
+<button class="btn btn-sm btn-outline-dark rounded-pill" onclick="exportDevis()"><i class="bi bi-download me-1"></i> Export</button>
+<button class="btn btn-sm btn-main rounded-pill" onclick="openDevisModal()"><i class="bi bi-plus-lg me-1"></i> Nouveau devis</button>
+</div>
+</div>
+<div class="table-responsive"><table class="table table-hover small align-middle"><thead class="table-light"><tr><th>N° Devis</th><th>Client</th><th>Montant</th><th>Date envoi</th><th>Validité</th><th>Statut</th><th style="min-width:280px;">Actions</th></tr></thead><tbody id="devisTable"></tbody></table></div>
+<div id="devisEmpty" class="text-center py-4 d-none text-muted"><i class="bi bi-file-earmark-text" style="font-size:40px;opacity:0.2"></i><p class="mt-2 small">Aucun devis — cliquez sur <strong>Nouveau devis</strong></p></div>
+</div>
+</div>
 </div>
 
-<div class="stat-card mt-3"><h6>Devis en cours</h6><div class="table-responsive mt-2"><table class="table small"><thead class="table-light"><tr><th>N° Devis</th><th>Client</th><th>Montant</th><th>Date envoi</th><th>Statut</th><th>Action</th></tr></thead><tbody>
-<tr><td>DEVIS-2025-028</td><td>Quincaillerie HERALD</td><td>450 000 FCFA</td><td>11/09/2025</td><td><span class="badge bg-info">Vu - Non signé</span></td><td><a href="https://wa.me/22997567890?text=Bonjour,%20avez-vous%20vu%20le%20devis%20450k?" target="_blank" class="btn btn-sm btn-success rounded-pill"><i class="bi bi-whatsapp"></i> Relancer</a></td></tr>
-</tbody></table></div></div>
-
 </div>
+
+<!-- MODAL DEVIS -->
+<div class="modal fade" id="devisModal" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#FFB81C;color:#0A2F5E;border-radius:16px 16px 0 0;"><h6 class="modal-title" style="font-family:Exo;font-weight:800;"><i class="bi bi-file-earmark-text me-2"></i><span id="devisModalTitle">Nouveau devis</span></h6><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body">
+<input type="hidden" id="devisEditIdx">
+<div class="row g-3">
+<div class="col-md-5"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Client * <small class="text-muted">(depuis CRM)</small></label><select id="devisClient" class="form-select" required><option value="">— Choisir un client —</option></select><small class="text-muted" id="devisClientInfo" style="font-size:11px;"></small></div>
+<div class="col-md-2"><label class="form-label small fw-bold">N° Devis</label><input type="text" id="devisNum" class="form-control fw-bold" readonly style="background:#fff8e1;"></div>
+<div class="col-md-2"><label class="form-label small fw-bold">Date</label><input type="date" id="devisDate" class="form-control"></div>
+<div class="col-md-3"><label class="form-label small fw-bold">Validité jusqu'au</label><input type="date" id="devisValidite" class="form-control"></div>
+<div class="col-12"><label class="form-label small fw-bold">Objet / Titre</label><input type="text" id="devisObjet" class="form-control" placeholder="Ex: Assistance comptable + Fiscalité T2 2025, Logiciel PERFECTO..."></div>
+</div>
+
+<div class="mt-4">
+<div class="d-flex justify-content-between align-items-center mb-2"><h6 style="font-family:Exo;font-weight:700;font-size:14px;color:#0A2F5E;"><i class="bi bi-list-task me-1"></i> Lignes - Prestations</h6><button class="btn btn-sm btn-outline-dark rounded-pill" onclick="addDevisLine()"><i class="bi bi-plus-lg me-1"></i> Ajouter une ligne</button></div>
+<div class="table-responsive"><table class="table table-sm align-middle small"><thead class="table-light"><tr><th style="width:45%;">Désignation</th><th style="width:12%;">Qté</th><th style="width:18%;">PU HT (FCFA)</th><th style="width:18%;">Total HT</th><th style="width:7%;"></th></tr></thead><tbody id="devisLines"></tbody></table></div>
+</div>
+
+<div class="row g-3 mt-1">
+<div class="col-md-3"><label class="form-label small fw-bold">TVA 18%</label><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="devisTVA" checked onchange="calcDevis()"><label class="form-check-label small" for="devisTVA">Appliquer TVA</label></div></div>
+<div class="col-md-3"><label class="form-label small fw-bold">AIB (Bénin)</label><select id="devisAIB" class="form-select form-select-sm" onchange="calcDevis()"><option value="0">0% - Avec IFU</option><option value="1">1% - Prestation avec IFU</option><option value="5">5% - Sans IFU / Prestation non domiciliée</option></select><small class="text-muted" style="font-size:11px;">Retenue à la source</small></div>
+<div class="col-md-3"><label class="form-label small fw-bold">Remise %</label><input type="number" id="devisRemise" class="form-control form-control-sm" value="0" min="0" max="100" oninput="calcDevis()"></div>
+<div class="col-md-3"><label class="form-label small fw-bold">Statut</label><select id="devisStatut" class="form-select form-select-sm"><option>Brouillon</option><option>Envoyé</option><option>Vu - Non signé</option><option>Accepté</option><option>Refusé</option><option>Facturé</option></select></div>
+<div class="col-md-6"><label class="form-label small fw-bold">Conditions / Délai</label><input type="text" id="devisConditions" class="form-control form-control-sm" placeholder="Ex: Paiement 50% à la commande, solde à livraison • Validité 15 jours"></div>
+<div class="col-md-6"><label class="form-label small fw-bold">Notes internes</label><input type="text" id="devisNotes" class="form-control form-control-sm" placeholder="Notes non imprimées"></div>
+</div>
+
+<div class="totals-box mt-3" id="devisTotals"></div>
+</div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Annuler</button><button class="btn btn-outline-dark rounded-pill" onclick="previewDevis()"><i class="bi bi-eye me-1"></i> Aperçu PDF</button><button class="btn btn-main rounded-pill" onclick="saveDevis()"><i class="bi bi-check-lg me-1"></i> Enregistrer devis</button></div></div></div></div>
+
+<!-- MODAL FACTURE -->
+<div class="modal fade" id="factureModal" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title" style="font-family:Exo;font-weight:700;"><i class="bi bi-receipt me-2 text-warning"></i><span id="factureModalTitle">Nouvelle facture</span></h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body">
+<input type="hidden" id="factureEditIdx">
+<div class="row g-3">
+<div class="col-md-5"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Client *</label><select id="factureClient" class="form-select" required><option value="">— Choisir un client —</option></select><small class="text-muted" id="factureClientInfo" style="font-size:11px;"></small></div>
+<div class="col-md-2"><label class="form-label small fw-bold">N° Facture</label><input type="text" id="factureNum" class="form-control fw-bold" readonly style="background:#e3f0ff;"></div>
+<div class="col-md-2"><label class="form-label small fw-bold">Date</label><input type="date" id="factureDate" class="form-control"></div>
+<div class="col-md-3"><label class="form-label small fw-bold">Échéance</label><input type="date" id="factureEcheance" class="form-control"></div>
+<div class="col-12"><label class="form-label small fw-bold">Objet / Référence</label><input type="text" id="factureObjet" class="form-control" placeholder="Ex: Facture assistance comptable Juin 2025, Licence PERFECTO..."></div>
+</div>
+
+<div class="mt-4">
+<div class="d-flex justify-content-between align-items-center mb-2"><h6 style="font-family:Exo;font-weight:700;font-size:14px;color:#0A2F5E;"><i class="bi bi-list-ul me-1"></i> Lignes facturées</h6><button class="btn btn-sm btn-outline-dark rounded-pill" onclick="addFactureLine()"><i class="bi bi-plus-lg me-1"></i> Ajouter une ligne</button></div>
+<div class="table-responsive"><table class="table table-sm align-middle small"><thead class="table-light"><tr><th style="width:45%;">Désignation</th><th style="width:12%;">Qté</th><th style="width:18%;">PU HT</th><th style="width:18%;">Total HT</th><th style="width:7%;"></th></tr></thead><tbody id="factureLines"></tbody></table></div>
+</div>
+
+<div class="row g-3 mt-1">
+<div class="col-md-2"><label class="form-label small fw-bold">TVA 18%</label><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="factureTVA" checked onchange="calcFacture()"><label class="form-check-label small" for="factureTVA">TVA</label></div></div>
+<div class="col-md-3"><label class="form-label small fw-bold">AIB</label><select id="factureAIB" class="form-select form-select-sm" onchange="calcFacture()"><option value="0">0% - Avec IFU</option><option value="1">1% - Avec IFU</option><option value="5">5% - Sans IFU</option></select></div>
+<div class="col-md-2"><label class="form-label small fw-bold">Remise %</label><input type="number" id="factureRemise" class="form-control form-control-sm" value="0" min="0" max="100" oninput="calcFacture()"></div>
+<div class="col-md-2"><label class="form-label small fw-bold">Acompte (FCFA)</label><input type="number" id="factureAcompte" class="form-control form-control-sm" value="0" min="0" oninput="calcFacture()"></div>
+<div class="col-md-3"><label class="form-label small fw-bold">Statut paiement</label><select id="factureStatut" class="form-select form-select-sm"><option>En attente</option><option>Payée</option><option>Partiellement payée</option><option>En retard</option><option>Brouillon</option><option>Annulée</option></select></div>
+<div class="col-md-4"><label class="form-label small fw-bold">Mode paiement</label><select id="factureMode" class="form-select form-select-sm"><option>Virement bancaire</option><option>Mobile Money (MTN/Moov)</option><option>Espèces</option><option>Chèque</option><option>Mixte</option></select></div>
+<div class="col-md-4"><label class="form-label small fw-bold">Conditions</label><input type="text" id="factureConditions" class="form-control form-control-sm" placeholder="Ex: Payable à réception, pénalités 10%..."></div>
+<div class="col-md-4"><label class="form-label small fw-bold">Notes</label><input type="text" id="factureNotes" class="form-control form-control-sm" placeholder="Notes internes"></div>
+</div>
+
+<div class="totals-box mt-3" id="factureTotals"></div>
+</div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Annuler</button><button class="btn btn-outline-dark rounded-pill" onclick="previewFacture()"><i class="bi bi-eye me-1"></i> Aperçu PDF</button><button class="btn btn-primary-gobex rounded-pill" onclick="saveFacture()"><i class="bi bi-check-lg me-1"></i> Enregistrer facture</button></div></div></div></div>
+
+<!-- PREVIEW MODAL UNIVERSEL -->
+<div class="modal fade" id="previewModalFact" tabindex="-1"><div class="modal-dialog modal-xl"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title" style="font-family:Exo;" id="previewTitle"><i class="bi bi-file-earmark-pdf me-2 text-warning"></i>Aperçu</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body" id="previewBodyFact" style="max-height:75vh;overflow-y:auto;background:#f4f7fb;"></div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Fermer</button><button class="btn btn-main rounded-pill" onclick="printPreviewFact()"><i class="bi bi-printer me-1"></i> Imprimer / PDF</button></div></div></div></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>if(localStorage.getItem('gobex_admin_auth')!=='true'){window.location.href='index.html';} function logout(){localStorage.removeItem('gobex_admin_auth');window.location.href='index.html';}</script>
+<script>
+if(localStorage.getItem('gobex_admin_auth')!=='true'){window.location.href='index.html';}
+let clients=[], devis=[], factures=[];
+let currentPreviewHTML='';
+
+// Cabinet info (modifiable via parametres)
+const CABINET = {name:'GOBEX', full:'Godwin Business Expertise', addr:'Carrefour 02 Manguiers, Rue de Tankpê, Abomey-Calavi, Bénin', rccm:'RB/ABC/15A3265', ifu:'1201502844807', tel:'+229 97 739 046', email:'godwinexpertise@gmail.com', iban:'Bénin - BOA / Ecobank'};
+
+function loadClients(){
+  const s=localStorage.getItem('gobex_crm_clients');
+  if(s){ try{clients=JSON.parse(s);}catch(e){clients=[];} } else clients=[];
+  const dSel=document.getElementById('devisClient'), fSel=document.getElementById('factureClient'), fF=document.getElementById('filterFactureClient'), dF=document.getElementById('filterDevisClient');
+  [dSel,fSel].forEach(sel=>{ sel.innerHTML='<option value=\"\">— Choisir un client —</option>'; clients.forEach((c,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=`${c.name} • ${c.ref||''} • ${c.typeClient||c.type}`; o.dataset.ref=c.ref||c.name; sel.appendChild(o); }); });
+  [fF,dF].forEach(sel=>{ sel.innerHTML='<option value=\"all\">Tous clients</option>'; clients.forEach((c,i)=>{ const o=document.createElement('option'); o.value=c.name; o.textContent=c.name; sel.appendChild(o); }); });
+  // client info listeners
+  document.getElementById('devisClient').addEventListener('change', e=>{ const c=clients[e.target.value]; document.getElementById('devisClientInfo').textContent=c? `${c.ifu? 'IFU '+c.ifu+' • ':''}${c.rccm? 'RCCM '+c.rccm+' • ':''}${c.address||c.partAdresse||c.siegeAdresse||''} • ${c.phone||''}`:''; });
+  document.getElementById('factureClient').addEventListener('change', e=>{ const c=clients[e.target.value]; document.getElementById('factureClientInfo').textContent=c? `${c.ifu? 'IFU '+c.ifu+' • ':''}${c.rccm? 'RCCM '+c.rccm+' • ':''}${c.address||c.partAdresse||c.siegeAdresse||''} • ${c.phone||''}`:''; });
+}
+function loadDevis(){
+  const s=localStorage.getItem('gobex_crm_devis');
+  if(s){ try{devis=JSON.parse(s);}catch(e){devis=[];} } else devis=[];
+  if(devis.length===0) seedDemoDevis();
+  renderDevis();
+}
+function loadFactures(){
+  const s=localStorage.getItem('gobex_crm_factures');
+  if(s){ try{factures=JSON.parse(s);}catch(e){factures=[];} } else factures=[];
+  if(factures.length===0) seedDemoFactures();
+  renderFactures();
+}
+function seedDemoDevis(){
+  if(clients.length===0) return;
+  devis=[{num:'DEVIS-2025-028', clientIdx:4, clientName:clients[4]?.name||'Quincaillerie HERALD', clientRef:clients[4]?.ref, date:'2025-09-11', validite:'2025-09-26', objet:'Logiciel PERFECTO + Assistance comptable', lines:[{desc:'PERFECTO Facturation & Stock PRO - Licence annuelle', qty:1, pu:75000},{desc:'Paramétrage + Formation 1 jour', qty:1, pu:150000},{desc:'Assistance comptable 3 mois', qty:3, pu:75000}], tva:true, aib:0, remise:0, conditions:'Paiement 50% à la commande', notes:'Prospect chaud', statut:'Vu - Non signé', total:{ht:450000,tva:81000,ttc:531000,aib:0,net:531000}}];
+  saveDevis(false);
+}
+function seedDemoFactures(){
+  if(clients.length===0) return;
+  factures=[
+    {num:'FACT-2025-045', clientIdx:0, clientName:clients[0]?.name||'ETS La Grâce', clientRef:clients[0]?.ref, date:'2025-06-01', echeance:'2025-06-10', objet:'TVA + Compta Mai 2025', lines:[{desc:'Tenue comptable Mai', qty:1, pu:250000},{desc:'Déclarations fiscales DGI', qty:1, pu:200000}], tva:true, aib:1, remise:0, acompte:0, mode:'Virement', conditions:'Payable à 10 jours', notes:'', statut:'En retard', total:{ht:450000,tva:81000,ttc:531000,aib:4500,net:526500}},
+    {num:'FACT-2025-044', clientIdx:1, clientName:clients[1]?.name||'Fashion Bénin', clientRef:clients[1]?.ref, date:'2025-05-28', echeance:'2025-06-15', objet:'Digitalisation stock + site', lines:[{desc:'Site e-commerce + formation', qty:1, pu:800000}], tva:false, aib:0, remise:0, acompte:0, mode:'Mobile Money', conditions:'', notes:'', statut:'En attente', total:{ht:800000,tva:0,ttc:800000,aib:0,net:800000}},
+    {num:'FACT-2025-043', clientIdx:2, clientName:clients[2]?.name||'JKA Services', clientRef:clients[2]?.ref, date:'2025-05-20', echeance:'2025-06-20', objet:'Business Plan + Compta', lines:[{desc:'Business Plan BOA', qty:1, pu:1200000}], tva:true, aib:0, remise:0, acompte:0, mode:'Virement', conditions:'', notes:'', statut:'Payée', total:{ht:1200000,tva:216000,ttc:1416000,aib:0,net:1416000}}
+  ];
+  saveFactures(false);
+}
+function saveDevis(render=true){ localStorage.setItem('gobex_crm_devis', JSON.stringify(devis)); if(render) {renderDevis(); updateStats();} }
+function saveFactures(render=true){ localStorage.setItem('gobex_crm_factures', JSON.stringify(factures)); if(render){renderFactures(); updateStats();} }
+
+function generateNum(prefix, list){
+  const year=new Date().getFullYear();
+  const pref=`${prefix}-${year}-`;
+  let max=0; list.forEach(d=>{ const m=d.num?.match(new RegExp(`${prefix}-\\d+-(\\d+)`)); if(m) max=Math.max(max, parseInt(m[1])); });
+  return `${pref}${String(max+1).padStart(3,'0')}`;
+}
+function fmt(n){ return (n||0).toLocaleString('fr-FR')+' FCFA'; }
+function fmtDate(s){ if(!s) return '—'; try{return new Date(s).toLocaleDateString('fr-FR');}catch(e){return s;} }
+function isOverdue(dateStr){ if(!dateStr) return false; const d=new Date(dateStr); d.setHours(0,0,0,0); const today=new Date(); today.setHours(0,0,0,0); return d < today; }
+
+function updateStats(){
+  // Factures en attente
+  const enAttente = factures.filter(f=> ['En attente','En retard','Partiellement payée'].includes(f.statut));
+  const sumAttente = enAttente.reduce((s,f)=> s + (f.total?.net || f.total?.ttc || 0), 0);
+  const enRetard = factures.filter(f=> f.statut==='En retard' || (['En attente','Partiellement payée'].includes(f.statut) && isOverdue(f.echeance)));
+  document.getElementById('factEnAttenteMontant').textContent = fmt(sumAttente);
+  document.getElementById('factEnAttenteCount').textContent = enAttente.length;
+  document.getElementById('factEnRetardInfo').textContent = enRetard.length + ' en retard';
+  // Encaissé ce mois
+  const now=new Date(); const month=now.getMonth(), year=now.getFullYear();
+  const payeesThisMonth = factures.filter(f=> f.statut==='Payée' && f.date && new Date(f.date).getMonth()===month && new Date(f.date).getFullYear()===year);
+  const sumEncaisse = payeesThisMonth.reduce((s,f)=> s+ (f.total?.net||f.total?.ttc||0),0);
+  // aussi factures payées quel que soit mois si démo mois différent, on prend total payé comme encaissé si 0
+  const totalPaye = factures.filter(f=>f.statut==='Payée').reduce((s,f)=>s+(f.total?.net||0),0);
+  const displayEncaisse = sumEncaisse>0? sumEncaisse : totalPaye; // fallback for demo
+  document.getElementById('factEncaisse').textContent = fmt(displayEncaisse);
+  document.getElementById('factEncaisseInfo').textContent = payeesThisMonth.length? payeesThisMonth.length+' facture(s) payée(s)' : factures.filter(f=>f.statut==='Payée').length+' payée(s) au total';
+  // Devis
+  const enCours = devis.filter(d=> !['Accepté','Refusé','Facturé'].includes(d.statut));
+  const sumDevis = enCours.reduce((s,d)=> s+(d.total?.net||d.total?.ttc||0),0);
+  document.getElementById('devisEnCoursCount').textContent = enCours.length;
+  document.getElementById('devisEnCoursMontant').textContent = fmt(sumDevis);
+  const aRelancer = devis.filter(d=> ['Envoyé','Vu - Non signé'].includes(d.statut) && isOverdue(d.validite));
+  document.getElementById('devisARelancer').textContent = aRelancer.length? aRelancer.length+' à relancer' : devis.filter(d=> ['Envoyé','Vu - Non signé'].includes(d.statut)).length+' à suivre';
+  // Taux conversion
+  const totalDevis = devis.length;
+  const acceptes = devis.filter(d=> ['Accepté','Facturé'].includes(d.statut)).length;
+  const taux = totalDevis? Math.round(acceptes/totalDevis*100):0;
+  document.getElementById('tauxConversion').textContent = taux+'%';
+  document.getElementById('tauxBar').style.width = taux+'%';
+  document.getElementById('badgeFactures').textContent = factures.length;
+  document.getElementById('badgeDevis').textContent = devis.length;
+}
+
+function renderFactures(){
+  const tbody=document.getElementById('facturesTable'), empty=document.getElementById('facturesEmpty');
+  const q=document.getElementById('searchFacture').value.toLowerCase(), statutF=document.getElementById('filterFactureStatut').value, clientF=document.getElementById('filterFactureClient').value;
+  let list=[...factures].sort((a,b)=> new Date(b.date)-new Date(a.date));
+  list=list.filter(f=>{
+    if(statutF!=='all' && f.statut!==statutF) return false;
+    if(clientF!=='all' && f.clientName!==clientF) return false;
+    if(q && !`${f.num} ${f.clientName} ${f.total?.net} ${f.objet}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  // auto mark retard
+  list.forEach(f=>{
+    if(f.statut==='En attente' && isOverdue(f.echeance)) f._isRetard=true; else f._isRetard=false;
+  });
+  tbody.innerHTML='';
+  if(list.length===0){ empty.classList.remove('d-none'); } else { empty.classList.add('d-none');
+    list.forEach((f,idx)=>{
+      const realIdx=factures.indexOf(f);
+      const statutCls = f.statut==='Payée'?'bg-success': f.statut==='En retard'?'bg-danger': f.statut==='En attente'?'bg-warning text-dark': f.statut==='Partiellement payée'?'bg-info': f.statut==='Brouillon'?'bg-secondary':'bg-dark';
+      const echeanceCls = isOverdue(f.echeance) && f.statut!=='Payée' && f.statut!=='Annulée' ? 'text-danger fw-bold' : '';
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td><strong>${f.num}</strong><br><small class="text-muted">${f.objet? f.objet.substring(0,30):''}</small></td>
+        <td><strong>${f.clientName}</strong><br><small class="text-muted">${f.clientRef||''}</small></td>
+        <td><strong>${fmt(f.total?.net||f.total?.ttc||0)}</strong><br><small class="text-muted">${fmt(f.total?.ht||0)} HT</small></td>
+        <td><small>${fmtDate(f.date)}</small></td>
+        <td><small class="${echeanceCls}">${fmtDate(f.echeance)}</small></td>
+        <td><span class="badge badge-statut ${statutCls}">${f.statut}</span></td>
+        <td><div class="d-flex gap-1 flex-wrap">
+          <button class="btn btn-sm btn-light" onclick="previewFactureByIdx(${realIdx})" title="Voir / PDF"><i class="bi bi-eye"></i></button>
+          <button class="btn btn-sm btn-outline-primary" onclick="editFacture(${realIdx})" title="Modifier"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-sm btn-outline-dark" onclick="duplicateFacture(${realIdx})" title="Dupliquer"><i class="bi bi-copy"></i></button>
+          ${f.statut!=='Payée' && f.statut!=='Annulée'? `<button class="btn btn-sm btn-success" onclick="markPaid(${realIdx})" title="Marquer payée"><i class="bi bi-check-circle"></i></button>`:''}
+          <button class="btn btn-sm btn-warning" onclick="relanceFacture(${realIdx})" title="Relancer WhatsApp"><i class="bi bi-whatsapp"></i></button>
+          <button class="btn btn-sm btn-outline-danger" onclick="deleteFacture(${realIdx})" title="Supprimer"><i class="bi bi-trash"></i></button>
+        </div></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+}
+function renderDevis(){
+  const tbody=document.getElementById('devisTable'), empty=document.getElementById('devisEmpty');
+  const q=document.getElementById('searchDevis').value.toLowerCase(), statutF=document.getElementById('filterDevisStatut').value, clientF=document.getElementById('filterDevisClient').value;
+  let list=[...devis].sort((a,b)=> new Date(b.date)-new Date(a.date));
+  list=list.filter(d=>{
+    if(statutF!=='all' && d.statut!==statutF) return false;
+    if(clientF!=='all' && d.clientName!==clientF) return false;
+    if(q && !`${d.num} ${d.clientName} ${d.objet}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  tbody.innerHTML='';
+  if(list.length===0){ empty.classList.remove('d-none'); } else { empty.classList.add('d-none');
+    list.forEach(d=>{
+      const realIdx=devis.indexOf(d);
+      const statutCls = d.statut==='Accepté'?'bg-success': d.statut==='Facturé'?'bg-primary': d.statut==='Vu - Non signé'?'bg-info': d.statut==='Envoyé'?'bg-warning text-dark': d.statut==='Refusé'?'bg-danger':'bg-secondary';
+      const validCls = isOverdue(d.validite) && !['Accepté','Facturé','Refusé'].includes(d.statut) ? 'text-danger fw-bold':'';
+      tr=document.createElement('tr');
+      tr.innerHTML=`<td><strong>${d.num}</strong><br><small class="text-muted">${d.objet? d.objet.substring(0,28):''}</small></td>
+        <td><strong>${d.clientName}</strong><br><small class="text-muted">${d.clientRef||''}</small></td>
+        <td><strong>${fmt(d.total?.net||d.total?.ttc||0)}</strong></td>
+        <td><small>${fmtDate(d.date)}</small></td>
+        <td><small class="${validCls}">${fmtDate(d.validite)}</small></td>
+        <td><span class="badge badge-statut ${statutCls}">${d.statut}</span></td>
+        <td><div class="d-flex gap-1 flex-wrap">
+          <button class="btn btn-sm btn-light" onclick="previewDevisByIdx(${realIdx})" title="Voir"><i class="bi bi-eye"></i></button>
+          <button class="btn btn-sm btn-outline-primary" onclick="editDevis(${realIdx})" title="Modifier"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-sm btn-outline-dark" onclick="duplicateDevis(${realIdx})" title="Dupliquer"><i class="bi bi-copy"></i></button>
+          ${['Accepté','Envoyé','Vu - Non signé'].includes(d.statut)? `<button class="btn btn-sm btn-primary-gobex" onclick="convertDevisToFacture(${realIdx})" title="Convertir en facture"><i class="bi bi-receipt"></i> →Facture</button>`:''}
+          <a href="https://wa.me/${(clients[d.clientIdx]?.whatsapp||'22997739046')}?text=${encodeURIComponent('Bonjour '+d.clientName+', votre devis '+d.num+' ('+fmt(d.total?.net||0)+') est en attente. Lien: validez-vous ?')}" target="_blank" class="btn btn-sm btn-success" title="Relancer"><i class="bi bi-whatsapp"></i></a>
+          <button class="btn btn-sm btn-outline-danger" onclick="deleteDevis(${realIdx})" title="Supprimer"><i class="bi bi-trash"></i></button>
+        </div></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+}
+
+// === DEVIS FORM ===
+function openDevisModal(idx=null){
+  const isEdit = idx!==null && idx!==undefined;
+  document.getElementById('devisEditIdx').value = isEdit? idx : '';
+  document.getElementById('devisModalTitle').textContent = isEdit? 'Modifier devis' : 'Nouveau devis';
+  const now=new Date(); const valid=new Date(); valid.setDate(valid.getDate()+15);
+  if(isEdit){
+    const d=devis[idx];
+    document.getElementById('devisClient').value = d.clientIdx;
+    document.getElementById('devisNum').value = d.num;
+    document.getElementById('devisDate').value = d.date;
+    document.getElementById('devisValidite').value = d.validite;
+    document.getElementById('devisObjet').value = d.objet;
+    document.getElementById('devisTVA').checked = d.tva;
+    document.getElementById('devisAIB').value = d.aib;
+    document.getElementById('devisRemise').value = d.remise;
+    document.getElementById('devisConditions').value = d.conditions||'';
+    document.getElementById('devisNotes').value = d.notes||'';
+    document.getElementById('devisStatut').value = d.statut;
+    renderDevisLines(d.lines);
+  } else {
+    document.getElementById('devisClient').value = '';
+    document.getElementById('devisNum').value = generateNum('DEVIS', devis);
+    document.getElementById('devisDate').valueAsDate = now;
+    document.getElementById('devisValidite').valueAsDate = valid;
+    document.getElementById('devisObjet').value = '';
+    document.getElementById('devisTVA').checked = true;
+    document.getElementById('devisAIB').value = '0';
+    document.getElementById('devisRemise').value = 0;
+    document.getElementById('devisConditions').value = 'Validité 15 jours • Paiement 50% à la commande, solde à livraison';
+    document.getElementById('devisNotes').value = '';
+    document.getElementById('devisStatut').value = 'Brouillon';
+    renderDevisLines([{desc:'', qty:1, pu:0}]);
+    document.getElementById('devisClientInfo').textContent='';
+  }
+  calcDevis();
+  new bootstrap.Modal(document.getElementById('devisModal')).show();
+}
+function renderDevisLines(lines){
+  const tbody=document.getElementById('devisLines');
+  tbody.innerHTML='';
+  lines.forEach((l,i)=>{
+    const tr=document.createElement('tr'); tr.className='line-row';
+    tr.innerHTML=`<td><input type="text" class="form-control form-control-sm" placeholder="Désignation (ex: Assistance comptable Juin)" value="${l.desc?.replace(/"/g,'&quot;')||''}" oninput="updateDevisLine(${i},'desc',this.value)"></td>
+      <td><input type="number" class="form-control form-control-sm" value="${l.qty||1}" min="0.1" step="0.1" oninput="updateDevisLine(${i},'qty',this.value)"></td>
+      <td><input type="number" class="form-control form-control-sm" value="${l.pu||0}" min="0" step="1000" oninput="updateDevisLine(${i},'pu',this.value)"></td>
+      <td><span class="fw-bold" id="devisLineTotal${i}">${fmt((l.qty||0)*(l.pu||0))}</span></td>
+      <td><button class="btn btn-sm btn-light" onclick="removeDevisLine(${i})" title="Supprimer"><i class="bi bi-x-lg"></i></button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+let devisLinesData=[];
+function updateDevisLine(i, field, val){
+  if(!devisLinesData[i]) devisLinesData[i]={desc:'', qty:1, pu:0};
+  if(field==='qty' || field==='pu') val=parseFloat(val)||0;
+  devisLinesData[i][field]=val;
+  document.getElementById('devisLineTotal'+i).textContent = fmt((devisLinesData[i].qty||0)*(devisLinesData[i].pu||0));
+  calcDevis();
+}
+function addDevisLine(){ devisLinesData.push({desc:'', qty:1, pu:0}); renderDevisLines(devisLinesData); calcDevis(); }
+function removeDevisLine(i){ devisLinesData.splice(i,1); if(devisLinesData.length===0) devisLinesData.push({desc:'', qty:1, pu:0}); renderDevisLines(devisLinesData); calcDevis(); }
+// patch render to sync data
+const origRenderDevisLines = renderDevisLines;
+renderDevisLines = function(lines){ devisLinesData = lines.map(l=> ({...l})); origRenderDevisLines(devisLinesData); };
+
+function calcDevis(){
+  let ht=0; devisLinesData.forEach(l=> ht+= (parseFloat(l.qty)||0)*(parseFloat(l.pu)||0));
+  const remisePct=parseFloat(document.getElementById('devisRemise').value)||0;
+  const htRemise = ht * (1 - remisePct/100);
+  const tvaOn = document.getElementById('devisTVA').checked;
+  const tva = tvaOn? Math.round(htRemise*0.18):0;
+  const aibPct=parseFloat(document.getElementById('devisAIB').value)||0;
+  const aib = Math.round(htRemise * aibPct/100);
+  const ttc = htRemise + tva;
+  const net = ttc - aib;
+  const box=document.getElementById('devisTotals');
+  box.innerHTML=`<div class="row small"><div class="col-6"><span class="text-muted">Sous-total HT</span></div><div class="col-6 text-end fw-bold">${fmt(ht)}</div>
+    ${remisePct>0? `<div class="col-6 text-muted">Remise ${remisePct}%</div><div class="col-6 text-end text-danger">- ${fmt(ht-htRemise)}</div><div class="col-6 fw-bold">HT après remise</div><div class="col-6 text-end fw-bold">${fmt(htRemise)}</div>`:''}
+    <div class="col-6 text-muted">TVA 18% ${tvaOn?'':' (non applicable)'}</div><div class="col-6 text-end">${fmt(tva)}</div>
+    <div class="col-6 fw-bold">Total TTC</div><div class="col-6 text-end fw-bold" style="color:#0A2F5E;font-size:15px;">${fmt(ttc)}</div>
+    ${aib>0? `<div class="col-6 text-muted">Retenue AIB ${aibPct}%</div><div class="col-6 text-end text-danger">- ${fmt(aib)}</div><div class="col-6 fw-bold">Net à payer</div><div class="col-6 text-end fw-bold text-success" style="font-size:15px;">${fmt(net)}</div>`:''}
+  </div>`;
+  box.dataset.calc = JSON.stringify({ht, htRemise, tva, ttc, aib, net});
+}
+function saveDevis(){
+  const idx=document.getElementById('devisEditIdx').value;
+  const clientIdx=parseInt(document.getElementById('devisClient').value);
+  if(isNaN(clientIdx)){ alert('Choisissez un client'); return; }
+  if(devisLinesData.length===0 || devisLinesData.every(l=>!l.desc)) { alert('Ajoutez au moins une ligne avec désignation'); return; }
+  const calc=JSON.parse(document.getElementById('devisTotals').dataset.calc||'{}');
+  const c=clients[clientIdx];
+  const obj={num:document.getElementById('devisNum').value, clientIdx, clientName:c.name, clientRef:c.ref, date:document.getElementById('devisDate').value, validite:document.getElementById('devisValidite').value, objet:document.getElementById('devisObjet').value.trim()||'Prestation GOBEX', lines:devisLinesData.map(l=> ({...l})), tva:document.getElementById('devisTVA').checked, aib:parseFloat(document.getElementById('devisAIB').value)||0, remise:parseFloat(document.getElementById('devisRemise').value)||0, conditions:document.getElementById('devisConditions').value.trim(), notes:document.getElementById('devisNotes').value.trim(), statut:document.getElementById('devisStatut').value, total:{ht:calc.ht||0, htRemise:calc.htRemise||calc.ht||0, tva:calc.tva||0, ttc:calc.ttc||0, aib:calc.aib||0, net:calc.net||calc.ttc||0}};
+  if(idx===''){ devis.unshift(obj); } else { devis[parseInt(idx)]=obj; }
+  saveDevis(); bootstrap.Modal.getInstance(document.getElementById('devisModal')).hide();
+}
+function editDevis(i){ openDevisModal(i); }
+function duplicateDevis(i){ const d={...devis[i], num:generateNum('DEVIS', devis), date:new Date().toISOString().split('T')[0], validite: new Date(Date.now()+15*86400000).toISOString().split('T')[0], statut:'Brouillon'}; devis.unshift(d); saveDevis(); }
+function deleteDevis(i){ if(confirm(`Supprimer ${devis[i].num} ?`)){ devis.splice(i,1); saveDevis(); } }
+function convertDevisToFacture(idx){
+  const d=devis[idx];
+  if(!confirm(`Convertir ${d.num} (${fmt(d.total.net)}) en facture ? Le devis passera en "Facturé".`)) return;
+  const newFact={num:generateNum('FACT', factures), clientIdx:d.clientIdx, clientName:d.clientName, clientRef:d.clientRef, date:new Date().toISOString().split('T')[0], echeance:new Date(Date.now()+30*86400000).toISOString().split('T')[0], objet:d.objet, lines:d.lines.map(l=> ({...l})), tva:d.tva, aib:d.aib, remise:d.remise, acompte:0, mode:'Virement', conditions:'Payable à 30 jours', notes:'Facture issue du devis '+d.num, statut:'En attente', total:{...d.total}};
+  factures.unshift(newFact);
+  d.statut='Facturé';
+  saveDevis(); saveFactures();
+  // switch to factures tab
+  const tabEl=document.querySelector('[data-bs-target="#paneFactures"]'); if(tabEl) new bootstrap.Tab(tabEl).show();
+  alert(`Facture ${newFact.num} créée !`);
+}
+function previewDevis(){ if(!document.getElementById('devisClient').value){ alert('Choisissez un client'); return; } const calc=JSON.parse(document.getElementById('devisTotals').dataset.calc||'{}'); const c=clients[parseInt(document.getElementById('devisClient').value)]; const html=buildDocHTML({type:'DEVIS', num:document.getElementById('devisNum').value, date:document.getElementById('devisDate').value, echeance:document.getElementById('devisValidite').value, objet:document.getElementById('devisObjet').value, client:c, lines:devisLinesData, tva:document.getElementById('devisTVA').checked, aib:parseFloat(document.getElementById('devisAIB').value)||0, remise:parseFloat(document.getElementById('devisRemise').value)||0, conditions:document.getElementById('devisConditions').value, total:calc}); showPreview(html, 'Devis '+document.getElementById('devisNum').value); }
+function previewDevisByIdx(i){ const d=devis[i]; const c=clients[d.clientIdx]||{name:d.clientName}; const html=buildDocHTML({type:'DEVIS', num:d.num, date:d.date, echeance:d.validite, objet:d.objet, client:c, lines:d.lines, tva:d.tva, aib:d.aib, remise:d.remise, conditions:d.conditions, total:d.total}); showPreview(html, 'Devis '+d.num); }
+
+// === FACTURE FORM ===
+function openFactureModal(idx=null){
+  const isEdit=idx!==null&&idx!==undefined;
+  document.getElementById('factureEditIdx').value=isEdit? idx : '';
+  document.getElementById('factureModalTitle').textContent=isEdit? 'Modifier facture' : 'Nouvelle facture';
+  const now=new Date(); const ech=new Date(); ech.setDate(ech.getDate()+30);
+  if(isEdit){
+    const f=factures[idx];
+    document.getElementById('factureClient').value=f.clientIdx;
+    document.getElementById('factureNum').value=f.num;
+    document.getElementById('factureDate').value=f.date;
+    document.getElementById('factureEcheance').value=f.echeance;
+    document.getElementById('factureObjet').value=f.objet;
+    document.getElementById('factureTVA').checked=f.tva;
+    document.getElementById('factureAIB').value=f.aib;
+    document.getElementById('factureRemise').value=f.remise;
+    document.getElementById('factureAcompte').value=f.acompte||0;
+    document.getElementById('factureMode').value=f.mode||'Virement bancaire';
+    document.getElementById('factureConditions').value=f.conditions||'';
+    document.getElementById('factureNotes').value=f.notes||'';
+    document.getElementById('factureStatut').value=f.statut;
+    renderFactureLines(f.lines);
+  } else {
+    document.getElementById('factureClient').value='';
+    document.getElementById('factureNum').value=generateNum('FACT', factures);
+    document.getElementById('factureDate').valueAsDate=now;
+    document.getElementById('factureEcheance').valueAsDate=ech;
+    document.getElementById('factureObjet').value='';
+    document.getElementById('factureTVA').checked=true;
+    document.getElementById('factureAIB').value='0';
+    document.getElementById('factureRemise').value=0;
+    document.getElementById('factureAcompte').value=0;
+    document.getElementById('factureMode').value='Virement bancaire';
+    document.getElementById('factureConditions').value='Payable à réception • Pénalités 10% après échéance • TVA 18% • AIB selon DGI';
+    document.getElementById('factureNotes').value='';
+    document.getElementById('factureStatut').value='En attente';
+    renderFactureLines([{desc:'', qty:1, pu:0}]);
+    document.getElementById('factureClientInfo').textContent='';
+  }
+  calcFacture();
+  new bootstrap.Modal(document.getElementById('factureModal')).show();
+}
+let factureLinesData=[];
+function renderFactureLines(lines){
+  factureLinesData = lines.map(l=> ({...l}));
+  const tbody=document.getElementById('factureLines');
+  tbody.innerHTML='';
+  factureLinesData.forEach((l,i)=>{
+    const tr=document.createElement('tr'); tr.className='line-row';
+    tr.innerHTML=`<td><input type="text" class="form-control form-control-sm" value="${l.desc?.replace(/"/g,'&quot;')||''}" placeholder="Désignation" oninput="updateFactureLine(${i},'desc',this.value)"></td>
+      <td><input type="number" class="form-control form-control-sm" value="${l.qty||1}" min="0.1" step="0.1" oninput="updateFactureLine(${i},'qty',this.value)"></td>
+      <td><input type="number" class="form-control form-control-sm" value="${l.pu||0}" min="0" step="1000" oninput="updateFactureLine(${i},'pu',this.value)"></td>
+      <td><span class="fw-bold" id="factureLineTotal${i}">${fmt((l.qty||0)*(l.pu||0))}</span></td>
+      <td><button class="btn btn-sm btn-light" onclick="removeFactureLine(${i})"><i class="bi bi-x-lg"></i></button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+function updateFactureLine(i,f,val){ if(f==='qty'||f==='pu') val=parseFloat(val)||0; factureLinesData[i][f]=val; document.getElementById('factureLineTotal'+i).textContent=fmt((factureLinesData[i].qty||0)*(factureLinesData[i].pu||0)); calcFacture(); }
+function addFactureLine(){ factureLinesData.push({desc:'', qty:1, pu:0}); renderFactureLines(factureLinesData); calcFacture(); }
+function removeFactureLine(i){ factureLinesData.splice(i,1); if(factureLinesData.length===0) factureLinesData.push({desc:'', qty:1, pu:0}); renderFactureLines(factureLinesData); calcFacture(); }
+function calcFacture(){
+  let ht=0; factureLinesData.forEach(l=> ht+= (parseFloat(l.qty)||0)*(parseFloat(l.pu)||0));
+  const remisePct=parseFloat(document.getElementById('factureRemise').value)||0;
+  const htRemise= ht*(1 - remisePct/100);
+  const tvaOn=document.getElementById('factureTVA').checked;
+  const tva=tvaOn? Math.round(htRemise*0.18):0;
+  const aibPct=parseFloat(document.getElementById('factureAIB').value)||0;
+  const aib=Math.round(htRemise*aibPct/100);
+  const ttc=htRemise+tva;
+  const net=ttc-aib;
+  const acompte=parseFloat(document.getElementById('factureAcompte').value)||0;
+  const reste= net - acompte;
+  const box=document.getElementById('factureTotals');
+  box.innerHTML=`<div class="row small"><div class="col-6 text-muted">Sous-total HT</div><div class="col-6 text-end fw-bold">${fmt(ht)}</div>
+    ${remisePct>0? `<div class="col-6 text-muted">Remise ${remisePct}%</div><div class="col-6 text-end text-danger">- ${fmt(ht-htRemise)}</div>`:''}
+    <div class="col-6 text-muted">HT après remise</div><div class="col-6 text-end fw-bold">${fmt(htRemise)}</div>
+    <div class="col-6 text-muted">TVA 18% ${tvaOn?'':' (NA)'}</div><div class="col-6 text-end">${fmt(tva)}</div>
+    <div class="col-6 fw-bold">Total TTC</div><div class="col-6 text-end fw-bold" style="color:#0A2F5E;font-size:15px;">${fmt(ttc)}</div>
+    ${aib>0? `<div class="col-6 text-muted">Retenue AIB ${aibPct}%</div><div class="col-6 text-end text-danger">- ${fmt(aib)}</div>`:''}
+    <div class="col-6 fw-bold">Net à payer</div><div class="col-6 text-end fw-bold text-success" style="font-size:16px;">${fmt(net)}</div>
+    ${acompte>0? `<div class="col-6 text-muted">Acompte</div><div class="col-6 text-end">- ${fmt(acompte)}</div><div class="col-6 fw-bold">Reste dû</div><div class="col-6 text-end fw-bold text-danger">${fmt(reste)}</div>`:''}
+  </div>`;
+  box.dataset.calc=JSON.stringify({ht, htRemise, tva, ttc, aib, net, acompte, reste});
+}
+function saveFacture(){
+  const idx=document.getElementById('factureEditIdx').value;
+  const clientIdx=parseInt(document.getElementById('factureClient').value);
+  if(isNaN(clientIdx)){ alert('Choisissez un client'); return; }
+  if(factureLinesData.every(l=>!l.desc)) { alert('Ajoutez au moins une ligne'); return; }
+  const calc=JSON.parse(document.getElementById('factureTotals').dataset.calc||'{}');
+  const c=clients[clientIdx];
+  const f={num:document.getElementById('factureNum').value, clientIdx, clientName:c.name, clientRef:c.ref, date:document.getElementById('factureDate').value, echeance:document.getElementById('factureEcheance').value, objet:document.getElementById('factureObjet').value.trim()||'Prestation GOBEX', lines:factureLinesData.map(l=> ({...l})), tva:document.getElementById('factureTVA').checked, aib:parseFloat(document.getElementById('factureAIB').value)||0, remise:parseFloat(document.getElementById('factureRemise').value)||0, acompte:parseFloat(document.getElementById('factureAcompte').value)||0, mode:document.getElementById('factureMode').value, conditions:document.getElementById('factureConditions').value.trim(), notes:document.getElementById('factureNotes').value.trim(), statut:document.getElementById('factureStatut').value, total:{ht:calc.ht||0, htRemise:calc.htRemise||calc.ht||0, tva:calc.tva||0, ttc:calc.ttc||0, aib:calc.aib||0, net:calc.net||calc.ttc||0, acompte:calc.acompte||0, reste:calc.reste||calc.net||0}};
+  if(idx===''){ factures.unshift(f); } else { factures[parseInt(idx)]=f; }
+  saveFactures(); bootstrap.Modal.getInstance(document.getElementById('factureModal')).hide();
+}
+function editFacture(i){ openFactureModal(i); }
+function duplicateFacture(i){ const f={...factures[i], num:generateNum('FACT', factures), date:new Date().toISOString().split('T')[0], echeance:new Date(Date.now()+30*86400000).toISOString().split('T')[0], statut:'Brouillon'}; factures.unshift(f); saveFactures(); }
+function deleteFacture(i){ if(confirm(`Supprimer ${factures[i].num} ?`)){ factures.splice(i,1); saveFactures(); } }
+function markPaid(i){ if(confirm(`Marquer ${factures[i].num} comme PAYÉE ?`)){ factures[i].statut='Payée'; saveFactures(); } }
+function relanceFacture(i){ const f=factures[i]; const c=clients[f.clientIdx]; const wa=c?.whatsapp || c?.phone?.replace(/\D/g,'') || '22997739046'; const msg=`Bonjour ${f.clientName}, votre facture ${f.num} de ${fmt(f.total.net)} (échéance ${fmtDate(f.echeance)}) est en attente. Merci de régulariser. GOBEX +229 97 739 046`; window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`, '_blank'); }
+function previewFacture(){ if(!document.getElementById('factureClient').value){ alert('Choisissez un client'); return; } const calc=JSON.parse(document.getElementById('factureTotals').dataset.calc||'{}'); const c=clients[parseInt(document.getElementById('factureClient').value)]; const html=buildDocHTML({type:'FACTURE', num:document.getElementById('factureNum').value, date:document.getElementById('factureDate').value, echeance:document.getElementById('factureEcheance').value, objet:document.getElementById('factureObjet').value, client:c, lines:factureLinesData, tva:document.getElementById('factureTVA').checked, aib:parseFloat(document.getElementById('factureAIB').value)||0, remise:parseFloat(document.getElementById('factureRemise').value)||0, acompte:parseFloat(document.getElementById('factureAcompte').value)||0, mode:document.getElementById('factureMode').value, conditions:document.getElementById('factureConditions').value, total:calc}); showPreview(html, 'Facture '+document.getElementById('factureNum').value); }
+function previewFactureByIdx(i){ const f=factures[i]; const c=clients[f.clientIdx]||{name:f.clientName}; const html=buildDocHTML({type:'FACTURE', num:f.num, date:f.date, echeance:f.echeance, objet:f.objet, client:c, lines:f.lines, tva:f.tva, aib:f.aib, remise:f.remise, acompte:f.acompte, mode:f.mode, conditions:f.conditions, total:f.total, statut:f.statut}); showPreview(html, 'Facture '+f.num); }
+
+function buildDocHTML({type, num, date, echeance, objet, client, lines, tva, aib, remise, acompte, mode, conditions, total}){
+  const isFact = type==='FACTURE';
+  const title = isFact? 'FACTURE' : 'DEVIS';
+  const color = isFact? '#0A2F5E' : '#FFB81C';
+  const textColor = isFact? '#fff' : '#0A2F5E';
+  const rows = (lines||[]).map((l,i)=> `<tr><td style="padding:8px;border:1px solid #e2e8f0;">${i+1}. ${l.desc||'—'}</td><td style="padding:8px;border:1px solid #e2e8f0;text-align:center;">${l.qty}</td><td style="padding:8px;border:1px solid #e2e8f0;text-align:right;">${fmt(l.pu)}</td><td style="padding:8px;border:1px solid #e2e8f0;text-align:right;font-weight:700;">${fmt((l.qty||0)*(l.pu||0))}</td></tr>`).join('');
+  const htInit = lines.reduce((s,l)=> s+(parseFloat(l.qty)||0)*(parseFloat(l.pu)||0),0);
+  return `<div id="printAreaFact" style="background:#fff;padding:24px;border-radius:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:start;gap:20px;border-bottom:3px solid ${color};padding-bottom:16px;">
+      <div><div style="font-family:Exo;font-weight:800;font-size:28px;color:#0A2F5E;letter-spacing:-0.5px;">GOBEX</div><div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#6f8ba4;font-weight:700;">Godwin Business Expertise</div><div style="font-size:11px;color:#6f8ba4;margin-top:6px;">${CABINET.addr}<br>RCCM ${CABINET.rccm} • IFU ${CABINET.ifu} • ${CABINET.tel} • ${CABINET.email}</div></div>
+      <div style="text-align:right;"><div style="background:${color};color:${textColor};padding:10px 18px;border-radius:10px;font-family:Exo;font-weight:800;letter-spacing:1px;">${title}</div><div style="margin-top:8px;font-size:13px;"><strong>${num}</strong><br>Date: ${fmtDate(date)}<br>${isFact? 'Échéance: <strong>'+fmtDate(echeance)+'</strong>' : 'Validité: <strong>'+fmtDate(echeance)+'</strong>'}<br><small class="text-muted">${objet||''}</small></div></div>
+    </div>
+    <div style="display:flex;gap:16px;margin-top:18px;">
+      <div style="flex:1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px;"><div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#6f8ba4;font-weight:700;">Émetteur</div><strong style="color:#0A2F5E;">${CABINET.full} (GOBEX)</strong><br><small>${CABINET.addr}<br>IFU ${CABINET.ifu} • RCCM ${CABINET.rccm}<br>${CABINET.tel} • ${CABINET.email}</small></div>
+      <div style="flex:1;background:#fff8e1;border:1px solid #FFE082;border-radius:10px;padding:12px;"><div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#6f8ba4;font-weight:700;">Client</div><strong style="color:#0A2F5E;">${client?.name || client?.entDenomination || client?.partNom || '—'}</strong><br><small>${client?.address||client?.siegeAdresse||client?.partAdresse||''}<br>${client?.ifu||client?.entIfu? 'IFU '+ (client.ifu||client.entIfu) +' • ':''}${client?.rccm||client?.entRccm? 'RCCM '+ (client.rccm||client.entRccm) +' • ':''}${client?.phone||client?.partTel||''}<br>${client?.email||client?.partEmail||''}</small></div>
+    </div>
+    ${objet? `<div style="margin-top:14px;padding:10px;background:#e3f0ff;border-radius:8px;font-size:13px;"><strong>Objet:</strong> ${objet}</div>`:''}
+    <table style="width:100%;border-collapse:collapse;margin-top:16px;font-size:13px;"><thead><tr style="background:#0A2F5E;color:#fff;"><th style="padding:10px;border:1px solid #0A2F5E;text-align:left;">Désignation</th><th style="padding:10px;border:1px solid #0A2F5E;width:70px;">Qté</th><th style="padding:10px;border:1px solid #0A2F5E;width:120px;">PU HT</th><th style="padding:10px;border:1px solid #0A2F5E;width:130px;">Total HT</th></tr></thead><tbody>${rows||'<tr><td colspan=4 style=\"padding:12px;border:1px solid #e2e8f0;text-align:center;color:#94a3b8;\">Aucune ligne</td></tr>'}</tbody></table>
+    <div style="display:flex;justify-content:flex-end;margin-top:14px;"><div style="width:320px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px;font-size:13px;">
+      <div style="display:flex;justify-content:space-between;"><span>Sous-total HT</span><strong>${fmt(htInit)}</strong></div>
+      ${remise>0? `<div style="display:flex;justify-content:space-between;color:#dc3545;"><span>Remise ${remise}%</span><span>- ${fmt(htInit - (total.htRemise||htInit))}</span></div><div style="display:flex;justify-content:space-between;"><span>HT après remise</span><strong>${fmt(total.htRemise||htInit)}</strong></div>`:''}
+      <div style="display:flex;justify-content:space-between;"><span>TVA 18% ${tva?'':' (NA)'}</span><span>${fmt(total.tva||0)}</span></div>
+      <div style="display:flex;justify-content:space-between;border-top:1px solid #e2e8f0;margin-top:6px;padding-top:6px;font-weight:700;color:#0A2F5E;font-size:15px;"><span>Total TTC</span><span>${fmt(total.ttc||0)}</span></div>
+      ${total.aib>0? `<div style="display:flex;justify-content:space-between;color:#dc3545;"><span>Retenue AIB ${aib}%</span><span>- ${fmt(total.aib)}</span></div><div style="display:flex;justify-content:space-between;font-weight:800;color:#2e7d32;font-size:15px;"><span>Net à payer</span><span>${fmt(total.net)}</span></div>`:''}
+      ${acompte>0? `<div style="display:flex;justify-content:space-between;"><span>Acompte</span><span>- ${fmt(acompte)}</span></div><div style="display:flex;justify-content:space-between;font-weight:800;color:#dc3545;"><span>Reste dû</span><span>${fmt(total.reste|| (total.net - acompte))}</span></div>`:''}
+      ${mode? `<div style="margin-top:6px;font-size:11px;color:#6f8ba4;">Mode: ${mode}</div>`:''}
+    </div></div>
+    ${conditions? `<div style="margin-top:14px;padding:10px;background:#fff3d0;border:1px solid #FFE082;border-radius:8px;font-size:11px;"><strong>Conditions:</strong> ${conditions}</div>`:''}
+    <div style="margin-top:14px;font-size:10px;color:#6f8ba4;border-top:1px solid #e2e8f0;padding-top:10px;text-align:center;">
+      ${isFact? 'Facture conforme SYSCOHADA & DGI Bénin • TVA 18% • AIB selon article 182 CGI • IFU obligatoire • En cas de retard, pénalités 10% • Payable par virement, Mobile Money ou espèces' : 'Devis valable jusqu\'au '+fmtDate(echeance)+' • Prix fermes • Délai exécution à convenir • TVA/AIB selon législation béninoise'}<br>
+      GOBEX – ${CABINET.rccm} • IFU ${CABINET.ifu} • ${CABINET.tel} • Document généré le ${new Date().toLocaleString('fr-FR')} • ${num}
+    </div>
+    <div style="display:flex;gap:16px;margin-top:18px;">
+      <div style="flex:1;border:2px dashed #cbd5e1;border-radius:10px;padding:16px;text-align:center;min-height:90px;"><small class="text-muted">Pour le client — Bon pour accord<br>Signature + Cachet</small><div style="border-top:1px solid #333;margin-top:40px;padding-top:6px;font-size:11px;font-weight:700;">Signature</div></div>
+      <div style="flex:1;border:2px dashed #cbd5e1;border-radius:10px;padding:16px;text-align:center;min-height:90px;"><small class="text-muted">Pour GOBEX<br>Signature & Cachet</small><div style="border-top:1px solid #333;margin-top:40px;padding-top:6px;font-size:11px;font-weight:700;">GOBEX</div></div>
+    </div>
+  </div>`;
+}
+function showPreview(html, title){
+  currentPreviewHTML=html;
+  document.getElementById('previewTitle').innerHTML=`<i class="bi bi-file-earmark-pdf me-2 text-warning"></i>${title}`;
+  document.getElementById('previewBodyFact').innerHTML=html;
+  new bootstrap.Modal(document.getElementById('previewModalFact')).show();
+}
+function printPreviewFact(){
+  const w=window.open('', '_blank');
+  w.document.write(`<html><head><title>GOBEX - ${document.getElementById('previewTitle').textContent}</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet"><style>body{font-family:Roboto;padding:20px} @media print{ @page{margin:12mm;size:A4} }</style></head><body>${currentPreviewHTML}<script>window.onload=function(){window.print();}<\/script></body></html>`);
+  w.document.close();
+}
+function exportFactures(){ const blob=new Blob([JSON.stringify(factures,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='gobex-factures-'+new Date().toISOString().split('T')[0]+'.json'; a.click(); }
+function exportDevis(){ const blob=new Blob([JSON.stringify(devis,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='gobex-devis-'+new Date().toISOString().split('T')[0]+'.json'; a.click(); }
+function logout(){localStorage.removeItem('gobex_admin_auth');window.location.href='index.html';}
+
+// init
+loadClients(); loadFactures(); loadDevis(); updateStats();
+document.getElementById('searchFacture').addEventListener('input', renderFactures);
+document.getElementById('searchDevis').addEventListener('input', renderDevis);
+
+// auto detect retard every minute
+setInterval(()=>{ renderFactures(); renderDevis(); updateStats(); }, 60000);
+</script>
 </body></html>

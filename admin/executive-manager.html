@@ -1,0 +1,861 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Executive Manager - Portail GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb;--success:#25D366}body{font-family:Roboto;background:var(--light);min-height:100vh}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:300px;z-index:1000;overflow-y:auto}.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{font-family:Exo;font-weight:800;font-size:22px;color:#fff;letter-spacing:-0.5px}.sidebar-logo span{color:var(--accent)}.menu-section{padding:14px 24px 6px;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,0.45);font-weight:700;margin-top:8px}.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.75);text-decoration:none;border-left:3px solid transparent;font-size:13px;transition:.2s;cursor:pointer}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}.menu-item i{width:20px;font-size:16px}.menu-item .badge{font-size:10px}.main{margin-left:300px;padding:20px}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:18px;border:1px solid #eef2f6;transition:.3s;height:100%}.stat-card:hover{box-shadow:0 10px 30px rgba(10,47,94,0.07)}.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:8px 18px;border:2px solid var(--accent);font-size:12px}.btn-main:hover{background:#e6a517;border-color:#e6a517;color:var(--primary)}.btn-dark-gobex{background:var(--primary);color:#fff;border-radius:50px;padding:8px 18px;font-weight:600;border:2px solid var(--primary);font-size:12px}.btn-dark-gobex:hover{background:#071f3e;color:#fff}.kpi-card{background:linear-gradient(135deg,var(--primary) 0%,#143d75 100%);color:#fff;border-radius:16px;padding:18px;position:relative;overflow:hidden;height:100%}.kpi-card.accent{background:linear-gradient(135deg,#FFB81C 0%,#e6a517 100%);color:#0A2F5E}.kpi-card:after{content:'';position:absolute;top:-30%;right:-20%;width:80%;height:80%;background:rgba(255,255,255,0.08);border-radius:50%}.nav-pills .nav-link{border-radius:50px;font-size:13px;font-weight:600;color:#6b7280;padding:8px 16px}.nav-pills .nav-link.active{background:var(--primary);color:#fff}.nav-pills .nav-link.active.accent{background:var(--accent)!important;color:#0A2F5E!important}.dossier-card{background:#fff;border-radius:16px;border:1px solid #eef2f6;padding:16px;transition:.2s;cursor:pointer;height:100%}.dossier-card:hover{box-shadow:0 8px 30px rgba(10,47,94,0.08);transform:translateY(-2px);border-color:#dbe4f0}.dossier-card.urgente{border-left:4px solid #dc3545}.dossier-card.tres-urgente{border-left:4px solid #dc3545;box-shadow:0 0 0 2px rgba(220,53,69,0.1)}.badge-prio{font-size:10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:700;padding:4px 8px;border-radius:50px}.badge-domaine{font-size:11px;border:1px solid #e2e8f0;background:#f8fafc;color:#0A2F5E;padding:4px 8px;border-radius:50px;font-weight:600}.progress-mini{height:6px;border-radius:50px}.timeline{position:relative;padding-left:22px}.timeline:before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:#e2e8f0;border-radius:2px}.timeline-item{position:relative;margin-bottom:14px}.timeline-item:before{content:'';position:absolute;left:-16px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--primary);border:2px solid #fff;box-shadow:0 0 0 2px var(--primary)}.timeline-item.correction:before{background:#dc3545;box-shadow:0 0 0 2px #dc3545}.timeline-item.validation:before{background:#198754;box-shadow:0 0 0 2px #198754}.chat-bubble{max-width:85%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.4}.chat-bubble.me{background:var(--primary);color:#fff;border-bottom-right-radius:4px;margin-left:auto}.chat-bubble.other{background:#f1f5f9;color:#0A2F5E;border-bottom-left-radius:4px}.dropzone-mini{border:2px dashed #cbd5e1;border-radius:12px;padding:16px;text-align:center;background:#f8fafc;cursor:pointer;transition:.2s}.dropzone-mini:hover{border-color:var(--accent);background:#fff8e1}.permission-matrix th{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#6f8ba4}.permission-matrix td{text-align:center}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}</style></head><body>
+<div class="sidebar" id="sidebar"><div class="sidebar-header"><div class="sidebar-logo">GOBEX <span>EXECUTIVE</span></div><div style="font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,0.5);">MANAGER • Portail Central</div><div class="mt-3 d-flex gap-2 align-items-center"><span class="badge bg-warning text-dark" style="font-size:10px;letter-spacing:0.5px;"><i class="bi bi-shield-check me-1"></i>EXECUTIVE MANAGER</span><small id="currentUserLbl" style="color:rgba(255,255,255,0.6);font-size:11px;">Godwin • Manager</small></div></div>
+<div class="menu-section">Pilotage Central</div>
+<a class="menu-item active" data-pane="overview" onclick="switchPane('overview')"><i class="bi bi-grid-1x2"></i> Vue d'ensemble <span class="badge bg-warning text-dark ms-auto" id="sbTotalDossiers">0</span></a>
+<a class="menu-item" data-pane="reception" onclick="switchPane('reception')"><i class="bi bi-inbox"></i> Réception Secrétariat <span class="badge bg-danger ms-auto" id="sbReception">0</span></a>
+<a class="menu-item" data-pane="dossiers" onclick="switchPane('dossiers')"><i class="bi bi-folder2-open"></i> Dossiers Clients <span class="badge bg-primary ms-auto" id="sbDossiers">0</span></a>
+<a class="menu-item" data-pane="affectation" onclick="switchPane('affectation')"><i class="bi bi-diagram-3"></i> Affectation <span class="badge bg-warning text-dark ms-auto" id="sbAffectation">0</span></a>
+<div class="menu-section">Départements • Workspaces</div>
+<a class="menu-item" data-pane="workspaces" onclick="switchPane('workspaces')"><i class="bi bi-kanban"></i> Workspaces</a>
+<div style="padding:4px 24px 4px 40px;display:flex;flex-direction:column;gap:2px;" id="deptQuickList"></div>
+<a class="menu-item" data-pane="validation" onclick="switchPane('validation')"><i class="bi bi-patch-check"></i> Validation Manager <span class="badge bg-success ms-auto" id="sbValidation">0</span></a>
+<div class="menu-section">Secrétariat & Admin</div>
+<a class="menu-item" data-pane="secretariat" onclick="switchPane('secretariat')"><i class="bi bi-receipt"></i> Secrétariat <small class="text-warning ms-1">Devis•Factures</small></a>
+<a class="menu-item" data-pane="admin" onclick="switchPane('admin')"><i class="bi bi-gear"></i> Administration <small class="text-white-50 ms-1">Teams/Elements</small></a>
+<a class="menu-item" data-pane="audit" onclick="switchPane('audit')"><i class="bi bi-clock-history"></i> Audit & Historique</a>
+<div style="margin-top:16px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px">
+<a href="crm.html" class="menu-item"><i class="bi bi-arrow-left"></i> Retour CRM</a>
+<a href="crm-clients.html" class="menu-item"><i class="bi bi-people"></i> Clients</a>
+<a href="crm-documents.html" class="menu-item"><i class="bi bi-files"></i> Documents</a>
+<a href="crm-facturation.html" class="menu-item"><i class="bi bi-receipt"></i> Facturation</a>
+<a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Voir site</a>
+<a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+</div></div>
+
+<div class="main">
+<div class="topbar">
+<div class="d-flex align-items-center gap-3">
+<button class="btn btn-light d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button>
+<div><h5 class="mb-0" style="font-family:Exo;font-weight:800;color:#0A2F5E;letter-spacing:-0.5px;">Portail Executive Manager</h5><small class="text-muted">Réception → Traitement → Affectation → Suivi • 6 Départements • Workflow collaboratif</small></div>
+</div>
+<div class="d-flex gap-2 align-items-center flex-wrap">
+<div class="d-flex align-items-center gap-2 px-3 py-2 bg-light rounded-pill border" style="font-size:12px;"><i class="bi bi-person-badge text-primary"></i><select id="roleSwitcher" class="form-select form-select-sm border-0 bg-transparent p-0" style="width:auto;font-size:12px;font-weight:600;" onchange="onRoleChange(this.value)"><option value="manager">Executive Manager</option><option value="secretariat">Secrétariat</option><option value="fiscalite">Dépt Fiscalité</option><option value="comptabilite">Dépt Comptabilité</option><option value="grh">Dépt GRH & Formations</option><option value="it">Dépt IT / WEB / IA</option><option value="business">Dépt Business & Autres</option><option value="gestion">Dépt Gestion & Suivi</option></select></div>
+<button class="btn btn-light position-relative rounded-pill" onclick="switchPane('validation')" title="Notifications internes"><i class="bi bi-bell"></i><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notifBadge" style="font-size:10px;">0</span></button>
+<button class="btn btn-main rounded-pill" onclick="switchPane('reception'); document.getElementById('btnNewDossierTop')?.click()"><i class="bi bi-plus-lg me-1"></i> Nouveau dossier</button>
+</div>
+</div>
+
+<!-- KPI -->
+<div class="row g-3 mb-4" id="kpiRow">
+<div class="col-lg-2 col-md-4 col-6"><div class="kpi-card"><div class="d-flex justify-content-between align-items-start"><div><small style="opacity:0.7">Dossiers en cours</small><h3 class="mb-0" id="kpiTotal">0</h3><small style="opacity:0.7" id="kpiTotalSub">—</small></div><i class="bi bi-folder2-open" style="font-size:22px;opacity:0.6"></i></div><div class="progress mt-2" style="height:4px;background:rgba(255,255,255,0.2)"><div class="progress-bar bg-warning" id="kpiTotalBar" style="width:0%"></div></div></div></div>
+<div class="col-lg-2 col-md-4 col-6"><div class="stat-card text-center py-3"><small class="text-muted">À affecter</small><h4 class="mb-0" style="color:#f59e0b;" id="kpiAAffecter">0</h4><small class="text-warning" id="kpiAAffecterSub">En attente</small></div></div>
+<div class="col-lg-2 col-md-4 col-6"><div class="stat-card text-center py-3"><small class="text-muted">En traitement</small><h4 class="mb-0" style="color:#1976d2;" id="kpiTraitement">0</h4><small class="text-muted" id="kpiTraitementSub">6 dépts</small></div></div>
+<div class="col-lg-2 col-md-4 col-6"><div class="stat-card text-center py-3"><small class="text-muted">En validation</small><h4 class="mb-0" style="color:#7b1fa2;" id="kpiValidation">0</h4><small class="text-muted">Manager</small></div></div>
+<div class="col-lg-2 col-md-4 col-6"><div class="stat-card text-center py-3"><small class="text-muted">À corriger</small><h4 class="mb-0 text-danger" id="kpiCorrection">0</h4><small class="text-danger">Renvoyés</small></div></div>
+<div class="col-lg-2 col-md-4 col-6"><div class="stat-card text-center py-3" style="border:2px solid #198754;"><small class="text-muted">Validés / Livrés</small><h4 class="mb-0 text-success" id="kpiLivres">0</h4><small class="text-success">Ce mois</small></div></div>
+</div>
+
+<!-- PANES -->
+<div id="pane-overview" class="pane">
+<div class="row g-3">
+<div class="col-lg-8"><div class="stat-card"><div class="d-flex justify-content-between align-items-center mb-3"><h6 class="mb-0" style="font-family:Exo;font-weight:700;">Flux dossiers — Kanban Executive</h6><button class="btn btn-sm btn-outline-dark rounded-pill" onclick="switchPane('dossiers')">Voir tout <i class="bi bi-arrow-right ms-1"></i></button></div><div class="row g-2" id="kanbanOverview"></div></div></div>
+<div class="col-lg-4"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-exclamation-triangle me-2 text-danger"></i>Priorités & urgences</h6><div id="urgencesList" class="mt-3"></div><div class="mt-3 p-3 rounded-3" style="background:#fff3d0;border:1px solid #FFE082;"><small class="fw-bold" style="color:#0A2F5E;"><i class="bi bi-lightning me-1"></i> Automatisation</small><br><small class="text-muted">Affectation auto par mots-clés, alertes retard, relance WhatsApp, versioning, audit complet.</small></div></div>
+<div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-people me-2 text-primary"></i>Charge par département</h6><div id="chargeDept" class="mt-3"></div></div></div>
+</div>
+<div class="row g-3 mt-1"><div class="col-12"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;">Activité récente — Historique global</h6><div id="activityFeed" class="mt-3 small" style="max-height:240px;overflow-y:auto;"></div></div></div></div>
+</div>
+
+<div id="pane-reception" class="pane d-none">
+<div class="stat-card"><div class="d-flex justify-content-between align-items-center mb-3"><div><h6 class="mb-0" style="font-family:Exo;font-weight:700;"><i class="bi bi-inbox me-2 text-warning"></i>Réception Secrétariat — Créer un dossier client</h6><small class="text-muted">Un dossier = un client + une ou plusieurs préoccupations • Base dédiée • Détection auto des domaines</small></div><span class="badge bg-warning text-dark">Rôle Secrétariat</span></div>
+<form id="receptionForm" onsubmit="event.preventDefault(); createDossier();">
+<div class="row g-3">
+<div class="col-md-4"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Client *</label><select id="recClient" class="form-select" required><option value="">— Sélectionner client CRM —</option></select><small class="text-muted" style="font-size:11px;">Depuis base CRM • <a href="crm-client-form.html" target="_blank" style="color:#0A2F5E;text-decoration:underline;">Créer nouveau client</a></small><div id="recClientPreview" class="mt-2 small p-2 bg-light rounded-3 d-none"></div></div>
+<div class="col-md-2"><label class="form-label small fw-bold">Secrétaire</label><input type="text" id="recSecretaire" class="form-control" value="Secrétariat GOBEX" placeholder="Nom secrétaire"></div>
+<div class="col-md-2"><label class="form-label small fw-bold">Date réception</label><input type="date" id="recDate" class="form-control"></div>
+<div class="col-md-2"><label class="form-label small fw-bold">Priorité</label><select id="recPriorite" class="form-select"><option>Normale</option><option>Urgente</option><option>Très urgente</option></select></div>
+<div class="col-md-2"><label class="form-label small fw-bold">Échéance souhaitée</label><input type="date" id="recEcheance" class="form-control"></div>
+</div>
+<div class="mt-4">
+<div class="d-flex justify-content-between align-items-center mb-2"><label class="form-label small fw-bold text-uppercase mb-0" style="color:#0A2F5E;">Préoccupations du client *</label><button type="button" class="btn btn-sm btn-outline-dark rounded-pill" onclick="addPreoccupation()"><i class="bi bi-plus-lg me-1"></i> Ajouter préoccupation</button></div>
+<small class="text-muted">Décrivez chaque demande • Le système détecte automatiquement le(s) département(s) concerné(s) par mots-clés</small>
+<div id="preoccupationsList" class="mt-3"></div>
+<div class="alert alert-info small mt-3" id="autoDetectAlert" style="border-radius:10px;display:none;"><i class="bi bi-magic me-1"></i> <strong>Départements détectés :</strong> <span id="autoDetectResult"></span> • Vous pouvez ajuster manuellement à l'étape Affectation.</div>
+</div>
+<div class="row g-3 mt-2">
+<div class="col-md-6"><label class="form-label small fw-bold">Pièces jointes initiales (optionnel)</label><div class="dropzone-mini" onclick="document.getElementById('recFiles').click()"><input type="file" id="recFiles" hidden multiple><i class="bi bi-paperclip" style="font-size:20px;color:#0A2F5E;"></i><small class="ms-2 text-muted">Glissez ou cliquez • PDF, images, docs</small><div id="recFilesList" class="small text-start mt-2"></div></div></div>
+<div class="col-md-6"><label class="form-label small fw-bold">Note secrétariat / Canal d'arrivée</label><input type="text" id="recNote" class="form-control" placeholder="Ex: Appel téléphonique, WhatsApp, visite cabinet, email..."><small class="text-muted" style="font-size:11px;">Sera tracé dans l'historique & audit</small></div>
+</div>
+<div class="d-flex justify-content-between align-items-center mt-4"><small class="text-muted"><i class="bi bi-shield-check me-1"></i> Un dossier sera créé avec référence auto, version 1, historique initial et notification Manager.</small><button type="submit" class="btn btn-main rounded-pill px-4" id="btnNewDossierTop"><i class="bi bi-folder-plus me-2"></i>Créer dossier & notifier Manager</button></div>
+</form>
+</div>
+<div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Derniers dossiers réceptionnés</h6><div id="recentReception" class="mt-2 small"></div></div>
+</div>
+
+<div id="pane-dossiers" class="pane d-none">
+<div class="stat-card">
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+<h6 class="mb-0" style="font-family:Exo;font-weight:700;">Dossiers Clients — Central</h6>
+<div class="d-flex gap-2 flex-wrap">
+<input type="text" id="searchDossier" class="form-control form-control-sm" placeholder="Rechercher réf, client, préoccupation..." style="width:220px;" oninput="renderDossiers()">
+<select id="filterStatut" class="form-select form-select-sm" style="width:160px;" onchange="renderDossiers()"><option value="all">Tous statuts</option><option>Reçu</option><option>Affecté</option><option>En traitement</option><option>En validation</option><option>À corriger</option><option>Validé</option><option>Livré</option></select>
+<select id="filterDept" class="form-select form-select-sm" style="width:200px;" onchange="renderDossiers()"><option value="all">Tous départements</option></select>
+<select id="filterPrio" class="form-select form-select-sm" style="width:150px;" onchange="renderDossiers()"><option value="all">Toutes priorités</option><option>Très urgente</option><option>Urgente</option><option>Normale</option></select>
+</div>
+</div>
+<div class="row g-3" id="dossiersGrid"></div>
+<div id="dossiersEmpty" class="text-center py-5 d-none text-muted"><i class="bi bi-folder-x" style="font-size:42px;opacity:0.2"></i><p class="mt-2">Aucun dossier — créez-en depuis Réception</p></div>
+</div>
+</div>
+
+<div id="pane-affectation" class="pane d-none">
+<div class="stat-card"><div class="d-flex justify-content-between align-items-center mb-3"><h6 class="mb-0" style="font-family:Exo;font-weight:700;"><i class="bi bi-diagram-3 me-2 text-warning"></i>Affectation — Executive Manager</h6><div class="d-flex gap-2"><button class="btn btn-sm btn-outline-dark rounded-pill" onclick="autoAffectAll()"><i class="bi bi-magic me-1"></i> Tout affecter auto</button><button class="btn btn-sm btn-main rounded-pill" onclick="bulkAffect()"><i class="bi bi-check2-square me-1"></i> Affecter sélection</button></div></div><small class="text-muted">Affectation automatique par IA mots-clés ou manuelle. Chaque dossier peut aller à 1 ou plusieurs départements.</small>
+<div class="table-responsive mt-3"><table class="table table-hover small align-middle"><thead class="table-light"><tr><th><input type="checkbox" id="checkAllAffect" onchange="toggleAllAffect(this.checked)"></th><th>Dossier / Client</th><th>Préoccupations • Domaines détectés</th><th>Priorité / Échéance</th><th>Affecter à</th><th>Action</th></tr></thead><tbody id="affectTable"></tbody></table></div></div>
+</div>
+
+<div id="pane-workspaces" class="pane d-none">
+<div class="d-flex gap-2 mb-3 flex-wrap" id="workspaceDeptTabs"></div>
+<div id="workspaceContent"></div>
+</div>
+
+<div id="pane-validation" class="pane d-none">
+<div class="stat-card"><h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-patch-check me-2 text-success"></i>Validation Manager — Dossiers en attente de décision</h6><small class="text-muted">Dossiers transmis par les départements via Teams/Elements • Valider → notification WhatsApp + email • Renvoyer → correction + nouvelle version</small>
+<div id="validationList" class="mt-3"></div>
+<div id="validationEmpty" class="text-center py-5 d-none text-muted"><i class="bi bi-patch-check" style="font-size:42px;opacity:0.2"></i><p class="mt-2">Aucun dossier en validation</p></div>
+</div>
+</div>
+
+<div id="pane-secretariat" class="pane d-none">
+<div class="row g-3">
+<div class="col-lg-8"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-receipt me-2 text-warning"></i>Secrétariat — Devis & Factures • Paiements • Relances</h6>
+<div class="row g-2 mt-2 text-center small">
+<div class="col-4"><div class="p-3 rounded-3" style="background:#e3f0ff;"><strong id="secDevis">0</strong><br>Devis</div></div>
+<div class="col-4"><div class="p-3 rounded-3" style="background:#fff3d0;"><strong id="secFactures">0</strong><br>Factures</div></div>
+<div class="col-4"><div class="p-3 rounded-3" style="background:#e8f5e9;"><strong id="secEncaisse">0 FCFA</strong><br>Encaissé</div></div>
+</div>
+<div class="d-flex gap-2 mt-3"><a href="crm-facturation.html" target="_blank" class="btn btn-main btn-sm rounded-pill"><i class="bi bi-plus-lg me-1"></i> Nouveau devis</a><a href="crm-facturation.html" target="_blank" class="btn btn-sm btn-dark-gobex rounded-pill"><i class="bi bi-receipt me-1"></i> Nouvelle facture</a><button class="btn btn-sm btn-outline-dark rounded-pill" onclick="refreshSecretariat()"><i class="bi bi-arrow-clockwise me-1"></i> Actualiser</button></div>
+<div id="secFacturesList" class="mt-3 small"></div>
+</div>
+<div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Dossiers en attente / retard — Suivi Secrétariat</h6><div id="secRetardList" class="mt-2 small"></div></div></div>
+<div class="col-lg-4"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Relances clients</h6><div id="secRelances" class="mt-3 small"></div></div><div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Notifications WhatsApp & Email</h6><div class="small text-muted">WhatsApp après validation • Email livrables par Manager ou Secrétariat</div><div id="secNotifs" class="mt-2 small"></div></div></div>
+</div>
+</div>
+
+<div id="pane-admin" class="pane d-none">
+<div class="row g-3">
+<div class="col-lg-7"><div class="stat-card"><div class="d-flex justify-content-between align-items-center mb-3"><h6 class="mb-0" style="font-family:Exo;font-weight:700;"><i class="bi bi-people me-2"></i>Comptes Teams / Elements — Départements & Agents</h6><button class="btn btn-sm btn-main rounded-pill" onclick="openAgentModal()"><i class="bi bi-person-plus me-1"></i> Créer compte</button></div><div class="table-responsive"><table class="table table-hover small align-middle"><thead class="table-light"><tr><th>Agent</th><th>Département</th><th>Rôle</th><th>Teams</th><th>Elements</th><th>Accès</th><th></th></tr></thead><tbody id="agentsTable"></tbody></table></div></div>
+<div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Matrice permissions</h6><div class="table-responsive"><table class="table table-sm permission-matrix small"><thead><tr><th>Permission</th><th>Manager</th><th>Secrétariat</th><th>Chef Dépt</th><th>Agent</th></tr></thead><tbody>
+<tr><td class="text-start">Créer dossier</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+<tr><td class="text-start">Affecter dossiers</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+<tr><td class="text-start">Traiter / Rédiger</td><td>✅</td><td>❌</td><td>✅</td><td>✅</td></tr>
+<tr><td class="text-start">Valider / Refuser</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+<tr><td class="text-start">Gérer devis/factures</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+<tr><td class="text-start">Envoyer livrables</td><td>✅</td><td>✅</td><td>✅</td><td>❌</td></tr>
+<tr><td class="text-start">Admin comptes</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+</tbody></table></div><small class="text-muted">Configurable par le Manager • Audit complet de chaque action horodatée</small></div></div>
+<div class="col-lg-5"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-shield-lock me-2"></i>Sécurité & Audit</h6><div class="small text-muted">Chaque action tracée : qui, quand, quoi, département, version. Chiffrage, sauvegarde quotidienne, PWA offline.</div><div id="adminAudit" class="mt-3 small" style="max-height:260px;overflow-y:auto;"></div></div>
+<div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Architecture PWA / SaaS</h6><div class="small"><span class="badge bg-success">PWA Ready</span> <span class="badge bg-primary">Offline-First</span> <span class="badge bg-warning text-dark">SaaS Multi-tenant</span></div><ul class="small text-muted mt-2 ps-3"><li>Manifest + Service Worker (cache dossiers, docs)</li><li>Sync auto dès retour online (IndexedDB → Cloud)</li><li>Chiffrement localStorage + JWT (prod Firebase/Supabase)</li><li>Versioning + sauvegarde incrémentale</li></ul><div class="mt-2 p-2 rounded-3 bg-light small"><strong>Compatibilité :</strong> Chrome, Android, iOS • Installable • Push notifications</div></div>
+<div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Gestion priorités & urgences</h6><div class="d-flex gap-2 mb-2"><span class="badge bg-danger">Très urgente</span> <span class="badge bg-warning text-dark">Urgente</span> <span class="badge bg-secondary">Normale</span></div><small class="text-muted">Tri auto par échéance + priorité • Alertes internes + WhatsApp si retard &gt;24h • Escalade Manager</small></div></div>
+</div>
+</div>
+
+<div id="pane-audit" class="pane d-none">
+<div class="stat-card"><h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-clock-history me-2"></i>Audit complet — Toutes actions</h6><div class="d-flex gap-2 mb-3"><input type="text" id="searchAudit" class="form-control form-control-sm" placeholder="Rechercher action, acteur, dossier..." style="width:260px;" oninput="renderAudit()"><select id="filterAuditDept" class="form-select form-select-sm" style="width:180px;" onchange="renderAudit()"><option value="all">Tous départements</option></select></div><div id="auditFull" class="small" style="max-height:60vh;overflow-y:auto;"></div></div>
+</div>
+
+</div>
+
+<!-- MODALS -->
+<div class="modal fade" id="dossierDetailModal" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><div><h6 class="modal-title" style="font-family:Exo;" id="detailTitle">Dossier</h6><small id="detailSub" class="text-white-50"></small></div><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body" id="detailBody" style="background:#f4f7fb;"></div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Fermer</button><div id="detailActions" class="d-flex gap-2"></div></div></div></div></div>
+
+<div class="modal fade" id="agentModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:var(--primary);color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title" style="font-family:Exo;">Créer compte Teams / Elements</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="agentIdx"><div class="row g-3"><div class="col-12"><label class="form-label small fw-bold">Nom complet *</label><input type="text" id="agNom" class="form-control" placeholder="Ex: Agent Fiscal K."></div><div class="col-md-6"><label class="form-label small fw-bold">Département *</label><select id="agDept" class="form-select"></select></div><div class="col-md-6"><label class="form-label small fw-bold">Rôle</label><select id="agRole" class="form-select"><option>Agent</option><option>Chef Département</option><option>Secrétariat</option><option>Executive Manager</option></select></div><div class="col-md-6"><label class="form-label small fw-bold">Email</label><input type="email" id="agEmail" class="form-control" placeholder="agent@gobex.bj"></div><div class="col-md-6"><label class="form-label small fw-bold">Téléphone</label><input type="tel" id="agPhone" class="form-control" placeholder="+229 ..."></div><div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="agTeams" checked><label class="form-check-label small" for="agTeams">Compte Teams</label></div></div><div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="agElements" checked><label class="form-check-label small" for="agElements">Compte Elements</label></div></div></div></div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Annuler</button><button class="btn btn-main rounded-pill" onclick="saveAgent()">Enregistrer</button></div></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+if(localStorage.getItem('gobex_admin_auth')!=='true'){ /* allow demo without auth but warn */ }
+const DEPARTEMENTS=[
+  {id:'fiscalite', name:'Département Fiscalité', short:'Fiscalité', color:'#1976d2', bg:'#e3f2fd', icon:'bi-calculator', chef:'Chef Fiscalité'},
+  {id:'comptabilite', name:'Département Comptabilité', short:'Comptabilité', color:'#2e7d32', bg:'#e8f5e9', icon:'bi-journal-check', chef:'Chef Comptabilité'},
+  {id:'grh', name:'Département GRH & Formations', short:'GRH & Formations', color:'#ef6c00', bg:'#fff3e0', icon:'bi-people', chef:'Chef GRH'},
+  {id:'it', name:'Département IT / WEB / IA', short:'IT / WEB / IA', color:'#7b1fa2', bg:'#f3e5f5', icon:'bi-laptop', chef:'Chef IT'},
+  {id:'business', name:'Département Business & Autres', short:'Business & Autres', color:'#c2185b', bg:'#fce4ec', icon:'bi-lightbulb', chef:'Chef Business'},
+  {id:'gestion', name:'Département Gestion & Suivi Entreprises', short:'Gestion & Suivi', color:'#00695c', bg:'#e0f2f1', icon:'bi-graph-up', chef:'Chef Gestion'},
+];
+const DOMAIN_KEYWORDS={
+  'Département Fiscalité':['fiscal','tva','ifu','aib','dgi','impôt','taxe','fiscalité'],
+  'Département Comptabilité':['compta','bilan','syscohada','balance','écriture','comptable','journal','compte'],
+  'Département GRH & Formations':['grh','paie','cnss','salaire','rh','formation','contrat travail','recrutement'],
+  'Département IT / WEB / IA':['it','web','site','logiciel','perfecto','digital','ia','intelligence','app','développement'],
+  'Département Business & Autres':['business','plan','création','entreprise','apiex','étude','marché','entrepreneuriat','statut'],
+  'Département Gestion & Suivi Entreprises':['gestion','suivi','pilotage','tableau de bord','performance','organisation','process'],
+};
+let clients=[], dossiers=[], agents=[], currentRole='manager', activeDept='fiscalite';
+
+function loadClients(){
+  const s=localStorage.getItem('gobex_crm_clients');
+  if(s){ try{clients=JSON.parse(s);}catch(e){clients=[];} }
+  const sel=document.getElementById('recClient');
+  sel.innerHTML='<option value="">— Sélectionner client CRM —</option>';
+  clients.forEach((c,i)=>{
+    const o=document.createElement('option'); o.value=i; o.textContent=`${c.name} • ${c.ref||''} • ${c.typeClient||c.type}`;
+    sel.appendChild(o);
+  });
+  sel.addEventListener('change', e=>{
+    const c=clients[e.target.value];
+    const prev=document.getElementById('recClientPreview');
+    if(c){ prev.classList.remove('d-none'); prev.innerHTML=`<strong>${c.name}</strong> • ${c.ref||''}<br><small>${c.ifu? 'IFU '+c.ifu+' • ':''}${c.rccm? 'RCCM '+c.rccm+' • ':''}${c.phone||''} • ${c.address||''}</small>`; }
+    else prev.classList.add('d-none');
+  });
+}
+function loadAgents(){
+  const s=localStorage.getItem('gobex_exec_agents');
+  if(s){ try{agents=JSON.parse(s);}catch(e){agents=[];} }
+  if(agents.length===0){
+    agents=[
+      {nom:'Godwin M.', dept:'Executive Manager', role:'Executive Manager', email:'godwin@gobex.bj', phone:'+22997739046', teams:true, elements:true},
+      {nom:'Secrétariat Fatou', dept:'Secrétariat', role:'Secrétariat', email:'secretariat@gobex.bj', phone:'+22997111222', teams:true, elements:true},
+      {nom:'Chef Fiscalité', dept:'Département Fiscalité', role:'Chef Département', email:'fiscal@gobex.bj', phone:'', teams:true, elements:true},
+      {nom:'Chef Comptabilité', dept:'Département Comptabilité', role:'Chef Département', email:'compta@gobex.bj', phone:'', teams:true, elements:true},
+      {nom:'Chef GRH', dept:'Département GRH & Formations', role:'Chef Département', email:'grh@gobex.bj', phone:'', teams:true, elements:false},
+      {nom:'Chef IT', dept:'Département IT / WEB / IA', role:'Chef Département', email:'it@gobex.bj', phone:'', teams:true, elements:true},
+      {nom:'Agent Compta A.', dept:'Département Comptabilité', role:'Agent', email:'agent.compta@gobex.bj', phone:'', teams:true, elements:true},
+      {nom:'Agent Fiscal B.', dept:'Département Fiscalité', role:'Agent', email:'agent.fiscal@gobex.bj', phone:'', teams:false, elements:true},
+    ];
+    saveAgents();
+  }
+  renderAgents();
+}
+function saveAgents(){ localStorage.setItem('gobex_exec_agents', JSON.stringify(agents)); renderAgents(); }
+
+function loadDossiers(){
+  const s=localStorage.getItem('gobex_exec_dossiers');
+  if(s){ try{dossiers=JSON.parse(s);}catch(e){dossiers=[];} }
+  if(dossiers.length===0) seedDossiers();
+  renderAll();
+}
+function seedDossiers(){
+  const now=new Date(); const addDays=(d,n)=>{ const x=new Date(d); x.setDate(x.getDate()+n); return x.toISOString().split('T')[0]; };
+  dossiers=[
+    {id:'DOS-2025-034', ref:'DOS-2025-034', clientIdx:0, clientName:clients[0]?.name||'ETS La Grâce', clientRef:clients[0]?.ref||'GOBEX-2024-001', dateReception:new Date(Date.now()-5*86400000).toISOString(), secretaire:'Secrétariat Fatou', preoccupations:[{id:'P1', titre:'Déclaration TVA Mai 2025', desc:'Retard DGI, pénalités à éviter', domaine:'Département Fiscalité'}], domaines:['Département Fiscalité'], departements:['Département Fiscalité'], statut:'En traitement', priorite:'Urgente', echeance:addDays(now,2), avancement:60, versions:[{v:1,date:new Date(Date.now()-4*86400000).toISOString(), dept:'Département Fiscalité', auteur:'Agent Fiscal B.', commentaire:'Collecte pièces', fichiers:[]}], communications:[{date:new Date().toISOString(), auteur:'Chef Fiscalité', dept:'Fiscalité', message:'On priorise ce dossier, échéance DGI 10 juin.'}], historique:[{date:new Date(Date.now()-5*86400000).toISOString(), acteur:'Secrétariat Fatou', role:'Secrétariat', action:'Création dossier', details:'Réception client + 1 préoccupation'},{date:new Date(Date.now()-4*86400000).toISOString(), acteur:'Executive Manager', role:'Manager', action:'Affectation', details:'→ Département Fiscalité (auto)'}], traitement:{checklist:[{tache:'Collecter IFU/RCCM',fait:true},{tache:'Préparer déclaration TVA',fait:true},{tache:'Validation interne',fait:false}], notes:''}, livrables:[]},
+    {id:'DOS-2025-033', ref:'DOS-2025-033', clientIdx:1, clientName:clients[1]?.name||'Fashion Bénin', clientRef:clients[1]?.ref||'GOBEX-2024-002', dateReception:new Date(Date.now()-10*86400000).toISOString(), secretaire:'Secrétariat Fatou', preoccupations:[{id:'P1', titre:'Bilan annuel 2024 + SYSCOHADA', desc:'Clôture bilan, à déposer', domaine:'Département Comptabilité'}], domaines:['Département Comptabilité'], departements:['Département Comptabilité'], statut:'En validation', priorite:'Normale', echeance:addDays(now,5), avancement:85, versions:[{v:2,date:new Date(Date.now()-1*86400000).toISOString(), dept:'Département Comptabilité', auteur:'Agent Compta A.', commentaire:'Bilan v2 corrigé', fichiers:[{name:'Bilan_2024_Fashion_v2.pdf',size:1240000}]}], communications:[{date:new Date().toISOString(), auteur:'Agent Compta A.', dept:'Comptabilité', message:'Bilan transmis au Manager via Elements, attente validation.'}], historique:[{date:new Date(Date.now()-10*86400000).toISOString(), acteur:'Secrétariat', role:'Secrétariat', action:'Création', details:''},{date:new Date(Date.now()-9*86400000).toISOString(), acteur:'Manager', role:'Manager', action:'Affectation', details:'→ Comptabilité'},{date:new Date(Date.now()-1*86400000).toISOString(), acteur:'Agent Compta A.', role:'Agent', action:'Transmission', details:'Livrable v2 → Manager (Elements)'}], traitement:{checklist:[{tache:'Saisie écritures',fait:true},{tache:'Balance',fait:true},{tache:'Bilan',fait:true}], notes:''}, livrables:[{name:'Bilan_2024_Fashion_v2.pdf', version:2, date:new Date(Date.now()-1*86400000).toISOString()}]},
+    {id:'DOS-2025-032', ref:'DOS-2025-032', clientIdx:4, clientName:clients[4]?.name||'Quincaillerie HERALD', clientRef:clients[4]?.ref||'GOBEX-2024-005', dateReception:new Date(Date.now()-2*86400000).toISOString(), secretaire:'Secrétariat', preoccupations:[{id:'P1', titre:'Création SARL + IFU + RCCM', desc:'Dossier APIEx complet', domaine:'Département Business & Autres'},{id:'P2', titre:'Logiciel PERFECTO', desc:'Besoin gestion stock', domaine:'Département IT / WEB / IA'}], domaines:['Département Business & Autres','Département IT / WEB / IA'], departements:['Département Business & Autres','Département IT / WEB / IA'], statut:'Affecté', priorite:'Très urgente', echeance:addDays(now,7), avancement:30, versions:[{v:1,date:new Date(Date.now()-1*86400000).toISOString(), dept:'Business', auteur:'Secrétariat', commentaire:'Initial', fichiers:[]}], communications:[], historique:[{date:new Date(Date.now()-2*86400000).toISOString(), acteur:'Secrétariat', role:'Secrétariat', action:'Création', details:'2 préoccupations'}, {date:new Date(Date.now()-1*86400000).toISOString(), acteur:'Manager', role:'Manager', action:'Affectation auto', details:'→ Business & IT (multi-département)'}], traitement:{checklist:[{tache:'Collecte pièces APIEx',fait:false},{tache:'Rédaction statuts',fait:false}], notes:''}, livrables:[]},
+    {id:'DOS-2025-031', ref:'DOS-2025-031', clientIdx:2, clientName:clients[2]?.name||'JKA Services', clientRef:clients[2]?.ref||'GOBEX-2024-003', dateReception:new Date(Date.now()-12*86400000).toISOString(), secretaire:'Secrétariat', preoccupations:[{id:'P1', titre:'Site vitrine + IA', desc:'Site web + chatbot', domaine:'Département IT / WEB / IA'}], domaines:['Département IT / WEB / IA'], departements:['Département IT / WEB / IA'], statut:'À corriger', priorite:'Urgente', echeance:addDays(now,-1), avancement:70, versions:[{v:1,date:new Date(Date.now()-3*86400000).toISOString(), dept:'IT', auteur:'Chef IT', commentaire:'Maquette v1', fichiers:[{name:'Maquette_JKA_v1.pdf',size:890000}]},{v:2,date:new Date(Date.now()-1*86400000).toISOString(), dept:'IT', auteur:'Chef IT', commentaire:'Corrections demandées par Manager', fichiers:[]}], communications:[{date:new Date(Date.now()-2*86400000).toISOString(), auteur:'Executive Manager', dept:'Manager', message:'Maquette à revoir : ajouter section équipe + CNSS.'}], historique:[{date:new Date(Date.now()-12*86400000).toISOString(), acteur:'Secrétariat', role:'Secrétariat', action:'Création', details:''},{date:new Date(Date.now()-11*86400000).toISOString(), acteur:'Manager', role:'Manager', action:'Affectation', details:'→ IT'},{date:new Date(Date.now()-3*86400000).toISOString(), acteur:'Chef IT', role:'Agent', action:'Transmission', details:'v1 → Manager'},{date:new Date(Date.now()-2*86400000).toISOString(), acteur:'Manager', role:'Manager', action:'Renvoi correction', details:'Maquette à corriger'}], traitement:{checklist:[{tache:'Maquette',fait:true},{tache:'Corrections',fait:false}], notes:''}, livrables:[]},
+  ];
+  saveDossiers();
+}
+function saveDossiers(){ localStorage.setItem('gobex_exec_dossiers', JSON.stringify(dossiers)); renderAll(); updateKPI(); }
+
+function updateKPI(){
+  document.getElementById('sbTotalDossiers').textContent=dossiers.length;
+  const aAffecter=dossiers.filter(d=>['Reçu','En analyse'].includes(d.statut)).length;
+  const enTrait=dossiers.filter(d=>['Affecté','En traitement'].includes(d.statut)).length;
+  const enValid=dossiers.filter(d=>d.statut==='En validation').length;
+  const aCorriger=dossiers.filter(d=>d.statut==='À corriger').length;
+  const livres=dossiers.filter(d=>['Validé','Livré','Archivé'].includes(d.statut)).length;
+  document.getElementById('kpiTotal').textContent=dossiers.length;
+  document.getElementById('kpiTotalSub').textContent=livres+' livrés';
+  document.getElementById('kpiAAffecter').textContent=aAffecter;
+  document.getElementById('kpiTraitement').textContent=enTrait;
+  document.getElementById('kpiValidation').textContent=enValid;
+  document.getElementById('kpiCorrection').textContent=aCorriger;
+  document.getElementById('kpiLivres').textContent=livres;
+  document.getElementById('sbReception').textContent=aAffecter;
+  document.getElementById('sbAffectation').textContent=aAffecter;
+  document.getElementById('sbDossiers').textContent=dossiers.length;
+  document.getElementById('sbValidation').textContent=enValid;
+  document.getElementById('kpiTotalBar').style.width=Math.min(100, livres/dossiers.length*100 || 0)+'%';
+  document.getElementById('notifBadge').textContent=enValid + aCorriger;
+  document.getElementById('notifBadge').style.display=(enValid+aCorriger)?'inline':'none';
+  // dept quick list
+  const ql=document.getElementById('deptQuickList');
+  ql.innerHTML=DEPARTEMENTS.map(dep=>{
+    const count=dossiers.filter(d=> d.departements.includes(dep.name)).length;
+    return `<a class="menu-item" style="padding:6px 0 6px 0;font-size:12px;color:rgba(255,255,255,0.6);" onclick="switchPane('workspaces'); setTimeout(()=>selectWorkspaceDept('${dep.id}'),200)"><span style="width:8px;height:8px;border-radius:50%;background:${dep.color};display:inline-block;"></span> ${dep.short} <span class="badge bg-light text-dark ms-auto" style="font-size:10px;">${count}</span></a>`;
+  }).join('');
+}
+
+// NAV
+function switchPane(id){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.add('d-none'));
+  document.getElementById('pane-'+id).classList.remove('d-none');
+  document.querySelectorAll('.sidebar .menu-item[data-pane]').forEach(el=>el.classList.remove('active'));
+  document.querySelector(`.sidebar .menu-item[data-pane="${id}"]`)?.classList.add('active');
+  if(id==='overview') renderOverview();
+  if(id==='dossiers') renderDossiers();
+  if(id==='affectation') renderAffectation();
+  if(id==='workspaces') renderWorkspaces();
+  if(id==='validation') renderValidation();
+  if(id==='secretariat') renderSecretariat();
+  if(id==='admin') {renderAgents(); renderAdminAudit();}
+  if(id==='audit') renderAudit();
+}
+function onRoleChange(val){
+  currentRole=val;
+  const names={manager:'Godwin • Manager', secretariat:'Fatou • Secrétariat', fiscalite:'Agent Fiscalité', comptabilite:'Agent Comptabilité', grh:'Agent GRH', it:'Agent IT', business:'Agent Business', gestion:'Agent Gestion'};
+  document.getElementById('currentUserLbl').textContent=names[val]||val;
+  // filter views for demo: if department role, jump to workspace
+  if(['fiscalite','comptabilite','grh','it','business','gestion'].includes(val)){
+    const map={fiscalite:'fiscalite', comptabilite:'comptabilite', grh:'grh', it:'it', business:'business', gestion:'gestion'};
+    switchPane('workspaces'); setTimeout(()=>selectWorkspaceDept(map[val]),200);
+  }
+}
+
+// OVERVIEW
+function renderOverview(){
+  const kanban=document.getElementById('kanbanOverview');
+  const statuses=[
+    {key:'Reçu', label:'Reçu / À affecter', color:'#f59e0b'},
+    {key:'Affecté', label:'Affecté', color:'#1976d2'},
+    {key:'En traitement', label:'En traitement', color:'#7b1fa2'},
+    {key:'En validation', label:'En validation', color:'#ef6c00'},
+    {key:'Validé', label:'Validé / Livré', color:'#198754'},
+  ];
+  kanban.innerHTML=statuses.map(s=>{
+    const list=dossiers.filter(d=> s.key==='Validé'? ['Validé','Livré','Archivé'].includes(d.statut) : d.statut===s.key);
+    return `<div class="col"><div style="background:${s.color}10;border:1px solid ${s.color}30;border-radius:12px;padding:10px;min-height:220px;"><div class="d-flex justify-content-between align-items-center mb-2"><small class="fw-bold" style="color:${s.color};">${s.label}</small><span class="badge" style="background:${s.color};color:#fff;">${list.length}</span></div>${list.slice(0,3).map(d=>`<div class="p-2 bg-white rounded-3 border mb-2" style="font-size:12px;cursor:pointer;" onclick="openDossier('${d.id}')"><strong>${d.ref}</strong> • ${d.clientName}<br><small class="text-muted">${d.preoccupations[0]?.titre.substring(0,40)||''}</small><br><span class="badge ${d.priorite==='Très urgente'?'bg-danger':d.priorite==='Urgente'?'bg-warning text-dark':'bg-secondary'}" style="font-size:10px;">${d.priorite}</span></div>`).join('')||'<small class="text-muted">—</small>'}${list.length>3? `<small class="text-muted">+${list.length-3} autres</small>`:''}</div></div>`;
+  }).join('');
+  // urgences
+  const urg=dossiers.filter(d=> d.priorite!=='Normale' || isOverdue(d.echeance)).sort((a,b)=> new Date(a.echeance)-new Date(b.echeance)).slice(0,4);
+  document.getElementById('urgencesList').innerHTML=urg.length? urg.map(d=>`<div class="d-flex gap-2 align-items-center p-2 rounded-3 mb-2" style="background:${d.priorite==='Très urgente'?'#ffebee':'#fff3e0'};border-left:3px solid ${d.priorite==='Très urgente'?'#dc3545':'#ff9800'}"><i class="bi ${d.priorite==='Très urgente'?'bi-exclamation-octagon-fill text-danger':'bi-exclamation-triangle-fill text-warning'}"></i><div><strong class="small">${d.ref} • ${d.clientName}</strong><br><small class="text-muted">${d.preoccupations.map(p=>p.titre).join(' • ').substring(0,60)} • Échéance ${fmtDate(d.echeance)}</small></div></div>`).join('') : '<small class="text-muted">Aucune urgence</small>';
+  // charge dept
+  document.getElementById('chargeDept').innerHTML=DEPARTEMENTS.map(dep=>{
+    const cnt=dossiers.filter(d=> d.departements.includes(dep.name)).length;
+    const pct=dossiers.length? Math.round(cnt/dossiers.length*100):0;
+    return `<div class="d-flex justify-content-between align-items-center mb-2"><span class="small"><span style="display:inline-block;width:10px;height:10px;background:${dep.color};border-radius:50%;margin-right:6px;"></span>${dep.short}</span><div class="d-flex align-items-center gap-2" style="width:50%"><div class="progress flex-grow-1" style="height:6px;"><div class="progress-bar" style="width:${pct}%;background:${dep.color}"></div></div><small>${cnt}</small></div></div>`;
+  }).join('');
+  // activity feed
+  const acts=[...dossiers.flatMap(d=> d.historique.map(h=> ({...h, ref:d.ref, client:d.clientName})))].sort((a,b)=> new Date(b.date)-new Date(a.date)).slice(0,8);
+  document.getElementById('activityFeed').innerHTML=acts.map(a=>`<div class="d-flex gap-2 mb-2 pb-2 border-bottom"><small class="text-muted" style="min-width:90px;">${fmtDateTime(a.date)}</small><div><strong class="small">${a.action}</strong> <span class="badge bg-light text-dark border" style="font-size:10px;">${a.ref}</span><br><small class="text-muted">${a.acteur} • ${a.details||''}</small></div></div>`).join('')||'<small class="text-muted">—</small>';
+}
+
+// RECEPTION
+let preoccCounter=1;
+function initReception(){
+  document.getElementById('recDate').valueAsDate=new Date();
+  const ech=new Date(); ech.setDate(ech.getDate()+10); document.getElementById('recEcheance').valueAsDate=ech;
+  document.getElementById('preoccupationsList').innerHTML='';
+  preoccCounter=0;
+  addPreoccupation();
+  updateAutoDetect();
+}
+function addPreoccupation(){
+  const id='P'+(++preoccCounter);
+  const div=document.createElement('div');
+  div.className='p-3 border rounded-3 bg-white mb-2';
+  div.dataset.pid=id;
+  div.innerHTML=`<div class="d-flex justify-content-between align-items-start mb-2"><strong class="small" style="color:#0A2F5E;">Préoccupation ${preoccCounter}</strong><button type="button" class="btn btn-sm btn-light" onclick="this.closest('.p-3').remove(); updateAutoDetect();"><i class="bi bi-x-lg"></i></button></div>
+  <div class="row g-2">
+  <div class="col-md-5"><label class="form-label small fw-bold">Titre *</label><input type="text" class="form-control form-control-sm preocc-titre" placeholder="Ex: Déclaration TVA, Bilan SYSCOHADA, Paie CNSS..." oninput="updateAutoDetect()"></div>
+  <div class="col-md-4"><label class="form-label small fw-bold">Domaine (auto)</label><select class="form-select form-select-sm preocc-domaine"><option value="">Auto-détection</option>${DEPARTEMENTS.map(d=>`<option>${d.name}</option>`).join('')}</select></div>
+  <div class="col-md-3"><label class="form-label small fw-bold">Priorité</label><select class="form-select form-select-sm preocc-prio"><option>Normale</option><option>Urgente</option><option>Très urgente</option></select></div>
+  <div class="col-12"><label class="form-label small fw-bold">Description détaillée</label><textarea class="form-control form-control-sm preocc-desc" rows="2" placeholder="Détaillez la demande, contexte, pièces déjà fournies..." oninput="updateAutoDetect()"></textarea></div>
+  </div><small class="text-muted" style="font-size:11px;"><i class="bi bi-magic me-1"></i>Détection auto affichée ci-dessous</small>`;
+  document.getElementById('preoccupationsList').appendChild(div);
+}
+function detectDepartements(text){
+  const lower=text.toLowerCase();
+  const found=[];
+  for(const [dept, keywords] of Object.entries(DOMAIN_KEYWORDS)){
+    if(keywords.some(k=> lower.includes(k))) found.push(dept);
+  }
+  return found.length? found : [];
+}
+function updateAutoDetect(){
+  const allTexts=[...document.querySelectorAll('.preocc-titre')].map((el,i)=> el.value+' '+document.querySelectorAll('.preocc-desc')[i]?.value).join(' • ');
+  const detected=detectDepartements(allTexts);
+  // auto fill selects if empty
+  document.querySelectorAll('.p-3').forEach(card=>{
+    const titre=card.querySelector('.preocc-titre').value; const desc=card.querySelector('.preocc-desc').value;
+    const det=detectDepartements(titre+' '+desc);
+    const sel=card.querySelector('.preocc-domaine');
+    if(det.length===1 && !sel.value) { sel.value=det[0]; sel.style.borderColor='#198754'; sel.style.background='#e8f5e9'; }
+    else if(det.length>1){ sel.style.borderColor='#f59e0b'; }
+  });
+  const alertEl=document.getElementById('autoDetectAlert');
+  if(detected.length){
+    alertEl.style.display='block';
+    document.getElementById('autoDetectResult').innerHTML=detected.map(d=>`<span class="badge" style="background:#0A2F5E;color:#fff;">${d}</span>`).join(' ');
+  } else alertEl.style.display='none';
+}
+document.getElementById('recFiles')?.addEventListener('change', e=>{
+  const list=[...e.target.files].map(f=> `${f.name} (${fmtSize(f.size)})`).join('<br>');
+  document.getElementById('recFilesList').innerHTML=list||'';
+});
+function fmtSize(b){ if(b<1024) return b+' o'; if(b<1024*1024) return (b/1024).toFixed(1)+' Ko'; return (b/1024/1024).toFixed(2)+' Mo'; }
+
+function createDossier(){
+  const clientIdx=parseInt(document.getElementById('recClient').value);
+  if(isNaN(clientIdx)){ alert('Choisissez un client'); return; }
+  const preoccupations=[...document.querySelectorAll('#preoccupationsList .p-3')].map(card=>{
+    const titre=card.querySelector('.preocc-titre').value.trim();
+    const desc=card.querySelector('.preocc-desc').value.trim();
+    const domaine=card.querySelector('.preocc-domaine').value || detectDepartements(titre+' '+desc)[0] || 'Département Business & Autres';
+    const prio=card.querySelector('.preocc-prio').value;
+    if(!titre) return null;
+    return {id:'P'+Math.random().toString(36).slice(2,6), titre, desc, domaine, priorite:prio};
+  }).filter(Boolean);
+  if(preoccupations.length===0){ alert('Ajoutez au moins une préoccupation avec titre'); return; }
+  const client=clients[clientIdx];
+  const domaines=[...new Set(preoccupations.map(p=>p.domaine))];
+  const num=generateDossierNum();
+  const dossier={
+    id:num, ref:num, clientIdx, clientName:client.name, clientRef:client.ref,
+    dateReception:document.getElementById('recDate').value || new Date().toISOString().split('T')[0],
+    secretaire:document.getElementById('recSecretaire').value||'Secrétariat',
+    preoccupations, domaines,
+    departements: domaines, // auto-affectation initiale = détectés, Manager pourra ajuster
+    statut:'Reçu',
+    priorite:document.getElementById('recPriorite').value,
+    echeance:document.getElementById('recEcheance').value,
+    avancement:5,
+    versions:[{v:1, date:new Date().toISOString(), dept:'Secrétariat', auteur:document.getElementById('recSecretaire').value, commentaire:'Création initiale', fichiers:[...document.getElementById('recFiles').files].map(f=> ({name:f.name,size:f.size}))}],
+    communications:[],
+    historique:[{date:new Date().toISOString(), acteur:document.getElementById('recSecretaire').value, role:'Secrétariat', action:'Création dossier', details:`${preoccupations.length} préoccupation(s) • Domaines: ${domaines.join(', ')}`}],
+    traitement:{checklist:preoccupations.map(p=> ({tache:p.titre, fait:false})), notes:document.getElementById('recNote').value},
+    livrables:[], validation:{}
+  };
+  dossiers.unshift(dossier);
+  saveDossiers();
+  // refresh reception recent
+  renderRecentReception();
+  alert(`Dossier ${num} créé pour ${client.name} • Domaines: ${domaines.join(', ')} • Manager notifié pour affectation.`);
+  // reset form
+  initReception();
+  switchPane('affectation');
+}
+function generateDossierNum(){
+  const year=new Date().getFullYear();
+  const prefix=`DOS-${year}-`;
+  let max=0; dossiers.forEach(d=>{ const m=d.ref.match(/DOS-\d+-(\d+)/); if(m) max=Math.max(max, parseInt(m[1])); });
+  return `${prefix}${String(max+1).padStart(3,'0')}`;
+}
+function renderRecentReception(){
+  const div=document.getElementById('recentReception');
+  const recents=dossiers.slice(0,5);
+  div.innerHTML=recents.map(d=>`<div class="d-flex gap-2 align-items-center p-2 border rounded-3 mb-2"><span class="badge bg-primary">${d.ref}</span><div><strong class="small">${d.clientName}</strong> • <small>${d.preoccupations.map(p=>p.titre).join(' • ').substring(0,50)}</small><br><small class="text-muted">${fmtDate(d.dateReception)} • ${d.secretaire} • ${d.statut}</small></div></div>`).join('')||'<small class="text-muted">—</small>';
+}
+
+// DOSSIERS CENTRAL
+function renderDossiers(){
+  const grid=document.getElementById('dossiersGrid'), empty=document.getElementById('dossiersEmpty');
+  const q=document.getElementById('searchDossier').value.toLowerCase(), fStatut=document.getElementById('filterStatut').value, fDept=document.getElementById('filterDept').value, fPrio=document.getElementById('filterPrio').value;
+  let list=[...dossiers].sort((a,b)=> new Date(b.dateReception)-new Date(a.dateReception));
+  list=list.filter(d=>{
+    if(fStatut!=='all' && d.statut!==fStatut) return false;
+    if(fDept!=='all' && !d.departements.includes(fDept)) return false;
+    if(fPrio!=='all' && d.priorite!==fPrio) return false;
+    if(q && !`${d.ref} ${d.clientName} ${d.preoccupations.map(p=>p.titre+' '+p.desc).join(' ')}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  if(list.length===0){ grid.innerHTML=''; empty.classList.remove('d-none'); return; }
+  empty.classList.add('d-none');
+  grid.innerHTML=list.map(d=>{
+    const overdue=isOverdue(d.echeance) && !['Validé','Livré','Archivé'].includes(d.statut);
+    const prioCls=d.priorite==='Très urgente'?'bg-danger':d.priorite==='Urgente'?'bg-warning text-dark':'bg-secondary';
+    const statutCls=d.statut==='En validation'?'bg-warning text-dark':d.statut==='À corriger'?'bg-danger':d.statut==='Validé'||d.statut==='Livré'?'bg-success':d.statut==='En traitement'?'bg-primary':d.statut==='Affecté'?'bg-info':'bg-secondary';
+    return `<div class="col-md-6 col-lg-4"><div class="dossier-card ${d.priorite==='Très urgente'?'tres-urgente':d.priorite==='Urgente'?'urgente':''}" onclick="openDossier('${d.id}')">
+      <div class="d-flex justify-content-between align-items-start mb-2"><span class="badge bg-dark">${d.ref}</span><span class="badge ${statutCls}" style="font-size:10px;">${d.statut}</span></div>
+      <strong style="color:#0A2F5E;font-size:14px;">${d.clientName}</strong> <small class="text-muted">${d.clientRef}</small><br>
+      <div class="mt-2 d-flex flex-wrap gap-1">${d.domaines.map(dom=>`<span class="badge-domaine">${dom.replace('Département ','')}</span>`).join('')}</div>
+      <div class="small mt-2" style="min-height:36px;">${d.preoccupations.slice(0,2).map(p=>`• ${p.titre}`).join('<br>')}${d.preoccupations.length>2? `<br><small class="text-muted">+${d.preoccupations.length-2} autres</small>`:''}</div>
+      <div class="d-flex gap-1 mt-2 flex-wrap">${d.departements.map(dep=>{
+        const depInfo=DEPARTEMENTS.find(x=>x.name===dep);
+        return `<span class="badge" style="background:${depInfo?.bg||'#eef2f6'};color:${depInfo?.color||'#0A2F5E'};border:1px solid ${depInfo?.color||'#e2e8f0'};font-size:11px;"><i class="bi ${depInfo?.icon||'bi-building'} me-1"></i>${dep.replace('Département ','')}</span>`;
+      }).join('')}</div>
+      <div class="d-flex justify-content-between align-items-center mt-3"><small class="${overdue?'text-danger fw-bold':'text-muted'}"><i class="bi bi-calendar3 me-1"></i>${fmtDate(d.echeance)} ${overdue?'• En retard':''}</small><span class="badge ${prioCls}">${d.priorite}</span></div>
+      <div class="progress progress-mini mt-2"><div class="progress-bar" style="width:${d.avancement}%;background:${d.statut==='Validé'?'#198754': d.priorite==='Très urgente'?'#dc3545':'#0A2F5E'}"></div></div><small class="text-muted">${d.avancement}% • ${d.versions.length} version(s)</small>
+      <div class="d-flex gap-1 mt-2"><button class="btn btn-sm btn-outline-dark rounded-pill" onclick="event.stopPropagation(); openDossier('${d.id}')"><i class="bi bi-eye"></i> Détail</button><button class="btn btn-sm btn-light rounded-pill" onclick="event.stopPropagation(); switchPane('affectation')"><i class="bi bi-diagram-3"></i> Affecter</button></div>
+    </div></div>`;
+  }).join('');
+}
+
+// AFFECTATION
+function renderAffectation(){
+  const tbody=document.getElementById('affectTable');
+  const aAffecter=dossiers.filter(d=> ['Reçu','En analyse'].includes(d.statut));
+  if(aAffecter.length===0){ tbody.innerHTML='<tr><td colspan=6 class="text-center py-4 text-muted">Aucun dossier à affecter — tous sont déjà affectés</td></tr>'; return; }
+  tbody.innerHTML=aAffecter.map(d=>{
+    const suggested=detectDepartements(d.preoccupations.map(p=>p.titre+' '+p.desc).join(' '));
+    return `<tr>
+      <td><input type="checkbox" class="affect-check" value="${d.id}"></td>
+      <td><strong>${d.ref}</strong><br><small>${d.clientName} • ${d.clientRef}</small><br><span class="badge ${d.priorite==='Très urgente'?'bg-danger':d.priorite==='Urgente'?'bg-warning text-dark':'bg-secondary'}" style="font-size:10px;">${d.priorite}</span></td>
+      <td><small>${d.preoccupations.map(p=>`• ${p.titre} <span class="badge bg-light text-dark border" style="font-size:10px;">${p.domaine.replace('Département ','')}</span>`).join('<br>')}</small><br><small class="text-success">Suggéré: ${suggested.join(', ')||'À analyser'}</small></td>
+      <td><select class="form-select form-select-sm" id="prio-${d.id}" style="width:130px;"><option ${d.priorite==='Normale'?'selected':''}>Normale</option><option ${d.priorite==='Urgente'?'selected':''}>Urgente</option><option ${d.priorite==='Très urgente'?'selected':''}>Très urgente</option></select><input type="date" class="form-control form-control-sm mt-1" id="ech-${d.id}" value="${d.echeance}" style="width:140px;"></td>
+      <td><div class="d-flex flex-column gap-1" style="min-width:200px;">${DEPARTEMENTS.map(dep=>{
+        const checked=suggested.includes(dep.name) || d.domaines.includes(dep.name) ? 'checked' : '';
+        return `<label class="small d-flex align-items-center gap-2"><input type="checkbox" class="affect-dept" data-dossier="${d.id}" value="${dep.name}" ${checked}> <span style="width:8px;height:8px;background:${dep.color};border-radius:50%;display:inline-block;"></span> ${dep.short}</label>`;
+      }).join('')}</div></td>
+      <td><button class="btn btn-sm btn-main rounded-pill" onclick="affectSingle('${d.id}')"><i class="bi bi-send me-1"></i> Affecter</button></td>
+    </tr>`;
+  }).join('');
+}
+function toggleAllAffect(checked){ document.querySelectorAll('.affect-check').forEach(c=>c.checked=checked); }
+function affectSingle(id){
+  const dossier=dossiers.find(d=>d.id===id);
+  const checks=[...document.querySelectorAll(`.affect-dept[data-dossier="${id}"]:checked`)].map(c=>c.value);
+  if(checks.length===0){ alert('Choisissez au moins un département'); return; }
+  dossier.departements=checks;
+  dossier.domaines=checks;
+  dossier.priorite=document.getElementById('prio-'+id).value;
+  dossier.echeance=document.getElementById('ech-'+id).value;
+  dossier.statut='Affecté';
+  dossier.avancement=15;
+  dossier.historique.push({date:new Date().toISOString(), acteur:'Executive Manager', role:'Manager', action:'Affectation', details:`→ ${checks.join(', ')} • Échéance ${fmtDate(dossier.echeance)} • Via Teams/Elements`});
+  // notify departments (internal)
+  checks.forEach(dep=> dossier.communications.push({date:new Date().toISOString(), auteur:'Executive Manager', dept:'Manager', message:`Dossier ${dossier.ref} affecté à ${dep} • Priorité ${dossier.priorite} • Merci de démarrer le traitement.`}));
+  saveDossiers();
+  renderAffectation();
+  alert(`Dossier ${dossier.ref} affecté à ${checks.join(', ')} • Notifications envoyées aux départements via Teams/Elements.`);
+}
+function autoAffectAll(){
+  dossiers.filter(d=>['Reçu','En analyse'].includes(d.statut)).forEach(d=>{
+    const suggested=detectDepartements(d.preoccupations.map(p=>p.titre+' '+p.desc).join(' '));
+    if(suggested.length){
+      d.departements=suggested; d.domaines=suggested; d.statut='Affecté'; d.avancement=15;
+      d.historique.push({date:new Date().toISOString(), acteur:'Executive Manager', role:'Manager', action:'Affectation auto', details:`→ ${suggested.join(', ')} (IA mots-clés)`});
+    }
+  });
+  saveDossiers(); renderAffectation();
+}
+function bulkAffect(){
+  const ids=[...document.querySelectorAll('.affect-check:checked')].map(c=>c.value);
+  if(ids.length===0){ alert('Cochez des dossiers'); return; }
+  ids.forEach(id=> affectSingle(id));
+}
+
+// WORKSPACES
+function renderWorkspaces(){
+  const tabs=document.getElementById('workspaceDeptTabs');
+  tabs.innerHTML=DEPARTEMENTS.map(dep=> `<button class="btn ${activeDept===dep.id?'btn-dark-gobex':'btn-outline-dark'} rounded-pill btn-sm" onclick="selectWorkspaceDept('${dep.id}')" style="border-color:${dep.color};${activeDept===dep.id?`background:${dep.color};border-color:${dep.color}`:''}"><i class="bi ${dep.icon} me-1"></i> ${dep.short}</button>`).join('');
+  selectWorkspaceDept(activeDept);
+}
+function selectWorkspaceDept(deptId){
+  activeDept=deptId;
+  document.querySelectorAll('#workspaceDeptTabs .btn').forEach(b=>b.classList.remove('btn-dark-gobex'));
+  // re-render tabs highlight
+  renderWorkspacesTabsOnly();
+  const dept=DEPARTEMENTS.find(d=>d.id===deptId);
+  const dossiersDept=dossiers.filter(d=> d.departements.includes(dept.name));
+  const container=document.getElementById('workspaceContent');
+  container.innerHTML=`<div class="stat-card"><div class="d-flex justify-content-between align-items-center mb-3"><div><h6 class="mb-0" style="font-family:Exo;font-weight:700;color:${dept.color}"><i class="bi ${dept.icon} me-2"></i>${dept.name} — Workspace</h6><small class="text-muted">${dossiersDept.length} dossier(s) affecté(s) • Outils complets • Teams/Elements connecté</small></div><span class="badge" style="background:${dept.bg};color:${dept.color};border:1px solid ${dept.color};">${dept.chef}</span></div>
+    ${dossiersDept.length===0? `<div class="text-center py-4 text-muted"><i class="bi bi-inbox" style="font-size:36px;opacity:0.2"></i><p class="mt-2">Aucun dossier pour ce département</p></div>` : dossiersDept.map(d=> workspaceCardHTML(d, dept)).join('')}
+  </div>`;
+}
+function renderWorkspacesTabsOnly(){
+  const tabs=document.getElementById('workspaceDeptTabs');
+  tabs.innerHTML=DEPARTEMENTS.map(dep=> `<button class="btn ${activeDept===dep.id?'btn-dark-gobex':'btn-outline-dark'} rounded-pill btn-sm" onclick="selectWorkspaceDept('${dep.id}')" style="${activeDept===dep.id?`background:${dep.color};border-color:${dep.color};color:#fff;`:''}"><i class="bi ${dep.icon} me-1"></i> ${dep.short}</button>`).join('');
+}
+function workspaceCardHTML(d, dept){
+  const isTreating=['Affecté','En traitement','À corriger'].includes(d.statut);
+  const canTransmit = d.statut==='En traitement' || d.statut==='À corriger';
+  return `<div class="border rounded-3 p-3 mb-3" style="background:${isTreating?'#fff':'#f8fafc'};border-left:4px solid ${dept.color}!important;">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+      <div><strong>${d.ref} • ${d.clientName}</strong> <span class="badge ${d.statut==='À corriger'?'bg-danger':d.statut==='En traitement'?'bg-primary':'bg-info'}" style="font-size:10px;">${d.statut}</span> <span class="badge ${d.priorite==='Très urgente'?'bg-danger':d.priorite==='Urgente'?'bg-warning text-dark':'bg-secondary'}" style="font-size:10px;">${d.priorite}</span><br><small class="text-muted">${d.preoccupations.map(p=>p.titre).join(' • ')} • Échéance ${fmtDate(d.echeance)} • v${d.versions.length}</small></div>
+      <div class="d-flex gap-1"><button class="btn btn-sm btn-light rounded-pill" onclick="openDossier('${d.id}')"><i class="bi bi-eye"></i> Détail</button>${d.statut==='Affecté'? `<button class="btn btn-sm btn-primary rounded-pill" onclick="startTreatment('${d.id}')"><i class="bi bi-play-fill"></i> Démarrer traitement</button>`:''}${canTransmit? `<button class="btn btn-sm btn-success rounded-pill" onclick="transmitToManager('${d.id}')"><i class="bi bi-send"></i> Transmettre au Manager</button>`:''}</div>
+    </div>
+    <ul class="nav nav-pills mt-3 gap-1" style="font-size:12px;">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#comm-${d.id}" type="button"><i class="bi bi-chat-dots me-1"></i>Communication</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#trait-${d.id}" type="button"><i class="bi bi-check2-square me-1"></i>Traitement</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#redac-${d.id}" type="button"><i class="bi bi-pencil-square me-1"></i>Rédaction</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#hist-${d.id}" type="button"><i class="bi bi-clock-history me-1"></i>Historique</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#livr-${d.id}" type="button"><i class="bi bi-box-seam me-1"></i>Livrables</button></li>
+    </ul>
+    <div class="tab-content border rounded-3 p-3 mt-2 bg-white">
+      <div class="tab-pane fade show active" id="comm-${d.id}">
+        <div class="small" id="chat-${d.id}" style="max-height:180px;overflow-y:auto;">${(d.communications||[]).slice(-5).map(m=>`<div class="d-flex mb-2 ${m.auteur.includes('Manager')?'justify-content-start':'justify-content-end'}"><div class="chat-bubble ${m.auteur.includes('Manager')?'other':'me'}"><strong class="small">${m.auteur} • ${m.dept}</strong><br>${m.message}<br><small style="opacity:0.7">${fmtDateTime(m.date)}</small></div></div>`).join('')||'<small class="text-muted">Aucun message — démarrez la discussion</small>'}</div>
+        <div class="d-flex gap-2 mt-2"><input type="text" class="form-control form-control-sm" id="chatInput-${d.id}" placeholder="Message interne à l'équipe..."><button class="btn btn-sm btn-dark-gobex rounded-pill" onclick="sendMessage('${d.id}')"><i class="bi bi-send"></i></button></div>
+      </div>
+      <div class="tab-pane fade" id="trait-${d.id}">
+        <div class="small">${(d.traitement.checklist||[]).map((t,i)=>`<div class="form-check"><input class="form-check-input" type="checkbox" ${t.fait?'checked':''} onchange="toggleCheck('${d.id}',${i},this.checked)"><label class="form-check-label">${t.tache} ${t.fait?'<span class="badge bg-success">Fait</span>':''}</label></div>`).join('')||'<small class="text-muted">—</small>'}</div>
+        <div class="mt-2"><label class="form-label small fw-bold">Notes de traitement</label><textarea class="form-control form-control-sm" rows="2" id="notes-${d.id}" placeholder="Notes internes...">${d.traitement.notes||''}</textarea><button class="btn btn-sm btn-outline-dark rounded-pill mt-2" onclick="saveNotes('${d.id}')"><i class="bi bi-save me-1"></i> Enregistrer</button></div>
+      </div>
+      <div class="tab-pane fade" id="redac-${d.id}">
+        <label class="form-label small fw-bold">Brouillon / Correction</label><textarea class="form-control form-control-sm" rows="4" id="draft-${d.id}" placeholder="Rédigez le livrable, rapport, lettre...">${d.traitement.draft||''}</textarea>
+        <div class="d-flex gap-2 mt-2"><button class="btn btn-sm btn-outline-primary rounded-pill" onclick="saveDraft('${d.id}')"><i class="bi bi-save me-1"></i> Sauvegarder brouillon</button><label class="btn btn-sm btn-light rounded-pill mb-0"><i class="bi bi-paperclip me-1"></i> Joindre fichier <input type="file" hidden onchange="addDraftFile('${d.id}', this.files)"></label></div>
+        <div class="small mt-2" id="draftFiles-${d.id}">${(d.traitement.files||[]).map(f=>`<span class="badge bg-light text-dark border me-1"><i class="bi bi-file-earmark me-1"></i>${f.name}</span>`).join('')}</div>
+        <div class="mt-3 small"><strong>Versions</strong> <span class="badge bg-secondary">${d.versions.length}</span><div class="mt-1">${d.versions.map(v=>`<div class="d-flex gap-2 small p-2 border rounded-3 mb-1"><span class="badge bg-dark">v${v.v}</span><div><strong>${v.dept}</strong> • ${v.auteur}<br><small class="text-muted">${fmtDateTime(v.date)} • ${v.commentaire}</small>${v.fichiers?.length? `<br><small>${v.fichiers.map(f=>f.name).join(', ')}</small>`:''}</div></div>`).join('')}</div></div>
+      </div>
+      <div class="tab-pane fade" id="hist-${d.id}"><div class="timeline small">${d.historique.map(h=>`<div class="timeline-item ${h.action.includes('correction')?'correction':h.action.includes('Validation')?'validation':''}"><strong>${h.action}</strong> • ${h.acteur} <small class="text-muted">(${h.role})</small><br><small>${h.details||''}</small><br><small class="text-muted">${fmtDateTime(h.date)} ${h.departement? '• '+h.departement:''}</small></div>`).join('')}</div></div>
+      <div class="tab-pane fade" id="livr-${d.id}"><div class="small">${d.livrables.length? d.livrables.map(l=>`<div class="d-flex justify-content-between align-items-center p-2 border rounded-3 mb-2"><div><i class="bi bi-file-earmark-check text-success me-2"></i><strong>${l.name}</strong> <span class="badge bg-primary">v${l.version}</span><br><small class="text-muted">${fmtDateTime(l.date)}</small></div><button class="btn btn-sm btn-light" onclick="downloadLivrable('${d.id}','${l.name}')"><i class="bi bi-download"></i></button></div>`).join('') : '<small class="text-muted">Aucun livrable transmis — utilisez Rédaction puis Transmettre au Manager</small>'}</div></div>
+    </div>
+  </div>`;
+}
+function startTreatment(id){
+  const d=dossiers.find(x=>x.id===id);
+  d.statut='En traitement'; d.avancement=40;
+  d.historique.push({date:new Date().toISOString(), acteur:DEPARTEMENTS.find(x=>x.id===activeDept)?.chef||'Chef Département', role:'Chef', action:'Démarrage traitement', details:`Département ${DEPARTEMENTS.find(x=>x.id===activeDept)?.name} • Teams`});
+  saveDossiers(); renderWorkspaces();
+}
+function sendMessage(id){
+  const input=document.getElementById('chatInput-'+id);
+  const msg=input.value.trim(); if(!msg) return;
+  const d=dossiers.find(x=>x.id===id);
+  const dept=DEPARTEMENTS.find(x=>x.id===activeDept);
+  d.communications.push({date:new Date().toISOString(), auteur:dept.chef, dept:dept.short, message:msg});
+  d.historique.push({date:new Date().toISOString(), acteur:dept.chef, role:'Agent', action:'Message interne', details:msg.substring(0,60)});
+  saveDossiers();
+  input.value='';
+  renderWorkspaces(); // re-render to show message
+  // keep tab active
+  setTimeout(()=>{ document.querySelector(`[data-bs-target="#comm-${id}"]`)?.click(); },100);
+}
+function toggleCheck(dossierId, idx, checked){
+  const d=dossiers.find(x=>x.id===dossierId);
+  d.traitement.checklist[idx].fait=checked;
+  const total=d.traitement.checklist.length; const done=d.traitement.checklist.filter(c=>c.fait).length;
+  d.avancement= 15 + Math.round(done/total*50);
+  if(done===total) d.avancement=70;
+  saveDossiers();
+}
+function saveNotes(id){
+  const d=dossiers.find(x=>x.id===id);
+  d.traitement.notes=document.getElementById('notes-'+id).value;
+  d.historique.push({date:new Date().toISOString(), acteur:DEPARTEMENTS.find(x=>x.id===activeDept).chef, role:'Agent', action:'Notes traitement', details:'Mise à jour'});
+  saveDossiers(); alert('Notes enregistrées');
+}
+function saveDraft(id){
+  const d=dossiers.find(x=>x.id===id);
+  d.traitement.draft=document.getElementById('draft-'+id).value;
+  d.historique.push({date:new Date().toISOString(), acteur:DEPARTEMENTS.find(x=>x.id===activeDept).chef, role:'Agent', action:'Sauvegarde brouillon', details:'Version de travail'});
+  saveDossiers(); alert('Brouillon sauvegardé');
+}
+function addDraftFile(id, files){
+  const d=dossiers.find(x=>x.id===id);
+  if(!d.traitement.files) d.traitement.files=[];
+  [...files].forEach(f=> d.traitement.files.push({name:f.name,size:f.size}));
+  saveDossiers(); renderWorkspaces();
+}
+function transmitToManager(id){
+  const d=dossiers.find(x=>x.id===id);
+  const dept=DEPARTEMENTS.find(x=>x.id===activeDept);
+  const versionNum=d.versions.length+1;
+  const draft=document.getElementById('draft-'+id)?.value || d.traitement.draft || '';
+  if(!draft && (!d.traitement.files||d.traitement.files.length===0)){ if(!confirm('Transmettre sans brouillon ni fichier ?')) return; }
+  // create version
+  d.versions.push({v:versionNum, date:new Date().toISOString(), dept:dept.name, auteur:dept.chef, commentaire: draft? draft.substring(0,80)+'...' : 'Transmission livrable', fichiers: d.traitement.files||[]});
+  d.livrables.push({name:`Livrable_${d.ref}_v${versionNum}.pdf`, version:versionNum, date:new Date().toISOString()});
+  d.statut='En validation';
+  d.avancement=85;
+  d.historique.push({date:new Date().toISOString(), acteur:dept.chef, role:'Agent', action:'Transmission → Manager', details:`v${versionNum} via ${Math.random()>0.5?'Teams':'Elements'} • ${dept.name}`});
+  d.communications.push({date:new Date().toISOString(), auteur:dept.chef, dept:dept.short, message:`Livrable v${versionNum} transmis au Manager pour validation via ${Math.random()>0.5?'Teams':'Elements'}.`});
+  saveDossiers();
+  alert(`Dossier ${d.ref} transmis au Manager via ${dept.name} → En validation. Notification Manager envoyée.`);
+}
+function downloadLivrable(dossierId, name){
+  const blob=new Blob([`Livrable GOBEX simulé\nDossier: ${dossierId}\nFichier: ${name}\nDate: ${new Date().toLocaleString('fr-FR')}`],{type:'text/plain'});
+  const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); URL.revokeObjectURL(url);
+}
+
+// VALIDATION
+function renderValidation(){
+  const list=dossiers.filter(d=> d.statut==='En validation');
+  const container=document.getElementById('validationList'), empty=document.getElementById('validationEmpty');
+  if(list.length===0){ container.innerHTML=''; empty.classList.remove('d-none'); return; }
+  empty.classList.add('d-none');
+  container.innerHTML=list.map(d=>{
+    const dept=d.versions[d.versions.length-1]?.dept||d.departements[0];
+    const lastVersion=d.versions[d.versions.length-1];
+    return `<div class="border rounded-3 p-3 mb-3" style="border-left:4px solid #f59e0b!important;">
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+        <div><strong>${d.ref} • ${d.clientName}</strong> <span class="badge bg-warning text-dark">En validation</span> <span class="badge ${d.priorite==='Très urgente'?'bg-danger':d.priorite==='Urgente'?'bg-warning text-dark':'bg-secondary'}">${d.priorite}</span><br><small class="text-muted">${d.preoccupations.map(p=>p.titre).join(' • ')} • Échéance ${fmtDate(d.echeance)} • ${dept}</small></div>
+        <span class="badge bg-light text-dark border">v${lastVersion.v} • ${lastVersion.auteur}</span>
+      </div>
+      <div class="row g-3 mt-2">
+        <div class="col-md-6"><div class="p-3 rounded-3 bg-light"><strong class="small">Dernier livrable • v${lastVersion.v}</strong><br><small>${lastVersion.commentaire||'—'}</small><br><small class="text-muted">${lastVersion.fichiers?.map(f=>f.name).join(', ')||'Aucun fichier joint'}</small><div class="mt-2">${d.livrables.slice(-1).map(l=>`<span class="badge bg-success"><i class="bi bi-file-earmark-check me-1"></i>${l.name}</span>`).join('')}</div></div></div>
+        <div class="col-md-6"><div class="timeline small" style="max-height:160px;overflow-y:auto;">${d.historique.slice(-4).map(h=>`<div class="timeline-item"><strong>${h.action}</strong> • ${h.acteur}<br><small class="text-muted">${h.details||''} • ${fmtDateTime(h.date)}</small></div>`).join('')}</div></div>
+      </div>
+      <div class="d-flex gap-2 mt-3 flex-wrap">
+        <button class="btn btn-success rounded-pill" onclick="validateDossier('${d.id}')"><i class="bi bi-check-circle me-1"></i> Valider</button>
+        <button class="btn btn-outline-danger rounded-pill" onclick="rejectDossier('${d.id}')"><i class="bi bi-arrow-counterclockwise me-1"></i> Renvoyer pour correction</button>
+        <button class="btn btn-light rounded-pill" onclick="openDossier('${d.id}')"><i class="bi bi-eye me-1"></i> Détail complet</button>
+        <button class="btn btn-outline-primary rounded-pill" onclick="previewLivrable('${d.id}')"><i class="bi bi-file-earmark-pdf me-1"></i> Aperçu livrable</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function validateDossier(id){
+  const d=dossiers.find(x=>x.id===id);
+  if(!confirm(`Valider le dossier ${d.ref} de ${d.clientName} ?\n→ Notification WhatsApp au client + email livrables (Manager/Secrétariat).`)) return;
+  d.statut='Validé'; d.avancement=100;
+  d.validation={decision:'Validé', commentaire:'Validé par Executive Manager', date:new Date().toISOString(), par:'Executive Manager'};
+  d.historique.push({date:new Date().toISOString(), acteur:'Executive Manager', role:'Manager', action:'Validation ✅', details:'Dossier validé • Prêt livraison'});
+  // prepare notifications
+  const client=clients[d.clientIdx];
+  const wa=client?.whatsapp||client?.phone?.replace(/\D/g,'')||'22997739046';
+  const waMsg=`Bonjour ${d.clientName}, votre dossier ${d.ref} (${d.preoccupations.map(p=>p.titre).join(', ')}) est traité et validé par GOBEX. Vous recevrez vos livrables par email. Merci de votre confiance. GOBEX +229 97 739 046`;
+  // simulate whatsapp send: add to notifications list
+  if(!d.notifications) d.notifications={};
+  d.notifications.whatsappEnvoye=true; d.notifications.whatsappDate=new Date().toISOString();
+  d.notifications.waLink=`https://wa.me/${wa}?text=${encodeURIComponent(waMsg)}`;
+  // email draft
+  d.notifications.emailDraft=`mailto:${client?.email||''}?subject=${encodeURIComponent('GOBEX - Livrables '+d.ref)}&body=${encodeURIComponent('Bonjour '+d.clientName+',\n\nVotre dossier '+d.ref+' est validé. Ci-joint vos livrables.\n\nCordialement,\nGOBEX')}`;
+  saveDossiers();
+  // open whatsapp + email options
+  if(confirm('Dossier validé ! Envoyer notification WhatsApp maintenant ?')) window.open(d.notifications.waLink, '_blank');
+  if(confirm('Envoyer livrables par email (Manager ou Secrétariat) ?')) window.open(d.notifications.emailDraft, '_blank');
+  renderValidation(); renderDossiers(); updateKPI();
+}
+function rejectDossier(id){
+  const d=dossiers.find(x=>x.id===id);
+  const comment=prompt(`Renvoyer ${d.ref} pour correction • Motif / corrections attendues :`, 'Corriger la mise en forme + ajouter annexe CNSS');
+  if(comment===null) return;
+  if(!comment.trim()){ alert('Indiquez le motif'); return; }
+  d.statut='À corriger'; d.avancement=65;
+  d.historique.push({date:new Date().toISOString(), acteur:'Executive Manager', role:'Manager', action:'Renvoi correction ↩️', details:comment});
+  d.communications.push({date:new Date().toISOString(), auteur:'Executive Manager', dept:'Manager', message:`Corrections demandées: ${comment}`});
+  // notify dept
+  saveDossiers();
+  alert(`Dossier ${d.ref} renvoyé au(x) département(s) ${d.departements.join(', ')} pour correction. Nouvelle version attendue.`);
+  renderValidation(); renderWorkspaces();
+}
+function previewLivrable(id){
+  const d=dossiers.find(x=>x.id===id);
+  const v=d.versions[d.versions.length-1];
+  const html=`<div class="p-3"><h6>${d.ref} • ${d.clientName}</h6><p class="small">Livrable v${v.v} • ${v.dept} • ${v.auteur}<br>${v.commentaire||''}</p><div class="alert alert-warning small">Aperçu simulé — en prod, prévisualisation PDF/Word depuis Teams/Elements</div></div>`;
+  document.getElementById('detailTitle').textContent='Aperçu livrable '+d.ref;
+  document.getElementById('detailSub').textContent='v'+v.v+' • '+v.dept;
+  document.getElementById('detailBody').innerHTML=html;
+  new bootstrap.Modal(document.getElementById('dossierDetailModal')).show();
+}
+
+// SECRETARIAT
+function renderSecretariat(){
+  const devisS=localStorage.getItem('gobex_crm_devis'); const factS=localStorage.getItem('gobex_crm_factures');
+  let devisArr=[], factArr=[];
+  try{devisArr=devisS? JSON.parse(devisS):[]}catch(e){}
+  try{factArr=factS? JSON.parse(factS):[]}catch(e){}
+  document.getElementById('secDevis').textContent=devisArr.length;
+  document.getElementById('secFactures').textContent=factArr.length;
+  const encaisse=factArr.filter(f=>f.statut==='Payée').reduce((s,f)=>s+(f.total?.net||0),0);
+  document.getElementById('secEncaisse').textContent= (encaisse/1000).toFixed(0)+'k FCFA';
+  document.getElementById('secFacturesList').innerHTML= factArr.slice(0,5).map(f=>`<div class="d-flex justify-content-between align-items-center p-2 border rounded-3 mb-2"><div><strong>${f.num}</strong> • ${f.clientName}<br><small class="text-muted">${fmtDate(f.date)} • ${f.statut}</small></div><strong>${(f.total?.net||0).toLocaleString()} FCFA</strong></div>`).join('') || '<small class="text-muted">Aucune facture</small>';
+  const retard=dossiers.filter(d=> isOverdue(d.echeance) && !['Validé','Livré','Archivé'].includes(d.statut));
+  document.getElementById('secRetardList').innerHTML= retard.length? retard.map(d=>`<div class="d-flex justify-content-between align-items-center p-2 rounded-3 mb-2" style="background:#ffebee;border-left:3px solid #dc3545;"><div><strong>${d.ref}</strong> • ${d.clientName}<br><small class="text-muted">${d.preoccupations[0]?.titre} • Échéance ${fmtDate(d.echeance)}</small></div><button class="btn btn-sm btn-warning rounded-pill" onclick="relanceDossier('${d.id}')"><i class="bi bi-whatsapp"></i> Relancer</button></div>`).join('') : '<small class="text-muted">Aucun retard</small>';
+  const relances=retard.slice(0,3).map(d=>{
+    const c=clients[d.clientIdx]; const wa=c?.whatsapp||'22997739046';
+    return `<div class="p-2 border rounded-3 mb-2"><strong>${d.clientName}</strong><br><small class="text-muted">${d.ref} • ${d.statut}</small><br><a href="https://wa.me/${wa}?text=${encodeURIComponent('Bonjour '+d.clientName+', votre dossier '+d.ref+' est en attente. Merci de fournir les pièces manquantes.')}" target="_blank" class="btn btn-sm btn-success rounded-pill mt-1"><i class="bi bi-whatsapp me-1"></i> Relancer client</a></div>`;
+  }).join('') || '<small class="text-muted">—</small>';
+  document.getElementById('secRelances').innerHTML=relances;
+  const notifs=dossiers.filter(d=> d.notifications?.whatsappEnvoye).slice(0,3);
+  document.getElementById('secNotifs').innerHTML= notifs.length? notifs.map(d=>`<div class="p-2 rounded-3 mb-2" style="background:#e8f5e9;"><strong>${d.ref}</strong> • WhatsApp envoyé<br><small class="text-muted">${fmtDateTime(d.notifications.whatsappDate)} • ${d.clientName}</small><br><a href="${d.notifications.waLink}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill mt-1"><i class="bi bi-whatsapp"></i> Revoir</a> <a href="${d.notifications.emailDraft}" class="btn btn-sm btn-outline-primary rounded-pill mt-1"><i class="bi bi-envelope"></i> Email</a></div>`).join('') : '<small class="text-muted">Aucune notification récente</small>';
+}
+function refreshSecretariat(){ renderSecretariat(); alert('Secrétariat actualisé'); }
+function relanceDossier(id){
+  const d=dossiers.find(x=>x.id===id);
+  const c=clients[d.clientIdx]; const wa=c?.whatsapp||c?.phone?.replace(/\D/g,'')||'22997739046';
+  const msg=`Bonjour ${d.clientName}, votre dossier ${d.ref} (${d.preoccupations.map(p=>p.titre).join(', ')}) est en attente. Merci de nous transmettre les éléments manquants. GOBEX`;
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// ADMIN
+function renderAgents(){
+  const tbody=document.getElementById('agentsTable');
+  tbody.innerHTML=agents.map((a,i)=>`<tr>
+    <td><strong>${a.nom}</strong><br><small class="text-muted">${a.email||''} ${a.phone? '• '+a.phone:''}</small></td>
+    <td><span class="badge" style="background:${DEPARTEMENTS.find(d=>d.name===a.dept)?.bg||'#eef2f6'};color:${DEPARTEMENTS.find(d=>d.name===a.dept)?.color||'#0A2F5E'};border:1px solid ${DEPARTEMENTS.find(d=>d.name===a.dept)?.color||'#e2e8f0'}">${a.dept}</span></td>
+    <td><span class="badge ${a.role==='Executive Manager'?'bg-dark':a.role==='Chef Département'?'bg-primary':a.role==='Secrétariat'?'bg-warning text-dark':'bg-light text-dark border'}">${a.role}</span></td>
+    <td>${a.teams? '<span class="badge bg-success">✔️ Teams</span>' : '<span class="badge bg-secondary">—</span>'}</td>
+    <td>${a.elements? '<span class="badge bg-success">✔️ Elements</span>' : '<span class="badge bg-secondary">—</span>'}</td>
+    <td><small>${a.role==='Executive Manager'?'Tous':a.role==='Secrétariat'?'Devis/Factures':a.role==='Chef Département'?'Département':'Lecture/Écriture'}</small></td>
+    <td><div class="d-flex gap-1"><button class="btn btn-sm btn-light" onclick="editAgent(${i})"><i class="bi bi-pencil"></i></button><button class="btn btn-sm btn-outline-danger" onclick="deleteAgent(${i})"><i class="bi bi-trash"></i></button></div></td>
+  </tr>`).join('');
+  // dept filter options
+  const deptFilter=document.getElementById('filterAuditDept');
+  if(deptFilter && deptFilter.options.length===1){
+    DEPARTEMENTS.forEach(d=>{
+      const o=document.createElement('option'); o.value=d.name; o.textContent=d.name; deptFilter.appendChild(o);
+    });
+  }
+  const agDept=document.getElementById('agDept');
+  if(agDept && agDept.options.length===0){
+    ['Executive Manager','Secrétariat', ...DEPARTEMENTS.map(d=>d.name)].forEach(n=>{
+      const o=document.createElement('option'); o.value=n; o.textContent=n; agDept.appendChild(o);
+    });
+  }
+}
+function openAgentModal(idx=null){
+  const isEdit=idx!==null;
+  document.getElementById('agentIdx').value=isEdit? idx : '';
+  if(isEdit){
+    const a=agents[idx];
+    document.getElementById('agNom').value=a.nom;
+    document.getElementById('agDept').value=a.dept;
+    document.getElementById('agRole').value=a.role;
+    document.getElementById('agEmail').value=a.email||'';
+    document.getElementById('agPhone').value=a.phone||'';
+    document.getElementById('agTeams').checked=a.teams;
+    document.getElementById('agElements').checked=a.elements;
+  } else {
+    document.getElementById('agNom').value=''; document.getElementById('agDept').value=DEPARTEMENTS[0].name; document.getElementById('agRole').value='Agent'; document.getElementById('agEmail').value=''; document.getElementById('agPhone').value=''; document.getElementById('agTeams').checked=true; document.getElementById('agElements').checked=true;
+  }
+  new bootstrap.Modal(document.getElementById('agentModal')).show();
+}
+function editAgent(i){ openAgentModal(i); }
+function deleteAgent(i){ if(confirm(`Supprimer ${agents[i].nom} ?`)){ agents.splice(i,1); saveAgents(); } }
+function saveAgent(){
+  const idx=document.getElementById('agentIdx').value;
+  const nom=document.getElementById('agNom').value.trim();
+  if(!nom){ alert('Nom requis'); return; }
+  const obj={nom, dept:document.getElementById('agDept').value, role:document.getElementById('agRole').value, email:document.getElementById('agEmail').value.trim(), phone:document.getElementById('agPhone').value.trim(), teams:document.getElementById('agTeams').checked, elements:document.getElementById('agElements').checked};
+  if(idx==='') agents.push(obj); else agents[parseInt(idx)]=obj;
+  saveAgents(); bootstrap.Modal.getInstance(document.getElementById('agentModal')).hide();
+}
+function renderAdminAudit(){
+  const div=document.getElementById('adminAudit');
+  const acts=[...dossiers.flatMap(d=> d.historique.map(h=> ({...h, ref:d.ref})))].sort((a,b)=> new Date(b.date)-new Date(a.date)).slice(0,10);
+  div.innerHTML=acts.map(a=>`<div class="d-flex gap-2 mb-2 pb-2 border-bottom"><small class="text-muted" style="min-width:85px;">${fmtDate(a.date)} ${new Date(a.date).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</small><div><span class="badge bg-light text-dark border" style="font-size:10px;">${a.ref}</span> <strong class="small">${a.action}</strong> • ${a.acteur}<br><small class="text-muted">${a.details||''}</small></div></div>`).join('')||'<small class="text-muted">—</small>';
+}
+function renderAudit(){
+  const q=document.getElementById('searchAudit').value.toLowerCase(), fDept=document.getElementById('filterAuditDept').value;
+  let acts=[...dossiers.flatMap(d=> d.historique.map(h=> ({...h, ref:d.ref, client:d.clientName, dept:d.departements.join(', ')})))].sort((a,b)=> new Date(b.date)-new Date(a.date));
+  if(fDept!=='all') acts=acts.filter(a=> a.details?.includes(fDept) || a.departement===fDept);
+  if(q) acts=acts.filter(a=> `${a.action} ${a.acteur} ${a.ref} ${a.details}`.toLowerCase().includes(q));
+  document.getElementById('auditFull').innerHTML=acts.slice(0,100).map(a=>`<div class="d-flex gap-3 p-2 border-bottom"><small class="text-muted" style="min-width:110px;">${fmtDateTime(a.date)}</small><div><span class="badge bg-primary" style="font-size:10px;">${a.ref}</span> <strong class="small">${a.action}</strong> <span class="badge bg-light text-dark border" style="font-size:10px;">${a.acteur} • ${a.role}</span><br><small>${a.details||''} ${a.departement? '• '+a.departement:''}</small><br><small class="text-muted">${a.client||''}</small></div></div>`).join('')||'<small class="text-muted">Aucun résultat</small>';
+}
+
+// DOSSIER DETAIL MODAL
+function openDossier(id){
+  const d=dossiers.find(x=>x.id===id);
+  const client=clients[d.clientIdx];
+  document.getElementById('detailTitle').textContent=`${d.ref} — ${d.clientName}`;
+  document.getElementById('detailSub').textContent=`${d.statut} • ${d.priorite} • Échéance ${fmtDate(d.echeance)} • ${d.departements.join(', ')}`;
+  const body=document.getElementById('detailBody');
+  body.innerHTML=`
+    <div class="row g-3">
+      <div class="col-md-6"><div class="p-3 bg-white rounded-3 border"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-person me-1"></i>Client</h6><strong>${d.clientName}</strong> • ${d.clientRef}<br><small>${client?.ifu? 'IFU '+client.ifu+' • ':''}${client?.rccm? 'RCCM '+client.rccm:''}<br>${client?.address||''} • ${client?.phone||''}</small><br><small class="text-muted">Réception ${fmtDate(d.dateReception)} par ${d.secretaire}</small></div></div>
+      <div class="col-md-6"><div class="p-3 rounded-3" style="background:${d.priorite==='Très urgente'?'#ffebee':d.priorite==='Urgente'?'#fff3e0':'#f1f8e9'};border:1px solid ${d.priorite==='Très urgente'?'#ffcdd2':'#FFE082'};"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Priorité & Échéance</h6><span class="badge ${d.priorite==='Très urgente'?'bg-danger':d.priorite==='Urgente'?'bg-warning text-dark':'bg-success'}">${d.priorite}</span> • ${fmtDate(d.echeance)} ${isOverdue(d.echeance)? '<span class="badge bg-danger">En retard</span>':''}<br><small class="text-muted">Avancement ${d.avancement}% • ${d.versions.length} version(s)</small><div class="progress mt-2" style="height:6px;"><div class="progress-bar" style="width:${d.avancement}%;background:${d.priorite==='Très urgente'?'#dc3545':'#0A2F5E'}"></div></div></div></div>
+    </div>
+    <div class="mt-3 p-3 bg-white rounded-3 border"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-list-task me-1"></i>Préoccupations • Domaines • Départements</h6>${d.preoccupations.map(p=>`<div class="d-flex gap-2 align-items-start p-2 rounded-3 mb-2" style="background:#f8fafc;"><span class="badge" style="background:#0A2F5E;color:#fff;">${p.domaine.replace('Département ','')}</span><div><strong class="small">${p.titre}</strong> <span class="badge ${p.priorite==='Très urgente'?'bg-danger':p.priorite==='Urgente'?'bg-warning text-dark':'bg-light text-dark border'}" style="font-size:10px;">${p.priorite}</span><br><small class="text-muted">${p.desc||'—'}</small></div></div>`).join('')}<div class="mt-2"><strong class="small">Départements affectés:</strong> ${d.departements.map(dep=>{
+      const info=DEPARTEMENTS.find(x=>x.name===dep);
+      return `<span class="badge me-1" style="background:${info.bg};color:${info.color};border:1px solid ${info.color};">${dep}</span>`;
+    }).join('')}</div></div>
+    <div class="row g-3 mt-1">
+      <div class="col-md-6"><div class="p-3 bg-white rounded-3 border"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Versions & Livrables</h6><div class="small">${d.versions.map(v=>`<div class="d-flex gap-2 p-2 border rounded-3 mb-2"><span class="badge bg-dark">v${v.v}</span><div><strong>${v.dept}</strong> • ${v.auteur}<br><small class="text-muted">${fmtDateTime(v.date)} • ${v.commentaire}</small><br><small>${v.fichiers?.map(f=>f.name).join(', ')||''}</small></div></div>`).join('')}</div><div class="mt-2">${d.livrables.map(l=>`<span class="badge bg-success me-1"><i class="bi bi-file-earmark-check me-1"></i>${l.name} v${l.version}</span>`).join('')||'<small class="text-muted">Aucun livrable final</small>'}</div></div></div>
+      <div class="col-md-6"><div class="p-3 bg-white rounded-3 border"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Historique complet</h6><div class="timeline small" style="max-height:260px;overflow-y:auto;">${d.historique.map(h=>`<div class="timeline-item ${h.action.includes('correction')?'correction':h.action.includes('Validation')?'validation':''}"><strong>${h.action}</strong> • ${h.acteur} <small class="text-muted">(${h.role})</small><br><small>${h.details||''}</small><br><small class="text-muted">${fmtDateTime(h.date)} ${h.departement? '• '+h.departement:''}</small></div>`).join('')}</div></div></div>
+    </div>
+    <div class="mt-3 p-3 bg-white rounded-3 border"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Communication interne</h6><div class="small" style="max-height:160px;overflow-y:auto;">${d.communications.map(m=>`<div class="d-flex mb-2 ${m.auteur.includes('Manager')?'justify-content-start':'justify-content-end'}"><div class="chat-bubble ${m.auteur.includes('Manager')?'other':'me'}"><strong class="small">${m.auteur}</strong><br>${m.message}<br><small style="opacity:0.7">${fmtDateTime(m.date)}</small></div></div>`).join('')||'<small class="text-muted">—</small>'}</div></div>
+  `;
+  const actions=document.getElementById('detailActions');
+  actions.innerHTML='';
+  if(['Reçu','En analyse'].includes(d.statut)) actions.innerHTML=`<button class="btn btn-main rounded-pill" onclick="switchPane('affectation'); bootstrap.Modal.getInstance(document.getElementById('dossierDetailModal')).hide();"><i class="bi bi-diagram-3 me-1"></i> Affecter</button>`;
+  else if(d.statut==='En validation') actions.innerHTML=`<button class="btn btn-success rounded-pill" onclick="validateDossier('${d.id}'); bootstrap.Modal.getInstance(document.getElementById('dossierDetailModal')).hide();"><i class="bi bi-check-circle me-1"></i> Valider</button><button class="btn btn-outline-danger rounded-pill" onclick="rejectDossier('${d.id}');"><i class="bi bi-arrow-counterclockwise me-1"></i> Corriger</button>`;
+  else if(d.statut==='Validé') {
+    const wa=d.notifications?.waLink||'#', mail=d.notifications?.emailDraft||'#';
+    actions.innerHTML=`<a href="${wa}" target="_blank" class="btn btn-success rounded-pill"><i class="bi bi-whatsapp me-1"></i> WhatsApp client</a><a href="${mail}" class="btn btn-primary rounded-pill"><i class="bi bi-envelope me-1"></i> Email livrables</a>`;
+  }
+  new bootstrap.Modal(document.getElementById('dossierDetailModal')).show();
+}
+
+// UTILS
+function fmtDate(s){ if(!s) return '—'; try{return new Date(s).toLocaleDateString('fr-FR');}catch(e){return s;} }
+function fmtDateTime(s){ if(!s) return '—'; try{const d=new Date(s); return d.toLocaleDateString('fr-FR')+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}catch(e){return s;} }
+function isOverdue(s){ if(!s) return false; const d=new Date(s); d.setHours(0,0,0,0); const t=new Date(); t.setHours(0,0,0,0); return d < t; }
+function logout(){localStorage.removeItem('gobex_admin_auth'); location.href='index.html';}
+
+// FILTERS INIT
+function initFilters(){
+  const fDept=document.getElementById('filterDept'), fAuditDept=document.getElementById('filterAuditDept');
+  DEPARTEMENTS.forEach(d=>{
+    const o=document.createElement('option'); o.value=d.name; o.textContent=d.name;
+    fDept.appendChild(o.cloneNode(true));
+  });
+}
+
+// INIT
+loadClients(); loadAgents(); loadDossiers();
+initReception(); renderRecentReception(); initFilters(); renderOverview(); updateKPI();
+switchPane('overview');
+
+// auto refresh audit-ish every 30s
+setInterval(()=>{ updateKPI(); }, 30000);
+</script>
+</body></html>

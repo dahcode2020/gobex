@@ -1,14 +1,455 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Documents - CRM GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb}body{font-family:Roboto;background:var(--light)}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px}.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{font-family:Exo;font-weight:800;font-size:24px;color:#fff}.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.7);text-decoration:none;border-left:3px solid transparent;font-size:14px}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}.main{margin-left:280px;padding:20px}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:20px}.stat-card{background:#fff;border-radius:16px;padding:18px;border:1px solid #eef2f6}.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:8px 18px;border:2px solid var(--accent);font-size:12px}@media(max-width:991px){.sidebar{transform:translateX(-100%)}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}</style></head><body>
-<div class="sidebar"><div class="sidebar-header"><div class="sidebar-logo">GOBEX CRM</div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);">Documents</div></div>
-<a href="crm.html" class="menu-item"><i class="bi bi-grid-1x2"></i> Dashboard</a><a href="crm-documents.html" class="menu-item active"><i class="bi bi-file-earmark-text"></i> Documents</a><a href="crm-dossiers.html" class="menu-item"><i class="bi bi-folder2-open"></i> Dossiers</a><a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Voir site</a><a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a></div>
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Documents Clients - CRM GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb}body{font-family:Roboto;background:var(--light)}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px;overflow-y:auto;z-index:100}.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{font-family:Exo;font-weight:800;font-size:24px;color:#fff}.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.7);text-decoration:none;border-left:3px solid transparent;font-size:14px;transition:.2s}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}.main{margin-left:280px;padding:20px}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:18px;border:1px solid #eef2f6}.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:8px 18px;border:2px solid var(--accent);font-size:12px;transition:.2s}.btn-main:hover{background:#e6a517;border-color:#e6a517;color:var(--primary)}.btn-dark-gobex{background:var(--primary);color:#fff;border-radius:50px;padding:8px 18px;font-weight:600;border:2px solid var(--primary);font-size:12px}.btn-dark-gobex:hover{background:#071f3e;color:#fff}.dropzone{border:2px dashed #cbd5e1;border-radius:16px;padding:24px;text-align:center;background:#f8fafc;cursor:pointer;transition:.2s}.dropzone.dragover{border-color:var(--accent);background:#fff8e1;transform:scale(1.01)}.doc-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}.badge-cat{font-size:10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:700;padding:4px 8px;border-radius:50px}.doc-row:hover{background:#f8fafc}.empty-state{padding:40px;text-align:center;color:#94a3b8}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}</style></head><body>
+<div class="sidebar" id="sidebar"><div class="sidebar-header"><div class="sidebar-logo">GOBEX CRM</div><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);">Documents Clients</div></div>
+<a href="crm.html" class="menu-item"><i class="bi bi-grid-1x2"></i> Dashboard CRM</a>
+<a href="crm-clients.html" class="menu-item"><i class="bi bi-people"></i> Clients & Prospects</a>
+<a href="crm-client-form.html" class="menu-item" style="background:rgba(255,184,28,0.12);border-left-color:#FFB81C;color:#FFB81C;"><i class="bi bi-person-plus"></i> Nouvelle Fiche Client</a>
+<a href="crm-pipeline.html" class="menu-item"><i class="bi bi-kanban"></i> Pipeline</a>
+<a href="crm-dossiers.html" class="menu-item"><i class="bi bi-folder2-open"></i> Dossiers</a>
+<a href="crm-facturation.html" class="menu-item"><i class="bi bi-receipt"></i> Facturation</a>
+<a href="crm-tasks.html" class="menu-item"><i class="bi bi-check2-square"></i> Tâches</a>
+<a href="crm-prevision.html" class="menu-item"><i class="bi bi-graph-up-arrow"></i> Prévisions</a>
+<a href="crm-automations.html" class="menu-item"><i class="bi bi-robot"></i> Automatisations</a>
+<a href="crm-calendrier.html" class="menu-item"><i class="bi bi-calendar3"></i> Calendrier</a>
+<a href="crm-documents.html" class="menu-item active"><i class="bi bi-file-earmark-text"></i> Documents</a>
+<a href="crm-reporting.html" class="menu-item"><i class="bi bi-bar-chart"></i> Reporting</a>
+<div style="margin-top:20px;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px">
+<a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Voir site</a>
+<a href="dashboard.html" class="menu-item"><i class="bi bi-speedometer2"></i> Dashboard Site</a>
+<a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+</div></div>
+
 <div class="main">
-<div class="topbar"><div><h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;">Gestion Documents - Cabinet Bénin</h5><small class="text-muted">Modèles, contrats, factures, bilans • Stockage sécurisé • Partage client</small></div><button class="btn btn-main rounded-pill"><i class="bi bi-cloud-upload me-1"></i> Upload document</button></div>
-<div class="row g-3"><div class="col-md-3"><div class="stat-card text-center"><i class="bi bi-file-earmark-word fs-2 text-primary"></i><h6 class="mt-2">Modèles Business Plan</h6><small class="text-muted">12 docs • 350+ vendus</small></div></div><div class="col-md-3"><div class="stat-card text-center"><i class="bi bi-file-earmark-pdf fs-2 text-danger"></i><h6 class="mt-2">Guides Fiscaux</h6><small class="text-muted">8 ebooks • DGI Bénin</small></div></div><div class="col-md-3"><div class="stat-card text-center"><i class="bi bi-file-earmark-excel fs-2 text-success"></i><h6 class="mt-2">Modèles Excel</h6><small class="text-muted">15 modèles • Paie, CA</small></div></div><div class="col-md-3"><div class="stat-card text-center"><i class="bi bi-folder2-open fs-2 text-warning"></i><h6 class="mt-2">Dossiers Clients</h6><small class="text-muted">127 dossiers • 2.3GB</small></div></div></div>
-<div class="stat-card mt-3"><h6>Documents récents</h6><div class="table-responsive mt-3"><table class="table small"><thead class="table-light"><tr><th>Document</th><th>Client</th><th>Type</th><th>Date</th><th>Taille</th><th>Actions</th></tr></thead><tbody>
-<tr><td><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Bilan 2024 - Fashion Bénin.pdf</td><td>Fashion Bénin</td><td>Bilan</td><td>10/06/2025</td><td>2.4MB</td><td><button class="btn btn-sm btn-light"><i class="bi bi-download"></i></button> <button class="btn btn-sm btn-light"><i class="bi bi-share"></i></button></td></tr>
-<tr><td><i class="bi bi-file-earmark-word me-2 text-primary"></i>Business Plan - JKA Services.docx</td><td>JKA Services</td><td>Business Plan</td><td>12/09/2025</td><td>1.2MB</td><td><button class="btn btn-sm btn-light"><i class="bi bi-download"></i></button></td></tr>
-</tbody></table></div></div>
+<div class="topbar"><div><h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-folder2-open me-2 text-warning"></i>Documents Clients <span class="badge bg-warning text-dark ms-2" id="totalDocsBadge">0</span></h5><small class="text-muted">Documents uploadés par les clients • Associés à chaque fiche client • RCCM, IFU, CNSS, Bilans, Contrats</small></div><div class="d-flex gap-2 flex-wrap"><button class="btn btn-light btn-sm rounded-pill d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button><a href="crm-clients.html" class="btn btn-dark-gobex rounded-pill"><i class="bi bi-people me-1"></i> Voir clients</a><button class="btn btn-main rounded-pill" data-bs-toggle="modal" data-bs-target="#uploadModal" onclick="openUploadModal()"><i class="bi bi-cloud-upload me-1"></i> Uploader document</button></div></div>
+
+<div class="alert alert-primary d-flex gap-2 small mb-3" style="border-radius:12px;background:#e3f0ff;border-color:#b6d4ff;">
+<i class="bi bi-info-circle-fill" style="font-size:18px;color:#0A2F5E;"></i>
+<div><strong>Nouveau flux :</strong> Les documents sont désormais <strong>associés à un client</strong>. Cliquez sur un client dans <a href="crm-clients.html" class="fw-bold" style="color:#0A2F5E;text-decoration:underline;">Clients & Prospects → Documents</a> pour voir et ajouter ses pièces (RCCM, IFU, CNI, bilans...). Ou uploadez ici en choisissant le client.</div>
 </div>
+
+<div class="row g-3 mb-3">
+<div class="col-md-3"><div class="stat-card text-center"><div class="doc-icon mx-auto mb-2" style="background:#e3f2fd;color:#1976d2;"><i class="bi bi-files"></i></div><h4 class="mb-0" id="statTotal">0</h4><small class="text-muted">Documents totaux</small><div class="mt-2"><span class="badge bg-primary" id="statClientDocs">0 clients avec docs</span></div></div></div>
+<div class="col-md-3"><div class="stat-card text-center"><div class="doc-icon mx-auto mb-2" style="background:#fff3d0;color:#f59e0b;"><i class="bi bi-hdd"></i></div><h4 class="mb-0" id="statSize">0 MB</h4><small class="text-muted">Volume stocké</small><div class="mt-2"><small class="text-muted" id="statAvg">Moy. — / doc</small></div></div></div>
+<div class="col-md-3"><div class="stat-card text-center"><div class="doc-icon mx-auto mb-2" style="background:#e8f5e9;color:#2e7d32;"><i class="bi bi-person-check"></i></div><h4 class="mb-0" id="statByClient">0%</h4><small class="text-muted">Clients documentés</small><div class="progress mt-2" style="height:6px;"><div class="progress-bar bg-success" id="statByClientBar" style="width:0%"></div></div></div></div>
+<div class="col-md-3"><div class="stat-card text-center"><div class="doc-icon mx-auto mb-2" style="background:#fce4ec;color:#e91e63;"><i class="bi bi-clock-history"></i></div><h4 class="mb-0" id="statRecent">0</h4><small class="text-muted">Ajoutés ce mois</small><div class="mt-2"><small class="text-muted" id="statRecentList">—</small></div></div></div>
+</div>
+
+<div class="stat-card">
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+<div class="d-flex gap-2 flex-wrap align-items-center">
+<input type="text" id="searchDoc" class="form-control form-control-sm" placeholder="Rechercher doc, client, catégorie..." style="width:260px;" oninput="renderDocs()">
+<select id="filterClient" class="form-select form-select-sm" style="width:200px;" onchange="renderDocs()"><option value="all">Tous clients</option></select>
+<select id="filterCat" class="form-select form-select-sm" style="width:170px;" onchange="renderDocs()"><option value="all">Toutes catégories</option><option>RCCM</option><option>IFU</option><option>CNSS</option><option>CNI / Passeport</option><option>Statuts</option><option>Contrat</option><option>Facture</option><option>Bilan</option><option>Relevé bancaire</option><option>Bulletin de paie</option><option>Business Plan</option><option>Attestation</option><option>Autre</option></select>
+<select id="filterUploader" class="form-select form-select-sm" style="width:150px;" onchange="renderDocs()"><option value="all">Toute source</option><option value="Client">Uploadé par Client</option><option value="Cabinet">Uploadé par Cabinet</option></select>
+</div>
+<div class="d-flex gap-2">
+<button class="btn btn-sm btn-outline-dark rounded-pill" onclick="exportDocs()"><i class="bi bi-download me-1"></i> Exporter JSON</button>
+<button class="btn btn-sm btn-outline-danger rounded-pill" onclick="clearAllDocs()"><i class="bi bi-trash me-1"></i> Vider</button>
+</div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-hover align-middle small mb-0">
+<thead class="table-light"><tr><th style="min-width:280px;">Document</th><th>Client associé</th><th>Catégorie / Source</th><th>Date</th><th>Taille</th><th>Actions</th></tr></thead>
+<tbody id="docsTable"></tbody>
+</table>
+</div>
+<div id="docsEmpty" class="empty-state d-none"><i class="bi bi-folder-x" style="font-size:48px;opacity:0.2"></i><p class="mt-3 mb-1 fw-bold">Aucun document trouvé</p><small class="text-muted">Uploadez un premier document ou associez-en depuis la fiche client.<br>Utilisez le bouton <strong>Uploader document</strong> ou allez dans <strong>Clients → Documents</strong></small><div class="mt-3"><button class="btn btn-main rounded-pill btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="bi bi-cloud-upload me-1"></i> Uploader un document</button></div></div>
+</div>
+
+<div class="row g-3 mt-1">
+<div class="col-lg-6"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-pie-chart me-2 text-warning"></i>Répartition par catégorie</h6><div id="catBreakdown" class="mt-3 small"></div></div></div>
+<div class="col-lg-6"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-people me-2 text-primary"></i>Clients avec le plus de documents</h6><div id="topClientsDocs" class="mt-3 small"></div></div></div>
+</div>
+</div>
+
+<!-- Upload Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title" style="font-family:Exo;"><i class="bi bi-cloud-upload me-2 text-warning"></i>Uploader & associer un document</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body">
+<div class="alert alert-warning small py-2" style="border-radius:10px;"><i class="bi bi-lightbulb me-1"></i> <strong>Astuce :</strong> Vous pouvez aussi ajouter des documents directement depuis la liste clients : cliquez sur l'icône <i class="bi bi-folder2-open"></i> <strong>Documents</strong> sur la ligne du client.</div>
+
+<div class="row g-3">
+<div class="col-md-7"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Client associé *</label><select id="uploadClient" class="form-select" required><option value="">— Choisir un client —</option></select><small class="text-muted" style="font-size:11px;">Le document sera rangé dans le dossier de ce client.</small></div>
+<div class="col-md-5"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Catégorie *</label><select id="uploadCat" class="form-select"><option value="Autre">Autre</option><option value="RCCM">RCCM</option><option value="IFU">IFU</option><option value="CNSS">CNSS</option><option value="CNI / Passeport">CNI / Passeport</option><option value="Statuts">Statuts / Actes</option><option value="Contrat">Contrat / Convention</option><option value="Facture">Facture / Devis</option><option value="Bilan">Bilan / Comptes annuels</option><option value="Relevé bancaire">Relevé bancaire</option><option value="Bulletin de paie">Bulletin de paie</option><option value="Business Plan">Business Plan</option><option value="Attestation">Attestation / Lettre</option><option value="Photo / Justificatif">Photo / Justificatif</option></select></div>
+<div class="col-md-6"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Uploadé par</label><select id="uploadBy" class="form-select"><option value="Cabinet">Cabinet GOBEX (vous)</option><option value="Client">Client (upload client)</option></select></div>
+<div class="col-md-6"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Note (optionnel)</label><input type="text" id="uploadNote" class="form-control" placeholder="Ex: RCCM original 2024, Bilan provisoire..."></div>
+</div>
+
+<div class="dropzone mt-3" id="dropzone" onclick="document.getElementById('fileInput').click()">
+<input type="file" id="fileInput" hidden multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.zip,.rar,.txt,.csv">
+<div id="dropzoneContent">
+<i class="bi bi-cloud-arrow-up" style="font-size:36px;color:#0A2F5E;opacity:0.7"></i>
+<p class="mb-1 mt-2 fw-bold" style="color:#0A2F5E;">Glissez-déposez vos fichiers ici</p>
+<small class="text-muted">ou cliquez pour parcourir</small><br><small class="text-muted" style="font-size:11px;">PDF, Word, Excel, Images, ZIP • Plusieurs fichiers possibles • Max 10 MB par fichier (aperçu stocké si &lt;1.5 MB)</small>
+</div>
+<div id="fileList" class="text-start mt-3 d-none"></div>
+</div>
+<div id="uploadProgress" class="mt-3 d-none"><div class="d-flex justify-content-between small mb-1"><span>Traitement...</span><span id="uploadPct">0%</span></div><div class="progress" style="height:6px;"><div class="progress-bar bg-warning" id="uploadBar" style="width:0%"></div></div></div>
+</div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Annuler</button><button class="btn btn-main rounded-pill" onclick="confirmUpload()" id="btnConfirmUpload" disabled><i class="bi bi-check-lg me-1"></i> Associer au client</button></div></div></div></div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewDocModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title" id="previewDocTitle" style="font-family:Exo;">Aperçu document</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body text-center" id="previewDocBody" style="min-height:300px;"></div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Fermer</button><button class="btn btn-main rounded-pill" onclick="downloadCurrent()"><i class="bi bi-download me-1"></i> Télécharger</button></div></div></div></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>if(localStorage.getItem('gobex_admin_auth')!=='true'){window.location.href='index.html';} function logout(){localStorage.removeItem('gobex_admin_auth');window.location.href='index.html';}</script>
+<script>
+if(localStorage.getItem('gobex_admin_auth')!=='true'){window.location.href='index.html';}
+let docs = [];
+let clients = [];
+let pendingFiles = [];
+let currentPreviewId = null;
+
+function loadClients(){
+  const stored = localStorage.getItem('gobex_crm_clients');
+  if(stored){ try{ clients = JSON.parse(stored);}catch(e){clients=[];} } else clients=[];
+  // populate selects
+  const sel = document.getElementById('uploadClient');
+  const filterSel = document.getElementById('filterClient');
+  sel.innerHTML = '<option value="">— Choisir un client —</option>';
+  filterSel.innerHTML = '<option value="all">Tous clients</option>';
+  clients.forEach((c,i)=>{
+    const label = `${c.name||c.entDenomination||c.partNom||'Client '+(i+1)} • ${c.ref||'sans réf'} • ${c.typeClient||c.type||''}`;
+    const o1 = document.createElement('option'); o1.value = c.ref || c.name || 'idx_'+i; o1.textContent = label; o1.dataset.idx=i; o1.dataset.ref=c.ref||''; o1.dataset.name=c.name||c.entDenomination||c.partNom||'';
+    sel.appendChild(o1);
+    const o2 = o1.cloneNode(true); filterSel.appendChild(o2);
+  });
+  // preselect from query ?clientRef=
+  const params = new URLSearchParams(location.search);
+  const pre = params.get('clientRef') || params.get('client');
+  if(pre){
+    const opt = Array.from(sel.options).find(o=>o.value===pre || o.dataset.ref===pre || o.dataset.name===pre);
+    if(opt) sel.value = opt.value;
+    validateUploadReady();
+  }
+}
+function loadDocs(){
+  const stored = localStorage.getItem('gobex_crm_documents');
+  if(stored){ try{ docs = JSON.parse(stored);}catch(e){docs=[];} } else docs=[];
+  // migrate demo if empty and clients exist
+  if(docs.length===0 && clients.length>0){
+    const demoCats = ['RCCM','IFU','Bilan','Contrat','CNI / Passeport'];
+    const demoNames = ['RCCM_ETS_La_Grace.pdf','IFU_Fashion_Benin.pdf','Bilan_2024_JKA_Services.xlsx','Contrat_BOA_GOBEX.pdf','CNI_Marie_DOSSOU.jpg','Facture_001_Fashion.pdf','Bulletin_Paie_ETS_Grace_05_2025.pdf'];
+    demoCats.forEach((cat, idx)=>{
+      const c = clients[idx % clients.length];
+      docs.push({
+        id:'demo_'+Date.now()+'_'+idx,
+        clientRef: c.ref || c.name || 'idx_'+idx,
+        clientName: c.name || c.entDenomination || c.partNom || 'Client',
+        clientIdx: idx % clients.length,
+        fileName: demoNames[idx] || ('Document_'+(idx+1)+'.pdf'),
+        fileType: demoNames[idx].split('.').pop().toLowerCase(),
+        mimeType: demoNames[idx].endsWith('.pdf')?'application/pdf': demoNames[idx].endsWith('.jpg')?'image/jpeg':'application/octet-stream',
+        category: cat,
+        size: Math.floor(300000 + Math.random()*1200000),
+        uploadDate: new Date(Date.now() - Math.floor(Math.random()*20)*86400000).toISOString(),
+        uploadedBy: idx%2===0?'Client':'Cabinet',
+        note: idx===0?'RCCM fourni par client via WhatsApp': idx===2?'Bilan provisoire à valider':'',
+        dataUrl: null
+      });
+    });
+    saveDocs();
+  }
+  renderDocs(); updateStats();
+}
+
+function saveDocs(){
+  localStorage.setItem('gobex_crm_documents', JSON.stringify(docs));
+  // also dispatch for other pages
+  localStorage.setItem('gobex_docs_last_update', new Date().toISOString());
+  updateStats(); renderDocs();
+}
+function formatSize(bytes){
+  if(!bytes && bytes!==0) return '—';
+  if(bytes<1024) return bytes+' o';
+  if(bytes<1024*1024) return (bytes/1024).toFixed(1)+' Ko';
+  return (bytes/1024/1024).toFixed(2)+' Mo';
+}
+function iconForDoc(d){
+  const ext = (d.fileType||'').toLowerCase();
+  const cat = d.category||'';
+  if(['jpg','jpeg','png','webp','gif'].includes(ext)) return {icon:'bi-file-earmark-image', bg:'#e3f2fd', color:'#1976d2'};
+  if(ext==='pdf') return {icon:'bi-file-earmark-pdf', bg:'#ffebee', color:'#d32f2f'};
+  if(['xls','xlsx','csv'].includes(ext)) return {icon:'bi-file-earmark-excel', bg:'#e8f5e9', color:'#2e7d32'};
+  if(['doc','docx'].includes(ext)) return {icon:'bi-file-earmark-word', bg:'#e3f2fd', color:'#1565c0'};
+  if(['zip','rar'].includes(ext)) return {icon:'bi-file-earmark-zip', bg:'#fff3e0', color:'#ef6c00'};
+  if(cat==='RCCM') return {icon:'bi-shield-check', bg:'#fff3d0', color:'#f59e0b'};
+  if(cat==='IFU') return {icon:'bi-upc-scan', bg:'#e0f2f1', color:'#00695c'};
+  if(cat==='Bilan') return {icon:'bi-graph-up', bg:'#fce4ec', color:'#c2185b'};
+  return {icon:'bi-file-earmark-text', bg:'#f3e5f5', color:'#6a1b9a'};
+}
+function updateStats(){
+  const total = docs.length;
+  document.getElementById('totalDocsBadge').textContent = total;
+  document.getElementById('statTotal').textContent = total;
+  const totalSize = docs.reduce((s,d)=>s+(d.size||0),0);
+  document.getElementById('statSize').textContent = totalSize ? (totalSize/1024/1024).toFixed(2)+' Mo' : '0 Mo';
+  document.getElementById('statAvg').textContent = total ? 'Moy. '+ formatSize(Math.round(totalSize/total))+' / doc' : 'Moy. — / doc';
+  const uniqClients = new Set(docs.map(d=>d.clientRef)).size;
+  document.getElementById('statClientDocs').textContent = uniqClients+' clients avec docs';
+  const pct = clients.length ? Math.round(uniqClients/clients.length*100) : 0;
+  document.getElementById('statByClient').textContent = pct+'%';
+  document.getElementById('statByClientBar').style.width = pct+'%';
+  const monthAgo = new Date(); monthAgo.setDate(monthAgo.getDate()-30);
+  const recent = docs.filter(d=> new Date(d.uploadDate) >= monthAgo).length;
+  document.getElementById('statRecent').textContent = recent;
+  document.getElementById('statRecentList').textContent = recent ? recent+' ce mois' : '—';
+  // breakdown
+  const byCat = {};
+  docs.forEach(d=>{ byCat[d.category]=(byCat[d.category]||0)+1; });
+  const catDiv = document.getElementById('catBreakdown');
+  if(Object.keys(byCat).length===0) catDiv.innerHTML='<small class="text-muted">Aucun document</small>';
+  else {
+    catDiv.innerHTML = Object.entries(byCat).sort((a,b)=>b[1]-a[1]).map(([cat,cnt])=>{
+      const pctc = Math.round(cnt/total*100);
+      return `<div class="d-flex justify-content-between align-items-center mb-2"><span><span class="badge bg-light text-dark border me-1">${cat}</span> ${cnt} doc(s)</span><div class="d-flex align-items-center gap-2" style="width:50%"><div class="progress flex-grow-1" style="height:6px;"><div class="progress-bar" style="width:${pctc}%;background:#0A2F5E;"></div></div><small>${pctc}%</small></div></div>`;
+    }).join('');
+  }
+  // top clients
+  const byClient = {};
+  docs.forEach(d=>{ const key = d.clientName + '|' + d.clientRef; byClient[key]=(byClient[key]||0)+1; });
+  const topDiv = document.getElementById('topClientsDocs');
+  const sorted = Object.entries(byClient).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  if(sorted.length===0) topDiv.innerHTML='<small class="text-muted">—</small>';
+  else topDiv.innerHTML = sorted.map(([key,cnt])=>{
+    const [name, ref] = key.split('|');
+    const pctc = Math.round(cnt/total*100);
+    return `<div class="d-flex justify-content-between align-items-center mb-2"><div><strong>${name}</strong> <small class="text-muted">${ref}</small></div><span class="badge bg-warning text-dark">${cnt}</span></div>`;
+  }).join('');
+}
+
+function renderDocs(){
+  const tbody = document.getElementById('docsTable');
+  const empty = document.getElementById('docsEmpty');
+  const q = document.getElementById('searchDoc').value.toLowerCase();
+  const fClient = document.getElementById('filterClient').value;
+  const fCat = document.getElementById('filterCat').value;
+  const fUploader = document.getElementById('filterUploader').value;
+  tbody.innerHTML='';
+  let filtered = docs.filter(d=>{
+    if(fClient!=='all' && d.clientRef!==fClient) return false;
+    if(fCat!=='all' && d.category!==fCat) return false;
+    if(fUploader!=='all' && d.uploadedBy!==fUploader) return false;
+    if(q && !`${d.fileName} ${d.clientName} ${d.category} ${d.note}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  // sort newest first
+  filtered.sort((a,b)=> new Date(b.uploadDate)-new Date(a.uploadDate));
+  if(filtered.length===0){
+    tbody.innerHTML='';
+    empty.classList.remove('d-none');
+  } else {
+    empty.classList.add('d-none');
+    filtered.forEach(d=>{
+      const ic = iconForDoc(d);
+      const date = new Date(d.uploadDate).toLocaleDateString('fr-FR');
+      const tr = document.createElement('tr'); tr.className='doc-row';
+      tr.innerHTML = `
+        <td>
+          <div class="d-flex gap-2 align-items-center">
+            <div class="doc-icon flex-shrink-0" style="background:${ic.bg};color:${ic.color};"><i class="bi ${ic.icon}"></i></div>
+            <div>
+              <strong style="color:#0A2F5E;font-size:13px;">${d.fileName}</strong><br>
+              <small class="text-muted">${d.mimeType||''} ${d.dataUrl? '• <span class="text-success">Aperçu dispo</span>' : '• <span class="text-muted">Stockage simulé</span>'}</small>
+              ${d.note? `<br><small class="text-muted fst-italic">"${d.note}"</small>`:''}
+            </div>
+          </div>
+        </td>
+        <td><strong>${d.clientName}</strong><br><small class="text-muted">${d.clientRef}</small><br><a href="crm-clients.html" class="small" style="color:#0A2F5E;text-decoration:underline;">Voir fiche</a></td>
+        <td><span class="badge-cat" style="background:#0A2F5E;color:#fff;">${d.category}</span><br><small class="badge ${d.uploadedBy==='Client'?'bg-success':'bg-warning text-dark'} mt-1">${d.uploadedBy==='Client'?'👤 Client':'🏢 Cabinet'}</small></td>
+        <td><small>${date}<br><span class="text-muted">${new Date(d.uploadDate).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span></small></td>
+        <td><small>${formatSize(d.size)}</small></td>
+        <td>
+          <div class="d-flex gap-1 flex-wrap">
+            <button class="btn btn-sm btn-light" onclick="previewDoc('${d.id}')" title="Aperçu"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-sm btn-outline-primary" onclick="downloadDoc('${d.id}')" title="Télécharger"><i class="bi bi-download"></i></button>
+            <button class="btn btn-sm btn-outline-dark" onclick="reassignDoc('${d.id}')" title="Réassocier"><i class="bi bi-arrow-left-right"></i></button>
+            <button class="btn btn-sm btn-outline-danger" onclick="deleteDoc('${d.id}')" title="Supprimer"><i class="bi bi-trash"></i></button>
+            <a href="https://wa.me/22997739046?text=${encodeURIComponent('Document GOBEX : '+d.fileName+' - Client '+d.clientName)}" target="_blank" class="btn btn-sm btn-success" title="Partager WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+}
+
+// Upload flow
+function openUploadModal(){
+  // refresh clients in case new
+  loadClients();
+  pendingFiles=[]; document.getElementById('fileList').innerHTML=''; document.getElementById('fileList').classList.add('d-none');
+  document.getElementById('dropzoneContent').classList.remove('d-none');
+  document.getElementById('uploadNote').value='';
+  document.getElementById('uploadProgress').classList.add('d-none');
+  validateUploadReady();
+  const fromClient = new URLSearchParams(location.search).get('clientRef');
+  if(fromClient) document.getElementById('uploadClient').value = fromClient;
+}
+
+const dropzone = document.getElementById('dropzone');
+if(dropzone){
+  dropzone.addEventListener('dragover', e=>{ e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', ()=> dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop', e=>{ e.preventDefault(); dropzone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+}
+document.getElementById('fileInput').addEventListener('change', e=> handleFiles(e.target.files));
+document.getElementById('uploadClient').addEventListener('change', validateUploadReady);
+document.getElementById('uploadCat').addEventListener('change', ()=>{ if(pendingFiles.length) renderPending(); });
+
+function handleFiles(fileList){
+  const arr = Array.from(fileList);
+  // validate size <10MB
+  const oversize = arr.filter(f=>f.size>10*1024*1024);
+  if(oversize.length){ alert('Fichier trop volumineux (>10 Mo) : '+oversize.map(f=>f.name).join(', ')); return; }
+  pendingFiles = arr;
+  renderPending();
+  validateUploadReady();
+}
+function renderPending(){
+  const list = document.getElementById('fileList');
+  const dzContent = document.getElementById('dropzoneContent');
+  if(pendingFiles.length===0){ list.classList.add('d-none'); dzContent.classList.remove('d-none'); return; }
+  dzContent.classList.add('d-none');
+  list.classList.remove('d-none');
+  list.innerHTML = pendingFiles.map((f, i)=>`
+    <div class="d-flex justify-content-between align-items-center p-2 border rounded-3 mb-2 bg-white">
+      <div class="d-flex gap-2 align-items-center"><i class="bi bi-file-earmark" style="font-size:20px;color:#0A2F5E;"></i><div><strong class="small">${f.name}</strong><br><small class="text-muted">${formatSize(f.size)} • ${f.type||'type inconnu'}</small></div></div>
+      <button class="btn btn-sm btn-light" onclick="removePending(${i})"><i class="bi bi-x-lg"></i></button>
+    </div>
+  `).join('') + `<small class="text-muted">${pendingFiles.length} fichier(s) prêt(s) • Catégorie: <strong>${document.getElementById('uploadCat').value}</strong> • Client: <strong>${document.getElementById('uploadClient').selectedOptions[0]?.textContent||'—'}</strong></small>`;
+}
+function removePending(i){ pendingFiles.splice(i,1); renderPending(); validateUploadReady(); }
+function validateUploadReady(){
+  const hasClient = !!document.getElementById('uploadClient').value;
+  const hasFiles = pendingFiles.length>0;
+  document.getElementById('btnConfirmUpload').disabled = !(hasClient && hasFiles);
+}
+
+async function confirmUpload(){
+  const clientVal = document.getElementById('uploadClient').value;
+  if(!clientVal){ alert('Choisissez un client'); return; }
+  const opt = document.getElementById('uploadClient').selectedOptions[0];
+  const clientName = opt.dataset.name || opt.textContent.split('•')[0].trim();
+  const clientRef = opt.dataset.ref || clientVal;
+  const clientIdx = opt.dataset.idx || 0;
+  const category = document.getElementById('uploadCat').value;
+  const uploadedBy = document.getElementById('uploadBy').value;
+  const note = document.getElementById('uploadNote').value.trim();
+  if(pendingFiles.length===0){ alert('Ajoutez au moins un fichier'); return; }
+
+  document.getElementById('uploadProgress').classList.remove('d-none');
+  const bar = document.getElementById('uploadBar'), pct = document.getElementById('uploadPct');
+  bar.style.width='10%'; pct.textContent='10%';
+
+  // Process each file with FileReader if <1.5MB else no dataUrl
+  const newDocs = [];
+  for(let idx=0; idx<pendingFiles.length; idx++){
+    const f = pendingFiles[idx];
+    const progress = Math.round(10 + (idx/pendingFiles.length)*90);
+    bar.style.width = progress+'%'; pct.textContent = progress+'%';
+    let dataUrl = null;
+    if(f.size < 1.5*1024*1024){
+      try{ dataUrl = await readAsDataUrl(f); }catch(e){ dataUrl=null; }
+    }
+    const ext = f.name.split('.').pop().toLowerCase();
+    newDocs.push({
+      id: 'doc_'+Date.now()+'_'+idx+'_'+Math.random().toString(36).slice(2,6),
+      clientRef, clientName, clientIdx: parseInt(clientIdx),
+      fileName: f.name,
+      fileType: ext,
+      mimeType: f.type || 'application/octet-stream',
+      category, size: f.size, uploadDate: new Date().toISOString(),
+      uploadedBy, note,
+      dataUrl
+    });
+    // small delay for UI
+    await new Promise(r=>setTimeout(r,150));
+  }
+  bar.style.width='100%'; pct.textContent='100%';
+  docs.unshift(...newDocs);
+  saveDocs();
+  // also update client's docs count persisted? no need
+  setTimeout(()=>{
+    bootstrap.Modal.getInstance(document.getElementById('uploadModal')).hide();
+    pendingFiles=[]; renderPending();
+    document.getElementById('uploadProgress').classList.add('d-none');
+    alert(newDocs.length+' document(s) associé(s) à '+clientName+' ('+clientRef+')');
+  }, 500);
+}
+function readAsDataUrl(file){
+  return new Promise((res, rej)=>{
+    const r = new FileReader();
+    r.onload = ()=> res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+function previewDoc(id){
+  const d = docs.find(x=>x.id===id);
+  if(!d) return;
+  currentPreviewId = id;
+  document.getElementById('previewDocTitle').textContent = d.fileName + ' — ' + d.clientName;
+  const body = document.getElementById('previewDocBody');
+  if(d.dataUrl){
+    if(d.mimeType.startsWith('image/')){
+      body.innerHTML = `<img src="${d.dataUrl}" style="max-width:100%;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.1)"> <p class="small text-muted mt-2">${d.category} • ${formatSize(d.size)} • ${d.clientName} • ${new Date(d.uploadDate).toLocaleString('fr-FR')}</p><p class="small fst-italic">${d.note||''}</p>`;
+    } else if(d.mimeType==='application/pdf'){
+      body.innerHTML = `<iframe src="${d.dataUrl}" style="width:100%;height:500px;border:1px solid #e2e8f0;border-radius:12px;"></iframe><p class="small text-muted mt-2">PDF • ${d.note||''}</p>`;
+    } else {
+      body.innerHTML = `<div class="p-4"><i class="bi bi-file-earmark" style="font-size:48px;color:#0A2F5E;"></i><p class="mt-3"><strong>${d.fileName}</strong></p><small class="text-muted">${d.mimeType} • ${formatSize(d.size)}</small><p class="small mt-2">${d.note||''}</p><a href="${d.dataUrl}" download="${d.fileName}" class="btn btn-main btn-sm mt-3"><i class="bi bi-download me-1"></i> Télécharger</a></div>`;
+    }
+  } else {
+    body.innerHTML = `<div class="p-4"><i class="bi bi-file-earmark-text" style="font-size:48px;opacity:0.2"></i><p class="mt-3"><strong>${d.fileName}</strong></p><small class="text-muted">Aperçu non stocké (fichier >1.5 Mo ou démo) • ${formatSize(d.size)}</small><p class="small mt-3">Fichier associé à <strong>${d.clientName}</strong> (${d.clientRef})<br>Catégorie: ${d.category} • Uploadé par: ${d.uploadedBy}<br>Note: ${d.note||'—'}</p><div class="alert alert-warning small mt-3" style="border-radius:10px;">En mode localStorage démo, seuls les fichiers &lt;1.5 Mo gardent l'aperçu. En production avec Firebase/Supabase, tous les fichiers seraient téléchargeables.</div></div>`;
+  }
+  new bootstrap.Modal(document.getElementById('previewDocModal')).show();
+}
+function downloadDoc(id){
+  const d = docs.find(x=>x.id===id);
+  if(!d) return;
+  if(d.dataUrl){
+    const a=document.createElement('a'); a.href=d.dataUrl; a.download=d.fileName; a.click();
+  } else {
+    // simulate download: create txt
+    const blob = new Blob([`Document GOBEX simulé\nClient: ${d.clientName} (${d.clientRef})\nFichier: ${d.fileName}\nCatégorie: ${d.category}\nNote: ${d.note}\nDate: ${d.uploadDate}\n\nCeci est une simulation. En production le fichier original serait téléchargé depuis Firebase Storage / Supabase.`], {type:'text/plain'});
+    const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=d.fileName+'.txt'; a.click();
+    URL.revokeObjectURL(url);
+  }
+}
+function downloadCurrent(){ if(currentPreviewId) downloadDoc(currentPreviewId); }
+function deleteDoc(id){
+  const d = docs.find(x=>x.id===id);
+  if(!d) return;
+  if(!confirm(`Supprimer "${d.fileName}" associé à ${d.clientName} ?`)) return;
+  docs = docs.filter(x=>x.id!==id);
+  saveDocs();
+}
+function reassignDoc(id){
+  const d = docs.find(x=>x.id===id);
+  if(!d) return;
+  const newRef = prompt(`Réassocier "${d.fileName}"\nActuel: ${d.clientName} (${d.clientRef})\nEntrez la nouvelle RÉFÉRENCE client (ou nom) :`, d.clientRef);
+  if(newRef===null) return;
+  const newName = prompt(`Nom du nouveau client (affichage) :`, d.clientName);
+  if(newName===null) return;
+  d.clientRef = newRef.trim() || d.clientRef;
+  d.clientName = newName.trim() || d.clientName;
+  saveDocs();
+  alert('Document réassocié à '+d.clientName);
+}
+function exportDocs(){
+  const blob=new Blob([JSON.stringify(docs,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='gobex-documents-'+new Date().toISOString().split('T')[0]+'.json'; a.click();
+}
+function clearAllDocs(){
+  if(!confirm('Supprimer TOUS les documents ? Irréversible !')) return;
+  if(!confirm('Vraiment tout effacer ?')) return;
+  docs=[]; saveDocs();
+}
+function logout(){localStorage.removeItem('gobex_admin_auth');window.location.href='index.html';}
+
+// init
+loadClients(); loadDocs();
+// react to external updates (from crm-clients page)
+window.addEventListener('storage', (e)=>{
+  if(e.key==='gobex_crm_documents' || e.key==='gobex_docs_last_update'){ loadDocs(); }
+  if(e.key==='gobex_crm_clients'){ loadClients(); updateStats(); }
+});
+</script>
 </body></html>

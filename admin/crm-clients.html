@@ -22,6 +22,14 @@ body{font-family:Roboto;background:var(--light)}
 .btn-dark-gobex{background:var(--primary);color:#fff;border-radius:50px;padding:8px 18px;font-weight:600;border:2px solid var(--primary);font-size:12px}
 .btn-dark-gobex:hover{background:#071f3e;color:#fff}
 .client-row:hover{background:#f8f9fa}
+.client-row{transition:.15s}
+.doc-badge{background:var(--primary);color:#fff;border-radius:50px;padding:3px 8px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.doc-badge.empty{background:#eef2f6;color:#6b7280;border:1px dashed #cbd5e1}
+.dropzone-client{border:2px dashed #cbd5e1;border-radius:16px;padding:20px;text-align:center;background:#f8fafc;cursor:pointer;transition:.2s}
+.dropzone-client.dragover{border-color:var(--accent);background:#fff8e1}
+.doc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.nav-pills .nav-link{border-radius:50px;font-size:13px;font-weight:600;color:#6b7280}
+.nav-pills .nav-link.active{background:var(--primary);color:#fff}
 @media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}
 </style>
 </head>
@@ -50,11 +58,12 @@ body{font-family:Roboto;background:var(--light)}
 <div class="main">
 <div class="topbar">
 <div>
-<h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;">Clients & Prospects <span class="badge bg-warning text-dark ms-2" id="totalClientsBadge">127</span></h5>
-<small class="text-muted">Gestion complète avec fiche exhaustive • IFU, RCCM, CNSS • Signature & cachet • PDF imprimable</small>
+<h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;">Clients & Prospects <span class="badge bg-warning text-dark ms-2" id="totalClientsBadge">127</span> <span class="badge bg-primary ms-1" id="totalDocsGlobalBadge" style="font-size:11px;"><i class="bi bi-files me-1"></i><span id="totalDocsGlobal">0</span> docs</span></h5>
+<small class="text-muted">Gestion complète avec fiche exhaustive • IFU, RCCM, CNSS • Signature & cachet • PDF imprimable • <strong style="color:#0A2F5E;">Cliquez sur un client → Documents pour gérer ses pièces</strong></small>
 </div>
 <div class="d-flex gap-2 flex-wrap">
 <button class="btn btn-light btn-sm rounded-pill d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button>
+<a href="crm-documents.html" class="btn btn-outline-dark btn-sm rounded-pill"><i class="bi bi-folder2-open me-1"></i> Tous les documents</a>
 <a href="crm-client-form.html" class="btn btn-dark-gobex rounded-pill"><i class="bi bi-file-earmark-plus me-1"></i> Fiche complète (PDF)</a>
 <button class="btn btn-main rounded-pill" data-bs-toggle="modal" data-bs-target="#clientModal" onclick="openAddClient()"><i class="bi bi-lightning me-1"></i> Rapide</button>
 </div>
@@ -63,22 +72,23 @@ body{font-family:Roboto;background:var(--light)}
 <div class="row g-3 mb-3">
 <div class="col-md-3"><div class="stat-card text-center"><h4 id="totalClients">127</h4><small class="text-muted">Clients actifs</small></div></div>
 <div class="col-md-3"><div class="stat-card text-center"><h4 id="totalProspects">12</h4><small class="text-muted">Prospects</small></div></div>
-<div class="col-md-3"><div class="stat-card text-center"><h4>8.5M</h4><small class="text-muted">CA mensuel</small></div></div>
+<div class="col-md-3"><div class="stat-card text-center"><h4 id="statDocsCount">0</h4><small class="text-muted">Documents associés</small><div><small class="text-muted" id="statDocsClients">0 clients documentés</small></div></div></div>
 <div class="col-md-3"><div class="stat-card text-center"><h4>98%</h4><small class="text-muted">Fidélisation</small></div></div>
 </div>
 
 <div class="stat-card">
 <div class="alert alert-warning d-flex align-items-center gap-2 small mb-3" style="border-radius:12px;">
 <i class="bi bi-info-circle-fill"></i>
-<div><strong>Nouveau :</strong> Fiche client exhaustive avec aperçu live et impression PDF pour signature & cachet. Fusion des infos CRM existantes + formulaire officiel GOBEX. Cliquez sur <strong>Fiche complète (PDF)</strong> pour créer un client avec attestation sur l'honneur.</div>
+<div><strong>Nouveau — Documents clients :</strong> Chaque client a désormais son dossier documentaire (RCCM, IFU, CNSS, CNI, bilans, contrats...). Cliquez sur <span class="badge bg-primary"><i class="bi bi-folder2-open"></i> Documents</span> sur la ligne d'un client, ou sur son nom, pour uploader, prévisualiser et organiser ses pièces. Tous les documents sont centralisés dans <a href="crm-documents.html" class="fw-bold" style="color:#0A2F5E;text-decoration:underline;">Documents</a>.</div>
 </div>
 
 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
 <div class="d-flex gap-2 flex-wrap">
-<input type="text" id="searchClient" class="form-control form-control-sm" placeholder="Rechercher client, IFU, téléphone..." style="width:250px;">
-<select id="filterType" class="form-select form-select-sm" style="width:150px;"><option value="all">Tous types</option><option value="SARL">SARL</option><option value="ETS">ETS</option><option value="SA">SA</option><option value="SAS">SAS</option><option value="ONG">ONG</option><option value="Particulier">Particulier</option></select>
-<select id="filterRegime" class="form-select form-select-sm" style="width:150px;"><option value="all">Tous régimes</option><option value="REEL">Réel</option><option value="RME">RME</option><option value="Entreprenant">Entreprenant</option></select>
-<select id="filterClientType" class="form-select form-select-sm" style="width:180px;"><option value="all">Tous profils</option><option value="Particulier">Particulier</option><option value="Entreprise individuelle">Ent. individuelle</option><option value="Personne morale">Personne morale</option></select>
+<input type="text" id="searchClient" class="form-control form-control-sm" placeholder="Rechercher client, IFU, téléphone, doc..." style="width:250px;">
+<select id="filterType" class="form-select form-select-sm" style="width:140px;"><option value="all">Tous types</option><option value="SARL">SARL</option><option value="ETS">ETS</option><option value="SA">SA</option><option value="SAS">SAS</option><option value="ONG">ONG</option><option value="Particulier">Particulier</option></select>
+<select id="filterRegime" class="form-select form-select-sm" style="width:140px;"><option value="all">Tous régimes</option><option value="REEL">Réel</option><option value="RME">RME</option><option value="Entreprenant">Entreprenant</option></select>
+<select id="filterClientType" class="form-select form-select-sm" style="width:170px;"><option value="all">Tous profils</option><option value="Particulier">Particulier</option><option value="Entreprise individuelle">Ent. individuelle</option><option value="Personne morale">Personne morale</option></select>
+<select id="filterDocs" class="form-select form-select-sm" style="width:170px;"><option value="all">Tous (docs)</option><option value="with">Avec documents</option><option value="without">Sans documents</option></select>
 </div>
 <div class="d-flex gap-2">
 <button class="btn btn-sm btn-outline-dark rounded-pill" onclick="exportClients()"><i class="bi bi-download me-1"></i> Exporter</button>
@@ -88,7 +98,7 @@ body{font-family:Roboto;background:var(--light)}
 
 <div class="table-responsive">
 <table class="table table-hover align-middle small">
-<thead class="table-light"><tr><th>Client / Réf</th><th>IFU / RCCM / Profil</th><th>Type / Régime</th><th>Contact</th><th>CA / Statut</th><th>Services / Besoin</th><th>Actions</th></tr></thead>
+<thead class="table-light"><tr><th style="min-width:220px;">Client / Réf</th><th>IFU / RCCM / Profil</th><th>Type / Régime</th><th>Contact</th><th>CA / Statut</th><th>Services / Besoin</th><th style="min-width:220px;">Actions</th></tr></thead>
 <tbody id="clientsTable"></tbody>
 </table>
 </div>
@@ -101,11 +111,89 @@ body{font-family:Roboto;background:var(--light)}
 <!-- Modal Preview Fiche exhaustive -->
 <div class="modal fade" id="previewModal" tabindex="-1"><div class="modal-dialog modal-xl"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title" style="font-family:Exo;"><i class="bi bi-file-earmark-pdf me-2"></i>Fiche Client - Aperçu PDF</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body" id="previewModalBody" style="max-height:75vh;overflow-y:auto;background:#f4f7fb;"></div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Fermer</button><button class="btn btn-main rounded-pill" onclick="printPreview()"><i class="bi bi-printer me-1"></i> Imprimer / PDF</button></div></div></div></div>
 
+<!-- Modal Documents Client : association -->
+<div class="modal fade" id="clientDocsModal" tabindex="-1"><div class="modal-dialog modal-xl"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><div><h6 class="modal-title" style="font-family:Exo;"><i class="bi bi-folder2-open me-2 text-warning"></i>Dossier Documents — <span id="docsModalClientName">Client</span></h6><small id="docsModalClientRef" class="text-white-50">Réf —</small></div><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+<div class="modal-body p-0">
+  <ul class="nav nav-pills p-3 pb-0 gap-2" role="tablist">
+    <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tabDocsList" type="button"><i class="bi bi-files me-1"></i> Documents <span class="badge bg-warning text-dark ms-1" id="docsCountBadge">0</span></button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tabDocsUpload" type="button"><i class="bi bi-cloud-upload me-1"></i> Ajouter des documents</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tabDocsInfo" type="button"><i class="bi bi-info-circle me-1"></i> Infos client</button></li>
+  </ul>
+  <div class="tab-content p-3">
+    <!-- List -->
+    <div class="tab-pane fade show active" id="tabDocsList">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <div class="d-flex gap-2 align-items-center flex-wrap">
+          <input type="text" id="docsSearchInModal" class="form-control form-control-sm" placeholder="Rechercher document..." style="width:220px;" oninput="renderClientDocs()">
+          <select id="docsFilterCatModal" class="form-select form-select-sm" style="width:180px;" onchange="renderClientDocs()"><option value="all">Toutes catégories</option><option>RCCM</option><option>IFU</option><option>CNSS</option><option>CNI / Passeport</option><option>Statuts</option><option>Contrat</option><option>Facture</option><option>Bilan</option><option>Relevé bancaire</option><option>Bulletin de paie</option><option>Business Plan</option><option>Attestation</option><option>Autre</option></select>
+          <small class="text-muted" id="docsStatsModal"></small>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="crm-documents.html" class="btn btn-sm btn-outline-dark rounded-pill" target="_blank"><i class="bi bi-box-arrow-up-right me-1"></i> Vue globale Docs</a>
+          <button class="btn btn-sm btn-main rounded-pill" onclick="showUploadTab()"><i class="bi bi-plus-lg me-1"></i> Ajouter</button>
+        </div>
+      </div>
+      <div class="table-responsive" style="max-height:45vh;overflow-y:auto;">
+        <table class="table table-hover align-middle small mb-0">
+          <thead class="table-light sticky-top"><tr><th>Document</th><th>Catégorie / Source</th><th>Date</th><th>Taille</th><th>Actions</th></tr></thead>
+          <tbody id="clientDocsTable"></tbody>
+        </table>
+      </div>
+      <div id="clientDocsEmpty" class="text-center py-4 d-none">
+        <i class="bi bi-folder-x" style="font-size:40px;opacity:0.2"></i>
+        <p class="mt-2 mb-1 fw-bold">Aucun document pour ce client</p>
+        <small class="text-muted">Uploadez son RCCM, IFU, CNI, bilans... Les fichiers seront automatiquement associés à sa fiche.</small><br>
+        <button class="btn btn-main btn-sm rounded-pill mt-3" onclick="showUploadTab()"><i class="bi bi-cloud-upload me-1"></i> Ajouter un document</button>
+      </div>
+    </div>
+    <!-- Upload -->
+    <div class="tab-pane fade" id="tabDocsUpload">
+      <div class="row g-3">
+        <div class="col-md-4"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Catégorie</label><select id="clientUploadCat" class="form-select"><option value="Autre">Autre</option><option value="RCCM">RCCM</option><option value="IFU">IFU</option><option value="CNSS">CNSS</option><option value="CNI / Passeport">CNI / Passeport</option><option value="Statuts">Statuts / Actes</option><option value="Contrat">Contrat / Convention</option><option value="Facture">Facture / Devis</option><option value="Bilan">Bilan / Comptes annuels</option><option value="Relevé bancaire">Relevé bancaire</option><option value="Bulletin de paie">Bulletin de paie</option><option value="Business Plan">Business Plan</option><option value="Attestation">Attestation / Lettre</option><option value="Photo / Justificatif">Photo / Justificatif</option></select></div>
+        <div class="col-md-4"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Uploadé par</label><select id="clientUploadBy" class="form-select"><option value="Cabinet">Cabinet GOBEX (vous)</option><option value="Client">Client (via WhatsApp / dépôt)</option></select></div>
+        <div class="col-md-4"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Note</label><input type="text" id="clientUploadNote" class="form-control" placeholder="Ex: IFU original 2024"></div>
+      </div>
+      <div class="dropzone-client mt-3" id="clientDropzone" onclick="document.getElementById('clientFileInput').click()">
+        <input type="file" id="clientFileInput" hidden multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.zip,.rar,.txt,.csv">
+        <div id="clientDropzoneContent">
+          <i class="bi bi-cloud-arrow-up" style="font-size:36px;color:#0A2F5E;opacity:0.6"></i>
+          <p class="mb-1 mt-2 fw-bold" style="color:#0A2F5E;">Glissez-déposez ici les pièces du client</p>
+          <small class="text-muted">ou cliquez pour parcourir • PDF, Word, Excel, Images, ZIP • Plusieurs fichiers • Max 10 Mo/fichier</small>
+        </div>
+        <div id="clientFileList" class="text-start mt-3 d-none"></div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <small class="text-muted"><i class="bi bi-shield-check me-1"></i> Les documents sont stockés localement (démo) et prêts pour Firebase/Supabase. &lt;1.5 Mo = aperçu conservé.</small>
+        <button class="btn btn-main rounded-pill" id="btnClientUpload" onclick="confirmClientUpload()" disabled><i class="bi bi-check-lg me-1"></i> Associer <span id="clientUploadCount">0</span> fichier(s) à <span id="clientUploadName">ce client</span></button>
+      </div>
+      <div id="clientUploadProgress" class="mt-3 d-none"><div class="progress" style="height:6px;"><div class="progress-bar bg-warning" id="clientUploadBar" style="width:0%"></div></div><small class="text-muted" id="clientUploadPct">0%</small></div>
+    </div>
+    <!-- Info -->
+    <div class="tab-pane fade" id="tabDocsInfo">
+      <div id="clientInfoTab" class="small"></div>
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="viewFicheFromDocs()"><i class="bi bi-file-earmark-pdf me-1"></i> Voir fiche PDF</button>
+        <button class="btn btn-sm btn-outline-dark rounded-pill" onclick="editFullFiche(currentDocsClientIdx)"><i class="bi bi-pencil-square me-1"></i> Éditer fiche complète</button>
+        <a id="btnWhatsappDocs" href="#" target="_blank" class="btn btn-sm btn-success rounded-pill"><i class="bi bi-whatsapp me-1"></i> WhatsApp client</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Fermer</button><a href="crm-documents.html" class="btn btn-dark-gobex rounded-pill"><i class="bi bi-folder2-open me-1"></i> Gérer tous les documents</a></div></div></div></div>
+
+<!-- Modal Preview Document (client page) -->
+<div class="modal fade" id="previewDocModalClient" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title" id="previewDocTitleClient" style="font-family:Exo;">Aperçu document</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body text-center" id="previewDocBodyClient" style="min-height:250px;"></div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Fermer</button><button class="btn btn-main rounded-pill" onclick="downloadCurrentClientDoc()"><i class="bi bi-download me-1"></i> Télécharger</button></div></div></div></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/backend.js"></script>
 <script>
 if(localStorage.getItem('gobex_admin_auth')!=='true'){window.location.href='index.html';}
 let clients = [];
+let docs = [];
+let currentDocsClientIdx = null;
+let pendingClientFiles = [];
+let currentPreviewDocId = null;
+
 const demoClientsBenin = [
   {name:"ETS La Grâce", type:"ETS", regime:"RME", ifu:"3201501234567", rccm:"RB/COT/20A1234", cnss:"123456", contact:"Marcel A.", phone:"+229 97 123 456", whatsapp:"22997123456", email:"lagrace@ets.bj", address:"Godomey, Abomey-Calavi", ca:5400000, status:"Actif", source:"Bouche à oreille", notes:"Client depuis 2022. Compta + Fiscal. TVA mensuelle. Bon payeur.", typeClient:"Entreprise individuelle", ref:"GOBEX-2024-001", services:["Assistance comptable","Conseil fiscal"], besoinDesc:"Tenue comptable mensuelle + déclarations DGI", besoinPieces:"RCCM, IFU, relevés", attestation:true},
   {name:"Fashion Bénin SARL", type:"SARL", regime:"REEL", ifu:"3201502345678", rccm:"RB/COT/21B2345", cnss:"234567", contact:"Fatou D.", phone:"+229 96 234 567", whatsapp:"22996234567", email:"contact@fashionbenin.bj", address:"Ganhi, Cotonou", ca:12000000, status:"Actif", source:"Facebook", notes:"Boutique e-commerce. Logiciel PERFECTO Facturation. CA en croissance.", typeClient:"Personne morale", ref:"GOBEX-2024-002", services:["Solutions IT, Web & IA","Gestion d'entreprise"], besoinDesc:"Digitalisation stock + site e-commerce", attestation:true},
@@ -117,8 +205,8 @@ const demoClientsBenin = [
 
 function loadClients(){
   const stored = localStorage.getItem('gobex_crm_clients');
-  if(stored){ clients = JSON.parse(stored); } else { clients = [...demoClientsBenin]; saveClients(); }
-  renderClients();
+  if(stored){ try{clients = JSON.parse(stored);}catch(e){clients=[...demoClientsBenin];} } else { clients = [...demoClientsBenin]; saveClients(); }
+  renderClients(); updateDocsStats();
 }
 function saveClients(){
   localStorage.setItem('gobex_crm_clients', JSON.stringify(clients));
@@ -126,25 +214,84 @@ function saveClients(){
   document.getElementById('totalProspects').textContent=clients.filter(c=>c.status==='Prospect').length;
   document.getElementById('totalClientsBadge').textContent=clients.length;
 }
+function loadDocs(){
+  const stored = localStorage.getItem('gobex_crm_documents');
+  if(stored){ try{docs = JSON.parse(stored);}catch(e){docs=[];} } else docs=[];
+  if(docs.length===0 && clients.length>0){
+    // seed demo docs if empty (same as in crm-documents.html)
+    const demoNames = ['RCCM_ETS_La_Grace.pdf','IFU_Fashion_Benin.pdf','Bilan_2024_JKA_Services.xlsx','Contrat_BOA_GOBEX.pdf','CNI_Marie_DOSSOU.jpg','Facture_001_Fashion.pdf'];
+    const demoCats = ['RCCM','IFU','Bilan','Contrat','CNI / Passeport','Facture'];
+    demoCats.forEach((cat, idx)=>{
+      const c = clients[idx % clients.length];
+      docs.push({id:'demo_'+Date.now()+'_'+idx, clientRef: c.ref||c.name, clientName: c.name, clientIdx: idx%clients.length, fileName: demoNames[idx], fileType: demoNames[idx].split('.').pop().toLowerCase(), mimeType: demoNames[idx].endsWith('.pdf')?'application/pdf': demoNames[idx].endsWith('.jpg')?'image/jpeg':'application/octet-stream', category: cat, size: Math.floor(300000+Math.random()*1200000), uploadDate: new Date(Date.now()-Math.floor(Math.random()*20)*86400000).toISOString(), uploadedBy: idx%2===0?'Client':'Cabinet', note: idx===0?'Fourni via WhatsApp':'' , dataUrl:null});
+    });
+    saveDocs();
+  }
+  updateDocsStats(); renderClients();
+}
+function saveDocs(){
+  localStorage.setItem('gobex_crm_documents', JSON.stringify(docs));
+  localStorage.setItem('gobex_docs_last_update', new Date().toISOString());
+  updateDocsStats(); renderClients();
+  if(currentDocsClientIdx!==null) renderClientDocs();
+}
+function updateDocsStats(){
+  const total = docs.length;
+  document.getElementById('totalDocsGlobal').textContent = total;
+  document.getElementById('statDocsCount').textContent = total;
+  const uniq = new Set(docs.map(d=>d.clientRef)).size;
+  document.getElementById('statDocsClients').textContent = uniq+' clients documentés';
+}
+function getDocsForClient(client){
+  if(!client) return [];
+  const ref = client.ref || client.name;
+  const name = client.name;
+  return docs.filter(d=> d.clientRef===ref || d.clientName===name);
+}
+function formatSize(bytes){
+  if(bytes==null) return '—';
+  if(bytes<1024) return bytes+' o';
+  if(bytes<1024*1024) return (bytes/1024).toFixed(1)+' Ko';
+  return (bytes/1024/1024).toFixed(2)+' Mo';
+}
+function iconFor(d){
+  const ext=(d.fileType||'').toLowerCase();
+  if(['jpg','jpeg','png','webp','gif'].includes(ext)) return {icon:'bi-file-earmark-image', bg:'#e3f2fd', color:'#1976d2'};
+  if(ext==='pdf') return {icon:'bi-file-earmark-pdf', bg:'#ffebee', color:'#d32f2f'};
+  if(['xls','xlsx','csv'].includes(ext)) return {icon:'bi-file-earmark-excel', bg:'#e8f5e9', color:'#2e7d32'};
+  if(['doc','docx'].includes(ext)) return {icon:'bi-file-earmark-word', bg:'#e3f2fd', color:'#1565c0'};
+  if(['zip','rar'].includes(ext)) return {icon:'bi-file-earmark-zip', bg:'#fff3e0', color:'#ef6c00'};
+  if(d.category==='RCCM') return {icon:'bi-shield-check', bg:'#fff3d0', color:'#f59e0b'};
+  if(d.category==='IFU') return {icon:'bi-upc-scan', bg:'#e0f2f1', color:'#00695c'};
+  return {icon:'bi-file-earmark-text', bg:'#f3e5f5', color:'#6a1b9a'};
+}
+
 function renderClients(){
   const tbody = document.getElementById('clientsTable');
   const search = document.getElementById('searchClient').value.toLowerCase();
   const typeF = document.getElementById('filterType').value;
   const regimeF = document.getElementById('filterRegime').value;
   const clientTypeF = document.getElementById('filterClientType').value;
+  const docsF = document.getElementById('filterDocs').value;
   tbody.innerHTML='';
   clients.forEach((c,i)=>{
     if(typeF!=='all' && c.type!==typeF) return;
     if(regimeF!=='all' && c.regime!==regimeF) return;
     if(clientTypeF!=='all' && (c.typeClient||'Particulier')!==clientTypeF) return;
-    if(search && !`${c.name} ${c.ifu} ${c.phone} ${c.contact} ${c.ref||''} ${c.typeClient||''}`.toLowerCase().includes(search)) return;
+    const docCount = getDocsForClient(c).length;
+    if(docsF==='with' && docCount===0) return;
+    if(docsF==='without' && docCount>0) return;
+    if(search && !`${c.name} ${c.ifu} ${c.phone} ${c.contact} ${c.ref||''} ${c.typeClient||''} ${getDocsForClient(c).map(d=>d.fileName+' '+d.category).join(' ')}`.toLowerCase().includes(search)) return;
     const tr=document.createElement('tr'); tr.className='client-row';
     const hasExhaustive = c.typeClient || c.services || c.besoinDesc;
     const servicesDisplay = c.services ? (Array.isArray(c.services) ? c.services.slice(0,2).join(', ') + (c.services.length>2?'...':'') : c.services) : (c.notes||'').substring(0,40);
+    const docBadge = docCount>0 ? `<span class="doc-badge"><i class="bi bi-files"></i> ${docCount} doc(s)</span>` : `<span class="doc-badge empty"><i class="bi bi-folder-plus"></i> 0 doc</span>`;
     tr.innerHTML=`
       <td>
-        <strong>${c.name}</strong> ${hasExhaustive? '<span class="badge bg-primary ms-1" title="Fiche exhaustive"><i class="bi bi-file-earmark-check"></i></span>':''}<br>
-        <small class="text-muted">${c.ref||'—'} • ${c.typeClient||c.type||'—'}</small>
+        <div style="cursor:pointer" onclick="openClientDocs(${i})" title="Gérer les documents de ce client">
+          <strong style="color:#0A2F5E;">${c.name}</strong> ${hasExhaustive? '<span class="badge bg-primary ms-1" title="Fiche exhaustive"><i class="bi bi-file-earmark-check"></i></span>':''} ${docBadge}<br>
+          <small class="text-muted">${c.ref||'—'} • ${c.typeClient||c.type||'—'}</small>
+        </div>
       </td>
       <td><small>IFU: ${c.ifu||'—'}<br>RCCM: ${c.rccm||'—'}<br><span class="badge bg-light text-dark border">${c.typeClient||'—'}</span></small></td>
       <td><span class="badge bg-light text-dark border">${c.type||'—'}</span><br><small class="badge ${c.regime==='REEL'?'bg-primary':c.regime==='RME'?'bg-warning text-dark':'bg-success'}">${c.regime||'—'}</small></td>
@@ -153,6 +300,9 @@ function renderClients(){
       <td><small>${servicesDisplay}...</small><br>${c.besoinDesc? `<small class="text-muted">${c.besoinDesc.substring(0,40)}...</small>`:''}</td>
       <td>
         <div class="d-flex gap-1 flex-wrap">
+          <button class="btn btn-sm ${docCount>0?'btn-primary':'btn-outline-primary'} position-relative" onclick="openClientDocs(${i})" title="Documents associés - cliquer pour gérer">
+            <i class="bi bi-folder2-open"></i> ${docCount>0? docCount : ''} ${docCount===0?'+':''}
+          </button>
           <button class="btn btn-sm btn-light" onclick="editClient(${i})" title="Éditer rapide"><i class="bi bi-pencil"></i></button>
           <button class="btn btn-sm btn-outline-primary" onclick="viewFiche(${i})" title="Voir fiche PDF"><i class="bi bi-file-earmark-pdf"></i></button>
           <button class="btn btn-sm btn-outline-dark" onclick="editFullFiche(${i})" title="Éditer fiche complète"><i class="bi bi-pencil-square"></i></button>
@@ -162,6 +312,9 @@ function renderClients(){
       </td>`;
     tbody.appendChild(tr);
   });
+  if(tbody.children.length===0){
+    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted"><i class="bi bi-search" style="font-size:24px;opacity:0.3"></i><br>Aucun client trouvé<br><small>${docs.length>0? 'Essayez un autre filtre (y compris recherche dans les noms de documents)':''}</small></td></tr>`;
+  }
 }
 
 function openAddClient(){ document.getElementById('clientForm').reset(); document.getElementById('editClientIndex').value=''; }
@@ -204,16 +357,27 @@ function saveClient(){
     source:document.getElementById('cSource').value,
     notes:document.getElementById('cNotes').value,
     typeClient: document.getElementById('cType').value==='Particulier'?'Particulier':'Personne morale',
-    ref: `GOBEX-${new Date().getFullYear()}-${String(clients.length+1).padStart(3,'0')}`
+    ref: idx==='' ? `GOBEX-${new Date().getFullYear()}-${String(clients.length+1).padStart(3,'0')}` : clients[parseInt(idx)].ref
   };
   if(idx===''){clients.push(c);}else{clients[parseInt(idx)]=c;}
   saveClients(); renderClients(); bootstrap.Modal.getInstance(document.getElementById('clientModal')).hide();
 }
-function deleteClient(i){ if(confirm('Supprimer ce client ?')){clients.splice(i,1); saveClients(); renderClients();} }
+function deleteClient(i){
+  const c = clients[i];
+  const dc = getDocsForClient(c).length;
+  let msg = 'Supprimer ce client ?';
+  if(dc>0) msg = `Supprimer "${c.name}" et ses ${dc} document(s) associé(s) ?\nLes documents seront aussi supprimés.`;
+  if(confirm(msg)){
+    // remove docs
+    const ref = c.ref || c.name;
+    docs = docs.filter(d=> !(d.clientRef===ref || d.clientName===c.name));
+    localStorage.setItem('gobex_crm_documents', JSON.stringify(docs));
+    clients.splice(i,1); saveClients(); renderClients(); updateDocsStats();
+  }
+}
 
 function viewFiche(i){
   const c = clients[i];
-  // Generate preview HTML similar to crm-client-form
   const html = generateFicheHTML(c);
   document.getElementById('previewModalBody').innerHTML = html;
   new bootstrap.Modal(document.getElementById('previewModal')).show();
@@ -264,7 +428,6 @@ function printPreview(){
 }
 function editFullFiche(i){
   const c = clients[i];
-  // Store in session to prefill form
   localStorage.setItem('gobex_edit_client_index', i);
   localStorage.setItem('gobex_edit_client_data', JSON.stringify(c));
   window.location.href='crm-client-form.html?edit='+i;
@@ -277,7 +440,206 @@ document.getElementById('searchClient').addEventListener('input', renderClients)
 document.getElementById('filterType').addEventListener('change', renderClients);
 document.getElementById('filterRegime').addEventListener('change', renderClients);
 document.getElementById('filterClientType').addEventListener('change', renderClients);
-loadClients();
+document.getElementById('filterDocs').addEventListener('change', renderClients);
+
+// ========== DOCUMENTS LOGIC FOR CLIENT MODAL ==========
+function openClientDocs(idx){
+  currentDocsClientIdx = idx;
+  const c = clients[idx];
+  document.getElementById('docsModalClientName').textContent = c.name || c.entDenomination || c.partNom || 'Client';
+  document.getElementById('docsModalClientRef').textContent = (c.ref||'—') + ' • ' + (c.typeClient||c.type||'') + ' • ' + (c.phone||'');
+  document.getElementById('clientUploadName').textContent = c.name;
+  // reset upload zone
+  pendingClientFiles=[]; document.getElementById('clientFileList').innerHTML=''; document.getElementById('clientFileList').classList.add('d-none'); document.getElementById('clientDropzoneContent').classList.remove('d-none'); document.getElementById('clientUploadBar').style.width='0%'; document.getElementById('clientUploadProgress').classList.add('d-none'); document.getElementById('clientUploadNote').value='';
+  updateClientUploadBtn();
+  // info tab
+  const info = document.getElementById('clientInfoTab');
+  const dc = getDocsForClient(c).length;
+  info.innerHTML = `
+    <div class="row g-3">
+      <div class="col-md-6"><div class="p-3 border rounded-3 bg-light"><strong>${c.name}</strong><br><small class="text-muted">${c.ref||''} • ${c.typeClient||c.type}</small><br><small>IFU: ${c.ifu||c.entIfu||'—'} • RCCM: ${c.rccm||c.entRccm||'—'}</small><br><small>${c.phone||c.partTel||c.siegeTel||''} • ${c.email||''}</small><br><small>${c.address||c.partAdresse||c.siegeAdresse||''}</small></div></div>
+      <div class="col-md-6"><div class="p-3 border rounded-3" style="background:#fff3d0;border-color:#FFB81C;"><i class="bi bi-files me-1"></i><strong>${dc} document(s)</strong> associé(s)<br><small class="text-muted">${dc>0? 'Cliquez sur Documents pour gérer' : 'Aucun document — ajoutez le RCCM, IFU, CNI...'}</small><br><small>Volume: ${formatSize(getDocsForClient(c).reduce((s,d)=>s+(d.size||0),0))}</small></div></div>
+    </div>
+  `;
+  document.getElementById('btnWhatsappDocs').href = `https://wa.me/${c.whatsapp||c.phone?.replace(/\D/g,'')}?text=${encodeURIComponent('Bonjour '+ (c.contact||c.name) +', à propos de votre dossier GOBEX ('+ (c.ref||'') +')')}`;
+  renderClientDocs();
+  // show modal, ensure first tab active
+  const modalEl = document.getElementById('clientDocsModal');
+  const bsModal = new bootstrap.Modal(modalEl);
+  bsModal.show();
+  // activate docs list tab
+  const triggerEl = modalEl.querySelector('[data-bs-target="#tabDocsList"]');
+  if(triggerEl) new bootstrap.Tab(triggerEl).show();
+}
+
+function showUploadTab(){
+  const el = document.querySelector('#clientDocsModal [data-bs-target="#tabDocsUpload"]');
+  if(el) new bootstrap.Tab(el).show();
+}
+function viewFicheFromDocs(){ if(currentDocsClientIdx!==null) viewFiche(currentDocsClientIdx); }
+
+function renderClientDocs(){
+  if(currentDocsClientIdx===null) return;
+  const c = clients[currentDocsClientIdx];
+  const docsForClient = getDocsForClient(c);
+  const q = (document.getElementById('docsSearchInModal').value||'').toLowerCase();
+  const catF = document.getElementById('docsFilterCatModal').value;
+  let filtered = docsForClient.filter(d=>{
+    if(catF!=='all' && d.category!==catF) return false;
+    if(q && !`${d.fileName} ${d.category} ${d.note}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  filtered.sort((a,b)=> new Date(b.uploadDate)-new Date(a.uploadDate));
+  document.getElementById('docsCountBadge').textContent = docsForClient.length;
+  document.getElementById('docsStatsModal').textContent = filtered.length + ' / ' + docsForClient.length + ' • ' + formatSize(filtered.reduce((s,d)=>s+(d.size||0),0));
+  const tbody = document.getElementById('clientDocsTable');
+  const empty = document.getElementById('clientDocsEmpty');
+  tbody.innerHTML='';
+  if(filtered.length===0){
+    tbody.innerHTML='';
+    empty.classList.remove('d-none');
+    if(q || catF!=='all') empty.innerHTML = `<i class="bi bi-search" style="font-size:32px;opacity:0.2"></i><p class="mt-2 small text-muted">Aucun document ne correspond à votre filtre.</p>`;
+    else empty.innerHTML = `<i class="bi bi-folder-x" style="font-size:40px;opacity:0.2"></i><p class="mt-2 mb-1 fw-bold">Aucun document pour ce client</p><small class="text-muted">Uploadez son RCCM, IFU, CNI, bilans... Les fichiers seront automatiquement associés à sa fiche.</small><br><button class="btn btn-main btn-sm rounded-pill mt-3" onclick="showUploadTab()"><i class="bi bi-cloud-upload me-1"></i> Ajouter un document</button>`;
+  } else {
+    empty.classList.add('d-none');
+    filtered.forEach(d=>{
+      const ic = iconFor(d);
+      const date = new Date(d.uploadDate).toLocaleDateString('fr-FR');
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>
+          <div class="d-flex gap-2 align-items-center">
+            <div class="doc-icon flex-shrink-0" style="background:${ic.bg};color:${ic.color};"><i class="bi ${ic.icon}"></i></div>
+            <div>
+              <strong style="font-size:13px;color:#0A2F5E;">${d.fileName}</strong><br>
+              <small class="text-muted">${d.mimeType||''} ${d.dataUrl? '• <span class="text-success">Aperçu</span>' : '• Simulé'}</small>
+              ${d.note? `<br><small class="fst-italic text-muted">"${d.note}"</small>`:''}
+            </div>
+          </div>
+        </td>
+        <td><span class="badge" style="background:#0A2F5E;color:#fff;font-size:10px;">${d.category}</span><br><small class="badge ${d.uploadedBy==='Client'?'bg-success':'bg-warning text-dark'} mt-1" style="font-size:10px;">${d.uploadedBy==='Client'?'👤 Client':'🏢 Cabinet'}</small></td>
+        <td><small>${date}<br><span class="text-muted">${new Date(d.uploadDate).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span></small></td>
+        <td><small>${formatSize(d.size)}</small></td>
+        <td>
+          <div class="d-flex gap-1">
+            <button class="btn btn-sm btn-light" onclick="previewClientDoc('${d.id}')" title="Aperçu"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-sm btn-outline-primary" onclick="downloadDocById('${d.id}')" title="Télécharger"><i class="bi bi-download"></i></button>
+            <button class="btn btn-sm btn-outline-danger" onclick="deleteClientDoc('${d.id}')" title="Supprimer"><i class="bi bi-trash"></i></button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+}
+
+// client upload handlers
+const clientDropzone = document.getElementById('clientDropzone');
+if(clientDropzone){
+  clientDropzone.addEventListener('dragover', e=>{ e.preventDefault(); clientDropzone.classList.add('dragover'); });
+  clientDropzone.addEventListener('dragleave', ()=> clientDropzone.classList.remove('dragover'));
+  clientDropzone.addEventListener('drop', e=>{ e.preventDefault(); clientDropzone.classList.remove('dragover'); handleClientFiles(e.dataTransfer.files); });
+}
+document.getElementById('clientFileInput').addEventListener('change', e=> handleClientFiles(e.target.files));
+document.getElementById('clientUploadCat').addEventListener('change', ()=>{ if(pendingClientFiles.length) renderPendingClient(); });
+function handleClientFiles(fileList){
+  const arr = Array.from(fileList);
+  const oversize = arr.filter(f=>f.size>10*1024*1024);
+  if(oversize.length){ alert('Fichier >10 Mo : '+oversize.map(f=>f.name).join(', ')); return; }
+  pendingClientFiles = arr;
+  renderPendingClient(); updateClientUploadBtn();
+}
+function renderPendingClient(){
+  const list = document.getElementById('clientFileList');
+  const content = document.getElementById('clientDropzoneContent');
+  if(pendingClientFiles.length===0){ list.classList.add('d-none'); content.classList.remove('d-none'); return; }
+  content.classList.add('d-none'); list.classList.remove('d-none');
+  list.innerHTML = pendingClientFiles.map((f,i)=>`
+    <div class="d-flex justify-content-between align-items-center p-2 border rounded-3 mb-2 bg-white">
+      <div class="d-flex gap-2 align-items-center"><i class="bi bi-file-earmark" style="font-size:20px;color:#0A2F5E;"></i><div><strong class="small">${f.name}</strong><br><small class="text-muted">${formatSize(f.size)} • ${f.type||'?'}</small></div></div>
+      <button class="btn btn-sm btn-light" onclick="removePendingClient(${i})"><i class="bi bi-x-lg"></i></button>
+    </div>
+  `).join('') + `<small class="text-muted">${pendingClientFiles.length} fichier(s) • Catégorie: <strong>${document.getElementById('clientUploadCat').value}</strong></small>`;
+}
+function removePendingClient(i){ pendingClientFiles.splice(i,1); renderPendingClient(); updateClientUploadBtn(); }
+function updateClientUploadBtn(){
+  const has = pendingClientFiles.length>0 && currentDocsClientIdx!==null;
+  document.getElementById('btnClientUpload').disabled = !has;
+  document.getElementById('clientUploadCount').textContent = pendingClientFiles.length;
+}
+async function confirmClientUpload(){
+  if(currentDocsClientIdx===null){ alert('Aucun client'); return; }
+  const c = clients[currentDocsClientIdx];
+  const category = document.getElementById('clientUploadCat').value;
+  const uploadedBy = document.getElementById('clientUploadBy').value;
+  const note = document.getElementById('clientUploadNote').value.trim();
+  if(pendingClientFiles.length===0){ alert('Ajoutez des fichiers'); return; }
+  document.getElementById('clientUploadProgress').classList.remove('d-none');
+  const bar = document.getElementById('clientUploadBar'), pctEl = document.getElementById('clientUploadPct');
+  bar.style.width='10%'; pctEl.textContent='Traitement...';
+  const newDocs=[];
+  for(let idx=0; idx<pendingClientFiles.length; idx++){
+    const f = pendingClientFiles[idx];
+    bar.style.width = Math.round(10 + (idx/pendingClientFiles.length)*90) + '%';
+    let dataUrl=null;
+    if(f.size < 1.5*1024*1024){
+      try{ dataUrl = await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(f); }); }catch(e){}
+    }
+    const ext = f.name.split('.').pop().toLowerCase();
+    newDocs.push({id:'doc_'+Date.now()+'_'+idx+'_'+Math.random().toString(36).slice(2,6), clientRef: c.ref||c.name, clientName: c.name, clientIdx: currentDocsClientIdx, fileName: f.name, fileType: ext, mimeType: f.type||'application/octet-stream', category, size: f.size, uploadDate: new Date().toISOString(), uploadedBy, note, dataUrl});
+    await new Promise(r=>setTimeout(r,150));
+  }
+  bar.style.width='100%'; pctEl.textContent='Terminé !';
+  docs.unshift(...newDocs);
+  saveDocs();
+  pendingClientFiles=[]; renderPendingClient(); updateClientUploadBtn();
+  setTimeout(()=>{
+    document.getElementById('clientUploadProgress').classList.add('d-none');
+    // switch to list tab
+    const el = document.querySelector('#clientDocsModal [data-bs-target="#tabDocsList"]');
+    if(el) new bootstrap.Tab(el).show();
+    renderClientDocs();
+  }, 600);
+}
+function deleteClientDoc(id){
+  const d = docs.find(x=>x.id===id);
+  if(!d) return;
+  if(!confirm(`Supprimer "${d.fileName}" de ${d.clientName} ?`)) return;
+  docs = docs.filter(x=>x.id!==id);
+  saveDocs();
+}
+function previewClientDoc(id){
+  const d = docs.find(x=>x.id===id);
+  if(!d) return;
+  currentPreviewDocId=id;
+  document.getElementById('previewDocTitleClient').textContent = d.fileName + ' — ' + d.clientName;
+  const body=document.getElementById('previewDocBodyClient');
+  if(d.dataUrl){
+    if(d.mimeType.startsWith('image/')) body.innerHTML=`<img src="${d.dataUrl}" style="max-width:100%;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.08)"><p class="small text-muted mt-2">${d.category} • ${formatSize(d.size)} • ${d.note||''}</p>`;
+    else if(d.mimeType==='application/pdf') body.innerHTML=`<iframe src="${d.dataUrl}" style="width:100%;height:500px;border:1px solid #e2e8f0;border-radius:12px;"></iframe><p class="small text-muted mt-2">${d.note||''}</p>`;
+    else body.innerHTML=`<div class="p-4"><i class="bi bi-file-earmark" style="font-size:48px;color:#0A2F5E;"></i><p class="mt-3"><strong>${d.fileName}</strong></p><small class="text-muted">${d.mimeType} • ${formatSize(d.size)}</small><p class="small mt-2">${d.note||''}</p><a href="${d.dataUrl}" download="${d.fileName}" class="btn btn-main btn-sm mt-2"><i class="bi bi-download me-1"></i> Télécharger</a></div>`;
+  } else {
+    body.innerHTML=`<div class="p-4"><i class="bi bi-file-earmark-text" style="font-size:48px;opacity:0.2"></i><p class="mt-3"><strong>${d.fileName}</strong></p><small class="text-muted">Aperçu non stocké (fichier &gt;1.5 Mo ou démo) • ${formatSize(d.size)}</small><p class="small mt-3">Associé à <strong>${d.clientName}</strong> (${d.clientRef})<br>Catégorie: ${d.category} • Par: ${d.uploadedBy}<br>Note: ${d.note||'—'}</p><div class="alert alert-warning small mt-3" style="border-radius:10px;">En démo localStorage, seuls les &lt;1.5 Mo gardent l'aperçu. En prod Firebase/Supabase, tous téléchargeables.</div></div>`;
+  }
+  new bootstrap.Modal(document.getElementById('previewDocModalClient')).show();
+}
+function downloadDocById(id){
+  const d=docs.find(x=>x.id===id);
+  if(!d) return;
+  if(d.dataUrl){ const a=document.createElement('a'); a.href=d.dataUrl; a.download=d.fileName; a.click(); }
+  else { const blob=new Blob([`Document GOBEX simulé\nClient: ${d.clientName} (${d.clientRef})\nFichier: ${d.fileName}\nCatégorie: ${d.category}\nNote: ${d.note}\nDate: ${d.uploadDate}\n\nSimulation localStorage. En prod, téléchargement depuis Firebase/Supabase.`],{type:'text/plain'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=d.fileName+'.txt'; a.click(); URL.revokeObjectURL(url); }
+}
+function downloadCurrentClientDoc(){ if(currentPreviewDocId) downloadDocById(currentPreviewDocId); }
+
+// search inside modal
+document.getElementById('docsSearchInModal').addEventListener('input', renderClientDocs);
+
+// init
+loadClients(); loadDocs();
+window.addEventListener('storage', (e)=>{
+  if(e.key==='gobex_crm_documents' || e.key==='gobex_docs_last_update'){ const s=localStorage.getItem('gobex_crm_documents'); if(s){ try{docs=JSON.parse(s);}catch(e){} updateDocsStats(); renderClients(); if(currentDocsClientIdx!==null) renderClientDocs(); } }
+  if(e.key==='gobex_crm_clients'){ const s=localStorage.getItem('gobex_crm_clients'); if(s){ try{clients=JSON.parse(s);}catch(e){} renderClients(); } }
+});
 </script>
 </body>
 </html>

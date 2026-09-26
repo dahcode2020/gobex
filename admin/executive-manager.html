@@ -23,6 +23,7 @@
 </div></div>
 
 <div class="main">
+<div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index:1080"></div>
 <div class="topbar">
 <div class="d-flex align-items-center gap-3">
 <button class="btn btn-light d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button>
@@ -31,7 +32,7 @@
 <div class="d-flex gap-2 align-items-center flex-wrap">
 <div class="d-flex align-items-center gap-2 px-3 py-2 bg-light rounded-pill border" style="font-size:12px;"><i class="bi bi-person-badge text-primary"></i><select id="roleSwitcher" class="form-select form-select-sm border-0 bg-transparent p-0" style="width:auto;font-size:12px;font-weight:600;" onchange="onRoleChange(this.value)"><option value="manager">Executive Manager</option><option value="secretariat">Secrétariat</option><option value="fiscalite">Dépt Fiscalité</option><option value="comptabilite">Dépt Comptabilité</option><option value="grh">Dépt GRH & Formations</option><option value="it">Dépt IT / WEB / IA</option><option value="business">Dépt Business & Autres</option><option value="gestion">Dépt Gestion & Suivi</option></select></div>
 <button class="btn btn-light position-relative rounded-pill" onclick="switchPane('validation')" title="Notifications internes"><i class="bi bi-bell"></i><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notifBadge" style="font-size:10px;">0</span></button>
-<button class="btn btn-main rounded-pill" onclick="switchPane('reception'); document.getElementById('btnNewDossierTop')?.click()"><i class="bi bi-plus-lg me-1"></i> Nouveau dossier</button>
+<button class="btn btn-main rounded-pill" onclick="switchPane('reception'); setTimeout(()=>{document.getElementById('recClient')?.focus(); window.scrollTo({top:0,behavior:'smooth'});},200)"><i class="bi bi-plus-lg me-1"></i> Nouveau dossier</button>
 </div>
 </div>
 
@@ -57,7 +58,7 @@
 
 <div id="pane-reception" class="pane d-none">
 <div class="stat-card"><div class="d-flex justify-content-between align-items-center mb-3"><div><h6 class="mb-0" style="font-family:Exo;font-weight:700;"><i class="bi bi-inbox me-2 text-warning"></i>Réception Secrétariat — Créer un dossier client</h6><small class="text-muted">Un dossier = un client + une ou plusieurs préoccupations • Base dédiée • Détection auto des domaines</small></div><span class="badge bg-warning text-dark">Rôle Secrétariat</span></div>
-<form id="receptionForm" onsubmit="event.preventDefault(); createDossier();">
+<form id="receptionForm" onsubmit="event.preventDefault(); createDossier();" novalidate>
 <div class="row g-3">
 <div class="col-md-4"><label class="form-label small fw-bold text-uppercase" style="color:#0A2F5E;">Client *</label><select id="recClient" class="form-select" required><option value="">— Sélectionner client CRM —</option></select><small class="text-muted" style="font-size:11px;">Depuis base CRM • <a href="crm-client-form.html" target="_blank" style="color:#0A2F5E;text-decoration:underline;">Créer nouveau client</a></small><div id="recClientPreview" class="mt-2 small p-2 bg-light rounded-3 d-none"></div></div>
 <div class="col-md-2"><label class="form-label small fw-bold">Secrétaire</label><input type="text" id="recSecretaire" class="form-control" value="Secrétariat GOBEX" placeholder="Nom secrétaire"></div>
@@ -75,7 +76,8 @@
 <div class="col-md-6"><label class="form-label small fw-bold">Pièces jointes initiales (optionnel)</label><div class="dropzone-mini" onclick="document.getElementById('recFiles').click()"><input type="file" id="recFiles" hidden multiple><i class="bi bi-paperclip" style="font-size:20px;color:#0A2F5E;"></i><small class="ms-2 text-muted">Glissez ou cliquez • PDF, images, docs</small><div id="recFilesList" class="small text-start mt-2"></div></div></div>
 <div class="col-md-6"><label class="form-label small fw-bold">Note secrétariat / Canal d'arrivée</label><input type="text" id="recNote" class="form-control" placeholder="Ex: Appel téléphonique, WhatsApp, visite cabinet, email..."><small class="text-muted" style="font-size:11px;">Sera tracé dans l'historique & audit</small></div>
 </div>
-<div class="d-flex justify-content-between align-items-center mt-4"><small class="text-muted"><i class="bi bi-shield-check me-1"></i> Un dossier sera créé avec référence auto, version 1, historique initial et notification Manager.</small><button type="submit" class="btn btn-main rounded-pill px-4" id="btnNewDossierTop"><i class="bi bi-folder-plus me-2"></i>Créer dossier & notifier Manager</button></div>
+<div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-2"><small class="text-muted"><i class="bi bi-shield-check me-1"></i> Un dossier sera créé avec référence auto, version 1, historique initial et notification Manager.</small><button type="button" class="btn btn-main rounded-pill px-4" id="btnCreateDossier" onclick="createDossier()" style="min-width:260px;"><i class="bi bi-folder-plus me-2"></i>Créer dossier & notifier Manager</button></div>
+<div id="recFormFeedback" class="mt-2 small d-none"></div>
 </form>
 </div>
 <div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;">Derniers dossiers réceptionnés</h6><div id="recentReception" class="mt-2 small"></div></div>
@@ -183,18 +185,34 @@ let clients=[], dossiers=[], agents=[], currentRole='manager', activeDept='fisca
 function loadClients(){
   const s=localStorage.getItem('gobex_crm_clients');
   if(s){ try{clients=JSON.parse(s);}catch(e){clients=[];} }
+  // Seed démo si vide (pour que bouton Créer dossier soit utilisable immédiatement)
+  if(clients.length===0){
+    clients=[
+      {name:"ETS La Grâce", type:"ETS", regime:"RME", ifu:"3201501234567", rccm:"RB/COT/20A1234", phone:"+229 97 123 456", whatsapp:"22997123456", email:"lagrace@ets.bj", address:"Godomey, Abomey-Calavi", contact:"Marcel A.", typeClient:"Entreprise individuelle", ref:"GOBEX-2024-001"},
+      {name:"Fashion Bénin SARL", type:"SARL", regime:"REEL", ifu:"3201502345678", rccm:"RB/COT/21B2345", phone:"+229 96 234 567", whatsapp:"22996234567", email:"contact@fashionbenin.bj", address:"Ganhi, Cotonou", contact:"Fatou D.", typeClient:"Personne morale", ref:"GOBEX-2024-002"},
+      {name:"JKA Services", type:"SARL", regime:"REEL", ifu:"3201503456789", rccm:"RB/ABC/19C3456", phone:"+229 97 345 678", whatsapp:"22997345678", email:"jka@services.bj", address:"Tankpê, Abomey-Calavi", contact:"Jean K.", typeClient:"Personne morale", ref:"GOBEX-2024-003"},
+      {name:"Quincaillerie HERALD", type:"ETS", regime:"RME", ifu:"3201505678901", rccm:"RB/COT/22E5678", phone:"+229 97 567 890", whatsapp:"22997567890", email:"herald@quinca.bj", address:"Dantokpa, Cotonou", contact:"Hervé L.", typeClient:"Entreprise individuelle", ref:"GOBEX-2024-005"},
+      {name:"DOSSOU Marie", type:"Particulier", regime:"Entreprenant", phone:"+229 97 111 222", whatsapp:"22997111222", email:"marie.dossou@email.bj", address:"Abomey-Calavi, Tankpê", contact:"Marie DOSSOU", typeClient:"Particulier", ref:"GOBEX-2025-006"}
+    ];
+    localStorage.setItem('gobex_crm_clients', JSON.stringify(clients));
+  }
   const sel=document.getElementById('recClient');
   sel.innerHTML='<option value="">— Sélectionner client CRM —</option>';
   clients.forEach((c,i)=>{
     const o=document.createElement('option'); o.value=i; o.textContent=`${c.name} • ${c.ref||''} • ${c.typeClient||c.type}`;
     sel.appendChild(o);
   });
-  sel.addEventListener('change', e=>{
+  // évite doublons d'écouteurs
+  sel.onchange = e=>{
     const c=clients[e.target.value];
     const prev=document.getElementById('recClientPreview');
-    if(c){ prev.classList.remove('d-none'); prev.innerHTML=`<strong>${c.name}</strong> • ${c.ref||''}<br><small>${c.ifu? 'IFU '+c.ifu+' • ':''}${c.rccm? 'RCCM '+c.rccm+' • ':''}${c.phone||''} • ${c.address||''}</small>`; }
+    const feedback=document.getElementById('recFormFeedback');
+    if(feedback) {feedback.classList.add('d-none'); feedback.textContent='';}
+    if(c){ prev.classList.remove('d-none'); prev.innerHTML=`<strong>${c.name}</strong> • ${c.ref||''}<br><small>${c.ifu? 'IFU '+c.ifu+' • ':''}${c.rccm? 'RCCM '+c.rccm+' • ':''}${c.phone||''} • ${c.address||''}</small>`; sel.classList.remove('is-invalid'); }
     else prev.classList.add('d-none');
-  });
+    updateCreateBtnState();
+  };
+  sel.addEventListener('input', updateCreateBtnState);
 }
 function loadAgents(){
   const s=localStorage.getItem('gobex_exec_agents');
@@ -326,15 +344,18 @@ function initReception(){
   preoccCounter=0;
   addPreoccupation();
   updateAutoDetect();
+  updateCreateBtnState();
+  const fb=document.getElementById('recFormFeedback');
+  if(fb){ fb.classList.add('d-none'); fb.textContent=''; fb.className='mt-2 small d-none'; }
 }
 function addPreoccupation(){
   const id='P'+(++preoccCounter);
   const div=document.createElement('div');
   div.className='p-3 border rounded-3 bg-white mb-2';
   div.dataset.pid=id;
-  div.innerHTML=`<div class="d-flex justify-content-between align-items-start mb-2"><strong class="small" style="color:#0A2F5E;">Préoccupation ${preoccCounter}</strong><button type="button" class="btn btn-sm btn-light" onclick="this.closest('.p-3').remove(); updateAutoDetect();"><i class="bi bi-x-lg"></i></button></div>
+  div.innerHTML=`<div class="d-flex justify-content-between align-items-start mb-2"><strong class="small" style="color:#0A2F5E;">Préoccupation ${preoccCounter}</strong><button type="button" class="btn btn-sm btn-light" onclick="this.closest('.p-3').remove(); updateAutoDetect(); updateCreateBtnState();"><i class="bi bi-x-lg"></i></button></div>
   <div class="row g-2">
-  <div class="col-md-5"><label class="form-label small fw-bold">Titre *</label><input type="text" class="form-control form-control-sm preocc-titre" placeholder="Ex: Déclaration TVA, Bilan SYSCOHADA, Paie CNSS..." oninput="updateAutoDetect()"></div>
+  <div class="col-md-5"><label class="form-label small fw-bold">Titre *</label><input type="text" class="form-control form-control-sm preocc-titre" placeholder="Ex: Déclaration TVA, Bilan SYSCOHADA, Paie CNSS..." oninput="updateAutoDetect(); updateCreateBtnState();"></div>
   <div class="col-md-4"><label class="form-label small fw-bold">Domaine (auto)</label><select class="form-select form-select-sm preocc-domaine"><option value="">Auto-détection</option>${DEPARTEMENTS.map(d=>`<option>${d.name}</option>`).join('')}</select></div>
   <div class="col-md-3"><label class="form-label small fw-bold">Priorité</label><select class="form-select form-select-sm preocc-prio"><option>Normale</option><option>Urgente</option><option>Très urgente</option></select></div>
   <div class="col-12"><label class="form-label small fw-bold">Description détaillée</label><textarea class="form-control form-control-sm preocc-desc" rows="2" placeholder="Détaillez la demande, contexte, pièces déjà fournies..." oninput="updateAutoDetect()"></textarea></div>
@@ -365,6 +386,7 @@ function updateAutoDetect(){
     alertEl.style.display='block';
     document.getElementById('autoDetectResult').innerHTML=detected.map(d=>`<span class="badge" style="background:#0A2F5E;color:#fff;">${d}</span>`).join(' ');
   } else alertEl.style.display='none';
+  updateCreateBtnState();
 }
 document.getElementById('recFiles')?.addEventListener('change', e=>{
   const list=[...e.target.files].map(f=> `${f.name} (${fmtSize(f.size)})`).join('<br>');
@@ -372,45 +394,115 @@ document.getElementById('recFiles')?.addEventListener('change', e=>{
 });
 function fmtSize(b){ if(b<1024) return b+' o'; if(b<1024*1024) return (b/1024).toFixed(1)+' Ko'; return (b/1024/1024).toFixed(2)+' Mo'; }
 
+function updateCreateBtnState(){
+  const hasClient = document.getElementById('recClient')?.value !== '';
+  const hasTitre = [...document.querySelectorAll('#preoccupationsList .preocc-titre')].some(i=> i.value.trim().length>2);
+  const btn=document.getElementById('btnCreateDossier');
+  if(btn){
+    btn.disabled = false; // toujours actif, on valide au clic mais on donne feedback visuel
+    btn.style.opacity = (hasClient && hasTitre) ? '1' : '0.92';
+    btn.title = (!hasClient || !hasTitre) ? 'Choisissez un client et saisissez au moins un titre de préoccupation' : 'Prêt à créer';
+  }
+}
+function showToast(title, msg, type='success'){
+  const container=document.getElementById('toastContainer');
+  const bg = type==='success' ? '#0A2F5E' : type==='warning' ? '#f59e0b' : '#dc3545';
+  const icon = type==='success' ? 'bi-check-circle-fill' : type==='warning' ? 'bi-exclamation-triangle-fill' : 'bi-x-circle-fill';
+  const id='toast'+Date.now();
+  const html=`<div id="${id}" class="toast show align-items-center border-0 mb-2" role="alert" style="background:${bg};color:#fff;min-width:320px;box-shadow:0 10px 30px rgba(0,0,0,0.2);border-radius:14px;">
+    <div class="d-flex"><div class="toast-body d-flex gap-3 align-items-start"><i class="bi ${icon}" style="font-size:20px;margin-top:2px;"></i><div><strong class="small">${title}</strong><br><small style="opacity:0.92">${msg}</small></div></div><button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="document.getElementById('${id}').remove()"></button></div></div>`;
+  container.insertAdjacentHTML('beforeend', html);
+  setTimeout(()=>{ document.getElementById(id)?.remove(); }, 6000);
+}
+function validateReceptionForm(showFeedback=true){
+  const sel=document.getElementById('recClient');
+  const titres=[...document.querySelectorAll('#preoccupationsList .preocc-titre')];
+  let ok=true; let firstInvalid=null;
+  const feedback=document.getElementById('recFormFeedback');
+  if(!sel.value){
+    ok=false; sel.classList.add('is-invalid'); firstInvalid=firstInvalid||sel;
+    if(showFeedback && feedback){ feedback.classList.remove('d-none'); feedback.classList.add('alert','alert-danger'); feedback.style.borderRadius='10px'; feedback.innerHTML='<i class="bi bi-exclamation-circle me-1"></i> Choisissez un client dans la base CRM.'; }
+  } else sel.classList.remove('is-invalid');
+  const hasTitre = titres.some(i=> i.value.trim().length>2);
+  titres.forEach(inp=>{
+    if(!inp.value.trim()){ inp.classList.add('is-invalid'); } else inp.classList.remove('is-invalid');
+  });
+  if(!hasTitre){
+    ok=false; if(showFeedback && feedback){ feedback.classList.remove('d-none'); feedback.classList.add('alert','alert-danger'); feedback.style.borderRadius='10px'; feedback.innerHTML=(feedback.innerHTML? feedback.innerHTML+'<br>':'')+'<i class="bi bi-pencil me-1"></i> Saisissez au moins une préoccupation (titre ≥ 3 caractères).'; firstInvalid=firstInvalid||titres[0]; }
+  } else {
+    // si au moins un a un titre, on enlève is-invalid des vides supplémentaires
+    titres.forEach(inp=>{ if(inp.value.trim()) inp.classList.remove('is-invalid'); });
+  }
+  if(!ok && firstInvalid) firstInvalid.focus();
+  if(ok && feedback){ feedback.classList.add('d-none'); feedback.textContent=''; }
+  return ok;
+}
 function createDossier(){
-  const clientIdx=parseInt(document.getElementById('recClient').value);
-  if(isNaN(clientIdx)){ alert('Choisissez un client'); return; }
-  const preoccupations=[...document.querySelectorAll('#preoccupationsList .p-3')].map(card=>{
-    const titre=card.querySelector('.preocc-titre').value.trim();
-    const desc=card.querySelector('.preocc-desc').value.trim();
-    const domaine=card.querySelector('.preocc-domaine').value || detectDepartements(titre+' '+desc)[0] || 'Département Business & Autres';
-    const prio=card.querySelector('.preocc-prio').value;
-    if(!titre) return null;
-    return {id:'P'+Math.random().toString(36).slice(2,6), titre, desc, domaine, priorite:prio};
-  }).filter(Boolean);
-  if(preoccupations.length===0){ alert('Ajoutez au moins une préoccupation avec titre'); return; }
-  const client=clients[clientIdx];
-  const domaines=[...new Set(preoccupations.map(p=>p.domaine))];
-  const num=generateDossierNum();
-  const dossier={
-    id:num, ref:num, clientIdx, clientName:client.name, clientRef:client.ref,
-    dateReception:document.getElementById('recDate').value || new Date().toISOString().split('T')[0],
-    secretaire:document.getElementById('recSecretaire').value||'Secrétariat',
-    preoccupations, domaines,
-    departements: domaines, // auto-affectation initiale = détectés, Manager pourra ajuster
-    statut:'Reçu',
-    priorite:document.getElementById('recPriorite').value,
-    echeance:document.getElementById('recEcheance').value,
-    avancement:5,
-    versions:[{v:1, date:new Date().toISOString(), dept:'Secrétariat', auteur:document.getElementById('recSecretaire').value, commentaire:'Création initiale', fichiers:[...document.getElementById('recFiles').files].map(f=> ({name:f.name,size:f.size}))}],
-    communications:[],
-    historique:[{date:new Date().toISOString(), acteur:document.getElementById('recSecretaire').value, role:'Secrétariat', action:'Création dossier', details:`${preoccupations.length} préoccupation(s) • Domaines: ${domaines.join(', ')}`}],
-    traitement:{checklist:preoccupations.map(p=> ({tache:p.titre, fait:false})), notes:document.getElementById('recNote').value},
-    livrables:[], validation:{}
-  };
-  dossiers.unshift(dossier);
-  saveDossiers();
-  // refresh reception recent
-  renderRecentReception();
-  alert(`Dossier ${num} créé pour ${client.name} • Domaines: ${domaines.join(', ')} • Manager notifié pour affectation.`);
-  // reset form
-  initReception();
-  switchPane('affectation');
+  if(!validateReceptionForm(true)) { showToast('Formulaire incomplet','Corrigez les champs en rouge puis réessayez.','warning'); updateCreateBtnState(); return; }
+  const btn=document.getElementById('btnCreateDossier');
+  const originalHTML=btn.innerHTML;
+  btn.disabled=true; btn.innerHTML='<span class="spinner-border spinner-border-sm me-2"></span>Création & notification Manager...';
+  // feedback visuel
+  const feedback=document.getElementById('recFormFeedback');
+  if(feedback){ feedback.classList.remove('d-none','alert-danger'); feedback.classList.add('alert','alert-info'); feedback.style.borderRadius='10px'; feedback.innerHTML='<i class="bi bi-hourglass-split me-1"></i> Création en cours — notification Teams/Elements...'; }
+
+  setTimeout(()=>{
+    try{
+      const clientIdx=parseInt(document.getElementById('recClient').value);
+      const preoccupations=[...document.querySelectorAll('#preoccupationsList .p-3')].map(card=>{
+        const titre=card.querySelector('.preocc-titre').value.trim();
+        const desc=card.querySelector('.preocc-desc').value.trim();
+        const domaine=card.querySelector('.preocc-domaine').value || detectDepartements(titre+' '+desc)[0] || 'Département Business & Autres';
+        const prio=card.querySelector('.preocc-prio').value;
+        if(!titre) return null;
+        return {id:'P'+Math.random().toString(36).slice(2,6), titre, desc, domaine, priorite:prio};
+      }).filter(Boolean);
+      const client=clients[clientIdx];
+      const domaines=[...new Set(preoccupations.map(p=>p.domaine))];
+      const num=generateDossierNum();
+      const dossier={
+        id:num, ref:num, clientIdx, clientName:client.name, clientRef:client.ref,
+        dateReception:document.getElementById('recDate').value || new Date().toISOString().split('T')[0],
+        secretaire:document.getElementById('recSecretaire').value||'Secrétariat',
+        preoccupations, domaines,
+        departements: domaines,
+        statut:'Reçu',
+        priorite:document.getElementById('recPriorite').value,
+        echeance:document.getElementById('recEcheance').value,
+        avancement:5,
+        versions:[{v:1, date:new Date().toISOString(), dept:'Secrétariat', auteur:document.getElementById('recSecretaire').value, commentaire:'Création initiale', fichiers:[...document.getElementById('recFiles').files].map(f=> ({name:f.name,size:f.size}))}],
+        communications:[
+          {date:new Date().toISOString(), auteur:'Système', dept:'Secrétariat', message:`Dossier ${num} créé par ${document.getElementById('recSecretaire').value} — ${preoccupations.length} préoccupation(s)`},
+          {date:new Date().toISOString(), auteur:'Executive Manager', dept:'Manager', message:`🔔 Nouveau dossier ${num} de ${client.name} à affecter — Domaines: ${domaines.join(', ')} (Teams/Elements)`}
+        ],
+        historique:[
+          {date:new Date().toISOString(), acteur:document.getElementById('recSecretaire').value, role:'Secrétariat', action:'Création dossier', details:`${preoccupations.length} préoccupation(s) • Domaines: ${domaines.join(', ')}`},
+          {date:new Date().toISOString(), acteur:'Système', role:'Système', action:'Notification Manager 🔔', details:`Teams & Elements • Canal Executive Manager • Dossier ${num} en attente d'affectation`}
+        ],
+        traitement:{checklist:preoccupations.map(p=> ({tache:p.titre, fait:false})), notes:document.getElementById('recNote').value},
+        livrables:[], validation:{}, notifications:{managerNotified:true, via:['Teams','Elements'], at:new Date().toISOString()}
+      };
+      dossiers.unshift(dossier);
+      saveDossiers();
+      renderRecentReception();
+      // Succès : restaure bouton + feedback + toast + notif
+      btn.disabled=false; btn.innerHTML=originalHTML;
+      if(feedback){ feedback.classList.remove('alert-info','alert-danger'); feedback.classList.add('alert','alert-success'); feedback.classList.remove('d-none'); feedback.innerHTML=`<i class="bi bi-check-circle-fill me-1"></i> <strong>Dossier ${num} créé !</strong> Executive Manager notifié via <strong>Teams</strong> & <strong>Elements</strong> • <a href="#" onclick="switchPane('affectation'); return false;" style="color:#0A2F5E;text-decoration:underline;">Voir en affectation</a>`; }
+      showToast(`Dossier ${num} créé`, `${client.name} • ${domaines.join(', ')} • Manager notifié via Teams & Elements — prêt à affecter.`, 'success');
+      // petite animation badge
+      const badge=document.getElementById('notifBadge');
+      if(badge){ badge.classList.add('bg-warning'); badge.style.transform='scale(1.2)'; setTimeout(()=>{badge.style.transform='scale(1)';},400); }
+      // reset form après 900ms pour laisser voir feedback
+      setTimeout(()=>{ initReception(); updateCreateBtnState(); }, 900);
+      // option switch auto après 1.2s
+      setTimeout(()=>{ switchPane('affectation'); }, 1200);
+    }catch(e){
+      console.error(e);
+      btn.disabled=false; btn.innerHTML=originalHTML;
+      showToast('Erreur','Impossible de créer le dossier : '+e.message,'danger');
+      if(feedback){ feedback.classList.remove('d-none','alert-info'); feedback.classList.add('alert','alert-danger'); feedback.innerHTML='<i class="bi bi-x-circle me-1"></i> Erreur lors de la création.'; }
+    }
+  }, 650);
 }
 function generateDossierNum(){
   const year=new Date().getFullYear();

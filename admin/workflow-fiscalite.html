@@ -1,0 +1,618 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Workflow Fiscalité • GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb;--fisc:#1976d2;--success:#198754;--danger:#dc3545}body{font-family:Roboto;background:var(--light);min-height:100vh}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:300px;z-index:1000;overflow-y:auto}.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{font-family:Exo;font-weight:800;font-size:22px;color:#fff}.sidebar-logo span{color:var(--accent)}.menu-section{padding:14px 24px 6px;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,0.45);font-weight:700;margin-top:8px}.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.75);text-decoration:none;border-left:3px solid transparent;font-size:13px;transition:.2s;cursor:pointer}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}.main{margin-left:300px;padding:20px}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:18px;border:1px solid #eef2f6;transition:.3s;height:100%}.stat-card:hover{box-shadow:0 10px 30px rgba(10,47,94,0.07)}.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:8px 18px;border:2px solid var(--accent);font-size:12px}.btn-main:hover{background:#e6a517;border-color:#e6a517}.btn-dark-gobex{background:var(--primary);color:#fff;border-radius:50px;padding:8px 18px;font-weight:600;border:2px solid var(--primary);font-size:12px}.btn-dark-gobex:hover{background:#071f3e}.kpi-card{border-radius:16px;padding:16px;position:relative;overflow:hidden;height:100%;border:1px solid #eef2f6}.kpi-card.prime{background:linear-gradient(135deg,var(--primary) 0%, #143d75 100%);color:#fff}.kpi-card.accent{background:linear-gradient(135deg,#FFB81C 0%,#e6a517 100%);color:#0A2F5E}.step-rail{display:flex;gap:8px;overflow-x:auto;padding:10px 2px;scrollbar-width:thin}.step-pill{flex:0 0 auto;min-width:148px;border-radius:14px;padding:10px 12px;border:1px solid #e2e8f0;background:#fff;text-align:left;position:relative;cursor:pointer;transition:.2s}.step-pill.active{border-color:var(--fisc);background:#e3f2fd;box-shadow:0 6px 20px rgba(25,118,210,0.15)}.step-pill.done{border-color:#86efac;background:#f0fdf4}.step-pill .num{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;background:#f1f5f9;color:#0A2F5E}.step-pill.active .num{background:var(--fisc);color:#fff}.step-pill.done .num{background:var(--success);color:#fff}.step-pill small{display:block;font-size:11px;color:#475569;line-height:1.2}.dossier-fisc{background:#fff;border-radius:16px;border:1px solid #eef2f6;padding:14px;transition:.2s;height:100%;cursor:pointer;position:relative}.dossier-fisc:hover{box-shadow:0 10px 30px rgba(10,47,94,0.08);transform:translateY(-2px)}.dossier-fisc.retard{border-left:4px solid var(--danger)}.dossier-fisc.urgent{border-left:4px solid #f59e0b}.sla-badge{font-size:11px;font-weight:700;padding:4px 8px;border-radius:50px}.timeline-vert{position:relative;padding-left:24px}.timeline-vert:before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:#e2e8f0}.tl-item{position:relative;margin-bottom:16px}.tl-item:before{content:'';position:absolute;left:-17px;top:6px;width:12px;height:12px;border-radius:50%;background:#cbd5e1;border:2px solid #fff;box-shadow:0 0 0 2px #cbd5e1}.tl-item.active:before{background:var(--fisc);box-shadow:0 0 0 2px var(--fisc)}.tl-item.done:before{background:var(--success);box-shadow:0 0 0 2px var(--success)}.tl-item.current:before{background:var(--accent);box-shadow:0 0 0 2px var(--accent);animation:pulse 1.5s infinite}.checklist-item{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid #eef2f6;border-radius:10px;background:#f8fafc;margin-bottom:6px}@keyframes pulse{0%{box-shadow:0 0 0 2px var(--accent)}50%{box-shadow:0 0 0 6px rgba(255,184,28,0.25)}100%{box-shadow:0 0 0 2px var(--accent)}}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}</style></head><body>
+<div class="sidebar" id="sidebar"><div class="sidebar-header"><div class="sidebar-logo">GOBEX <span>FISCALITÉ</span></div><div style="font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,0.5);">WORKFLOW • 9 étapes</div><div class="mt-3 d-flex gap-2 align-items-center"><span class="badge" style="background:#1976d2;color:#fff;font-size:10px;"><i class="bi bi-calculator me-1"></i>FISCALITÉ</span><small id="currentUserLbl" style="color:rgba(255,255,255,0.6);font-size:11px;">—</small></div><div class="mt-2"><small style="color:rgba(255,255,255,0.6);">RB/ABC/15A3265 • IFU 1201502844807</small></div></div>
+<div class="menu-section">Workflow</div>
+<a href="workflows.html" class="menu-item"><i class="bi bi-diagram-3"></i> Hub Workflows</a>
+<a href="workflow-fiscalite.html" class="menu-item active" style="border-left-color:#1976d2;background:rgba(25,118,210,0.15);"><i class="bi bi-calculator"></i> Fiscalité <span class="badge bg-warning text-dark ms-auto" id="sbFiscCount">0</span></a>
+<a class="menu-item" style="opacity:0.45;cursor:not-allowed;"><i class="bi bi-journal-text"></i> Comptabilité</a>
+<a class="menu-item" style="opacity:0.45;cursor:not-allowed;"><i class="bi bi-people"></i> GRH & CNSS</a>
+<a class="menu-item" style="opacity:0.45;cursor:not-allowed;"><i class="bi bi-laptop"></i> IT / WEB / IA</a>
+<div class="menu-section">Liens Portail</div>
+<a href="executive-manager.html" class="menu-item"><i class="bi bi-shield-check"></i> Executive Manager</a>
+<a href="executive-manager.html#reception" class="menu-item"><i class="bi bi-inbox"></i> Réception Secrétariat</a>
+<a href="crm.html" class="menu-item"><i class="bi bi-grid-1x2"></i> CRM Dashboard</a>
+<a href="crm-clients.html" class="menu-item"><i class="bi bi-people"></i> Clients</a>
+<a href="crm-facturation.html" class="menu-item"><i class="bi bi-receipt"></i> Devis & Facturation</a>
+<a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Voir site</a>
+<a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+<div style="padding:16px 24px;"><div class="p-3 rounded-3" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);"><small class="text-white-50"><i class="bi bi-shield-lock me-1"></i> Accès: Admin + Fiscalité habilités</small><br><small style="color:#FFB81C;" id="accessLbl">Vérification...</small><div class="mt-2"><button class="btn btn-sm btn-light rounded-pill w-100" onclick="openPermModal()" style="font-size:11px;"><i class="bi bi-gear me-1"></i> Gérer accès</button></div></div></div>
+</div>
+<div class="main">
+<div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index:1080"></div>
+<div class="topbar"><div class="d-flex align-items-center gap-3"><button class="btn btn-light d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button><div><h5 class="mb-0" style="font-family:Exo;font-weight:800;color:#0A2F5E;letter-spacing:-0.5px;"><i class="bi bi-calculator me-2" style="color:#1976d2;"></i>Workflow Fiscalité</h5><small class="text-muted">TVA • AIB • IS • Retenues • e-DGI • 9 étapes de la réception au dépôt & livraison • Bénin</small></div></div><div class="d-flex gap-2 align-items-center flex-wrap"><span class="badge" style="background:#0A2F5E;color:#FFB81C;border:1px solid #FFB81C;font-size:10px;">CGI 2026 • Loi 2025-22</span><span class="badge bg-light text-dark border" id="authBadge">—</span><button class="btn btn-light rounded-pill btn-sm" onclick="scrollToRail()"><i class="bi bi-signpost me-1"></i> Étapes</button><button class="btn btn-main rounded-pill" onclick="createDemoFisc()"><i class="bi bi-plus-lg me-1"></i> Dossier fiscalité</button><a href="workflows.html" class="btn btn-outline-dark rounded-pill btn-sm"><i class="bi bi-diagram-3 me-1"></i> Hub</a></div></div>
+
+<!-- Gate -->
+<div class="stat-card mb-3" style="border:2px solid #0A2F5E;background:#eef2f6;"><div class="d-flex gap-3 align-items-center"><div style="width:44px;height:44px;border-radius:12px;background:#0A2F5E;color:#FFB81C;display:flex;align-items:center;justify-content:center;"><i class="bi bi-box-arrow-up-right"></i></div><div class="flex-grow-1"><h6 class="mb-1" style="color:#0A2F5E;">Portail Workflow désormais indépendant</h6><p class="small text-muted mb-1">Ce workflow a été <strong>détaché</strong> du site principal pour rester léger. Nouveau portail autonome : <code>/workflow/fiscalite.html</code> — mêmes données, accès via <strong>bouton Workflow</strong> (admin / désignés).</p><a href="../workflow/fiscalite.html" class="btn btn-dark-gobex rounded-pill btn-sm"><i class="bi bi-diagram-3 me-1"></i> Ouvrir le nouveau Workflow Fiscalité</a> <small class="text-muted ms-2">Cette ancienne URL reste fonctionnelle.</small></div></div></div>
+<div id="accessGate" class="stat-card d-none mb-3" style="border:2px solid #dc3545;background:#fff5f5;"><div class="d-flex gap-3"><div style="width:48px;height:48px;border-radius:12px;background:#fee2e2;color:#dc3545;display:flex;align-items:center;justify-content:center;font-size:20px;"><i class="bi bi-shield-lock-fill"></i></div><div class="flex-grow-1"><h6 class="mb-1" style="color:#dc3545;">Accès restreint — Workflow Fiscalité</h6><p class="small text-muted mb-2">Seul l’<strong>Administrateur</strong> ou les agents du <strong>Département Fiscalité</strong> habilités peuvent ouvrir ce workflow. <span id="gateUser"></span></p><div class="d-flex gap-2 flex-wrap"><a href="workflows.html" class="btn btn-dark-gobex rounded-pill btn-sm">Gérer habilitations</a><a href="index.html" class="btn btn-outline-dark rounded-pill btn-sm">Se connecter</a><button class="btn btn-light rounded-pill btn-sm" onclick="requestAccess()"><i class="bi bi-envelope me-1"></i> Demander accès</button></div></div></div></div>
+
+<!-- KPIs -->
+<div class="row g-3 mb-3">
+<div class="col-lg-3 col-md-6"><div class="kpi-card prime"><div class="d-flex justify-content-between align-items-start"><div><small style="color:rgba(255,255,255,0.7);">Dossiers Fiscalité</small><h3 class="mb-0 text-white" id="kpiTotal">0</h3><small style="color:rgba(255,255,255,0.6);" id="kpiTotalSub">—</small></div><div style="width:44px;height:44px;border-radius:12px;background:rgba(255,184,28,0.2);color:#FFB81C;display:flex;align-items:center;justify-content:center;"><i class="bi bi-folder2-open"></i></div></div><div class="progress mt-3" style="height:4px;background:rgba(255,255,255,0.2);"><div class="progress-bar bg-warning" id="kpiBar" style="width:0%;"></div></div></div></div>
+<div class="col-lg-3 col-md-6"><div class="kpi-card" style="background:#fff;"><div class="d-flex justify-content-between"><div><small class="text-muted">À traiter / En retard</small><h3 class="mb-0" style="color:#0A2F5E;" id="kpiRetard">0</h3><small class="text-danger" id="kpiRetardSub">— échéance DGI ≤7j</small></div><div style="width:44px;height:44px;border-radius:12px;background:#fee2e2;color:#dc3545;display:flex;align-items:center;justify-content:center;"><i class="bi bi-alarm"></i></div></div><div class="mt-2"><span class="badge bg-danger" id="kpiRetardBadge">0 retard</span> <span class="badge bg-warning text-dark" id="kpiUrgentBadge">0 urgents</span></div></div></div>
+<div class="col-lg-3 col-md-6"><div class="kpi-card" style="background:#fff;"><div class="d-flex justify-content-between"><div><small class="text-muted">En validation Manager</small><h3 class="mb-0" style="color:#0A2F5E;" id="kpiValid">0</h3><small style="color:rgba(25,118,210,0.7);" id="kpiValidSub">— via Teams/Elements</small></div><div style="width:44px;height:44px;border-radius:12px;background:#e3f2fd;color:#1976d2;display:flex;align-items:center;justify-content:center;"><i class="bi bi-patch-check"></i></div></div><div class="mt-2"><small class="text-muted">Délai moyen validation: <strong>24h</strong></small></div></div></div>
+<div class="col-lg-3 col-md-6"><div class="kpi-card accent"><div class="d-flex justify-content-between"><div><small style="color:#0A2F5E;opacity:0.8;">Livrés ce mois</small><h3 class="mb-0" style="color:#0A2F5E;" id="kpiLivres">0</h3><small style="color:#0A2F5E;opacity:0.7;" id="kpiLivresSub">+ WhatsApp & Email</small></div><div style="width:44px;height:44px;border-radius:12px;background:rgba(10,47,94,0.12);color:#0A2F5E;display:flex;align-items:center;justify-content:center;"><i class="bi bi-whatsapp"></i></div></div><div class="mt-2"><small style="color:#0A2F5E;">DGI Bénin • Échéance TVA: <strong>10 du mois</strong></small></div></div></div>
+</div>
+
+<!-- Configurateur dynamique CGI 2026 -->
+<div class="stat-card mb-3" style="border:1px solid #1976d2;background:#f0f7ff;" id="cgiConfigCard"><div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2"><h6 class="mb-0" style="font-family:Exo;font-weight:800;color:#0A2F5E;"><i class="bi bi-sliders me-2" style="color:#1976d2;"></i>Moteur CGI 2026 — Configurateur dynamique <span class="badge bg-primary ms-2" style="font-size:10px;">LIVE</span></h6><div class="d-flex gap-2"><a href="../docs/analyse-cgi-2026-workflow-fiscalite.md" target="_blank" class="btn btn-sm btn-outline-dark rounded-pill"><i class="bi bi-file-text me-1"></i> Analyse CGI</a><button class="btn btn-sm btn-dark-gobex rounded-pill" onclick="resetCGIConfig()"><i class="bi bi-arrow-clockwise me-1"></i> Réinitialiser</button><span class="badge bg-warning text-dark" id="cgiRuleBadge" style="font-size:10px;">— règles actives</span></div></div>
+<div class="row g-3">
+<div class="col-lg-4"><div class="p-3 bg-white rounded-3 border"><small class="text-muted fw-bold text-uppercase" style="font-size:10px;letter-spacing:0.8px;"><i class="bi bi-building me-1"></i>Qui — Client & régime</small>
+<div class="mt-2"><label class="form-label small fw-bold mb-1">Régime fiscal</label><select id="cgiRegime" class="form-select form-select-sm" onchange="onCGIChange()"><option value="reel_normal">Réel Normal (télédéclaration obligatoire)</option><option value="reel_simplifie">Réel Simplifié</option><option value="tps">TPS / TPU (CA &lt;50M)</option><option value="entreprenant">Entreprenant</option></select></div>
+<div class="row g-2 mt-1"><div class="col-6"><label class="form-label small fw-bold mb-1">Type entité</label><select id="cgiType" class="form-select form-select-sm" onchange="onCGIChange()"><option value="pm">Personne Morale (SARL/SA)</option><option value="pp">Personne Physique</option><option value="ong">ONG / Association</option><option value="ep">Établissement public non-commercial</option></select></div><div class="col-6"><label class="form-label small fw-bold mb-1">CA annuel (F)</label><input type="number" id="cgiCA" class="form-control form-control-sm" value="127000000" oninput="onCGIChange()" placeholder="ex: 50000000"></div></div>
+<div class="mt-2 d-flex gap-2"><div class="flex-grow-1"><label class="form-label small fw-bold mb-1">Effectif salarié</label><input type="number" id="cgiEffectif" class="form-control form-control-sm" value="3" min="0" oninput="onCGIChange()"></div><div class="form-check form-switch mt-4"><input class="form-check-input" type="checkbox" id="cgiMecf" checked onchange="onCGIChange()"><label class="form-check-label small" for="cgiMecf">MECeF</label></div></div>
+<div class="mt-2"><small class="text-muted" id="cgiRegimeHint" style="font-size:11px;">—</small></div>
+</div></div>
+<div class="col-lg-4"><div class="p-3 bg-white rounded-3 border"><small class="text-muted fw-bold text-uppercase" style="font-size:10px;letter-spacing:0.8px;"><i class="bi bi-check2-square me-1"></i>Quoi — Impôts concernés</small>
+<div class="mt-2 d-flex flex-column gap-1" id="cgiImpotsChecks">
+<label class="d-flex align-items-center gap-2 p-1 rounded-2" style="background:#e3f2fd;border:1px solid #90caf9;"><input type="checkbox" class="form-check-input m-0" value="TVA" checked onchange="onCGIChange()"> <span class="small flex-grow-1"><strong>TVA 18%</strong> <small class="text-muted">Art.219-268</small></span> <span class="badge bg-primary" style="font-size:10px;">10/mois</span></label>
+<label class="d-flex align-items-center gap-2 p-1 rounded-2" style="background:#fff3e0;border:1px solid #ffe082;"><input type="checkbox" class="form-check-input m-0" value="AIB" checked onchange="onCGIChange()"> <span class="small flex-grow-1"><strong>AIB</strong> <small class="text-muted">Art.130 — 3% IFU / 5% sans</small></span> <span class="badge bg-warning text-dark" style="font-size:10px;">10/mois</span></label>
+<label class="d-flex align-items-center gap-2 p-1 rounded-2" style="background:#e8f5e9;border:1px solid #a5d6a7;"><input type="checkbox" class="form-check-input m-0" value="IS" checked onchange="onCGIChange()"> <span class="small flex-grow-1"><strong>IS / IBA 30%</strong> <small class="text-muted">Art.49 — MFP 1,5%</small></span> <span class="badge bg-success" style="font-size:10px;">30 avril</span></label>
+<label class="d-flex align-items-center gap-2 p-1 rounded-2" style="background:#fce4ec;border:1px solid #f8bbd0;"><input type="checkbox" class="form-check-input m-0" value="ITS" checked onchange="onCGIChange()"> <span class="small flex-grow-1"><strong>ITS + VPS 4%</strong> <small class="text-muted">Art.119/191 — 10/mois</small></span> <span class="badge bg-danger" style="font-size:10px;">10/mois</span></label>
+<label class="d-flex align-items-center gap-2 p-1 rounded-2"><input type="checkbox" class="form-check-input m-0" value="LOYER" onchange="onCGIChange()"> <span class="small flex-grow-1"><strong>Retenue loyers 12%</strong> <small class="text-muted">Art.101</small></span> <span class="badge bg-light text-dark border" style="font-size:10px;">10/mois</span></label>
+<label class="d-flex align-items-center gap-2 p-1 rounded-2"><input type="checkbox" class="form-check-input m-0" value="IRCM" onchange="onCGIChange()"> <span class="small flex-grow-1"><strong>IRCM 5%/15%</strong> <small class="text-muted">Art.69-90</small></span> <span class="badge bg-light text-dark border" style="font-size:10px;">10/mois</span></label>
+</div>
+<small class="text-muted d-block mt-2" style="font-size:11px;">Décochez un impôt → piste masquée, étapes & SLA recalculés. Coche multiple → workflow multi-pistes parallèles.</small>
+</div></div>
+<div class="col-lg-4"><div class="p-3 bg-white rounded-3 border"><small class="text-muted fw-bold text-uppercase" style="font-size:10px;letter-spacing:0.8px;"><i class="bi bi-gear me-1"></i>Contexte — Déclencheurs CGI</small>
+<div class="mt-2 d-flex flex-column gap-2">
+<label class="d-flex align-items-center gap-2"><input type="checkbox" class="form-check-input m-0" id="cgiMarche" onchange="onCGIChange()"> <span class="small">Marché public <strong>>50M</strong> <small class="text-muted">Art.248 bis — Retenue TVA source</small></span></label>
+<label class="d-flex align-items-center gap-2"><input type="checkbox" class="form-check-input m-0" id="cgiImport" onchange="onCGIChange()"> <span class="small">Importations <small class="text-muted">AIB 1% IFU / 5% sans</small></span></label>
+<label class="d-flex align-items-center gap-2"><input type="checkbox" class="form-check-input m-0" id="cgiEservice" onchange="onCGIChange()"> <span class="small">E-service / Prestation non-résident <small class="text-muted">Art.221-225</small></span></label>
+<label class="d-flex align-items-center gap-2"><input type="checkbox" class="form-check-input m-0" id="cgiGroupe" onchange="onCGIChange()"> <span class="small">Groupe international <small class="text-muted">Art.39 — Test 30% EBITDA</small></span></label>
+<label class="d-flex align-items-center gap-2"><input type="checkbox" class="form-check-input m-0" id="cgiPremierEmploi" onchange="onCGIChange()"> <span class="small">Premier emploi béninois <small class="text-muted">Art.192-6 — VPS 2 ans exo</small></span></label>
+</div>
+<div class="mt-3 p-2 rounded-3" style="background:#f8fafc;border:1px dashed #cbd5e1;"><small class="text-muted fw-bold" style="font-size:11px;">Échéancier auto CGI 2026</small><div id="cgiEcheances" class="small mt-1" style="line-height:1.5;">—</div><button class="btn btn-sm btn-outline-dark rounded-pill mt-2" onclick="generateCGICalendar()" style="font-size:11px;"><i class="bi bi-calendar-week me-1"></i> Générer calendrier</button></div>
+</div></div>
+</div>
+<div class="mt-3 d-flex flex-wrap gap-2 align-items-center"><span class="badge" style="background:#0A2F5E;color:#fff;"><i class="bi bi-lightning me-1"></i>Moteur CGI2026 v2026.2.2-FEC-2024-plafond</span><span class="small text-muted" id="cgiSummary">—</span><button class="btn btn-sm btn-outline-primary rounded-pill ms-auto" onclick="applyCGIToCurrentDossier()"><i class="bi bi-magic me-1"></i> Appliquer au dossier sélectionné</button></div>
+<div class="small text-muted mt-2" style="font-size:11px;"><i class="bi bi-info-circle me-1"></i>Chaque règle pointe vers son article CGI cliquable (ouvrira DGI). Les cartes et le rail ci-dessous se recalculent instantanément. Le configurateur est stocké dans <code>gobex_cgi_config</code>.</div>
+</div>
+<!-- Rail 9 étapes -->
+<div class="stat-card mb-3" id="railCard"><div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2"><h6 class="mb-0" style="font-family:Exo;font-weight:800;color:#0A2F5E;"><i class="bi bi-signpost-2 me-2 text-primary"></i>Workflow — 9 étapes (cliquez pour filtrer)</h6><div class="d-flex gap-2 align-items-center"><small class="text-muted">SLA global 10–15 j • Pénalités évitées</small><button class="btn btn-sm btn-outline-dark rounded-pill" onclick="openHelp()"><i class="bi bi-question-circle me-1"></i> Aide</button></div></div><div class="step-rail" id="stepRail"></div><div class="d-flex gap-2 mt-3 flex-wrap"><span class="badge" style="background:#0A2F5E;color:#fff;"><i class="bi bi-clock me-1"></i>Échéance DGI: 10/mois</span><span class="badge" style="background:#e3f2fd;color:#0A2F5E;border:1px solid #90caf9;"><i class="bi bi-link me-1"></i>Lié à Executive Manager</span><span class="badge" style="background:#fff3d0;color:#8d6e00;border:1px solid #ffe082;"><i class="bi bi-shield-check me-1"></i>Habilitations: Fiscalité</span><span class="badge" style="background:#25D366;color:#fff;"><i class="bi bi-whatsapp me-1"></i> wa.me/22997739046</span></div></div>
+
+<!-- Filtres + liste -->
+<div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2"><div class="d-flex gap-2 align-items-center"><div class="btn-group" role="group"><button class="btn btn-dark-gobex btn-sm active" onclick="setFilter('all', this)">Tous</button><button class="btn btn-outline-dark btn-sm" onclick="setFilter('aretard', this)">≤7j / Retard</button><button class="btn btn-outline-dark btn-sm" onclick="setFilter('avalider', this)">À valider</button><button class="btn btn-outline-dark btn-sm" onclick="setFilter('livres', this)">Livrés</button></div><span class="badge bg-light text-dark border" id="filterCount">—</span></div><div class="d-flex gap-2"><input type="text" id="searchFisc" class="form-control form-control-sm" placeholder="Rechercher client, réf, TVA..." style="width:220px;" oninput="renderFisc()"><select id="sortFisc" class="form-select form-select-sm" style="width:150px;" onchange="renderFisc()"><option value="echeance">Échéance ↑</option><option value="etapeDesc">Étape ↓</option><option value="priorite">Priorité</option></select></div></div>
+<div id="fiscGrid" class="row g-3"></div>
+<div id="emptyFisc" class="stat-card text-center d-none"><div class="py-4"><i class="bi bi-inbox" style="font-size:28px;color:#cbd5e1;"></i><p class="small text-muted mt-2 mb-1">Aucun dossier Fiscalité pour ce filtre.</p><button class="btn btn-main rounded-pill btn-sm mt-1" onclick="createDemoFisc()"><i class="bi bi-plus-lg me-1"></i> Créer dossier Fiscalité (démo)</button><br><small class="text-muted">Ou créez depuis <a href="executive-manager.html#reception" style="color:#0A2F5E;text-decoration:underline;">Réception Secrétariat</a> (détection auto → Fiscalité).</small></div></div>
+
+<!-- Légende DGI -->
+<div class="stat-card mt-3" style="background:#f8fafc;border:1px dashed #cbd5e1;"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-info-circle me-2"></i>Repères DGI Bénin — Fiscalité</h6><div class="row g-2 small text-muted"><div class="col-md-4"><strong>TVA</strong> : 10 du mois (M+1) • AIB 1% / 5% selon régime<br><strong>IS</strong> : acompte trimestriel + solde 30/04</div><div class="col-md-4"><strong>Ret. source</strong> : 10 du mois • <strong>TSS/IRPP</strong> : 15 du mois (CNSS)</div><div class="col-md-4"><strong>Pénalités</strong> : 10% + astreinte si retard • <strong>e-MEF / e-DGI</strong> : télédéclaration obligatoire Réel</div></div></div>
+
+</div>
+
+<!-- Modal Détail Workflow -->
+<div class="modal fade" id="fiscDetailModal" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><div class="flex-grow-1"><h6 class="modal-title" style="font-family:Exo;font-weight:800;"><i class="bi bi-calculator me-2" style="color:#FFB81C;"></i><span id="detailTitle">Dossier</span> <span class="badge bg-warning text-dark ms-2" id="detailRef"></span></h6><small style="color:rgba(255,255,255,0.75);" id="detailSub"></small></div><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body" style="background:#f4f7fb;"><div class="row g-3"><div class="col-lg-7"><div class="stat-card"><div class="d-flex justify-content-between align-items-center mb-2"><h6 class="mb-0" style="font-family:Exo;font-weight:700;font-size:13px;">Progression — 9 étapes</h6><span class="badge" style="background:#e3f2fd;color:#0A2F5E;border:1px solid #90caf9;" id="detailEtapeLbl">—</span></div><div class="progress mb-3" style="height:10px;background:#e2e8f0;"><div class="progress-bar" id="detailProgress" style="background:#1976d2;width:0%;"></div></div><div class="timeline-vert" id="detailTimeline"></div></div><div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-check2-square me-2 text-success"></i>Check-list de l'étape en cours</h6><div id="detailChecklist" class="mt-2"></div><div class="d-flex gap-2 mt-3 flex-wrap"><button class="btn btn-dark-gobex rounded-pill btn-sm" onclick="toggleAllChecks(true)"><i class="bi bi-check-all me-1"></i> Tout cocher</button><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="saveChecks()"><i class="bi bi-save me-1"></i> Enregistrer</button><span class="small text-muted align-self-center" id="checkFeedback"></span></div></div></div><div class="col-lg-5"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-lightning me-2 text-warning"></i>Actions de l'étape</h6><div id="detailActions" class="d-grid gap-2 mt-2"></div><hr><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-paperclip me-2"></i>Pièces & livrables</h6><div class="dropzone-mini" onclick="document.getElementById('detailFile').click()" style="padding:12px;"><input type="file" id="detailFile" hidden multiple onchange="handleDetailFiles(this.files)"><i class="bi bi-cloud-arrow-up" style="color:#1976d2;"></i> <small>Déposer IFU, factures, relevés…</small><div id="detailFiles" class="small text-start mt-2"></div></div><div class="mt-2 small" id="detailDocs"></div><hr><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-chat-dots me-2"></i>Notes & communication (Teams/Elements)</h6><div id="detailComms" style="max-height:160px;overflow-y:auto;" class="small"></div><div class="input-group input-group-sm mt-2"><input type="text" id="detailMsg" class="form-control" placeholder="Message à l'équipe..."><button class="btn btn-dark-gobex" onclick="sendDetailMsg()"><i class="bi bi-send"></i></button></div><hr><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-clock-history me-2"></i>Audit trail</h6><div id="detailHist" class="small" style="max-height:160px;overflow-y:auto;"></div></div></div></div></div><div class="modal-footer" style="background:#fff;border-radius:0 0 16px 16px;"><small class="text-muted me-auto"><i class="bi bi-link-45deg me-1"></i>Synchronisé avec <code>gobex_exec_dossiers</code> • Portail Executive Manager</small><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Fermer</button></div></div></div></div>
+
+<!-- Modal Perms -->
+<div class="modal fade" id="permModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title"><i class="bi bi-shield-lock me-2"></i> Habilitations — Workflow Fiscalité</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body small" id="permModalBody"></div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Fermer</button><button class="btn btn-dark-gobex rounded-pill" onclick="saveModalPerms()"><i class="bi bi-check-lg me-1"></i> Enregistrer</button></div></div></div></div>
+
+<!-- Help -->
+<div class="modal fade" id="helpModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#1976d2;color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title"><i class="bi bi-signpost-2 me-2"></i> Workflow Fiscalité — mode d'emploi</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body small" style="line-height:1.7;">
+<p><strong>But</strong> : exécuter chaque mission fiscale du cabinet de la réception client jusqu’au dépôt DGI et à la livraison, sans retard ni pénalité, avec traçabilité totale.</p>
+<ol>
+<li><strong>Réception & qualification</strong> (Secrétariat + Manager, 24h) : IFU/RCCM, régime, échéance.</li>
+<li><strong>Diagnostic</strong> (Chef Fiscalité, 48h) : obligations TVA/AIB/IS, risques.</li>
+<li><strong>Collecte pièces</strong> (Agent, 5j) : factures, relevés, CNSS, relance J+2 auto.</li>
+<li><strong>Pré-traitement comptable</strong> (Compta↔Fiscalité, 3j) : saisie, balance.</li>
+<li><strong>Établissement déclaration</strong> (Agent, 2j) : brouillon e-MEF.</li>
+<li><strong>Contrôle interne</strong> (Chef, 24h) : revue.</li>
+<li><strong>Validation Manager</strong> (Manager, 24h via Teams/Elements) : Validé / À corriger (versioning).</li>
+<li><strong>Dépôt DGI & paiement</strong> (échéance 10) : e-DGI, reçu, preuve.</li>
+<li><strong>Livraison & archivage</strong> (Secrétariat, 24h) : email + WhatsApp wa.me/22997739046, archivage audit.</li>
+</ol>
+<p><strong>Accès</strong> : page liée au site, même base <code>gobex_exec_dossiers</code>. Seul l’admin voit “Gérer accès” et peut habiliter le Département Fiscalité. Les habilitations sont dans <code>gobex_workflow_access.fiscalite</code>.</p>
+<p><strong>Raccourci</strong> : créez un dossier depuis <a href="executive-manager.html" style="color:#0A2F5E;text-decoration:underline;">Executive Manager → Réception</a> avec un titre contenant “TVA, fiscal, DGI, impôt” → il apparaît ici auto en étape 1.</p>
+</div><div class="modal-footer"><button class="btn btn-dark-gobex rounded-pill" data-bs-dismiss="modal">Compris</button></div></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const STEPS=[
+  {id:'reception', label:'1 • Réception & Qualification', who:'Secrétariat + Manager', sla:'24h', icon:'bi-inbox', desc:'Vérif IFU/RCCM, régime RME/Réel, type déclaration, échéance DGI 10.', checks:['Vérifier IFU/RCCM + pièce ID','Identifier régime (RME/Réel)','Qualifier type déclaration (TVA/AIB/IS)','Fixer échéance DGI & SLA']},
+  {id:'diagnostic', label:'2 • Diagnostic fiscal', who:'Chef Fiscalité', sla:'48h', icon:'bi-search', desc:'Analyse obligations, calendrier fiscal Bénin, risques pénalités 10%.', checks:['Analyser dernier exercice & dettes DGI','Lister obligations TVA/AIB/IS/Retenue','Évaluer risques pénalités','Planifier calendrier & charge']},
+  {id:'collecte', label:'3 • Collecte pièces', who:'Agent Fiscal', sla:'5j', icon:'bi-folder2-open', desc:'Factures ventes/achats, relevés bancaires, CNSS, relance J+2.', checks:['Demander factures ventes/achats','Relevés bancaires du mois','État CNSS / paie','Relance client auto J+2 (WhatsApp/Email)']},
+  {id:'pretraitement', label:'4 • Pré-traitement comptable', who:'Compta ↔ Fiscalité', sla:'3j', icon:'bi-journal-text', desc:'Saisie, balance, rapprochement avant déclaration.', checks:['Saisie écritures manquantes','Balance vérifiée & lettrage','Rapprochement bancaire']},
+  {id:'etablissement', label:'5 • Établissement déclaration', who:'Agent Fiscal', sla:'2j', icon:'bi-calculator', desc:'Brouillon TVA/AIB/IS sur e-MEF/DGI, calculs.', checks:['Calcul TVA collectée/déductible','Brouillon AIB/IS & retenues','Vérif cohérence comptable']},
+  {id:'controle', label:'6 • Contrôle interne', who:'Chef Fiscalité', sla:'24h', icon:'bi-eye', desc:'Revue montants, cohérence, pièces justificatives.', checks:['Vérif montants & bases','Cohérence pièces vs déclaration','Validation interne checklist']},
+  {id:'validation', label:'7 • Validation Manager', who:'Executive Manager', sla:'24h', icon:'bi-patch-check', desc:'Teams/Elements → Validé ou À corriger (versioning).', checks:['Transmission via Teams/Elements','Décision Manager','Si À corriger → boucle étape 5']},
+  {id:'depot', label:'8 • Dépôt DGI & paiement', who:'Fiscalité + Secrétariat', sla:'10 du mois', icon:'bi-cloud-arrow-up', desc:'Télédéclaration e-DGI, reçu, paiement Trésor.', checks:['Dépôt e-DGI / e-MEF','Télécharger reçu DGI','Paiement Trésor & preuve']},
+  {id:'livraison', label:'9 • Livraison & Archivage', who:'Secrétariat', sla:'24h', icon:'bi-send-check', desc:'Email + WhatsApp wa.me/22997739046, archivage audit, prochaine échéance.', checks:['Email livrable + reçu DGI','WhatsApp client (wa.me/22997739046)','Archivage dossier & audit','Planifier prochaine échéance']},
+];
+// === MOTEUR CGI BÉNIN 2026 — Dynamique ===
+const CGI2026 = {
+  version:"2026.1 • Loi 2021-15 + Loi 2025-22",
+  seuils:{ tva:50_000_000, mfp_taux:0.015, mfp_min:500000, is_taux:0.30, is_edu:0.25, tva_taux:0.18, aib_avec_ifu:0.03, aib_sans_ifu:0.05, aib_import_ifu:0.01, loyer:0.12, loyer_si_bailleur_is:0.10, ircm_div:0.05, ircm_creance:0.15, vps:0.04, ortb:4000 },
+  echeances:{ is_acomptes:["03-10","06-10","09-10","12-10"], is_annuel:"04-30", tva:"10 du mois suivant", its:"10 du mois suivant", vps:"10 du mois suivant", salaires_annuel:"04-30" },
+  articles:{ tva:"Art.219-268", aib:"Art.130-140", is:"Art.3-65 / Art.49", its:"Art.119-129", vps:"Art.191-193", loyer:"Art.101-102", ircm:"Art.69-90", ifu:"Art.460", be:"Art.462", conservation:"Art.480", mecf:"Art.217 bis / 256", retenue_marche:"Art.248 bis", groupe:"Art.39" },
+};
+function getCGIConfig(){
+  const regime=document.getElementById('cgiRegime')?.value || 'reel_normal';
+  const type=document.getElementById('cgiType')?.value || 'pm';
+  const ca=parseInt(document.getElementById('cgiCA')?.value || '0');
+  const effectif=parseInt(document.getElementById('cgiEffectif')?.value || '0');
+  const mecf=document.getElementById('cgiMecf')?.checked ?? true;
+  const impots=[...document.querySelectorAll('#cgiImpotsChecks input:checked')].map(i=> i.value);
+  const marche=document.getElementById('cgiMarche')?.checked || false;
+  const impor=document.getElementById('cgiImport')?.checked || false;
+  const eservice=document.getElementById('cgiEservice')?.checked || false;
+  const groupe=document.getElementById('cgiGroupe')?.checked || false;
+  const premier=document.getElementById('cgiPremierEmploi')?.checked || false;
+  const cfg={regime,type,ca,effectif,mecf,impots,marche,import:impor,eservice,groupe,premierEmploi:premier};
+  localStorage.setItem('gobex_cgi_config', JSON.stringify(cfg));
+  return cfg;
+}
+function loadCGIConfig(){
+  try{
+    const s=localStorage.getItem('gobex_cgi_config');
+    if(!s) return;
+    const c=JSON.parse(s);
+    if(c.regime) document.getElementById('cgiRegime').value=c.regime;
+    if(c.type) document.getElementById('cgiType').value=c.type;
+    if(c.ca) document.getElementById('cgiCA').value=c.ca;
+    if(c.effectif!==undefined) document.getElementById('cgiEffectif').value=c.effectif;
+    if(c.mecf!==undefined) document.getElementById('cgiMecf').checked=c.mecf;
+    document.querySelectorAll('#cgiImpotsChecks input').forEach(i=>{ i.checked = (c.impots||[]).includes(i.value); });
+    if(c.marche!==undefined) document.getElementById('cgiMarche').checked=c.marche;
+    if(c.import!==undefined) document.getElementById('cgiImport').checked=c.import;
+    if(c.eservice!==undefined) document.getElementById('cgiEservice').checked=c.eservice;
+    if(c.groupe!==undefined) document.getElementById('cgiGroupe').checked=c.groupe;
+    if(c.premierEmploi!==undefined) document.getElementById('cgiPremierEmploi').checked=c.premierEmploi;
+  }catch(e){}
+}
+function isStepActiveForCGI(stepIdx, cfg){
+  // Filtrage dynamique par régime / impôt
+  cfg=cfg||getCGIConfig();
+  const imp=cfg.impots;
+  // ONG/EP exonérations : masque IS/VPS selon RESCRITS
+  if(cfg.type==='ong' || cfg.type==='ep'){
+    if(stepIdx===7 && imp.includes('IS')){ // dépôt IS exonéré
+      // garde mais badge exonéré
+    }
+  }
+  // Entreprenant / TPS : simplifie pré-traitement
+  if((cfg.regime==='entreprenant' || cfg.regime==='tps') && stepIdx===3) return false; // 4. Pré-traitement comptable non pertinent
+  // Si TVA non cochée, étapes 4-5 TVA allégées mais on garde pour AIB/IS
+  if(stepIdx===4 && !imp.includes('TVA') && !imp.includes('AIB') && !imp.includes('IS')) return false;
+  // Si ITS/VPS non coché et effectif 0, on peut masquer la partie collecte ITS
+  // Garde 9 étapes de base mais grise les non pertinentes
+  return true;
+}
+function cgiSummaryText(cfg){
+  cfg=cfg||getCGIConfig();
+  const parts=[];
+  parts.push(cfg.regime==='reel_normal'?'Réel Normal (télédéclaration e-DGI obligatoire Circ.012/2026)': cfg.regime==='reel_simplifie'?'Réel Simplifié': cfg.regime==='tps'?'TPS/TPU':'Entreprenant');
+  parts.push(cfg.type==='ong'?'ONG exonérée (Art.4/192/197)': cfg.type==='ep'?'EP non-commercial':'CA '+ (cfg.ca>=1000000? (cfg.ca/1000000).toFixed(1)+'M':'0'));
+  if(cfg.ca < 50_000_000 && cfg.impots.includes('TVA')) parts.push('⚠️ CA <50M → TVA optionnelle (seuil Art.223)');
+  if(cfg.marche) parts.push('Marché >50M → Retenue TVA 248 bis');
+  if(cfg.import) parts.push('AIB import 1%/5% (Art.130)');
+  if(cfg.groupe) parts.push('Test EBITDA 30% (Art.39)');
+  if(cfg.premierEmploi) parts.push('VPS exonéré 2 ans (Art.192-6)');
+  return parts.join(' • ');
+}
+function onCGIChange(){
+  const cfg=getCGIConfig();
+  // hints
+  const hint=document.getElementById('cgiRegimeHint');
+  if(cfg.regime==='reel_normal') hint.innerHTML='MECeF <strong>Art.217 bis</strong> + télédéclaration <strong>Art.256 bis</strong> obligatoires • Taux IS 30% (25% enseignement) • MFP 1,5% min 500k (Art.64)';
+  else if(cfg.regime==='tps') hint.innerHTML='Pas de TVA (CA<50M) • TPU/TFU trimestrielle • Compta allégée OHADA';
+  else if(cfg.regime==='entreprenant') hint.innerHTML='Régime ultra-simplifié • Pas de TVA • Pas d’IS, TPS uniquement';
+  else hint.innerHTML='Réel Simplifié • TVA mensuelle possible • MECeF recommandé';
+  if(cfg.type==='ong') hint.innerHTML+=' • <span class="badge bg-success">ONG exonérée IS/VPS/Patente (RESCRITS 2026)</span>';
+  // échéances
+  const ech=document.getElementById('cgiEcheances');
+  const pistes=cfg.impots;
+  const lignes=[];
+  if(pistes.includes('TVA')) lignes.push('TVA 18% : <strong>10 du mois suivant</strong> (Art.249 bis) — télédeclaration e-MEF');
+  if(pistes.includes('AIB')) lignes.push('AIB 3% (IFU) / 5% (sans) : <strong>10 du mois suivant</strong> (Art.130) — 1% import IFU');
+  if(pistes.includes('IS')) lignes.push('IS : acomptes <strong>10 mars / 10 juin / 10 sept / 10 déc</strong> + solde <strong>30 avril</strong> (Art.51/49) — MFP 1,5%');
+  if(pistes.includes('ITS')) lignes.push('ITS/VPS 4% : <strong>10 du mois suivant</strong> (Art.129/191) — annuel salaires <strong>30 avril</strong> (472)');
+  if(cfg.marche) lignes.push('<span class="badge bg-warning text-dark">Retenue TVA marchés >50M Art.248 bis</span>');
+  ech.innerHTML=lignes.join('<br>') || '<span class="text-muted">Cochez au moins un impôt.</span>';
+  document.getElementById('cgiSummary').textContent=cgiSummaryText(cfg);
+  document.getElementById('cgiRuleBadge').textContent=cfg.impots.length+' piste(s) • '+ STEPS.filter((_,i)=> isStepActiveForCGI(i,cfg)).length+'/9 étapes actives';
+  // re-render rail & grid avec filtrage
+  renderRail(); renderFisc();
+}
+function resetCGIConfig(){
+  localStorage.removeItem('gobex_cgi_config');
+  document.getElementById('cgiRegime').value='reel_normal';
+  document.getElementById('cgiType').value='pm';
+  document.getElementById('cgiCA').value='127000000';
+  document.getElementById('cgiEffectif').value='3';
+  document.getElementById('cgiMecf').checked=true;
+  document.querySelectorAll('#cgiImpotsChecks input').forEach((i,idx)=>{ i.checked=[0,1,2,3].includes(idx); });
+  ['cgiMarche','cgiImport','cgiEservice','cgiGroupe','cgiPremierEmploi'].forEach(id=> document.getElementById(id).checked=false);
+  onCGIChange(); toast('Configurateur réinitialisé','CGI 2026 • Réel Normal • TVA+AIB+IS+ITS', 'success');
+}
+function generateCGICalendar(){
+  const cfg=getCGIConfig();
+  const year=new Date().getFullYear();
+  const dates=[];
+  if(cfg.impots.includes('IS')) dates.push(`${year}-03-10 : 1er acompte IS`, `${year}-06-10 : 2e acompte IS`, `${year}-09-10 : 3e acompte IS`, `${year}-12-10 : 4e acompte IS`, `${year+1}-04-30 : Déclaration annuelle IS/IBA + salaires (Art.49/472)`);
+  if(cfg.impots.includes('TVA')||cfg.impots.includes('AIB')||cfg.impots.includes('ITS')){
+    for(let m=1;m<=12;m++){ const mm=String(m).padStart(2,'0'); dates.push(`${year}-${mm}-10 : TVA/AIB/ITS/VPS mensuel (Art.130/191/229)`); if(m===12) break; }
+  }
+  if(cfg.impots.includes('LOYER')) dates.push('10 du mois suivant : Retenue loyers 12% (Art.101)');
+  toast('Calendrier CGI 2026 généré', dates.slice(0,6).join(' • ') + ' ...', 'success');
+  // aussi injecte dans échéances
+  document.getElementById('cgiEcheances').innerHTML+= '<hr style="margin:6px 0;"><small class="text-primary">Prochaines échéances 2026 :</small><br>' + dates.slice(0,5).map(d=> '• '+d).join('<br>');
+}
+function applyCGIToCurrentDossier(){
+  if(!currentDetailId){ toast('Aucun dossier sélectionné','Ouvrez un dossier puis appliquez la config.', 'warning'); return; }
+  const cfg=getCGIConfig();
+  let all=getDossiers(); const d=all.find(x=>x.id===currentDetailId); if(!d) return;
+  d.cgiConfig=cfg;
+  d.historique.push({date:new Date().toISOString(), acteur:currentUser(), role:'Fiscalité', action:'Config CGI appliquée', details: cgiSummaryText(cfg)});
+  setDossiers(all); toast('Config CGI appliquée', d.ref+' • '+ cfg.impots.join('+') + ' • '+cfg.regime, 'success');
+}
+function getDossiers(){ try{return JSON.parse(localStorage.getItem('gobex_exec_dossiers')||'[]')}catch(e){return []}}
+function setDossiers(d){ localStorage.setItem('gobex_exec_dossiers', JSON.stringify(d)); }
+function getClients(){ try{return JSON.parse(localStorage.getItem('gobex_crm_clients')||'[]')}catch(e){return []}}
+function getAgents(){ try{return JSON.parse(localStorage.getItem('gobex_exec_agents')||'[]')}catch(e){return []}}
+function getAccess(){ try{return JSON.parse(localStorage.getItem('gobex_workflow_access')||'{}')}catch(e){return {}}}
+function setAccess(o){ localStorage.setItem('gobex_workflow_access', JSON.stringify(o)); }
+function currentUser(){ return localStorage.getItem('gobex_admin_user')|| localStorage.getItem('gobex_admin_email')|| 'admin'; }
+function isAuthed(){ return localStorage.getItem('gobex_admin_auth')==='true'; }
+function isAdmin(){ const u=currentUser().toLowerCase(); return u.includes('admin')|| localStorage.getItem('gobex_admin_role')==='admin' || u==='godwin' || u==='gobex'; }
+function hasAccess(){ if(!isAuthed()) return false; if(isAdmin()) return true; const list=(getAccess().fiscalite||[]); return list.includes(currentUser()) || list.includes('*'); }
+function toast(title,msg,type='success'){
+  const c=document.getElementById('toastContainer'); const bg= type==='success'?'#0A2F5E': type==='warning'?'#f59e0b':'#dc3545'; const icon= type==='success'?'bi-check-circle-fill':'bi-exclamation-triangle-fill'; const id='t'+Date.now();
+  c.insertAdjacentHTML('beforeend', `<div id="${id}" class="toast show align-items-center border-0 mb-2" role="alert" style="background:${bg};color:#fff;min-width:320px;box-shadow:0 10px 30px rgba(0,0,0,0.18);border-radius:14px;"><div class="d-flex"><div class="toast-body d-flex gap-3"><i class="bi ${icon}" style="font-size:20px;"></i><div><strong class="small">${title}</strong><br><small style="opacity:0.92">${msg}</small></div></div><button class="btn-close btn-close-white me-2 m-auto" onclick="document.getElementById('${id}').remove()"></button></div></div>`);
+  setTimeout(()=> document.getElementById(id)?.remove(), 5500);
+}
+let filterMode='all', activeStepFilter=null, currentDetailId=null;
+function init(){
+  loadCGIConfig(); renderGate(); renderRail(); renderFisc(); renderKPIs(); onCGIChange();
+  document.getElementById('currentUserLbl').textContent=currentUser() + (isAdmin()?' • Admin':'');
+}
+function renderGate(){
+  const gate=document.getElementById('accessGate');
+  const badge=document.getElementById('authBadge');
+  const lbl=document.getElementById('accessLbl');
+  const gu=document.getElementById('gateUser');
+  if(!isAuthed()){
+    gate.classList.remove('d-none'); badge.innerHTML='<i class="bi bi-x-circle me-1 text-danger"></i> Non connecté'; badge.className='badge bg-danger';
+    lbl.innerHTML='<span style="color:#dc3545;">Non connecté</span>'; gu.textContent='(gobex_admin_auth = false)';
+    document.getElementById('fiscGrid').innerHTML=''; document.getElementById('emptyFisc').classList.add('d-none');
+    return;
+  }
+  if(!hasAccess()){
+    gate.classList.remove('d-none'); badge.innerHTML='<i class="bi bi-person-lock me-1"></i>'+currentUser()+' • Non habilité'; badge.className='badge bg-warning text-dark';
+    lbl.innerHTML='<span style="color:#dc3545;">Accès refusé</span>'; gu.textContent='(demandez habilitation Fiscalité)';
+    // still show but dim
+  } else {
+    gate.classList.add('d-none'); badge.innerHTML='<i class="bi bi-shield-check me-1"></i>'+currentUser()+' • Habilité'; badge.className='badge bg-success';
+    lbl.innerHTML='<span style="color:#198754;">Habilité</span> • '+currentUser();
+  }
+}
+function fiscDossiers(){
+  const all=getDossiers();
+  // ensure workflow field
+  all.forEach(d=>{
+    if(d.workflowFiscalite===undefined){
+      // auto-assign step based on statut si domaine fiscalité
+      const isFisc=(d.departements||d.domaines||[]).includes('Département Fiscalité') || (d.domaines||[]).includes('Département Fiscalité') || (d.preoccupations||[]).some(p=> (p.domaine||'').includes('Fiscalité'));
+      if(isFisc){
+        const map={ 'Reçu':0, 'En analyse':1, 'Affecté':1, 'En traitement':4, 'En validation':6, 'À corriger':5, 'Validé':7, 'Livré':8, 'Archivé':8 };
+        d.workflowFiscalite = map[d.statut] ?? 0;
+        d.workflowChecks = d.workflowChecks || {};
+        // init checks for step 0
+      }
+    }
+    // also ensure those with Fiscalité domaine are considered fiscal even if not yet workflow
+    if(!d.workflowFiscalite && d.workflowFiscalite!==0){
+      const isFisc = (d.departements||[]).includes('Département Fiscalité') || (d.domaines||[]).includes('Département Fiscalité');
+      if(isFisc) { d.workflowFiscalite=0; }
+    }
+  });
+  setDossiers(all);
+  return all.filter(d=> (d.departements||d.domaines||d.workflowFiscalite!==undefined) && ((d.departements||[]).includes('Département Fiscalité') || (d.domaines||[]).includes('Département Fiscalité') || d.workflowFiscalite!==undefined) );
+  // Actually simpler: return all with fiscalite domain or workflow
+}
+function fiscaisFiltered(){
+  let list=fiscDossiers();
+  // step filter
+  if(activeStepFilter!==null) list=list.filter(d=> d.workflowFiscalite===activeStepFilter);
+  // mode filter
+  const q=(document.getElementById('searchFisc').value||'').toLowerCase();
+  if(q) list=list.filter(d=> (d.clientName||'').toLowerCase().includes(q) || (d.ref||'').toLowerCase().includes(q) || (d.preoccupations||[]).some(p=> (p.titre||'').toLowerCase().includes(q)) || (d.id||'').toLowerCase().includes(q));
+  if(filterMode==='aretard'){
+    list=list.filter(d=>{
+      if(!d.echeance) return false;
+      const diff=Math.ceil((new Date(d.echeance)-new Date())/86400000);
+      return diff<=7 || diff<0;
+    });
+  } else if(filterMode==='avalider'){
+    list=list.filter(d=> d.workflowFiscalite===6);
+  } else if(filterMode==='livres'){
+    list=list.filter(d=> d.workflowFiscalite===8 || ['Livré','Archivé','Validé'].includes(d.statut));
+  }
+  const sort=document.getElementById('sortFisc').value;
+  if(sort==='echeance') list.sort((a,b)=> new Date(a.echeance||'2099-12-31') - new Date(b.echeance||'2099-12-31'));
+  else if(sort==='etapeDesc') list.sort((a,b)=> (b.workflowFiscalite||0)-(a.workflowFiscalite||0));
+  else if(sort==='priorite') { const o={'Très urgente':0,'Urgente':1,'Normale':2}; list.sort((a,b)=> (o[a.priorite]??2)-(o[b.priorite]??2)); }
+  return list;
+}
+function slaInfo(d){
+  if(!d.echeance) return {label:'Sans échéance', cls:'bg-light text-dark border'};
+  const diff=Math.ceil((new Date(d.echeance)-new Date())/86400000);
+  if(diff<0) return {label:`En retard J${diff}`, cls:'bg-danger', urgent:true};
+  if(diff===0) return {label:"Aujourd'hui", cls:'bg-danger', urgent:true};
+  if(diff<=2) return {label:`J-${diff}`, cls:'bg-danger', urgent:true};
+  if(diff<=7) return {label:`J-${diff}`, cls:'bg-warning text-dark', urgent:true};
+  return {label:`J-${diff}`, cls:'bg-success'};
+}
+function renderKPIs(){
+  const fisc=fiscDossiers();
+  const retard=fisc.filter(d=>{ const diff=d.echeance? Math.ceil((new Date(d.echeance)-new Date())/86400000):999; return diff<=7; }).length;
+  const enRetardFisc=fisc.filter(d=>{ const diff=d.echeance? Math.ceil((new Date(d.echeance)-new Date())/86400000):999; return diff<0; }).length;
+  const avalider=fisc.filter(d=> d.workflowFiscalite===6).length;
+  const livres=fisc.filter(d=> d.workflowFiscalite===8 || ['Livré','Archivé'].includes(d.statut)).length;
+  document.getElementById('kpiTotal').textContent=fisc.length;
+  document.getElementById('kpiTotalSub').textContent= (fisc.length? Math.round(livres/fisc.length*100):0)+'% livrés • '+ (fisc.filter(d=> d.workflowFiscalite>=3 && d.workflowFiscalite<=5).length)+' en traitement';
+  document.getElementById('kpiBar').style.width= (fisc.length? livres/fisc.length*100:0)+'%';
+  document.getElementById('kpiRetard').textContent=retard;
+  document.getElementById('kpiRetardSub').textContent=enRetardFisc+' en retard • '+ (retard-enRetardFisc)+' ≤7j';
+  document.getElementById('kpiRetardBadge').textContent=enRetardFisc+' retard';
+  document.getElementById('kpiUrgentBadge').textContent= fisc.filter(d=> d.priorite!=='Normale').length+' urgents';
+  document.getElementById('kpiValid').textContent=avalider;
+  document.getElementById('kpiValidSub').textContent= avalider? 'À valider maintenant' : 'Aucun en attente';
+  document.getElementById('kpiLivres').textContent=livres;
+  document.getElementById('sbFiscCount').textContent=fisc.length;
+}
+function renderRail(){
+  const rail=document.getElementById('stepRail');
+  const cfg=getCGIConfig();
+  const articleByStep=["Art.460 IFU","Art.39/64 EBITDA/MFP","Art.130 AIB / 472","Art.479 OHADA","Art.219-268 TVA 18%","Art.496 Contrôle","Art.Teams/Elements","Art.256 bis e-DGI / 248 bis","Art.480 Archivage 10 ans"];
+  rail.innerHTML=STEPS.map((s,i)=>{
+    const active= activeStepFilter===i ? 'active' : '';
+    const isActive=isStepActiveForCGI(i,cfg);
+    const doneCount=fiscDossiers().filter(d=> d.workflowFiscalite!==undefined && d.workflowFiscalite>i).length;
+    const opacity=isActive? 'opacity:1;' : 'opacity:0.45;filter:grayscale(0.5);';
+    const badgeArticle=`<span class="badge" style="background:#0A2F5E;color:#FFB81C;font-size:9px;">${articleByStep[i]||''}</span>`;
+    const horsBadge=!isActive? '<span class="badge bg-secondary" style="font-size:9px;">hors régime</span>':'' ;
+    return `<button class="step-pill ${active}" onclick="toggleStepFilter(${i})" style="${opacity}"><div class="d-flex align-items-center gap-2 mb-1"><span class="num">${i+1}</span><strong style="font-size:12px;color:#0A2F5E;">${s.label.split('•')[1]?.trim()||s.label}</strong> ${badgeArticle} ${horsBadge}</div><small style="color:#1976d2;font-weight:700;">${s.who} • SLA ${s.sla}</small><small>${s.desc}</small><small class="mt-1"><span class="badge bg-light text-dark border">${fiscDossiers().filter(d=> d.workflowFiscalite===i).length} dossiers</span> ${doneCount? `<span class="text-success">• ${doneCount} au-delà</span>`:''}</small></button>`;
+  }).join('');
+}
+function toggleStepFilter(i){
+  if(activeStepFilter===i) activeStepFilter=null; else activeStepFilter=i;
+  renderRail(); renderFisc();
+}
+function setFilter(mode, btn){
+  filterMode=mode;
+  document.querySelectorAll('.btn-group .btn').forEach(b=>{ b.className='btn btn-outline-dark btn-sm'; });
+  btn.className='btn btn-dark-gobex btn-sm active';
+  renderFisc();
+}
+function renderFisc(){
+  if(!hasAccess() && !isAdmin()){
+    // still render but with overlay dim
+    document.getElementById('fiscGrid').style.opacity='0.35';
+    document.getElementById('fiscGrid').style.pointerEvents='none';
+  } else {
+    document.getElementById('fiscGrid').style.opacity='1';
+    document.getElementById('fiscGrid').style.pointerEvents='auto';
+  }
+  const list=fiscaisFiltered();
+  const grid=document.getElementById('fiscGrid');
+  const empty=document.getElementById('emptyFisc');
+  document.getElementById('filterCount').textContent=list.length+' dossier(s)';
+  if(list.length===0){ grid.innerHTML=''; empty.classList.remove('d-none'); return; }
+  empty.classList.add('d-none');
+  grid.innerHTML=list.map(d=>{
+    const step=d.workflowFiscalite||0;
+    const s=STEPS[step]||STEPS[0];
+    const pct=Math.round((step+1)/STEPS.length*100);
+    const sla=slaInfo(d);
+    const retardClass= sla.label.includes('retard')||sla.label==="Aujourd'hui" ? 'retard' : sla.label.includes('J-')&&sla.cls.includes('warning') ? 'urgent':'';
+    const titre=(d.preoccupations||[]).map(p=>p.titre).join(' • ') || s.label;
+    return `<div class="col-lg-6 col-xl-4"><div class="dossier-fisc ${retardClass}" onclick="openDetail('${d.id}')">
+      <div class="d-flex justify-content-between align-items-start mb-2"><div><strong style="font-size:13px;color:#0A2F5E;">${d.clientName}</strong><br><small class="text-muted">${d.ref||d.id} • ${d.clientRef||''}</small></div><span class="sla-badge ${sla.cls}">${sla.label}</span></div>
+      <div class="small mb-2" style="color:#334155;min-height:36px;"><i class="bi bi-file-earmark-text me-1 text-primary"></i>${titre}</div>
+      <div class="d-flex gap-1 flex-wrap mb-2"><span class="badge" style="background:#e3f2fd;color:#0A2F5E;border:1px solid #90caf9;">${s.label}</span><span class="badge ${d.priorite==='Très urgente'?'bg-danger': d.priorite==='Urgente'?'bg-warning text-dark':'bg-light text-dark border'}">${d.priorite||'Normale'}</span><span class="badge bg-light text-dark border"><i class="bi bi-calendar me-1"></i>${d.echeance||'—'}</span></div>
+      <div class="d-flex justify-content-between align-items-center small mb-1"><span class="text-muted">Étape ${step+1}/9</span><span style="color:#1976d2;font-weight:700;">${pct}%</span></div><div class="progress" style="height:6px;background:#e2e8f0;"><div class="progress-bar" style="width:${pct}%;background:#1976d2;"></div></div>
+      <div class="d-flex gap-2 mt-3"><button class="btn btn-dark-gobex btn-sm rounded-pill flex-grow-1" onclick="event.stopPropagation(); openDetail('${d.id}')"><i class="bi bi-eye me-1"></i> Workflow</button><button class="btn btn-outline-dark btn-sm rounded-pill" onclick="event.stopPropagation(); quickAdvance('${d.id}')" title="Avancer d'une étape"><i class="bi bi-arrow-right"></i></button></div>
+      <small class="text-muted d-block mt-2"><i class="bi bi-person me-1"></i>${s.who} • SLA ${s.sla}</small>
+    </div></div>`;
+  }).join('');
+}
+function openDetail(id){
+  if(!hasAccess()){ toast('Accès restreint','Habilitation Fiscalité requise. Voir Hub Workflows.', 'warning'); return; }
+  const d=getDossiers().find(x=>x.id===id); if(!d) return;
+  currentDetailId=id;
+  const step=d.workflowFiscalite||0; const s=STEPS[step];
+  document.getElementById('detailTitle').textContent=d.clientName;
+  document.getElementById('detailRef').textContent=d.ref||d.id;
+  document.getElementById('detailSub').textContent=(d.preoccupations||[]).map(p=>p.titre).join(' • ') + ' • Échéance '+ (d.echeance||'—') + ' • '+ (d.priorite||'Normale');
+  document.getElementById('detailEtapeLbl').textContent= s.label + ' • ' + s.who + ' • SLA '+s.sla;
+  document.getElementById('detailProgress').style.width= Math.round((step+1)/STEPS.length*100)+'%';
+  // timeline
+  document.getElementById('detailTimeline').innerHTML=STEPS.map((st,i)=>{
+    const cls= i<step? 'done' : i===step? 'current' : i===step+1? 'active': '';
+    const icon= i<step? 'bi-check-circle-fill text-success' : i===step? 'bi-play-circle-fill text-warning' : 'bi-circle text-muted';
+    const checksDone= (d.workflowChecks && d.workflowChecks[st.id]) ? d.workflowChecks[st.id].filter(Boolean).length : 0;
+    const checksTotal= st.checks.length;
+    return `<div class="tl-item ${cls}"><div class="d-flex justify-content-between align-items-start"><div><strong style="font-size:12px;color:${i===step?'#0A2F5E':'#334155'};"><i class="bi ${icon} me-1"></i>${st.label}</strong><br><small class="text-muted">${st.who} • SLA ${st.sla}</small><br><small style="color:#475569;">${st.desc}</small></div><span class="badge ${i<step?'bg-success': i===step?'bg-warning text-dark':'bg-light text-dark border'}" style="font-size:10px;">${i<step? checksDone+'/'+checksTotal+' ✓' : i===step? checksDone+'/'+checksTotal : ''} ${i<step?'Fait': i===step?'En cours':'À venir'}</span></div>${i===step? `<div class="mt-2 small text-primary"><i class="bi bi-arrow-right me-1"></i>Étape en cours — cochez la check-list puis Validez.</div>`:''}</div>`;
+  }).join('');
+  // checklist
+  renderDetailChecklist(d, step);
+  // actions
+  renderDetailActions(d, step);
+  // files/docs/hist
+  const files=(d.versions||[]).flatMap(v=> v.fichiers||[]).map(f=> f.name||f).join(', ') || '<span class="text-muted">Aucun</span>';
+  document.getElementById('detailDocs').innerHTML=`<small class="text-muted">Fichiers versions: ${files}</small>`;
+  const comms=(d.communications||[]).slice(-6).reverse().map(c=> `<div class="p-2 rounded-3 mb-1" style="background:#fff;border:1px solid #eef2f6;"><strong style="font-size:11px;">${c.auteur||c.dept}</strong> <small class="text-muted">${new Date(c.date).toLocaleDateString('fr-FR')}</small><br><span>${c.message||c.contenu||''}</span></div>`).join('') || '<small class="text-muted">Aucune communication.</small>';
+  document.getElementById('detailComms').innerHTML=comms;
+  document.getElementById('detailHist').innerHTML=(d.historique||[]).slice(-8).reverse().map(h=> `<div class="d-flex gap-2 mb-1"><span class="badge bg-light text-dark border" style="font-size:10px;white-space:nowrap;">${new Date(h.date).toLocaleDateString('fr-FR')}</span><div><strong style="font-size:11px;">${h.action||h.acteur}</strong><br><small class="text-muted">${h.details||h.acteur||''}</small></div></div>`).join('') || '<small class="text-muted">Aucun historique.</small>';
+  document.getElementById('detailFiles').innerHTML='';
+  new bootstrap.Modal(document.getElementById('fiscDetailModal')).show();
+}
+function renderDetailChecklist(d, step){
+  const st=STEPS[step];
+  const saved= (d.workflowChecks && d.workflowChecks[st.id]) || st.checks.map(()=> false);
+  document.getElementById('detailChecklist').innerHTML= st.checks.map((c,i)=> `<label class="checklist-item"><input type="checkbox" class="form-check-input" ${saved[i]?'checked':''} onchange="onCheckChange(${i}, this.checked)"> <span class="small flex-grow-1" style="${saved[i]?'text-decoration:line-through;color:#64748b;':''}">${c}</span> ${saved[i]?'<i class="bi bi-check-circle-fill text-success"></i>':''}</label>`).join('');
+}
+function onCheckChange(idx, val){
+  const d=getDossiers().find(x=>x.id===currentDetailId); if(!d) return;
+  const step=d.workflowFiscalite||0; const st=STEPS[step];
+  d.workflowChecks=d.workflowChecks||{}; d.workflowChecks[st.id]=d.workflowChecks[st.id]|| st.checks.map(()=>false);
+  d.workflowChecks[st.id][idx]=val; setDossiers(getDossiers().map(x=> x.id===d.id? d: x));
+  renderDetailChecklist(d, step);
+}
+function toggleAllChecks(v){
+  const d=getDossiers().find(x=>x.id===currentDetailId); if(!d) return;
+  const step=d.workflowFiscalite||0; const st=STEPS[step];
+  d.workflowChecks=d.workflowChecks||{}; d.workflowChecks[st.id]=st.checks.map(()=> v);
+  setDossiers(getDossiers().map(x=> x.id===d.id? d: x)); renderDetailChecklist(d,step);
+  document.getElementById('checkFeedback').textContent= v? 'Tout coché — n’oubliez pas Enregistrer.':'Tout décoché.'; setTimeout(()=>document.getElementById('checkFeedback').textContent='',2000);
+}
+function saveChecks(){
+  const d=getDossiers().find(x=>x.id===currentDetailId); if(!d) return;
+  d.historique=d.historique||[]; d.historique.push({date:new Date().toISOString(), acteur:currentUser(), role:'Fiscalité', action:'Check-list mise à jour', details: STEPS[d.workflowFiscalite||0].label});
+  setDossiers(getDossiers().map(x=> x.id===d.id? d: x));
+  toast('Check-list enregistrée','Étape '+( (d.workflowFiscalite||0)+1) + ' sauvegardée.', 'success'); renderFisc(); renderKPIs();
+  document.getElementById('checkFeedback').textContent='✅ Enregistré'; setTimeout(()=>document.getElementById('checkFeedback').textContent='',2000);
+}
+function renderDetailActions(d, step){
+  const c=document.getElementById('detailActions');
+  const isLast= step===STEPS.length-1;
+  const canAdvance= (()=>{ const checks=(d.workflowChecks&&d.workflowChecks[STEPS[step].id])||[]; const total=STEPS[step].checks.length; const done=checks.filter(Boolean).length; return done>=Math.ceil(total*0.66) || isAdmin(); })();
+  if(isLast){
+    c.innerHTML=`<div class="alert alert-success small mb-0"><i class="bi bi-check-circle-fill me-1"></i>Workflow terminé — dossier à archiver. <a href="#" onclick="archiveDossier(); return false;" style="color:#0A2F5E;text-decoration:underline;">Archiver</a></div>
+    <button class="btn btn-main rounded-pill" onclick="deliverClient()"><i class="bi bi-whatsapp me-1"></i> Livrer client (WhatsApp + Email)</button>`;
+    return;
+  }
+  if(step===6){ // validation Manager
+    c.innerHTML=`<button class="btn btn-success rounded-pill" ${!canAdvance?'disabled':''} onclick="validateStep(true)"><i class="bi bi-patch-check me-1"></i> Valider (Manager) → Étape ${step+2}</button>
+    <button class="btn btn-warning rounded-pill" onclick="validateStep(false)"><i class="bi bi-arrow-counterclockwise me-1"></i> Renvoyer À corriger → Étape 5</button>
+    <small class="text-muted">Validation via Teams/Elements simulée • Version ${((d.versions||[]).length)+1} créée.</small>`;
+  } else if(step===7){
+    c.innerHTML=`<button class="btn btn-dark-gobex rounded-pill" ${!canAdvance?'disabled':''} onclick="advanceStep()"><i class="bi bi-cloud-arrow-up me-1"></i> Confirmer dépôt DGI (reçu)</button>
+    <button class="btn btn-outline-dark rounded-pill" onclick="advanceStep()"><i class="bi bi-arrow-right me-1"></i> Avancer → Livraison</button>
+    <small class="text-muted">Joignez le reçu DGI dans Pièces & livrables.</small>`;
+  } else if(step===8){
+    c.innerHTML=`<button class="btn btn-main rounded-pill" ${!canAdvance?'disabled':''} onclick="advanceStep()"><i class="bi bi-send-check me-1"></i> Clôturer & notifier prochaine échéance</button>`;
+  } else {
+    c.innerHTML=`<button class="btn btn-dark-gobex rounded-pill" ${!canAdvance?'disabled':''} onclick="advanceStep()"><i class="bi bi-arrow-right-circle me-1"></i> Valider étape & passer à ${STEPS[step+1].label.split('•')[1]?.trim()}</button>
+    ${!canAdvance? '<small class="text-warning"><i class="bi bi-exclamation-triangle me-1"></i>Cochez au moins 2/3 de la check-list pour avancer.</small>': '<small class="text-muted">Notifie le responsable suivant via Teams/Elements.</small>'}
+    <button class="btn btn-outline-dark rounded-pill" onclick="requestCorrection()"><i class="bi bi-flag me-1"></i> Signaler blocage / Demander pièce</button>`;
+  }
+}
+function advanceStep(){
+  let all=getDossiers(); const d=all.find(x=>x.id===currentDetailId); if(!d) return;
+  const cur=d.workflowFiscalite||0;
+  if(cur>=STEPS.length-1) return;
+  const next=cur+1;
+  d.workflowFiscalite=next;
+  // map to global statut for KPIs
+  const статуMap={0:'Reçu',1:'En analyse',2:'En traitement',3:'En traitement',4:'En traitement',5:'En traitement',6:'En validation',7:'En validation',8:'Validé'};
+  d.statut= статуMap[next] || d.statut;
+  d.avancement=Math.round((next+1)/STEPS.length*100);
+  d.historique=d.historique||[]; d.historique.push({date:new Date().toISOString(), acteur:currentUser(), role:'Fiscalité', action:'Avancement workflow', details:`${STEPS[cur].label} → ${STEPS[next].label}`});
+  d.communications=d.communications||[]; d.communications.push({date:new Date().toISOString(), auteur:currentUser(), dept:'Fiscalité', message:`Workflow Fiscalité : étape ${next+1}/9 — ${STEPS[next].label} (Teams/Elements)`});
+  d.versions=d.versions||[]; d.versions.push({v:d.versions.length+1, date:new Date().toISOString(), dept:'Département Fiscalité', auteur:currentUser(), commentaire:`Workflow étape ${next+1} — ${STEPS[next].label}`, fichiers:[]});
+  setDossiers(all); renderFisc(); renderKPIs(); renderRail(); openDetail(d.id);
+  toast('Étape validée', STEPS[next].label + ' • Notifié via Teams/Elements', 'success');
+}
+function quickAdvance(id){
+  if(!hasAccess()){ toast('Accès restreint','Habilitation requise', 'warning'); return; }
+  currentDetailId=id; advanceStep();
+}
+function validateStep(ok){
+  let all=getDossiers(); const d=all.find(x=>x.id===currentDetailId); if(!d) return;
+  if(ok){
+    d.workflowFiscalite=7; d.statut='En validation'; // will then go to depot
+    d.historique.push({date:new Date().toISOString(), acteur:'Executive Manager', role:'Manager', action:'Validation Manager', details:'Validé → Dépôt DGI'});
+    d.communications.push({date:new Date().toISOString(), auteur:'Executive Manager', dept:'Manager', message:'✅ Validé — prêt pour dépôt DGI (Teams/Elements)'});
+    toast('Validé','Dossier validé par Manager — passage au dépôt DGI.', 'success');
+  } else {
+    d.workflowFiscalite=4; d.statut='À corriger';
+    d.historique.push({date:new Date().toISOString(), acteur:'Executive Manager', role:'Manager', action:'Renvoi correction', details:'À corriger → retour Établissement déclaration'});
+    d.communications.push({date:new Date().toISOString(), auteur:'Executive Manager', dept:'Manager', message:'🔁 À corriger — revoir déclaration (Teams/Elements)'});
+    toast('Renvoyé pour correction','Retour à l’étape 5 — Établissement déclaration.', 'warning');
+  }
+  setDossiers(all); renderKPIs(); renderFisc(); openDetail(d.id);
+}
+function requestCorrection(){
+  let all=getDossiers(); const d=all.find(x=>x.id===currentDetailId); if(!d) return;
+  d.communications.push({date:new Date().toISOString(), auteur:currentUser(), dept:'Fiscalité', message:'⚠️ Blocage signalé — pièce manquante, relance client nécessaire.'});
+  d.historique.push({date:new Date().toISOString(), acteur:currentUser(), role:'Fiscalité', action:'Blocage signalé', details:'Demande pièce / relance'});
+  setDossiers(all); toast('Blocage signalé','Manager & Secrétariat notifiés via Teams/Elements.','warning'); openDetail(d.id);
+}
+function archiveDossier(){
+  let all=getDossiers(); const d=all.find(x=>x.id===currentDetailId); if(!d) return;
+  d.statut='Archivé'; d.workflowFiscalite=8; setDossiers(all); toast('Archivé','Dossier fiscalité archivé • Audit complet.','success'); bootstrap.Modal.getInstance(document.getElementById('fiscDetailModal')).hide(); renderFisc(); renderKPIs();
+}
+function deliverClient(){
+  let all=getDossiers(); const d=all.find(x=>x.id===currentDetailId); if(!d) return;
+  const clients=getClients(); const cl=clients[d.clientIdx]||{};
+  const wa=cl.whatsapp||cl.phone||'22997739046';
+  const waLink=`https://wa.me/${wa.replace(/\D/g,'')}?text=${encodeURIComponent(`Bonjour ${d.clientName}, votre dossier ${d.ref} (Fiscalité) a été déposé à la DGI. Reçu en pièce jointe. — Cabinet GOBEX`)}`;
+  const mailto=`mailto:${cl.email||''}?subject=${encodeURIComponent(`GOBEX • Dossier ${d.ref} — Dépôt DGI Fiscalité`)}&body=${encodeURIComponent(`Bonjour ${d.clientName},\n\nVotre déclaration fiscale (${(d.preoccupations||[]).map(p=>p.titre).join(', ')}) a été déposée avec succès à la DGI.\n\nReçu DGI et preuve de paiement joints.\n\nProchaine échéance : 10 du mois prochain.\n\nCabinet GOBEX • Tel +229 97 739 046`)}`;
+  d.historique.push({date:new Date().toISOString(), acteur:currentUser(), role:'Secrétariat', action:'Livraison client', details:'WhatsApp + Email • wa.me/22997739046'});
+  setDossiers(all);
+  toast('Livraison',"WhatsApp et Email préparés — dossier livré.",'success');
+  window.open(waLink,'_blank'); setTimeout(()=> window.open(mailto,'_blank'), 600);
+}
+function handleDetailFiles(files){
+  const d=getDossiers().find(x=>x.id===currentDetailId); if(!d) return;
+  const names=[...files].map(f=> f.name);
+  document.getElementById('detailFiles').innerHTML=names.map(n=>`<span class="badge bg-light text-dark border me-1">${n}</span>`).join('');
+  let all=getDossiers(); const target=all.find(x=>x.id===currentDetailId);
+  target.versions=target.versions||[]; target.versions.push({v:target.versions.length+1, date:new Date().toISOString(), dept:'Département Fiscalité', auteur:currentUser(), commentaire:'Ajout pièces workflow', fichiers:names.map(n=>({name:n,size:0}))});
+  target.historique.push({date:new Date().toISOString(), acteur:currentUser(), role:'Fiscalité', action:'Ajout pièces', details:names.join(', ')});
+  setDossiers(all); toast('Pièces ajoutées', names.join(', '), 'success');
+}
+function sendDetailMsg(){
+  const txt=document.getElementById('detailMsg').value.trim(); if(!txt) return;
+  let all=getDossiers(); const d=all.find(x=>x.id===currentDetailId); if(!d) return;
+  d.communications=d.communications||[]; d.communications.push({date:new Date().toISOString(), auteur:currentUser(), dept:'Fiscalité', message:txt});
+  setDossiers(all); document.getElementById('detailMsg').value=''; openDetail(d.id); toast('Message envoyé','Teams/Elements', 'success');
+}
+function createDemoFisc(){
+  if(!hasAccess()){ toast('Accès restreint','Habilitation requise', 'warning'); return; }
+  let all=getDossiers();
+  const clients=getClients();
+  if(clients.length===0){ toast('Aucun client','Créez d’abord un client dans CRM.', 'warning'); window.open('crm-client-form.html','_blank'); return; }
+  const idx=Math.floor(Math.random()*clients.length); const cl=clients[idx];
+  const isTVA=Math.random()>0.5;
+  const ref='DOS-'+new Date().getFullYear()+'-'+String(all.length+34).padStart(3,'0');
+  const echeance=new Date(); echeance.setDate(10); if(echeance < new Date()) echeance.setMonth(echeance.getMonth()+1);
+  const dossier={
+    id:ref, ref:ref, clientIdx:idx, clientName:cl.name, clientRef:cl.ref,
+    dateReception:new Date().toISOString(), secretaire:currentUser(),
+    preoccupations:[{id:'P'+Date.now(), titre: isTVA? 'Déclaration TVA '+ echeance.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}) : 'Déclaration AIB + IS acompte', desc: isTVA? 'TVA mensuelle, e-MEF, DGI Bénin':'AIB 1%, retenues à la source', domaine:'Département Fiscalité'}],
+    domaines:['Département Fiscalité'], departements:['Département Fiscalité'],
+    statut:'Reçu', priorite: Math.random()>0.6?'Urgente':'Normale', echeance:echeance.toISOString().split('T')[0], avancement:10,
+    versions:[{v:1,date:new Date().toISOString(), dept:'Secrétariat', auteur:currentUser(), commentaire:'Création workflow fiscalité', fichiers:[]}],
+    communications:[{date:new Date().toISOString(), auteur:'Système', dept:'Secrétariat', message:'Dossier fiscalité créé • Workflow étape 1 (Teams/Elements)'}],
+    historique:[{date:new Date().toISOString(), acteur:currentUser(), role:'Secrétariat', action:'Création dossier fiscalité', details:'Workflow 9 étapes • Échéance 10 du mois'}],
+    traitement:{checklist:[], notes:''}, workflowFiscalite:0, workflowChecks:{}, livrables:[]
+  };
+  all.unshift(dossier); setDossiers(all); renderKPIs(); renderFisc(); renderRail();
+  toast('Dossier fiscalité créé', ref+' • '+cl.name+' • Étape 1 Réception', 'success');
+  setTimeout(()=> openDetail(ref), 500);
+}
+function openPermModal(){
+  const acc=getAccess(); const list=acc.fiscalite||[];
+  const agents=getAgents();
+  const allNames=[currentUser(), ...agents.map(a=>a.nom)];
+  const uniq=[...new Set(allNames)];
+  document.getElementById('permModalBody').innerHTML=`<p class="mb-2">Cochez qui peut ouvrir le <strong>Workflow Fiscalité</strong>. <code>gobex_workflow_access.fiscalite</code></p><div id="permChecks" class="d-flex flex-column gap-1" style="max-height:260px;overflow-y:auto;">${uniq.map(n=> `<label class="d-flex align-items-center gap-2 p-2 border rounded-3"><input type="checkbox" class="form-check-input m-0" value="${n}" ${list.includes(n)|| (n===currentUser()&&isAdmin())?'checked':''}> <span class="flex-grow-1">${n}</span> ${agents.find(a=>a.nom===n)? `<span class="badge" style="background:${agents.find(a=>a.nom===n).dept==='Département Fiscalité'?'#e3f2fd':'#f1f5f9'};color:${agents.find(a=>a.nom===n).dept==='Département Fiscalité'?'#1976d2':'#475569'};">${agents.find(a=>a.nom===n).dept}</span>`:''}</label>`).join('')}</div><div class="mt-2"><button class="btn btn-sm btn-outline-dark rounded-pill" onclick="addCustomPerm()"><i class="bi bi-plus-lg me-1"></i> Ajouter un nom</button></div><small class="text-muted d-block mt-2">Admin a toujours accès implicitement. Videz tout pour “Admin seul”.</small>`;
+  new bootstrap.Modal(document.getElementById('permModal')).show();
+}
+function addCustomPerm(){
+  const name=prompt('Nom ou email à habiliter :'); if(!name) return;
+  const c=document.getElementById('permChecks');
+  c.insertAdjacentHTML('beforeend', `<label class="d-flex align-items-center gap-2 p-2 border rounded-3"><input type="checkbox" class="form-check-input m-0" value="${name}" checked> <span class="flex-grow-1">${name}</span> <span class="badge bg-warning text-dark">Ajout</span></label>`);
+}
+function saveModalPerms(){
+  const vals=[...document.querySelectorAll('#permChecks input:checked')].map(i=> i.value);
+  let acc=getAccess(); acc.fiscalite=vals; setAccess(acc); renderGate(); toast('Habilitations enregistrées', vals.length+' habilités • Fiscalité', 'success'); bootstrap.Modal.getInstance(document.getElementById('permModal')).hide();
+}
+function openHelp(){ new bootstrap.Modal(document.getElementById('helpModal')).show(); }
+function scrollToRail(){ document.getElementById('railCard').scrollIntoView({behavior:'smooth', block:'center'}); }
+function requestAccess(){ alert('Demande d’habilitation envoyée à l’Administrateur (Teams/Elements).'); }
+function logout(){ localStorage.removeItem('gobex_admin_auth'); window.location.href='index.html'; }
+document.addEventListener('DOMContentLoaded', init);
+window.addEventListener('storage', ()=>{ renderKPIs(); renderFisc(); });
+</script>
+</body></html>

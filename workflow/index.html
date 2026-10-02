@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Workflows • GOBEX — Portail Métiers</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb;--success:#25D366}body{font-family:Roboto;background:var(--light);min-height:100vh}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:300px;z-index:1000;overflow-y:auto}.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{font-family:Exo;font-weight:800;font-size:22px;color:#fff;letter-spacing:-0.5px}.sidebar-logo span{color:var(--accent)}.menu-section{padding:14px 24px 6px;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,0.45);font-weight:700;margin-top:8px}.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.75);text-decoration:none;border-left:3px solid transparent;font-size:13px;transition:.2s;cursor:pointer}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}.menu-item i{width:20px;font-size:16px}.main{margin-left:300px;padding:20px}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:18px;border:1px solid #eef2f6;transition:.3s;height:100%}.stat-card:hover{box-shadow:0 10px 30px rgba(10,47,94,0.07)}.btn-main{background:var(--accent);color:var(--primary);font-weight:700;border-radius:50px;padding:8px 18px;border:2px solid var(--accent);font-size:12px}.btn-main:hover{background:#e6a517;border-color:#e6a517}.btn-dark-gobex{background:var(--primary);color:#fff;border-radius:50px;padding:8px 18px;font-weight:600;border:2px solid var(--primary);font-size:12px}.btn-dark-gobex:hover{background:#071f3e;color:#fff}.wf-card{background:#fff;border-radius:16px;border:1px solid #eef2f6;padding:18px;transition:.2s;position:relative;overflow:hidden;height:100%}.wf-card.active{border-color:var(--accent);box-shadow:0 8px 30px rgba(255,184,28,0.15)}.wf-card.coming{opacity:0.85}.wf-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(10,47,94,0.10)}.wf-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}.badge-etape{font-size:10px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;padding:4px 8px;border-radius:50px}.access-toggle .form-check-input:checked{background-color:var(--primary);border-color:var(--primary)}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}</style></head><body>
+<div class="sidebar" id="sidebar"><div class="sidebar-header"><div class="sidebar-logo">GOBEX <span>WORKFLOWS</span></div><div style="font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,0.5);">MANAGER • Portail Métiers</div><div class="mt-3 d-flex gap-2 align-items-center"><span class="badge bg-warning text-dark" style="font-size:10px;"><i class="bi bi-diagram-3 me-1"></i>WORKFLOWS</span><small id="currentUserLbl" style="color:rgba(255,255,255,0.6);font-size:11px;">—</small></div></div>
+<div class="menu-section">Portails</div>
+<a href="../admin/executive-manager.html" class="menu-item"><i class="bi bi-shield-check"></i> Executive Manager</a>
+<a href="index.html" class="menu-item active"><i class="bi bi-diagram-3"></i> Workflows <span class="badge bg-warning text-dark ms-auto" style="font-size:10px;">6</span></a>
+<a href="fiscalite.html" class="menu-item" style="background:rgba(255,184,28,0.15);border-left-color:#FFB81C;color:#FFB81C;"><i class="bi bi-calculator"></i> → Fiscalité <span class="badge bg-success ms-auto" style="font-size:10px;">LIVE</span></a>
+<div class="menu-section">Workflows par domaine</div>
+<a href="fiscalite.html" class="menu-item active" style="border-left-color:#1976d2;"><i class="bi bi-calculator"></i> Fiscalité <small class="ms-auto text-warning">5 étapes</small></a>
+<a class="menu-item" style="opacity:0.55;cursor:not-allowed;"><i class="bi bi-journal-text"></i> Comptabilité <span class="badge bg-light text-dark ms-auto" style="font-size:10px;">À venir</span></a>
+<a class="menu-item" style="opacity:0.55;cursor:not-allowed;"><i class="bi bi-people"></i> GRH & Formations <span class="badge bg-light text-dark ms-auto" style="font-size:10px;">À venir</span></a>
+<a class="menu-item" style="opacity:0.55;cursor:not-allowed;"><i class="bi bi-laptop"></i> IT / WEB / IA <span class="badge bg-light text-dark ms-auto" style="font-size:10px;">À venir</span></a>
+<a class="menu-item" style="opacity:0.55;cursor:not-allowed;"><i class="bi bi-briefcase"></i> Business & Autres <span class="badge bg-light text-dark ms-auto" style="font-size:10px;">À venir</span></a>
+<a class="menu-item" style="opacity:0.55;cursor:not-allowed;"><i class="bi bi-building"></i> Gestion & Suivi <span class="badge bg-light text-dark ms-auto" style="font-size:10px;">À venir</span></a>
+<div class="menu-section">CRM & Site</div>
+<a href="../admin/crm.html" class="menu-item"><i class="bi bi-grid-1x2"></i> Dashboard CRM</a>
+<a href="../admin/crm-clients.html" class="menu-item"><i class="bi bi-people"></i> Clients</a>
+<a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Voir site</a>
+<a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+<div style="padding:16px 24px;" class="small text-white-50"><i class="bi bi-shield-lock me-1"></i> Accès restreint — Admin ou habilitation.</div>
+</div>
+<div class="main">
+<div class="topbar"><div class="d-flex align-items-center gap-3"><button class="btn btn-light d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button><div><h5 class="mb-0" style="font-family:Exo;font-weight:800;color:#0A2F5E;letter-spacing:-0.5px;">Workflows GOBEX</h5><small class="text-muted">6 domaines • Pages dédiées, liées au Portail • Accès administrateur</small></div></div><div class="d-flex gap-2 align-items-center"><span class="badge bg-light text-dark border"><i class="bi bi-shield-check me-1"></i><span id="authBadge">Vérification...</span></span><a href="../admin/executive-manager.html" class="btn btn-dark-gobex rounded-pill"><i class="bi bi-arrow-left me-1"></i> Portail Manager</a></div></div>
+
+<!-- Gate -->
+<div id="accessGate" class="stat-card d-none" style="border:2px solid #dc3545;background:#fff5f5;"><div class="d-flex gap-3 align-items-start"><div class="wf-icon" style="background:#fee2e2;color:#dc3545;"><i class="bi bi-shield-lock"></i></div><div class="flex-grow-1"><h6 class="mb-1" style="color:#dc3545;">Accès administrateur requis</h6><p class="small text-muted mb-2">Ce portail Workflows est réservé à l'<strong>Administrateur</strong> ou aux personnes habilitées. Connectez-vous via <a href="index.html" style="color:#0A2F5E;text-decoration:underline;">GOBEX Admin</a> ou demandez une habilitation.</p><div class="d-flex gap-2 flex-wrap"><a href="index.html" class="btn btn-dark-gobex rounded-pill btn-sm">Se connecter</a><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="requestAccess()">Demander l'accès</button></div><small class="text-muted d-block mt-2" id="gateInfo"></small></div></div></div>
+
+<!-- Intro -->
+<div class="stat-card mb-3" style="background:linear-gradient(135deg,#0A2F5E 0%, #143d75 100%);color:#fff;overflow:hidden;position:relative;"><div class="row align-items-center position-relative" style="z-index:2;"><div class="col-lg-8"><div class="d-flex gap-3 align-items-start"><div class="wf-icon" style="background:rgba(255,184,28,0.2);color:#FFB81C;"><i class="bi bi-diagram-3"></i></div><div><h5 class="mb-1 text-white" style="font-family:Exo;font-weight:800;">Workflows métiers GOBEX — exécution A→Z</h5><p class="small mb-2" style="color:rgba(255,255,255,0.75);">Chaque domaine dispose de sa <strong>page dédiée</strong> avec étapes, SLA, check-lists, livrables, validation Manager et traçabilité complète. Les pages sont <strong>liées au site</strong> (même base dossiers) et visibles uniquement par l'admin ou les habilités.</p><div class="d-flex gap-2 flex-wrap"><span class="badge bg-warning text-dark"><i class="bi bi-link-45deg me-1"></i> Lié au Portail Executive Manager</span><span class="badge" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.2);"><i class="bi bi-shield-check me-1"></i> Habilitations par domaine</span><span class="badge" style="background:rgba(37,211,102,0.2);color:#25D366;border:1px solid #25D366;"><i class="bi bi-whatsapp me-1"></i> Notifs WhatsApp</span></div></div></div></div><div class="col-lg-4 text-lg-end mt-3 mt-lg-0"><div class="p-3 rounded-3" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);"><small style="color:rgba(255,255,255,0.7);">Dossiers synchronisés</small><h4 class="mb-0 text-warning" id="kpiTotalDossiers">—</h4><small style="color:rgba(255,255,255,0.6);" id="kpiFiscalite">— fiscalité</small></div></div></div><div style="position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:rgba(255,184,28,0.08);border-radius:50%;"></div></div>
+
+<!-- 6 workflows -->
+<div class="stat-card mb-3" style="border:1px solid #1976d2;background:#f0f7ff;"><div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><h6 class="mb-0" style="font-family:Exo;font-weight:800;color:#0A2F5E;"><i class="bi bi-book me-2" style="color:#1976d2;"></i>CGI Bénin 2026 — Moteur dynamique <span class="badge bg-primary ms-2">Loi 2025-22</span> <span class="badge bg-warning text-dark">v2026.2.2-FEC-2024-plafond</span></h6><div class="d-flex gap-2"><a href="../docs/analyse-cgi-2026-workflow-fiscalite.md" target="_blank" class="btn btn-sm btn-outline-dark rounded-pill"><i class="bi bi-file-text me-1"></i> Analyse complète</a><a href="../docs/cgibenin-2026.json" target="_blank" class="btn btn-sm btn-dark-gobex rounded-pill"><i class="bi bi-braces me-1"></i> JSON règles</a></div></div><p class="small text-muted mt-2 mb-2">Le Workflow Fiscalité est désormais <strong>dynamique</strong> : le moteur lit le <strong>Code Général des Impôts 2026</strong> (Loi 2021-15 + Loi de finances 2025-22, 392 p.) et adapte automatiquement les étapes, échéances et check-lists selon le régime, le CA, les impôts cochés et les déclencheurs Bénin (seuil 50M, MECeF Art.217 bis, télédéclaration obligatoire, MFP 1,5% Art.64, retenue TVA >50M Art.248 bis, test EBITDA 30% Art.39, exonérations ONG Art.4/192/197).</p><div class="row g-2 small"><div class="col-md-4"><div class="p-2 bg-white rounded-3 border"><strong>TVA 18%</strong> • Seuil 50M • Échéance 10/mois (Art.219-268)<br><strong>AIB 3%/5%</strong> • 1% import IFU (Art.130)</div></div><div class="col-md-4"><div class="p-2 bg-white rounded-3 border"><strong>IS 30%</strong> (25% enseignement) • MFP 1,5% min 500k (Art.64) • 10 mars/juin/sept/déc + 30 avril<br><strong>ITS/VPS 4%</strong> • 10/mois + annuel 30 avril (Art.119/191)</div></div><div class="col-md-4"><div class="p-2 bg-white rounded-3 border"><strong>Obligations</strong> : IFU 30j (460), BE Art.462 (1M), conservation 10 ans (480)<br><strong>Sanctions</strong> : 100k→200k (495), 1M/exercice (500), 250k-1,5M retard (506)</div></div></div><div class="d-flex gap-2 mt-3 flex-wrap"><span class="badge" style="background:#0A2F5E;color:#FFB81C;"><i class="bi bi-lightning me-1"></i>Configurateur dans <a href="fiscalite.html" style="color:#FFB81C;text-decoration:underline;">Workflow Fiscalité</a></span><span class="badge bg-light text-dark border"><i class="bi bi-sliders me-1"></i>Régime + CA + Pistes + Déclencheurs</span><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Documenté Art. par Art.</span></div></div>
+<div class="row g-3 mb-4">
+<div class="col-lg-4 col-md-6"><div class="wf-card active" style="border-left:4px solid #1976d2;"><div class="d-flex justify-content-between align-items-start mb-2"><div class="wf-icon" style="background:#e3f2fd;color:#1976d2;"><i class="bi bi-calculator"></i></div><span class="badge bg-success">DISPONIBLE</span></div><h6 class="mb-1" style="font-family:Exo;font-weight:800;color:#0A2F5E;">1 • Fiscalité</h6><p class="small text-muted mb-2">Workflow intelligent 5 étapes — Qualification, RuleBase versionnée, double échéancier, diagnostic & traçabilité CGI.</p><div class="d-flex gap-1 flex-wrap mb-3"><span class="badge-etape" style="background:#1976d2;color:#fff;border:1px solid #1976d2;">5 étapes intelligentes</span><span class="badge-etape" style="background:#fff3d0;color:#8d6e00;border:1px solid #ffe082;">CGI versionné</span><span class="badge-etape" style="background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;">Sans dur</span></div><div class="d-flex gap-2"><a href="fiscalite.html" class="btn btn-dark-gobex rounded-pill flex-grow-1"><i class="bi bi-box-arrow-up-right me-1"></i> Ouvrir Workflow</a><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="openAccessModal('fiscalite')"><i class="bi bi-shield-lock"></i></button></div><small class="text-muted d-block mt-2"><i class="bi bi-people me-1"></i><span id="countFiscaliteAccess">—</span> habilités</small></div></div>
+<div class="col-lg-4 col-md-6"><div class="wf-card coming"><div class="d-flex justify-content-between align-items-start mb-2"><div class="wf-icon" style="background:#fce4ec;color:#c2185b;"><i class="bi bi-journal-text"></i></div><span class="badge bg-light text-dark border">À VENIR</span></div><h6 class="mb-1" style="font-family:Exo;font-weight:800;color:#0A2F5E;">2 • Comptabilité</h6><p class="small text-muted mb-2">SYSCOHADA, bilans, balances, écritures, clôture. Workflow en préparation.</p><div class="d-flex gap-1 flex-wrap mb-3"><span class="badge-etape" style="background:#f3e5f5;color:#7b1fa2;">8 étapes</span><span class="badge-etape" style="background:#fff3d0;color:#8d6e00;">OHADA</span></div><button class="btn btn-light rounded-pill w-100" disabled style="border:1px dashed #cbd5e1;"><i class="bi bi-hourglass me-1"></i> Bientôt disponible</button></div></div>
+<div class="col-lg-4 col-md-6"><div class="wf-card coming"><div class="d-flex justify-content-between align-items-start mb-2"><div class="wf-icon" style="background:#e8f5e9;color:#2e7d32;"><i class="bi bi-people"></i></div><span class="badge bg-light text-dark border">À VENIR</span></div><h6 class="mb-1" style="font-family:Exo;font-weight:800;color:#0A2F5E;">3 • GRH & Formations</h6><p class="small text-muted mb-2">Paie, CNSS, contrats, formations. Workflow en préparation.</p><div class="d-flex gap-1 flex-wrap mb-3"><span class="badge-etape" style="background:#e8f5e9;color:#2e7d32;">7 étapes</span><span class="badge-etape" style="background:#fff3d0;color:#8d6e00;">CNSS Bénin</span></div><button class="btn btn-light rounded-pill w-100" disabled style="border:1px dashed #cbd5e1;"><i class="bi bi-hourglass me-1"></i> Bientôt disponible</button></div></div>
+<div class="col-lg-4 col-md-6"><div class="wf-card coming"><div class="d-flex justify-content-between align-items-start mb-2"><div class="wf-icon" style="background:#ede7f6;color:#4527a0;"><i class="bi bi-laptop"></i></div><span class="badge bg-light text-dark border">À VENIR</span></div><h6 class="mb-1" style="font-family:Exo;font-weight:800;color:#0A2F5E;">4 • IT / WEB / IA</h6><p class="small text-muted mb-2">Sites, PERFECTO, IA, hébergement. Workflow en préparation.</p><div class="d-flex gap-1 flex-wrap mb-3"><span class="badge-etape" style="background:#ede7f6;color:#4527a0;">8 étapes</span><span class="badge-etape" style="background:#e3f2fd;color:#1976d2;">PERFECTO</span></div><button class="btn btn-light rounded-pill w-100" disabled style="border:1px dashed #cbd5e1;"><i class="bi bi-hourglass me-1"></i> Bientôt disponible</button></div></div>
+<div class="col-lg-4 col-md-6"><div class="wf-card coming"><div class="d-flex justify-content-between align-items-start mb-2"><div class="wf-icon" style="background:#fff3e0;color:#ef6c00;"><i class="bi bi-briefcase"></i></div><span class="badge bg-light text-dark border">À VENIR</span></div><h6 class="mb-1" style="font-family:Exo;font-weight:800;color:#0A2F5E;">5 • Business & Autres</h6><p class="small text-muted mb-2">Création SARL, APIEx, RCCM, IFU. Workflow en préparation.</p><div class="d-flex gap-1 flex-wrap mb-3"><span class="badge-etape" style="background:#fff3e0;color:#ef6c00;">7 étapes</span><span class="badge-etape" style="background:#e3f2fd;color:#1976d2;">APIEx</span></div><button class="btn btn-light rounded-pill w-100" disabled style="border:1px dashed #cbd5e1;"><i class="bi bi-hourglass me-1"></i> Bientôt disponible</button></div></div>
+<div class="col-lg-4 col-md-6"><div class="wf-card coming"><div class="d-flex justify-content-between align-items-start mb-2"><div class="wf-icon" style="background:#e0f2f1;color:#00695c;"><i class="bi bi-building"></i></div><span class="badge bg-light text-dark border">À VENIR</span></div><h6 class="mb-1" style="font-family:Exo;font-weight:800;color:#0A2F5E;">6 • Gestion & Suivi Entreprises</h6><p class="small text-muted mb-2">Suivi mensuel, tableaux de bord, accompagnement. Workflow en préparation.</p><div class="d-flex gap-1 flex-wrap mb-3"><span class="badge-etape" style="background:#e0f2f1;color:#00695c;">6 étapes</span><span class="badge-etape" style="background:#fff3d0;color:#8d6e00;">Mensuel</span></div><button class="btn btn-light rounded-pill w-100" disabled style="border:1px dashed #cbd5e1;"><i class="bi bi-hourglass me-1"></i> Bientôt disponible</button></div></div>
+</div>
+
+<!-- Permissions admin -->
+<div class="stat-card" id="permCard" style="border:1px solid #FFB81C;background:#fffbf0;"><div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2"><h6 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-shield-check me-2 text-warning"></i>Gestion des habilitations — Fiscalité</h6><span class="badge bg-warning text-dark"><i class="bi bi-lock me-1"></i>Admin uniquement</span></div><p class="small text-muted mb-3">L’admin autorise qui peut ouvrir le <strong>Workflow Fiscalité</strong>. Par défaut : Admin + membres <em>Département Fiscalité</em>. Modifications prises en compte immédiatement (stockées dans <code>gobex_workflow_access</code>).</p><div class="table-responsive"><table class="table table-sm align-middle mb-0"><thead class="table-light"><tr><th>Utilisateur / Agent</th><th>Département</th><th>Rôle</th><th class="text-center">Accès Fiscalité</th></tr></thead><tbody id="permTable"></tbody></table></div><div class="d-flex gap-2 mt-3"><button class="btn btn-dark-gobex rounded-pill btn-sm" onclick="savePerms()"><i class="bi bi-check-lg me-1"></i> Enregistrer habilitations</button><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="resetPerms()"><i class="bi bi-arrow-clockwise me-1"></i> Réinitialiser</button><small class="text-muted ms-2 align-self-center" id="permFeedback"></small></div></div>
+
+<div class="stat-card mt-3" style="border:2px solid #0A2F5E;background:#f8fafc;"><div class="d-flex gap-2 align-items-center mb-2"><span class="badge" style="background:#0A2F5E;color:#FFB81C;"><i class="bi bi-box-arrow-up-right me-1"></i>Portail Indépendant</span><span class="badge bg-success">Détaché du site principal</span><span class="badge bg-light text-dark border">Accès bouton Workflow</span></div><h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-info-circle me-2"></i>Workflow détaché — comment ça marche ?</h6><ul class="small text-muted mb-0" style="line-height:1.7;"><li><strong>Indépendant</strong> : ce portail vit à <code>/workflow/</code> (hub + <code>/workflow/fiscalite.html</code>), <strong>séparé du site GOBEX</strong> pour ne pas surcharger l'application. Il peut être déployé seul, mis à jour sans toucher au site.</li><li><strong>Accès par bouton</strong> : seul un <strong>bouton “Workflow”</strong> dans l'admin (visible uniquement par l'administrateur ou les personnes désignées) y donne accès. Pas de lien dans le menu public.</li><li><strong>Données</strong> : même origine → <code>localStorage</code> partagé (<code>gobex_exec_dossiers</code> / <code>gobex_crm_clients</code>) si besoin, mais le workflow peut aussi fonctionner avec sa propre base (import/export JSON) pour rester autonome.</li><li><strong>Sécurité</strong> : vérif <code>gobex_admin_auth</code> + <code>gobex_workflow_access</code> — l'admin désigne qui voit le bouton et qui ouvre chaque workflow.</li></ul></div>
+
+</div>
+
+<!-- Modal accès -->
+<div class="modal fade" id="accessModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="border-radius:16px;"><div class="modal-header" style="background:#0A2F5E;color:#fff;border-radius:16px 16px 0 0;"><h6 class="modal-title"><i class="bi bi-shield-lock me-2"></i>Habilitations • <span id="modalDeptName">Fiscalité</span></h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body small" id="modalAccessBody"></div><div class="modal-footer"><button class="btn btn-light rounded-pill" data-bs-dismiss="modal">Fermer</button></div></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const DEPARTEMENTS=['Département Fiscalité','Département Comptabilité','Département GRH & Formations','Département IT / WEB / IA','Département Business & Autres','Département Gestion & Suivi Entreprises'];
+function getClients(){ try{return JSON.parse(localStorage.getItem('gobex_crm_clients')||'[]')}catch(e){return []}}
+function getDossiers(){ try{return JSON.parse(localStorage.getItem('gobex_exec_dossiers')||'[]')}catch(e){return []}}
+function getAgents(){ try{return JSON.parse(localStorage.getItem('gobex_exec_agents')||'[]')}catch(e){return []}}
+function getAccess(){ try{return JSON.parse(localStorage.getItem('gobex_workflow_access')||'{}')}catch(e){return {}}}
+function setAccess(o){ localStorage.setItem('gobex_workflow_access', JSON.stringify(o)); }
+function isAuthed(){ return localStorage.getItem('gobex_admin_auth')==='true'; }
+function currentUser(){ return localStorage.getItem('gobex_admin_user')|| localStorage.getItem('gobex_admin_email')|| 'admin'; }
+function isAdmin(){ const u=currentUser().toLowerCase(); return u.includes('admin') || localStorage.getItem('gobex_admin_role')==='admin' || u==='godwin' || u==='gobex'; }
+function hasAccess(deptId){ if(!isAuthed()) return false; if(isAdmin()) return true; const acc=getAccess(); const list=acc[deptId]||[]; const u=currentUser(); return list.includes(u) || list.includes('*'); }
+
+function renderGate(){
+  const gate=document.getElementById('accessGate');
+  const badge=document.getElementById('authBadge');
+  const gateInfo=document.getElementById('gateInfo');
+  if(!isAuthed()){
+    gate.classList.remove('d-none'); badge.innerHTML='<i class="bi bi-x-circle me-1 text-danger"></i>Non connecté'; badge.className='badge bg-danger';
+    gateInfo.textContent='Auth: gobex_admin_auth = false • Connectez-vous puis revenez.';
+    return;
+  }
+  if(!isAdmin()){
+    // non-admin but authed -> check fiscalite access for info only, hub stays visible but fiscalité card will gate
+    badge.innerHTML='<i class="bi bi-person me-1"></i>'+currentUser()+' • Habilitations limitées'; badge.className='badge bg-warning text-dark';
+    gate.classList.add('d-none');
+    gateInfo.textContent='';
+  } else {
+    gate.classList.add('d-none'); badge.innerHTML='<i class="bi bi-shield-check me-1"></i>Admin • '+currentUser(); badge.className='badge bg-success';
+  }
+  document.getElementById('currentUserLbl').textContent=currentUser() + (isAdmin()?' • Admin':' • Invité');
+}
+function renderKPIs(){
+  const dossiers=getDossiers(); const fiscalite=dossiers.filter(d=> (d.departements||d.domaines||[]).includes('Département Fiscalité'));
+  document.getElementById('kpiTotalDossiers').textContent=dossiers.length || '0';
+  document.getElementById('kpiFiscalite').textContent=fiscalite.length+' en fiscalité • '+fiscalite.filter(d=>['En traitement','Affecté'].includes(d.statut)).length+' en cours';
+  document.getElementById('countFiscaliteAccess').textContent=(getAccess().fiscalite||[]).length + (isAdmin()? ' (+ admin)':'');
+}
+function seedAccess(){
+  let acc=getAccess();
+  if(!acc.fiscalite){
+    const agents=getAgents();
+    const fiscAgents=agents.filter(a=> a.dept==='Département Fiscalité').map(a=> a.nom);
+    // défaut: admin implicite + tous fiscaux
+    acc.fiscalite=[...fiscAgents, 'admin'];
+    setAccess(acc);
+  }
+}
+function renderPerms(){
+  const agents=getAgents();
+  const acc=getAccess();
+  const fiscList=new Set(acc.fiscalite||[]);
+  // si vide, prendre tous agents fiscaux par défaut
+  const allUsers=[...agents];
+  // ajoute quelques utilisateurs système pour demo
+  const systemUsers=[{nom:currentUser(), dept:'Administration', role:'Admin', email:'admin@gobex.bj'}];
+  const rows=[...systemUsers, ...allUsers];
+  // dédup by nom
+  const seen=new Set(); const uniq=[];
+  rows.forEach(r=>{ if(!seen.has(r.nom)){ seen.add(r.nom); uniq.push(r); }});
+  const tbody=document.getElementById('permTable');
+  // si admin uniquement, on montre tout
+  const canEdit=isAdmin();
+  tbody.innerHTML=uniq.map(u=>{
+    const checked= fiscList.has(u.nom) || (u.role==='Admin' && isAdmin());
+    const disabled = !canEdit ? 'disabled' : '';
+    const badgeColor= u.dept==='Département Fiscalité' ? '#1976d2' : u.role==='Admin' ? '#0A2F5E' : '#64748b';
+    const bg= u.dept==='Département Fiscalité' ? '#e3f2fd' : u.role==='Admin' ? '#eef2f6' : '#f8fafc';
+    return `<tr><td><strong>${u.nom}</strong><br><small class="text-muted">${u.email||''}</small></td><td><span class="badge" style="background:${bg};color:${badgeColor};border:1px solid ${badgeColor};">${u.dept}</span></td><td><small>${u.role||'Agent'}</small></td><td class="text-center"><div class="form-check form-switch d-inline-flex access-toggle"><input class="form-check-input" type="checkbox" ${checked?'checked':''} ${disabled} onchange="toggleAccess(this,'${u.nom.replace(/'/g,"\\'")}')" style="width:42px;height:22px;"></div></td></tr>`;
+  }).join('') || `<tr><td colspan="4" class="text-center small text-muted">Aucun agent trouvé — ajoutez-en dans <a href="../admin/executive-manager.html" style="color:#0A2F5E;text-decoration:underline;">Portail Executive > Administration</a>.</td></tr>`;
+  if(!canEdit){
+    document.getElementById('permFeedback').textContent='Lecture seule — seul l’admin peut modifier.';
+  }
+}
+function toggleAccess(cb, nom){
+  let acc=getAccess(); acc.fiscalite=acc.fiscalite||[];
+  if(cb.checked){ if(!acc.fiscalite.includes(nom)) acc.fiscalite.push(nom); } else { acc.fiscalite=acc.fiscalite.filter(n=>n!==nom); }
+  setAccess(acc); renderKPIs();
+  document.getElementById('permFeedback').textContent='Modifié (non enregistré définitivement) — cliquez Enregistrer.';
+  setTimeout(()=> document.getElementById('permFeedback').textContent='', 3000);
+}
+function savePerms(){ setAccess(getAccess()); document.getElementById('permFeedback').textContent='✅ Habilitations enregistrées.'; renderKPIs(); setTimeout(()=>document.getElementById('permFeedback').textContent='',2500); }
+function resetPerms(){ localStorage.removeItem('gobex_workflow_access'); seedAccess(); renderPerms(); renderKPIs(); document.getElementById('permFeedback').textContent='Réinitialisé aux défauts (Admin + Fiscalité).'; }
+function openAccessModal(dept){
+  const acc=getAccess(); const list=acc[dept]||[];
+  document.getElementById('modalDeptName').textContent=dept;
+  document.getElementById('modalAccessBody').innerHTML=`<p>Utilisateurs habilités <strong>${dept}</strong> :</p><div class="d-flex flex-wrap gap-1 mb-3">${list.length? list.map(n=>`<span class="badge" style="background:#0A2F5E;color:#fff;">${n}</span>`).join('') : '<small class="text-muted">Aucun (seul admin implicite)</small>'}<br></div><p class="small text-muted">Gérez ci-dessus dans le tableau. L’accès est vérifié à l’ouverture de <code>workflow-${dept}.html</code> via <code>gobex_admin_auth</code> + <code>gobex_workflow_access</code>.</p>`;
+  new bootstrap.Modal(document.getElementById('accessModal')).show();
+}
+function requestAccess(){ alert('Demande envoyée à l’administrateur GOBEX. Vous serez notifié via Teams/Elements.'); }
+function logout(){ localStorage.removeItem('gobex_admin_auth'); window.location.href='index.html'; }
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  // demo seed if empty
+  if(!localStorage.getItem('gobex_exec_agents')){
+    // let executive-manager seed on next visit, but provide minimal fallback
+  }
+  seedAccess();
+  renderGate();
+  renderKPIs();
+  renderPerms();
+});
+</script>
+</body></html>

@@ -1,0 +1,656 @@
+{
+  "version": "2026.2.2-FEC-2024-plafond",
+  "annee": 2026,
+  "loiFinances": "2025-22",
+  "source": "CGI Bénin 2026 + FEC 2024 réel (11 04 01) — patch détection + plafond global Art32",
+  "editeur": "Droit Afrique — EAN 9782353083237",
+  "seuils": {
+    "tva_assujettissement": 50000000,
+    "tva_taux": 0.18,
+    "tps_micro_max": 20000000,
+    "tps_petite_max": 50000000,
+    "aib_avec_ifu": 0.03,
+    "aib_sans_ifu": 0.05,
+    "aib_import_avec_ifu": 0.01,
+    "aib_import_sans_ifu": 0.05,
+    "is_taux": 0.3,
+    "is_taux_enseignement": 0.25,
+    "mfp_taux": 0.01,
+    "mfp_min": 250000,
+    "mfp_taux_btp": 0.03,
+    "mfp_taux_immobilier": 0.1,
+    "vps_taux": 0.04,
+    "loyer_taux": 0.12,
+    "loyer_taux_si_bailleur_is": 0.1,
+    "ircm_dividende_resident": 0.15,
+    "ircm_dividende_non_resident": 0.05,
+    "ircm_creance": 0.15,
+    "ortb_redevance": 4000,
+    "is_taux_industriel": 0.25,
+    "mfp_taux_station": 0.6,
+    "dons_limite_1pour1000": 0.001,
+    "dons_qualifie_25M": 25000000,
+    "cadeaux_pub_3pour1000": 0.003,
+    "interets_plafond_ebitda": 0.3,
+    "frais_siege_plafond": 0.1,
+    "redevances_plafond": 0.05,
+    "commissions_plafond": 0.05,
+    "voiture_limite_TTC": 25000000,
+    "amort_neuf_min_10M": 10000000,
+    "frais_dev_seuil_1M": 1000000,
+    "cash_limite_100k": 100000,
+    "deficit_report_annees": 5
+  },
+  "taux": {
+    "is": 0.3,
+    "is_enseignement": 0.25,
+    "tva": 0.18,
+    "aib_avec_ifu": 0.03,
+    "aib_sans_ifu": 0.05,
+    "vps": 0.04,
+    "loyer_taux": 0.12
+  },
+  "echeanciers": {
+    "is_acomptes": {
+      "dates": [
+        "10/03",
+        "10/06",
+        "10/09",
+        "10/12"
+      ],
+      "article": "Art.51"
+    },
+    "tps": {
+      "acomptes": [
+        "10/02",
+        "10/06"
+      ],
+      "article": "Art.1084-33",
+      "solde": "30/04"
+    },
+    "tva": {
+      "echeance": "10 du mois suivant",
+      "article": "Art.249 bis"
+    },
+    "aib": {
+      "echeance": "10 du mois suivant",
+      "article": "Art.130-140"
+    }
+  },
+  "echeancier_general_exhaustif": [
+    {
+      "id": "is",
+      "livre": "L1 — Impôts directs",
+      "titre": "T1 — Revenu",
+      "chapitre": "IS (5)",
+      "libelle": "Impôt sur les Sociétés (IS) 30% / 25% enseignement",
+      "echeance": "10/03, 10/06, 10/09, 10/12 + solde 30/04",
+      "article": "Art.3-65",
+      "periodicite": "acomptes + annuel",
+      "nature": "direct"
+    },
+    {
+      "id": "iba",
+      "livre": "L1 — Impôts directs",
+      "titre": "T1 — Revenu",
+      "chapitre": "IBA (33)",
+      "libelle": "Impôt sur les Bénéfices d'Affaires (IBA)",
+      "echeance": "30/04 (annuel)",
+      "article": "Art.54",
+      "periodicite": "annuel",
+      "nature": "direct"
+    },
+    {
+      "id": "ircm",
+      "livre": "L1 — Impôts directs",
+      "titre": "T1 — Revenu",
+      "chapitre": "IRCM (38)",
+      "libelle": "Impôt Revenu Capitaux Mobiliers (dividendes 15%/5%, créances 15%)",
+      "echeance": "10 du mois suivant",
+      "article": "Art.69-90",
+      "periodicite": "mensuel",
+      "nature": "direct"
+    },
+    {
+      "id": "irf",
+      "livre": "L1 — Impôts directs",
+      "titre": "T1 — Revenu",
+      "chapitre": "IRF (53)",
+      "libelle": "Impôt sur les Revenus Fonciers (loyers 12%/10% si bailleur IS)",
+      "echeance": "10 du mois suivant / 30/04 annuel",
+      "article": "Art.101-102",
+      "periodicite": "mensuel",
+      "nature": "direct"
+    },
+    {
+      "id": "tpvi",
+      "livre": "L1 — Impôts directs",
+      "titre": "T1 — Revenu",
+      "chapitre": "TPVI (56)",
+      "libelle": "Taxe Plus-Values Immobilières",
+      "echeance": "15 jours après mutation",
+      "article": "Art.56",
+      "periodicite": "à l'acte",
+      "nature": "direct"
+    },
+    {
+      "id": "its",
+      "livre": "L1 — Impôts directs",
+      "titre": "T1 — Revenu",
+      "chapitre": "ITS (59)",
+      "libelle": "Impôt sur Traitements et Salaires (ITS)",
+      "echeance": "10 du mois suivant",
+      "article": "Art.119-129",
+      "periodicite": "mensuel",
+      "nature": "direct"
+    },
+    {
+      "id": "retenues_source",
+      "livre": "L1 — Impôts directs",
+      "titre": "T1 — Revenu",
+      "chapitre": "Retenues (64)",
+      "libelle": "Retenues à la source (BIC, loyers, prestations, AIB 1%/3%/5%)",
+      "echeance": "10 du mois suivant",
+      "article": "Art.130-140 / 64",
+      "periodicite": "mensuel",
+      "nature": "direct"
+    },
+    {
+      "id": "tfu",
+      "livre": "L1 — Impôts directs",
+      "titre": "T2 — Patrimoine",
+      "chapitre": "TFU (73)",
+      "libelle": "Taxe Foncière Unique (TFU)",
+      "echeance": "31/03 (annuel)",
+      "article": "Art.73",
+      "periodicite": "annuel",
+      "nature": "direct"
+    },
+    {
+      "id": "tvm",
+      "livre": "L1 — Impôts directs",
+      "titre": "T2 — Patrimoine",
+      "chapitre": "TVM (78)",
+      "libelle": "Taxe sur Véhicules à Moteur (TVM)",
+      "echeance": "31/03 (annuel)",
+      "article": "Art.208-210",
+      "periodicite": "annuel",
+      "nature": "direct"
+    },
+    {
+      "id": "taxe_armes",
+      "livre": "L1 — Impôts directs",
+      "titre": "T2 — Patrimoine",
+      "chapitre": "Armes (80)",
+      "libelle": "Taxe sur les Armes à Feu",
+      "echeance": "31/03 (annuel)",
+      "article": "Art.80",
+      "periodicite": "annuel",
+      "nature": "direct"
+    },
+    {
+      "id": "taxe_pirogues",
+      "livre": "L1 — Impôts directs",
+      "titre": "T2 — Patrimoine",
+      "chapitre": "Pirogues (82)",
+      "libelle": "Taxe sur Pirogues/Barques motorisées",
+      "echeance": "annuel",
+      "article": "Art.82",
+      "periodicite": "annuel",
+      "nature": "direct"
+    },
+    {
+      "id": "taxe_taxis",
+      "livre": "L1 — Impôts directs",
+      "titre": "T2 — Patrimoine",
+      "chapitre": "Taxis (83)",
+      "libelle": "Taxe sur Taxis ville 2-4 roues",
+      "echeance": "trimestriel",
+      "article": "Art.83",
+      "periodicite": "trimestriel",
+      "nature": "direct"
+    },
+    {
+      "id": "tps",
+      "livre": "L1 — Impôts directs",
+      "titre": "T3 — Autres directs",
+      "chapitre": "TPS (84)",
+      "libelle": "Taxe Professionnelle Synthétique (TPS) 2% micro / 5% petite",
+      "echeance": "10/02, 10/06 + solde 30/04",
+      "article": "Art.1084-18 à 1084-33",
+      "periodicite": "acomptes + solde",
+      "nature": "direct"
+    },
+    {
+      "id": "vps",
+      "livre": "L1 — Impôts directs",
+      "titre": "T3 — Autres directs",
+      "chapitre": "VPS (88)",
+      "libelle": "Versement Patronal sur Salaires (VPS) 4%",
+      "echeance": "10 du mois suivant",
+      "article": "Art.191-193",
+      "periodicite": "mensuel",
+      "nature": "direct"
+    },
+    {
+      "id": "patente",
+      "livre": "L1 — Impôts directs",
+      "titre": "T3 — Autres directs",
+      "chapitre": "Patente (89)",
+      "libelle": "Contribution Patentes et Licences",
+      "echeance": "10/02 (annuel, 2 acomptes si >50k)",
+      "article": "Art.197",
+      "periodicite": "annuel",
+      "nature": "direct"
+    },
+    {
+      "id": "taxe_sport",
+      "livre": "L1 — Impôts directs",
+      "titre": "T3 — Autres directs",
+      "chapitre": "Sport (97)",
+      "libelle": "Taxe de Développement du Sport",
+      "echeance": "annuel",
+      "article": "Art.97",
+      "periodicite": "annuel",
+      "nature": "direct"
+    },
+    {
+      "id": "teom",
+      "livre": "L1 — Impôts directs",
+      "titre": "T3 — Autres directs",
+      "chapitre": "TEOM (98)",
+      "libelle": "Taxe d'Enlèvement Ordures Ménagères (TEOM)",
+      "echeance": "avec TFU / trimestriel",
+      "article": "Art.98",
+      "periodicite": "annuel",
+      "nature": "direct"
+    },
+    {
+      "id": "tva",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T1 — CA",
+      "chapitre": "TVA (99)",
+      "libelle": "Taxe sur la Valeur Ajoutée (TVA) 18% + retenue marchés >50M",
+      "echeance": "10 du mois suivant",
+      "article": "Art.219-268 / 248 bis",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "tafa",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T1 — CA",
+      "chapitre": "TAFA (125)",
+      "libelle": "Taxe sur Activités Financières et Assurances (TAFA)",
+      "echeance": "10 du mois suivant",
+      "article": "Art.293-1 à 293-5",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_jeux",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T1 — CA",
+      "chapitre": "Jeux (128)",
+      "libelle": "Taxe sur les Jeux de Hasard",
+      "echeance": "10 du mois suivant",
+      "article": "Art.128",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_com",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T1 — CA",
+      "chapitre": "Com (129)",
+      "libelle": "Contribution Vente Services Communications",
+      "echeance": "10 du mois suivant",
+      "article": "Art.129",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_accise",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T2 — Accises",
+      "chapitre": "Accise (131)",
+      "libelle": "Taxe sur Produits Spécifiques (accise)",
+      "echeance": "10 du mois suivant",
+      "article": "Art.131",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "tsu_petrolier",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T2 — Accises",
+      "chapitre": "TSU (133)",
+      "libelle": "Taxe Spécifique Unique Produits Pétroliers",
+      "echeance": "à l'importation / mise à conso",
+      "article": "Art.133",
+      "periodicite": "à l'acte",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_tourisme",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T2 — Accises",
+      "chapitre": "Tourisme (134)",
+      "libelle": "Taxe sur Véhicules de Tourisme",
+      "echeance": "annuel",
+      "article": "Art.134",
+      "periodicite": "annuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_sejour",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T3 — Autres indirects",
+      "chapitre": "Séjour (135)",
+      "libelle": "Taxe de Séjour",
+      "echeance": "10 du mois suivant",
+      "article": "Art.135",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "contrib_locale",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T3 — Autres indirects",
+      "chapitre": "CDL (136)",
+      "libelle": "Contribution Développement Local",
+      "echeance": "10 du mois suivant",
+      "article": "Art.136",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "prelev_occasion",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T3 — Autres indirects",
+      "chapitre": "Occasion (139)",
+      "libelle": "Prélèvement Forfaitaire Véhicules d'Occasion",
+      "echeance": "à l'importation",
+      "article": "Art.139",
+      "periodicite": "à l'acte",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_pacage",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T3 — Autres indirects",
+      "chapitre": "Pacage (140)",
+      "libelle": "Taxe de Pacage",
+      "echeance": "annuel",
+      "article": "Art.140",
+      "periodicite": "annuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_spectacles",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T3 — Autres indirects",
+      "chapitre": "Spectacles (141)",
+      "libelle": "Taxe sur Spectacles, Jeux et Divertissements",
+      "echeance": "10 du mois suivant",
+      "article": "Art.141",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_boissons",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T3 — Autres indirects",
+      "chapitre": "Boissons (142)",
+      "libelle": "Taxe sur Vente Boissons Fermentées",
+      "echeance": "10 du mois suivant",
+      "article": "Art.142",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_pub",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T3 — Autres indirects",
+      "chapitre": "Pub (143)",
+      "libelle": "Taxe sur la Publicité",
+      "echeance": "10 du mois suivant",
+      "article": "Art.143",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "taxe_energie",
+      "livre": "L2 — Impôts indirects",
+      "titre": "T3 — Autres indirects",
+      "chapitre": "Énergie (145)",
+      "libelle": "Taxe Consommation Électricité et Eau",
+      "echeance": "10 du mois suivant",
+      "article": "Art.145",
+      "periodicite": "mensuel",
+      "nature": "indirect"
+    },
+    {
+      "id": "droits_enreg",
+      "livre": "L3 — Enregistrement/Timbre",
+      "titre": "T1 — Enregistrement",
+      "chapitre": "Enreg. (147)",
+      "libelle": "Droits d'Enregistrement (mutations, actes)",
+      "echeance": "30 jours après acte",
+      "article": "Art.147-171",
+      "periodicite": "à l'acte",
+      "nature": "enregistrement"
+    },
+    {
+      "id": "timbre",
+      "livre": "L3 — Enregistrement/Timbre",
+      "titre": "T2 — Timbre",
+      "chapitre": "Timbre (176)",
+      "libelle": "Droit de Timbre",
+      "echeance": "à l'acte / au comptant",
+      "article": "Art.176-193",
+      "periodicite": "à l'acte",
+      "nature": "timbre"
+    }
+  ],
+  "echeances": {
+    "is_acomptes": [
+      "03-10",
+      "06-10",
+      "09-10",
+      "12-10"
+    ],
+    "is_solde": "04-30",
+    "iba_annuel": "04-30",
+    "tva_mensuel": "10 du mois suivant",
+    "aib_mensuel": "10 du mois suivant",
+    "its_mensuel": "10 du mois suivant",
+    "vps_mensuel": "10 du mois suivant",
+    "loyer_mensuel": "10 du mois suivant",
+    "ircm_mensuel": "10 du mois suivant",
+    "salaires_annuel": "04-30",
+    "rapport_ong": "04-30",
+    "tps_trimestriel": "10 du mois suivant trimestre",
+    "tvs": [
+      "03-10",
+      "06-10",
+      "09-10",
+      "12-10"
+    ],
+    "tfu": [
+      "01-31",
+      "03-31",
+      "05-31"
+    ]
+  },
+  "articles": {
+    "is": "Art.3-65",
+    "iba": "Art.54",
+    "ircm": "Art.69-90",
+    "loyer": "Art.101-102 / 131",
+    "its": "Art.119-129",
+    "aib": "Art.130-140",
+    "vps": "Art.191-193",
+    "patente": "Art.197",
+    "tvs": "Art.208-210",
+    "tva": "Art.219-268 quater / 221-225 (e-services) / 248 bis (marchés >50M)",
+    "taf": "Art.293-1 à 293-5",
+    "mecf": "Art.217 bis / 256 bis",
+    "ifu": "Art.460 (30j)",
+    "modifications": "Art.461 (30j)",
+    "beneficiaires_effectifs": "Art.462 (+ Arrêté 2025/1700)",
+    "comptabilite_ohada": "Art.479-480 (conservation 10 ans)",
+    "declaration_annuelle": "Art.49 (IS) / Art.472 (salaires)",
+    "sanctions": {
+      "defaut_ifu": "Art.495 (100k → 200k)",
+      "be": "Art.496-4 (1M)",
+      "comptabilite": "Art.500 (1M / exercice)",
+      "opposition": "Art.503 (500k)",
+      "retard_paiement": "Art.506 (250k-1,5M + 10%)"
+    }
+  },
+  "regimes": {
+    "entreprenant": {
+      "tva": false,
+      "tps": true,
+      "compta": "allégée",
+      "teledeclaration": false,
+      "mecf": false,
+      "etapes_actives": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "tps": {
+      "tva": false,
+      "tps": true,
+      "tpu_tfu": true,
+      "etapes_actives": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "reel_simplifie": {
+      "tva": true,
+      "etapes_actives": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "reel_normal": {
+      "tva": true,
+      "teledeclaration_obligatoire": true,
+      "mecf_obligatoire": true,
+      "etapes_actives": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  },
+  "exonerations": {
+    "ong": [
+      "is",
+      "vps",
+      "patente",
+      "tva_etat"
+    ],
+    "ep_non_commercial": [
+      "is",
+      "vps",
+      "patente",
+      "tva"
+    ],
+    "premier_emploi_beninois": {
+      "vps_2ans": true,
+      "article": "Art.192-6"
+    }
+  },
+  "declencheurs": {
+    "marche_public_sup_50M": {
+      "retenue_tva": true,
+      "article": "Art.248 bis"
+    },
+    "import": {
+      "aib_taux": "1% IFU / 5% sans",
+      "article": "Art.130"
+    },
+    "eservice_non_resident": {
+      "tva_18_ir_20": true,
+      "immatriculation_simplifiee": true,
+      "article": "Art.221-225"
+    },
+    "groupe_international": {
+      "test_ebitda_30": true,
+      "article": "Art.39"
+    }
+  },
+  "penalites": {
+    "retard_tva": "10% + astreinte",
+    "mfp_deficit": "1,5% CA HT min 500k"
+  },
+  "notes": "Taux TVA standard 18% inchangé (2026). Retenue TVA marchés >50M (248 bis) et plancher charges intragroupe 30% EBITDA (Art.39) sont nouveautés Loi de finances 2026. Télédéclaration obligatoire Réel Normal (Circ. DGI 012/2026 du 15/03/2026).",
+  "changelog": [
+    "IS Art.2-53 intégrés : taux 25/30, MFP 1%/3%/10% min250k +0.60F/L +4000F, dons 1‰/25M, cadeaux 3‰, intérêts 30% EBITDA BCEAO+3pts, siège 10%, redevances 5%, etc."
+  ],
+  "mapping_fec_ohada": {
+    "fec_txt_colonnes": [
+      "CodeJournal",
+      "LibJournal",
+      "NumEcriture",
+      "DateEcriture",
+      "NumCompte",
+      "LibCompte",
+      "NumCompteAux",
+      "LibCompteAux",
+      "RefPiece",
+      "DatePiece",
+      "LibEcriture",
+      "MontDebit",
+      "MontCredit",
+      "LetEcriture",
+      "DateLetEcriture",
+      "DateValid",
+      "MontDevise",
+      "CodeDevise"
+    ],
+    "fallback": "Si MontDebit/MontCredit absents → Montant (12) + Sens (13 D/C) ; sep Tab ou | ; 21 champs trésorerie : +Date Règlement|Mode Règlement|NatOp",
+    "regles_formatage": {
+      "organisation": "Séquentielle : 1 ligne = 1 écriture",
+      "fin_de_ligne": "CR/LF",
+      "separateur": "Tabulation ou |",
+      "numeriques": "Caractère, base décimale, cadré droite zéros à gauche si fixe, signe 1er à gauche, virgule décimale, pas de séparateur milliers",
+      "alphanumeriques": "Cadré gauche, espaces à droite",
+      "dates": "AAAAMMJJ sans séparateur",
+      "heures": "HH:MM:SS",
+      "nom_fichier": "FEC_IFU_AAAAMMJJ.txt (ex FEC_3202312345678_20231231.txt) ; si volume > => FEC_IFU_AAAAMMJJ_X.txt",
+      "champs_obligatoires": "18 champs §2 (CodeJournal..CodeDevise) + 3 si trésorerie IR (Date Règlement, Mode Règlement, NatOp)",
+      "alternative_Montant_Sens": "Si 12-13 MontDebit/MontCredit non présents → Montant (12) et Sens (13 D/C)"
+    }
+  }
+}

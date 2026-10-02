@@ -1,0 +1,116 @@
+CodeJournal|LibJournal|NumEcriture|DateEcriture|NumCompte|LibCompte|NumCompteAux|LibCompteAux|RefPiece|DatePiece|LibEcriture|MontDebit|MontCredit|LetEcriture|DateLetEcriture|DateValid|MontDevise|CodeDevise
+AN|Journal des à-nouveaux|1|20230101|101000|Capital social|||AN2023|20230101|REPORT|0,00|10000000,00||||20230101||
+AN|Journal des à-nouveaux|2|20230101|118000|Report à nouveau|||AN2023|20230101|REPORT|0,00|1500000,00||||20230101||
+AN|Journal des à-nouveaux|3|20230101|231000|Bâtiments|||AN2023|20230101|REPORT|5000000,00|0,00||||20230101||
+AN|Journal des à-nouveaux|4|20230101|241000|Matériel et outillage|||AN2023|20230101|REPORT|2000000,00|0,00||||20230101||
+AN|Journal des à-nouveaux|5|20230101|245100|Matériel de transport|||AN2023|20230101|REPORT|3000000,00|0,00||||20230101||
+AN|Journal des à-nouveaux|6|20230101|281000|Amortissements bâtiments|||AN2023|20230101|REPORT|0,00|1000000,00||||20230101||
+AN|Journal des à-nouveaux|7|20230101|284100|Amortissements matériel|||AN2023|20230101|REPORT|0,00|800000,00||||20230101||
+AN|Journal des à-nouveaux|8|20230101|401000|Fournisseurs|||AN2023|20230101|REPORT|0,00|1500000,00||||20230101||
+AN|Journal des à-nouveaux|9|20230101|411000|Clients|||AN2023|20230101|REPORT|2500000,00|0,00||||20230101||
+AN|Journal des à-nouveaux|10|20230101|521000|Banque|||AN2023|20230101|REPORT|1800000,00|0,00||||20230101||
+AN|Journal des à-nouveaux|11|20230101|571000|Caisse|||AN2023|20230101|REPORT|500000,00|0,00||||20230101||
+AC|Journal des achats|12|20230105|601000|Achats de marchandises|||FA-A-001|20230105|Achat de marchandises|1500000,00|0,00||||20230105||
+AC|Journal des achats|12|20230105|445100|TVA déductible|||FA-A-001|20230105|Achat de marchandises|270000,00|0,00||||20230105||
+AC|Journal des achats|12|20230105|401000|Fournisseurs|FR001|Ets SOBEMAP|FA-A-001|20230105|Achat de marchandises|0,00|1770000,00||||20230105||
+AC|Journal des achats|13|20230112|605000|Achats d'autres approvisionnements|||FA-A-002|20230112|Achat de fournitures|250000,00|0,00||||20230112||
+AC|Journal des achats|13|20230112|445100|TVA déductible|||FA-A-002|20230112|Achat de fournitures|45000,00|0,00||||20230112||
+AC|Journal des achats|13|20230112|401000|Fournisseurs|FR002|Sté DIVERS|FA-A-002|20230112|Achat de fournitures|0,00|295000,00||||20230112||
+AC|Journal des achats|14|20230120|601000|Achats de marchandises|||FA-A-003|20230120|Achat de marchandises|2000000,00|0,00||||20230120||
+AC|Journal des achats|14|20230120|445100|TVA déductible|||FA-A-003|20230120|Achat de marchandises|360000,00|0,00||||20230120||
+AC|Journal des achats|14|20230120|401000|Fournisseurs|FR001|Ets SOBEMAP|FA-A-003|20230120|Achat de marchandises|0,00|2360000,00||||20230120||
+AC|Journal des achats|15|20230203|601000|Achats de marchandises|||FA-A-004|20230203|Achat de marchandises|1800000,00|0,00||||20230203||
+AC|Journal des achats|15|20230203|445100|TVA déductible|||FA-A-004|20230203|Achat de marchandises|324000,00|0,00||||20230203||
+AC|Journal des achats|15|20230203|401000|Fournisseurs|FR003|Sté ALPHA|FA-A-004|20230203|Achat de marchandises|0,00|2124000,00||||20230203||
+AC|Journal des achats|16|20230215|241000|Matériel et outillage|||FA-A-005|20230215|Achat matériel|800000,00|0,00||||20230215||
+AC|Journal des achats|16|20230215|445100|TVA déductible|||FA-A-005|20230215|Achat matériel|144000,00|0,00||||20230215||
+AC|Journal des achats|16|20230215|401000|Fournisseurs|FR004|Sté MATECO|FA-A-005|20230215|Achat matériel|0,00|944000,00||||20230215||
+VE|Journal des ventes|17|20230110|411000|Clients|CL001|Client ALPHA|FA-V-001|20230110|Vente de marchandises|1180000,00|0,00||||20230110||
+VE|Journal des ventes|17|20230110|701000|Ventes de marchandises|||FA-V-001|20230110|Vente de marchandises|0,00|1000000,00||||20230110||
+VE|Journal des ventes|17|20230110|443100|TVA collectée|||FA-V-001|20230110|Vente de marchandises|0,00|180000,00||||20230110||
+VE|Journal des ventes|18|20230118|411000|Clients|CL002|Client BETA|FA-V-002|20230118|Vente de services|590000,00|0,00||||20230118||
+VE|Journal des ventes|18|20230118|706000|Services vendus|||FA-V-002|20230118|Vente de services|0,00|500000,00||||20230118||
+VE|Journal des ventes|18|20230118|443100|TVA collectée|||FA-V-002|20230118|Vente de services|0,00|90000,00||||20230118||
+VE|Journal des ventes|19|20230125|411000|Clients|CL003|Client GAMMA|FA-V-003|20230125|Vente de marchandises|2360000,00|0,00||||20230125||
+VE|Journal des ventes|19|20230125|701000|Ventes de marchandises|||FA-V-003|20230125|Vente de marchandises|0,00|2000000,00||||20230125||
+VE|Journal des ventes|19|20230125|443100|TVA collectée|||FA-V-003|20230125|Vente de marchandises|0,00|360000,00||||20230125||
+VE|Journal des ventes|20|20230208|411000|Clients|CL001|Client ALPHA|FA-V-004|20230208|Vente de marchandises|1770000,00|0,00||||20230208||
+VE|Journal des ventes|20|20230208|701000|Ventes de marchandises|||FA-V-004|20230208|Vente de marchandises|0,00|1500000,00||||20230208||
+VE|Journal des ventes|20|20230208|443100|TVA collectée|||FA-V-004|20230208|Vente de marchandises|0,00|270000,00||||20230208||
+VE|Journal des ventes|21|20230220|411000|Clients|CL004|Client DELTA|FA-V-005|20230220|Vente de services|885000,00|0,00||||20230220||
+VE|Journal des ventes|21|20230220|706000|Services vendus|||FA-V-005|20230220|Vente de services|0,00|750000,00||||20230220||
+VE|Journal des ventes|21|20230220|443100|TVA collectée|||FA-V-005|20230220|Vente de services|0,00|135000,00||||20230220||
+BQ|Journal de banque|22|20230115|521000|Banque|||BV-001|20230115|Encaissement client|1180000,00|0,00||||20230115||
+BQ|Journal de banque|22|20230115|411000|Clients|CL001|Client ALPHA|BV-001|20230115|Encaissement client|0,00|1180000,00||||20230115||
+BQ|Journal de banque|23|20230122|401000|Fournisseurs|FR001|Ets SOBEMAP|BV-002|20230122|Paiement fournisseur|1770000,00|0,00||||20230122||
+BQ|Journal de banque|23|20230122|521000|Banque|||BV-002|20230122|Paiement fournisseur|0,00|1770000,00||||20230122||
+BQ|Journal de banque|24|20230201|521000|Banque|||BV-003|20230201|Encaissement client|2360000,00|0,00||||20230201||
+BQ|Journal de banque|24|20230201|411000|Clients|CL003|Client GAMMA|BV-003|20230201|Encaissement client|0,00|2360000,00||||20230201||
+BQ|Journal de banque|25|20230210|401000|Fournisseurs|FR003|Sté ALPHA|BV-004|20230210|Paiement fournisseur|2124000,00|0,00||||20230210||
+BQ|Journal de banque|25|20230210|521000|Banque|||BV-004|20230210|Paiement fournisseur|0,00|2124000,00||||20230210||
+BQ|Journal de banque|26|20230228|631000|Frais bancaires|||BV-005|20230228|Frais bancaires|25000,00|0,00||||20230228||
+BQ|Journal de banque|26|20230228|521000|Banque|||BV-005|20230228|Frais bancaires|0,00|25000,00||||20230228||
+CA|Journal de caisse|27|20230105|605000|Achats d'autres approvisionnements|||CA-001|20230105|Achat fournitures caisse|50000,00|0,00||||20230105||
+CA|Journal de caisse|27|20230105|571000|Caisse|||CA-001|20230105|Achat fournitures caisse|0,00|50000,00||||20230105||
+CA|Journal de caisse|28|20230115|571000|Caisse|||CA-002|20230115|Vente au comptant|295000,00|0,00||||20230115||
+CA|Journal de caisse|28|20230115|701000|Ventes de marchandises|||CA-002|20230115|Vente au comptant|0,00|250000,00||||20230115||
+CA|Journal de caisse|28|20230115|443100|TVA collectée|||CA-002|20230115|Vente au comptant|0,00|45000,00||||20230115||
+CA|Journal de caisse|29|20230205|641000|Impôts et taxes|||CA-003|20230205|Paiement taxe locale|30000,00|0,00||||20230205||
+CA|Journal de caisse|29|20230205|571000|Caisse|||CA-003|20230205|Paiement taxe locale|0,00|30000,00||||20230205||
+PA|Journal de paie|30|20230131|661000|Charges de personnel|||PA-2023-01|20230131|Salaires janvier|1200000,00|0,00||||20230131||
+PA|Journal de paie|30|20230131|421000|Personnel|||PA-2023-01|20230131|Salaires janvier|0,00|1200000,00||||20230131||
+PA|Journal de paie|31|20230131|661000|Charges de personnel|||PA-2023-01|20230131|Charges sociales janvier|240000,00|0,00||||20230131||
+PA|Journal de paie|31|20230131|431000|Sécurité sociale|||PA-2023-01|20230131|Charges sociales janvier|0,00|240000,00||||20230131||
+BQ|Journal de banque|32|20230201|421000|Personnel|||BV-006|20230201|Paiement salaires|1200000,00|0,00||||20230201||
+BQ|Journal de banque|32|20230201|521000|Banque|||BV-006|20230201|Paiement salaires|0,00|1200000,00||||20230201||
+BQ|Journal de banque|33|20230215|431000|Sécurité sociale|||BV-007|20230215|Paiement CNSS|240000,00|0,00||||20230215||
+BQ|Journal de banque|33|20230215|521000|Banque|||BV-007|20230215|Paiement CNSS|0,00|240000,00||||20230215||
+PA|Journal de paie|34|20230228|661000|Charges de personnel|||PA-2023-02|20230228|Salaires février|1200000,00|0,00||||20230228||
+PA|Journal de paie|34|20230228|421000|Personnel|||PA-2023-02|20230228|Salaires février|0,00|1200000,00||||20230228||
+PA|Journal de paie|35|20230228|661000|Charges de personnel|||PA-2023-02|20230228|Charges sociales février|240000,00|0,00||||20230228||
+PA|Journal de paie|35|20230228|431000|Sécurité sociale|||PA-2023-02|20230228|Charges sociales février|0,00|240000,00||||20230228||
+OD|Journal des opérations diverses|36|20230131|681000|Dotations aux amortissements|||OD-001|20230131|Amortissement janvier|50000,00|0,00||||20230131||
+OD|Journal des opérations diverses|36|20230131|281000|Amortissements bâtiments|||OD-001|20230131|Amortissement janvier|0,00|50000,00||||20230131||
+OD|Journal des opérations diverses|37|20230228|681000|Dotations aux amortissements|||OD-002|20230228|Amortissement février|50000,00|0,00||||20230228||
+OD|Journal des opérations diverses|37|20230228|281000|Amortissements bâtiments|||OD-002|20230228|Amortissement février|0,00|50000,00||||20230228||
+OD|Journal des opérations diverses|38|20230228|681000|Dotations aux amortissements|||OD-003|20230228|Amortissement matériel|66667,00|0,00||||20230228||
+OD|Journal des opérations diverses|38|20230228|284100|Amortissements matériel|||OD-003|20230228|Amortissement matériel|0,00|66667,00||||20230228||
+OD|Journal des opérations diverses|39|20230131|443100|TVA collectée|||OD-004|20230131|Déclaration TVA janvier|630000,00|0,00||||20230131||
+OD|Journal des opérations diverses|39|20230131|444000|État, TVA due|||OD-004|20230131|Déclaration TVA janvier|45000,00|0,00||||20230131||
+OD|Journal des opérations diverses|39|20230131|445100|TVA déductible|||OD-004|20230131|Déclaration TVA janvier|0,00|675000,00||||20230131||
+OD|Journal des opérations diverses|40|20230228|443100|TVA collectée|||OD-005|20230228|Déclaration TVA février|405000,00|0,00||||20230228||
+OD|Journal des opérations diverses|40|20230228|444000|État, TVA due|||OD-005|20230228|Déclaration TVA février|63000,00|0,00||||20230228||
+OD|Journal des opérations diverses|40|20230228|445100|TVA déductible|||OD-005|20230228|Déclaration TVA février|0,00|468000,00||||20230228||
+OD|Journal des opérations diverses|41|20230228|891000|Impôts sur le résultat|||OD-006|20230228|Provision IS|100000,00|0,00||||20230228||
+OD|Journal des opérations diverses|41|20230228|441000|État, impôt sur les sociétés|||OD-006|20230228|Provision IS|0,00|100000,00||||20230228||
+OD|Journal des opérations diverses|42|20230228|603000|Variations des stocks|||OD-007|20230228|Régularisation stocks|150000,00|0,00||||20230228||
+OD|Journal des opérations diverses|42|20230228|311000|Marchandises|||OD-007|20230228|Régularisation stocks|0,00|150000,00||||20230228||
+BQ|Journal de banque|43|20230228|521000|Banque|||BV-008|20230228|Encaissement client|1770000,00|0,00||||20230228||
+BQ|Journal de banque|43|20230228|411000|Clients|CL001|Client ALPHA|BV-008|20230228|Encaissement client|0,00|1770000,00||||20230228||
+BQ|Journal de banque|44|20230228|401000|Fournisseurs|FR004|Sté MATECO|BV-009|20230228|Paiement fournisseur|944000,00|0,00||||20230228||
+BQ|Journal de banque|44|20230228|521000|Banque|||BV-009|20230228|Paiement fournisseur|0,00|944000,00||||20230228||
+BQ|Journal de banque|45|20230228|521000|Banque|||BV-010|20230228|Dépôt espèces|200000,00|0,00||||20230228||
+BQ|Journal de banque|45|20230228|571000|Caisse|||BV-010|20230228|Dépôt espèces|0,00|200000,00||||20230228||
+BQ|Journal de banque|46|20230228|521000|Banque|||BV-011|20230228|Intérêts bancaires|15000,00|0,00||||20230228||
+BQ|Journal de banque|46|20230228|771000|Revenus financiers|||BV-011|20230228|Intérêts bancaires|0,00|15000,00||||20230228||
+AC|Journal des achats|47|20230220|245100|Matériel de transport|||FA-A-006|20230220|Achat véhicule|4000000,00|0,00||||20230220||
+AC|Journal des achats|47|20230220|445100|TVA déductible|||FA-A-006|20230220|Achat véhicule|720000,00|0,00||||20230220||
+AC|Journal des achats|47|20230220|401000|Fournisseurs|FR005|Sté AUTO BENIN|FA-A-006|20230220|Achat véhicule|0,00|4720000,00||||20230220||
+BQ|Journal de banque|48|20230225|401000|Fournisseurs|FR005|Sté AUTO BENIN|BV-012|20230225|Paiement véhicule|4720000,00|0,00||||20230225||
+BQ|Journal de banque|48|20230225|521000|Banque|||BV-012|20230225|Paiement véhicule|0,00|4720000,00||||20230225||
+BQ|Journal de banque|49|20230228|521000|Banque|||BV-013|20230228|Emprunt bancaire|5000000,00|0,00||||20230228||
+BQ|Journal de banque|49|20230228|162000|Emprunts bancaires|||BV-013|20230228|Emprunt bancaire|0,00|5000000,00||||20230228||
+BQ|Journal de banque|50|20230228|162000|Emprunts bancaires|||BV-014|20230228|Remboursement emprunt|500000,00|0,00||||20230228||
+BQ|Journal de banque|50|20230228|672000|Intérêts des emprunts|||BV-014|20230228|Remboursement emprunt|50000,00|0,00||||20230228||
+BQ|Journal de banque|50|20230228|521000|Banque|||BV-014|20230228|Remboursement emprunt|0,00|550000,00||||20230228||
+VE|Journal des ventes|51|20230228|521000|Banque|||FA-V-006|20230228|Cession matériel|300000,00|0,00||||20230228||
+VE|Journal des ventes|51|20230228|824000|Produits de cession|||FA-V-006|20230228|Cession matériel|0,00|300000,00||||20230228||
+OD|Journal des opérations diverses|52|20230228|284100|Amortissements matériel|||OD-008|20230228|Sortie matériel|500000,00|0,00||||20230228||
+OD|Journal des opérations diverses|52|20230228|812000|Charges de cession|||OD-008|20230228|Sortie matériel|300000,00|0,00||||20230228||
+OD|Journal des opérations diverses|52|20230228|241000|Matériel et outillage|||OD-008|20230228|Sortie matériel|0,00|800000,00||||20230228||
+OD|Journal des opérations diverses|53|20230228|421000|Personnel|||OD-009|20230228|Avance sur salaire|100000,00|0,00||||20230228||
+OD|Journal des opérations diverses|53|20230228|521000|Banque|||OD-009|20230228|Avance sur salaire|0,00|100000,00||||20230228||
+BQ|Journal de banque|54|20230228|447000|État, impôts retenus|||BV-015|20230228|Paiement IS|150000,00|0,00||||20230228||
+BQ|Journal de banque|54|20230228|521000|Banque|||BV-015|20230228|Paiement IS|0,00|150000,00||||20230228||
+OD|Journal des opérations diverses|55|20230228|658000|Charges diverses|||OD-010|20230228|Provision charges|75000,00|0,00||||20230228||
+OD|Journal des opérations diverses|55|20230228|481000|Provisions pour charges|||OD-010|20230228|Provision charges|0,00|75000,00||||20230228||

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boutique - Produits Digitaux & Logiciels | GOBEX Bénin</title>
+  <meta name="description" content="Boutique GOBEX - Logiciels de gestion PERFECTO, documents modèles, ebooks fiscaux Bénin, formations digitales. Paiement Mobile Money.">
+  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    .page-title{background:linear-gradient(105deg,#0A2F5E 0%,#143d75 60%,#f4f7fb 100%);padding:100px 0 80px;color:#fff;position:relative;overflow:hidden}
+    .page-title h1{color:#fff;font-size:48px}
+    .product-card{background:#fff;border-radius:16px;border:1px solid #eef2f6;overflow:hidden;transition:.3s;height:100%;position:relative}
+    .product-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(10,47,94,0.12);border-color:transparent}
+    .product-badge{position:absolute;top:12px;left:12px;background:#FFB81C;color:#0A2F5E;font-weight:700;font-size:11px;padding:4px 10px;border-radius:50px;letter-spacing:1px;z-index:2}
+    .product-badge.popular{background:#0A2F5E;color:#fff}
+    .product-img{height:200px;overflow:hidden;background:#f4f7fb}
+    .product-img img{width:100%;height:100%;object-fit:cover;transition:.4s}
+    .product-card:hover .product-img img{transform:scale(1.05)}
+    .product-body{padding:20px}
+    .product-category{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#FFB81C;font-weight:700;margin-bottom:6px;display:block}
+    .product-title{font-size:17px;font-weight:700;color:#0A2F5E;margin-bottom:8px;line-height:1.3}
+    .product-desc{font-size:13px;color:#6f8ba4;margin-bottom:14px;line-height:1.5}
+    .product-price{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .price-current{font-family:Exo;font-weight:800;font-size:22px;color:#0A2F5E}
+    .price-old{font-size:13px;color:#aaa;text-decoration:line-through}
+    .product-meta{display:flex;gap:12px;font-size:11px;color:#6f8ba4;margin-bottom:16px}
+    .product-meta span{display:flex;align-items:center;gap:4px}
+    .filter-btn{border:1px solid #eef2f6;background:#fff;padding:8px 18px;border-radius:50px;font-size:13px;font-weight:600;transition:.3s}
+    .filter-btn.active,.filter-btn:hover{background:#0A2F5E;color:#fff;border-color:#0A2F5E}
+  </style>
+</head>
+<body>
+<div class="topbar"><div class="container"><div class="row"><div class="col-lg-7"><span><i class="bi bi-geo-alt-fill"></i> Carrefour 02 Manguiers - Abomey-Calavi | IFU: 1201502844807</span></div><div class="col-lg-5 text-lg-end"><a href="tel:+22997739046">+229 97 739 046</a> <a href="https://wa.me/22997739046" class="ms-3"><i class="bi bi-whatsapp"></i> WhatsApp</a></div></div></div></div>
+<header class="header-nav"><nav class="navbar navbar-expand-lg"><div class="container"><a class="navbar-brand" href="index.html" style="display:flex;flex-direction:column;line-height:1;"><span style="font-family:Exo,sans-serif;font-weight:800;font-size:28px;color:#0A2F5E;letter-spacing:-0.5px;">GOBEX</span><span style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#6f8ba4;font-weight:700;">Godwin Business Expertise</span></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="nav"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li><li class="nav-item"><a class="nav-link active" href="boutique.html">Boutique</a></li><li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li></ul><a href="https://wa.me/22997739046?text=Boutique%20GOBEX" class="btn btn-main ms-3"><i class="bi bi-cart3 me-1"></i> Commander</a></div></div></nav></header>
+
+<section class="page-title"><div class="container"><div class="row align-items-center"><div class="col-lg-7"><span style="background:rgba(255,184,28,0.2);color:#FFB81C;padding:6px 14px;border-radius:50px;font-size:12px;letter-spacing:2px;font-weight:700;">BOUTIQUE • PRODUITS DIGITAUX BÉNIN</span><h1 class="mt-3">Logiciels, Documents & Formations pour votre entreprise</h1><p class="lead text-white-50">Des outils prêts à l'emploi, conformes au contexte béninois (SYSCOHADA, DGI, CNSS). Paiement Mobile Money, livraison instantanée WhatsApp.</p><div class="d-flex gap-3 mt-4"><div class="d-flex align-items-center gap-2 text-white"><i class="bi bi-check-circle-fill text-warning"></i><span class="small">Licence à vie</span></div><div class="d-flex align-items-center gap-2 text-white"><i class="bi bi-check-circle-fill text-warning"></i><span class="small">Support WhatsApp 7j/7</span></div><div class="d-flex align-items-center gap-2 text-white"><i class="bi bi-check-circle-fill text-warning"></i><span class="small">Mise à jour gratuite</span></div></div></div><div class="col-lg-5 d-none d-lg-block text-center"><img src="assets/img/product-facturation.jpg" style="width:80%;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.2);transform:rotate(2deg);"></div></div></div></section>
+
+<section class="section" style="padding-top:50px;padding-bottom:30px;background:#fff;">
+<div class="container">
+<div class="d-flex flex-wrap gap-2 justify-content-center mb-5">
+<button class="filter-btn active" data-filter="all">Tous les produits</button>
+<button class="filter-btn" data-filter="logiciel">Logiciels PERFECTO</button>
+<button class="filter-btn" data-filter="document">Documents Modèles</button>
+<button class="filter-btn" data-filter="formation">Formations & Ebooks</button>
+</div>
+
+<div class="row g-4" id="productsContainer">
+<!-- Produits chargés dynamiquement via JS (localStorage admin) -->
+</div>
+
+<div class="row mt-5">
+<div class="col-lg-8 mx-auto text-center p-4 bg-light rounded-4 border">
+<h4><i class="bi bi-shield-check text-success me-2"></i>Paiement sécurisé Mobile Money & Livraison instantanée</h4>
+<p class="small text-muted mt-2">Payez par MTN MoMo, Moov Money, ou virement BOA/Ecobank. Livraison par WhatsApp en moins de 5 minutes après paiement. Support installation inclus.</p>
+<div class="d-flex justify-content-center gap-3 mt-3 flex-wrap"><span class="badge bg-white border text-dark p-2"><i class="bi bi-phone"></i> MTN MoMo</span><span class="badge bg-white border text-dark p-2"><i class="bi bi-phone"></i> Moov Money</span><span class="badge bg-white border text-dark p-2"><i class="bi bi-bank"></i> BOA / Ecobank</span><span class="badge bg-white border text-dark p-2"><i class="bi bi-whatsapp text-success"></i> WhatsApp</span></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- Partenaires mis à jour -->
+<section class="section partners" style="padding:40px 0;background:#fff;border-top:1px solid #eef2f6;">
+<div class="container">
+<div class="row justify-content-center mb-4"><div class="col-lg-8 text-center"><h4>Nos partenaires & Distributeurs officiels</h4><p class="small text-muted">GOBEX est partenaire officiel et distributeur agréé</p></div></div>
+<div class="row align-items-center partners-logos g-3">
+<div class="col-6 col-md-3 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong style="color:#0A2F5E;">DGI BÉNIN</strong><br><small class="text-muted">Fiscalité</small></div></div>
+<div class="col-6 col-md-3 col-lg-2"><div class="p-3 border rounded-3 text-center h-100" style="background:#fff3d0;border-color:#FFB81C !important;"><strong style="color:#0A2F5E;">PERFECTO</strong><br><small class="text-muted">Progiciels</small></div></div>
+<div class="col-6 col-md-3 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong>Cabinet HERALD</strong><br><small class="text-muted">Partenaire</small></div></div>
+<div class="col-6 col-md-3 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong>Cabinet JF Conseils</strong><br><small class="text-muted">Partenaire</small></div></div>
+<div class="col-6 col-md-3 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong>BOA BÉNIN</strong><br><small class="text-muted">Banque</small></div></div>
+<div class="col-6 col-md-3 col-lg-2"><div class="p-3 border rounded-3 text-center h-100"><strong>ECOBANK</strong><br><small class="text-muted">Banque</small></div></div>
+</div>
+</div>
+</section>
+
+<footer class="footer"><div class="container"><div class="row"><div class="col-lg-4"><div class="footer-widget"><span style="font-family:Exo;font-weight:800;font-size:28px;color:#fff;">GOBEX</span><br><span style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);">Godwin Business Expertise</span><p class="mt-3">Boutique officielle PERFECTO & documents professionnels pour entreprises béninoises.</p></div></div><div class="col-lg-2"><div class="footer-widget"><h5>Boutique</h5><ul><li><a href="#">Logiciels PERFECTO</a></li><li><a href="#">Documents Modèles</a></li><li><a href="#">Ebooks Fiscaux</a></li><li><a href="#">Formations Vidéo</a></li></ul></div></div><div class="col-lg-3"><div class="footer-widget"><h5>Partenaires</h5><ul><li><a href="#">PERFECTO Progiciels</a></li><li><a href="#">Cabinet HERALD</a></li><li><a href="#">Cabinet JF Conseils</a></li><li><a href="#">BOA, Ecobank</a></li></ul></div></div><div class="col-lg-3"><div class="footer-widget"><h5>Contact Boutique</h5><p><i class="bi bi-whatsapp text-success me-2"></i>+229 97 739 046<br><i class="bi bi-envelope me-2"></i> boutique@gobex.bj</p><a href="https://wa.me/22997739046?text=Boutique%20GOBEX" class="btn btn-success rounded-pill btn-sm w-100"><i class="bi bi-cart3 me-2"></i>Commander sur WhatsApp</a></div></div></div><div class="footer-bottom"><div class="row align-items-center"><div class="col-md-8"><p>© 2025 GOBEX Boutique - PERFECTO Distributeur Officiel Bénin</p></div><div class="col-md-4 text-md-end"><a href="admin/" class="btn btn-sm btn-outline-light rounded-pill" style="font-size:11px;letter-spacing:1px;border-color:rgba(255,255,255,0.2);"><i class="bi bi-shield-lock me-1"></i>ADMIN</a></div></div></div></div></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/backend.js"></script>
+  <script src="assets/js/animations.js"></script>
+    <style>
+    .safety-revealed{opacity:1 !important;transform:none !important;visibility:visible !important;}
+    [data-aos].safety-revealed{opacity:1 !important;transform:translateY(0) translateX(0) scale(1) !important;}
+    @media (prefers-reduced-motion: reduce){ [data-aos], .product-card{opacity:1 !important;transform:none !important;} }
+  </style>
+  <noscript><style>[data-aos], .product-card{opacity:1 !important;transform:none !important;}</style></noscript>
+  <script>
+    try{ AOS.init({duration:800, once:true}); }catch(e){}
+    (function(){
+      function forceReveal(){
+        document.querySelectorAll('[data-aos]').forEach(function(el){
+          if(!el.classList.contains('aos-animate')){
+            el.classList.add('aos-animate','safety-revealed');
+            if(getComputedStyle(el).opacity==='0'){ el.style.opacity='1'; el.style.transform='none'; }
+          }
+        });
+        document.querySelectorAll('.product-card').forEach(function(el){
+          if(getComputedStyle(el).opacity==='0'){ el.style.opacity='1'; el.style.transform='none'; el.classList.add('safety-revealed'); }
+        });
+      }
+      setTimeout(forceReveal, 2500);
+      try{ if(window.self!==window.top) setTimeout(forceReveal, 800); }catch(e){ setTimeout(forceReveal,1000); }
+      window.addEventListener('load', function(){ setTimeout(forceReveal,1000); });
+      setTimeout(forceReveal, 3500);
+    })();
+  </script>
+<script>
+// Produits par défaut (si pas de localStorage admin)
+const defaultProducts = [
+  {name:"PERFECTO Facturation & Stock PRO", category:"logiciel", price:75000, oldPrice:120000, badge:"BEST SELLER", desc:"Factures avec IFU, AIB, gestion stock, alertes rupture, clients, dettes. Idéal boutiques, quincailleries.", image:"assets/img/product-facturation.jpg", whatsapp:"Je veux acheter PERFECTO Facturation PRO 75k", meta1:"Windows", meta2:"1200+ utilisateurs • 4.9/5", active:true},
+  {name:"PERFECTO Paie & CNSS Bénin", category:"logiciel", price:90000, oldPrice:150000, badge:"NOUVEAU", desc:"Bulletins de paie conformes Code travail Bénin, CNSS, ITS, déclarations automatiques.", image:"assets/img/product-paie.jpg", whatsapp:"PERFECTO Paie CNSS 90k", meta1:"Conforme CNSS", meta2:"4.8/5", active:true},
+  {name:"PERFECTO Compta SYSCOHADA", category:"logiciel", price:120000, oldPrice:0, badge:"", desc:"Tenue comptable simplifiée, bilan, grand livre, balance. Pour TPE/PME sans comptable.", image:"assets/img/service-compta.jpg", whatsapp:"PERFECTO Compta 120k", meta1:"SYSCOHADA", meta2:"4.7/5", active:true},
+  {name:"Pack Business Plan Bancable (BOA/Ecobank)", category:"document", price:25000, oldPrice:50000, badge:"PACK", desc:"Modèle Word + Excel financier 3 ans + guide. Déjà accepté par BOA, Ecobank, BGFI.", image:"assets/img/product-businessplan.jpg", whatsapp:"Pack Business Plan 25k", meta1:"Word + Excel", meta2:"350+ vendus", active:true},
+  {name:"Pack Création Entreprise Bénin (10 docs)", category:"document", price:15000, oldPrice:0, badge:"", desc:"Statuts SARL, SAS, PV, contrat de travail Bénin, registre, modèle facture avec IFU.", image:"assets/img/product-statuts.jpg", whatsapp:"Pack Création 15k", meta1:"10 modèles", meta2:"Conforme APIEx", active:true},
+  {name:"Guide Complet Fiscalité Bénin 2024-2025", category:"formation", price:10000, oldPrice:20000, badge:"FORMATION", desc:"120 pages : TVA, AIB, IS, IRPP, astuces optimisation, cas pratiques DGI. PDF + mises à jour.", image:"assets/img/product-ebook.jpg", whatsapp:"Guide Fiscalité 10k", meta1:"120 pages PDF", meta2:"5/5", active:true},
+  {name:"Formation Excel Avancé + Paie CNSS", category:"formation", price:35000, oldPrice:0, badge:"", desc:"8h de vidéos, fichiers Excel, attestation. Apprenez à faire votre paie et tableaux de bord.", image:"assets/img/product-formation.jpg", whatsapp:"Formation Excel 35k", meta1:"8h vidéo", meta2:"Attestation", active:true},
+  {name:"PERFECTO Pack Entreprise (3 logiciels)", category:"logiciel", price:200000, oldPrice:285000, badge:"BUNDLE", desc:"Facturation + Paie + Compta. Licence 3 postes + formation + support 1 an.", image:"assets/img/hero-west-africa.jpg", whatsapp:"PERFECTO Pack 200k", meta1:"Économisez 85k", meta2:"Support inclus", active:true},
+  {name:"Modèle Étude de Marché Bénin", category:"document", price:20000, oldPrice:0, badge:"", desc:"Template Word 30 pages avec exemple marché Cotonou/Calavi, analyse concurrence, pricing.", image:"assets/img/service-business.jpg", whatsapp:"Etude Marché 20k", meta1:"30 pages", meta2:"Exemple Cotonou", active:true},
+];
+
+function loadProducts(){
+  let products = defaultProducts;
+  const stored = localStorage.getItem('gobex_products');
+  if(stored){
+    try{ const parsed = JSON.parse(stored); if(parsed.length>0) products = parsed; }catch(e){}
+  }
+  const container = document.getElementById('productsContainer');
+  container.innerHTML='';
+  products.forEach((p, index)=>{
+    if(!p.active) return;
+    const col = document.createElement('div');
+    col.className=`col-lg-4 col-md-6 product`;
+    col.dataset.category=p.category;
+    col.setAttribute('data-aos','fade-up');
+    col.setAttribute('data-aos-delay', (index%3)*100);
+    const badgeClass = p.badge==='BEST SELLER'?'popular':'';
+    const oldPriceHtml = p.oldPrice?`<span class="price-old">${p.oldPrice.toLocaleString()} FCFA</span>`:'';
+    col.innerHTML=`
+      <div class="product-card">
+        ${p.badge?`<span class="product-badge ${badgeClass}">${p.badge}</span>`:''}
+        <div class="product-img"><img src="${p.image}" alt="${p.name}" onerror="this.src='assets/img/favicon.png'"></div>
+        <div class="product-body">
+          <span class="product-category">${p.category.toUpperCase()} • ${p.category==='logiciel'?'PERFECTO':p.category==='document'?'MODÈLE':'FORMATION'}</span>
+          <h5 class="product-title">${p.name}</h5>
+          <p class="product-desc">${p.desc}</p>
+          <div class="product-meta"><span><i class="bi bi-tag"></i> ${p.meta1||''}</span><span><i class="bi bi-star-fill text-warning"></i> ${p.meta2||''}</span></div>
+          <div class="product-price"><span class="price-current">${p.price.toLocaleString()} FCFA</span>${oldPriceHtml}</div>
+          <div class="d-grid gap-2"><a href="https://wa.me/22997739046?text=${encodeURIComponent(p.whatsapp)}" target="_blank" class="btn btn-main rounded-pill"><i class="bi bi-whatsapp me-2"></i>Acheter via WhatsApp</a></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(col);
+  });
+  // Re-attach filter events
+  attachFilter();
+}
+
+function attachFilter(){
+  document.querySelectorAll('.filter-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.product').forEach(p=>{
+        if(filter==='all' || p.dataset.category===filter){ p.style.display='block'; } else { p.style.display='none'; }
+      });
+    });
+  });
+}
+
+loadProducts();
+// Reload if admin updates in another tab
+window.addEventListener('storage', (e)=>{ if(e.key==='gobex_products') loadProducts(); });
+</script>
+</body>
+</html>

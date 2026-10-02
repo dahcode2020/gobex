@@ -1,0 +1,420 @@
+CodeJournal|LibJournal|NumEcriture|DateEcriture|NumCompte|LibCompte|NumCompteAux|LibCompteAux|RefPiece|DatePiece|LibEcriture|MontDebit|MontCredit|LetEcriture|DateLetEcriture|DateValid|MontDevise|CodeDevise
+AN|Journal des à-nouveaux|1|20240101|101000|Capital social|||AN2024|20240101|REPORT|0,00|60000000,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|118000|Report à nouveau|||AN2024|20240101|REPORT|0,00|10000000,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|231000|Bâtiments|||AN2024|20240101|REPORT|20000000,00|0,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|241000|Matériel et outillage|||AN2024|20240101|REPORT|12000000,00|0,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|245100|Matériel de transport|||AN2024|20240101|REPORT|15000000,00|0,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|281000|Amortissements bâtiments|||AN2024|20240101|REPORT|0,00|5000000,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|284100|Amortissements matériel|||AN2024|20240101|REPORT|0,00|4000000,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|284500|Amortissements matériel transport|||AN2024|20240101|REPORT|0,00|6000000,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|311000|Marchandises|||AN2024|20240101|REPORT|12000000,00|0,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|401000|Fournisseurs|||AN2024|20240101|REPORT|0,00|15000000,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|411000|Clients|||AN2024|20240101|REPORT|18000000,00|0,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|521000|Banque|||AN2024|20240101|REPORT|20000000,00|0,00||||20240101||
+AN|Journal des à-nouveaux|1|20240101|571000|Caisse|||AN2024|20240101|REPORT|3000000,00|0,00||||20240101||
+VE|Journal des ventes|2|20240108|411000|Clients|CL001|Client ALPHA|FV-2024-001|20240108|Vente marchandises|7080000,00|0,00||||20240108||
+VE|Journal des ventes|2|20240108|701000|Ventes de marchandises|||FV-2024-001|20240108|Vente marchandises|0,00|6000000,00||||20240108||
+VE|Journal des ventes|2|20240108|443100|TVA collectée|||FV-2024-001|20240108|Vente marchandises|0,00|1080000,00||||20240108||
+VE|Journal des ventes|3|20240115|411000|Clients|CL002|Client BETA|FV-2024-002|20240115|Vente marchandises|5900000,00|0,00||||20240115||
+VE|Journal des ventes|3|20240115|701000|Ventes de marchandises|||FV-2024-002|20240115|Vente marchandises|0,00|5000000,00||||20240115||
+VE|Journal des ventes|3|20240115|443100|TVA collectée|||FV-2024-002|20240115|Vente marchandises|0,00|900000,00||||20240115||
+VE|Journal des ventes|4|20240125|411000|Clients|CL003|Client GAMMA|FV-2024-003|20240125|Vente marchandises|5900000,00|0,00||||20240125||
+VE|Journal des ventes|4|20240125|701000|Ventes de marchandises|||FV-2024-003|20240125|Vente marchandises|0,00|5000000,00||||20240125||
+VE|Journal des ventes|4|20240125|443100|TVA collectée|||FV-2024-003|20240125|Vente marchandises|0,00|900000,00||||20240125||
+AC|Journal des achats|5|20240110|601000|Achats de marchandises|||FA-2024-001|20240110|Achat marchandises|8000000,00|0,00||||20240110||
+AC|Journal des achats|5|20240110|445100|TVA déductible|||FA-2024-001|20240110|Achat marchandises|1440000,00|0,00||||20240110||
+AC|Journal des achats|5|20240110|401000|Fournisseurs|FR001|Sté SOBEMAP|FA-2024-001|20240110|Achat marchandises|0,00|9440000,00||||20240110||
+AC|Journal des achats|6|20240120|601000|Achats de marchandises|||FA-2024-002|20240120|Achat marchandises|5000000,00|0,00||||20240120||
+AC|Journal des achats|6|20240120|445100|TVA déductible|||FA-2024-002|20240120|Achat marchandises|900000,00|0,00||||20240120||
+AC|Journal des achats|6|20240120|401000|Fournisseurs|FR002|Sté DIVERS|FA-2024-002|20240120|Achat marchandises|0,00|5900000,00||||20240120||
+BQ|Journal de banque|7|20240112|521000|Banque|||BV-2024-001|20240112|Encaissement client|7080000,00|0,00||||20240112||
+BQ|Journal de banque|7|20240112|411000|Clients|CL001|Client ALPHA|BV-2024-001|20240112|Encaissement client|0,00|7080000,00||||20240112||
+BQ|Journal de banque|8|20240115|401000|Fournisseurs|FR001|Sté SOBEMAP|BV-2024-002|20240115|Paiement fournisseur|9440000,00|0,00||||20240115||
+BQ|Journal de banque|8|20240115|521000|Banque|||BV-2024-002|20240115|Paiement fournisseur|0,00|9440000,00||||20240115||
+BQ|Journal de banque|9|20240125|401000|Fournisseurs|FR002|Sté DIVERS|BV-2024-003|20240125|Paiement fournisseur|5900000,00|0,00||||20240125||
+BQ|Journal de banque|9|20240125|521000|Banque|||BV-2024-003|20240125|Paiement fournisseur|0,00|5900000,00||||20240125||
+PA|Journal de paie|10|20240131|661000|Charges de personnel|||PA-2024-01|20240131|Salaires janvier|2500000,00|0,00||||20240131||
+PA|Journal de paie|10|20240131|421000|Personnel|||PA-2024-01|20240131|Salaires janvier|0,00|2500000,00||||20240131||
+PA|Journal de paie|10|20240131|661000|Charges de personnel|||PA-2024-01|20240131|Charges sociales janvier|500000,00|0,00||||20240131||
+PA|Journal de paie|10|20240131|431000|Sécurité sociale|||PA-2024-01|20240131|Charges sociales janvier|0,00|500000,00||||20240131||
+OD|Journal des opérations diverses|11|20240131|681000|Dotations aux amortissements|||OD-2024-01|20240131|Amortissement janvier|500000,00|0,00||||20240131||
+OD|Journal des opérations diverses|11|20240131|281000|Amortissements bâtiments|||OD-2024-01|20240131|Amortissement janvier|0,00|200000,00||||20240131||
+OD|Journal des opérations diverses|11|20240131|284100|Amortissements matériel|||OD-2024-01|20240131|Amortissement janvier|0,00|150000,00||||20240131||
+OD|Journal des opérations diverses|11|20240131|284500|Amortissements matériel transport|||OD-2024-01|20240131|Amortissement janvier|0,00|150000,00||||20240131||
+VE|Journal des ventes|12|20240205|411000|Clients|CL004|Client DELTA|FV-2024-004|20240205|Vente marchandises|5900000,00|0,00||||20240205||
+VE|Journal des ventes|12|20240205|701000|Ventes de marchandises|||FV-2024-004|20240205|Vente marchandises|0,00|5000000,00||||20240205||
+VE|Journal des ventes|12|20240205|443100|TVA collectée|||FV-2024-004|20240205|Vente marchandises|0,00|900000,00||||20240205||
+VE|Journal des ventes|13|20240214|411000|Clients|CL001|Client ALPHA|FV-2024-005|20240214|Vente marchandises|4720000,00|0,00||||20240214||
+VE|Journal des ventes|13|20240214|701000|Ventes de marchandises|||FV-2024-005|20240214|Vente marchandises|0,00|4000000,00||||20240214||
+VE|Journal des ventes|13|20240214|443100|TVA collectée|||FV-2024-005|20240214|Vente marchandises|0,00|720000,00||||20240214||
+VE|Journal des ventes|14|20240222|411000|Clients|CL002|Client BETA|FV-2024-006|20240222|Vente marchandises|5900000,00|0,00||||20240222||
+VE|Journal des ventes|14|20240222|701000|Ventes de marchandises|||FV-2024-006|20240222|Vente marchandises|0,00|5000000,00||||20240222||
+VE|Journal des ventes|14|20240222|443100|TVA collectée|||FV-2024-006|20240222|Vente marchandises|0,00|900000,00||||20240222||
+AC|Journal des achats|15|20240208|601000|Achats de marchandises|||FA-2024-003|20240208|Achat marchandises|7000000,00|0,00||||20240208||
+AC|Journal des achats|15|20240208|445100|TVA déductible|||FA-2024-003|20240208|Achat marchandises|1260000,00|0,00||||20240208||
+AC|Journal des achats|15|20240208|401000|Fournisseurs|FR003|Sté ALPHA|FA-2024-003|20240208|Achat marchandises|0,00|8260000,00||||20240208||
+AC|Journal des achats|16|20240218|605000|Achats d'autres approvisionnements|||FA-2024-004|20240218|Achat fournitures|4000000,00|0,00||||20240218||
+AC|Journal des achats|16|20240218|445100|TVA déductible|||FA-2024-004|20240218|Achat fournitures|720000,00|0,00||||20240218||
+AC|Journal des achats|16|20240218|401000|Fournisseurs|FR004|Sté MATECO|FA-2024-004|20240218|Achat fournitures|0,00|4720000,00||||20240218||
+BQ|Journal de banque|17|20240210|521000|Banque|||BV-2024-004|20240210|Encaissement client|5900000,00|0,00||||20240210||
+BQ|Journal de banque|17|20240210|411000|Clients|CL002|Client BETA|BV-2024-004|20240210|Encaissement client|0,00|5900000,00||||20240210||
+BQ|Journal de banque|18|20240215|401000|Fournisseurs|FR003|Sté ALPHA|BV-2024-005|20240215|Paiement fournisseur|8260000,00|0,00||||20240215||
+BQ|Journal de banque|18|20240215|521000|Banque|||BV-2024-005|20240215|Paiement fournisseur|0,00|8260000,00||||20240215||
+BQ|Journal de banque|19|20240228|421000|Personnel|||BV-2024-006|20240228|Paiement salaires|2500000,00|0,00||||20240228||
+BQ|Journal de banque|19|20240228|521000|Banque|||BV-2024-006|20240228|Paiement salaires|0,00|2500000,00||||20240228||
+BQ|Journal de banque|20|20240228|431000|Sécurité sociale|||BV-2024-007|20240228|Paiement CNSS|500000,00|0,00||||20240228||
+BQ|Journal de banque|20|20240228|521000|Banque|||BV-2024-007|20240228|Paiement CNSS|0,00|500000,00||||20240228||
+PA|Journal de paie|21|20240229|661000|Charges de personnel|||PA-2024-02|20240229|Salaires février|2500000,00|0,00||||20240229||
+PA|Journal de paie|21|20240229|421000|Personnel|||PA-2024-02|20240229|Salaires février|0,00|2500000,00||||20240229||
+PA|Journal de paie|21|20240229|661000|Charges de personnel|||PA-2024-02|20240229|Charges sociales février|500000,00|0,00||||20240229||
+PA|Journal de paie|21|20240229|431000|Sécurité sociale|||PA-2024-02|20240229|Charges sociales février|0,00|500000,00||||20240229||
+OD|Journal des opérations diverses|22|20240229|681000|Dotations aux amortissements|||OD-2024-02|20240229|Amortissement février|500000,00|0,00||||20240229||
+OD|Journal des opérations diverses|22|20240229|281000|Amortissements bâtiments|||OD-2024-02|20240229|Amortissement février|0,00|200000,00||||20240229||
+OD|Journal des opérations diverses|22|20240229|284100|Amortissements matériel|||OD-2024-02|20240229|Amortissement février|0,00|150000,00||||20240229||
+OD|Journal des opérations diverses|22|20240229|284500|Amortissements matériel transport|||OD-2024-02|20240229|Amortissement février|0,00|150000,00||||20240229||
+VE|Journal des ventes|23|20240306|411000|Clients|CL003|Client GAMMA|FV-2024-007|20240306|Vente marchandises|8260000,00|0,00||||20240306||
+VE|Journal des ventes|23|20240306|701000|Ventes de marchandises|||FV-2024-007|20240306|Vente marchandises|0,00|7000000,00||||20240306||
+VE|Journal des ventes|23|20240306|443100|TVA collectée|||FV-2024-007|20240306|Vente marchandises|0,00|1260000,00||||20240306||
+VE|Journal des ventes|24|20240314|411000|Clients|CL001|Client ALPHA|FV-2024-008|20240314|Vente marchandises|7080000,00|0,00||||20240314||
+VE|Journal des ventes|24|20240314|701000|Ventes de marchandises|||FV-2024-008|20240314|Vente marchandises|0,00|6000000,00||||20240314||
+VE|Journal des ventes|24|20240314|443100|TVA collectée|||FV-2024-008|20240314|Vente marchandises|0,00|1080000,00||||20240314||
+VE|Journal des ventes|25|20240326|411000|Clients|CL004|Client DELTA|FV-2024-009|20240326|Vente marchandises|5900000,00|0,00||||20240326||
+VE|Journal des ventes|25|20240326|701000|Ventes de marchandises|||FV-2024-009|20240326|Vente marchandises|0,00|5000000,00||||20240326||
+VE|Journal des ventes|25|20240326|443100|TVA collectée|||FV-2024-009|20240326|Vente marchandises|0,00|900000,00||||20240326||
+AC|Journal des achats|26|20240307|601000|Achats de marchandises|||FA-2024-005|20240307|Achat marchandises|9000000,00|0,00||||20240307||
+AC|Journal des achats|26|20240307|445100|TVA déductible|||FA-2024-005|20240307|Achat marchandises|1620000,00|0,00||||20240307||
+AC|Journal des achats|26|20240307|401000|Fournisseurs|FR001|Sté SOBEMAP|FA-2024-005|20240307|Achat marchandises|0,00|10620000,00||||20240307||
+AC|Journal des achats|27|20240319|601000|Achats de marchandises|||FA-2024-006|20240319|Achat marchandises|6000000,00|0,00||||20240319||
+AC|Journal des achats|27|20240319|445100|TVA déductible|||FA-2024-006|20240319|Achat marchandises|1080000,00|0,00||||20240319||
+AC|Journal des achats|27|20240319|401000|Fournisseurs|FR002|Sté DIVERS|FA-2024-006|20240319|Achat marchandises|0,00|7080000,00||||20240319||
+BQ|Journal de banque|28|20240311|521000|Banque|||BV-2024-008|20240311|Encaissement client|5900000,00|0,00||||20240311||
+BQ|Journal de banque|28|20240311|411000|Clients|CL003|Client GAMMA|BV-2024-008|20240311|Encaissement client|0,00|5900000,00||||20240311||
+BQ|Journal de banque|29|20240315|401000|Fournisseurs|FR001|Sté SOBEMAP|BV-2024-009|20240315|Paiement fournisseur|10620000,00|0,00||||20240315||
+BQ|Journal de banque|29|20240315|521000|Banque|||BV-2024-009|20240315|Paiement fournisseur|0,00|10620000,00||||20240315||
+BQ|Journal de banque|30|20240328|421000|Personnel|||BV-2024-010|20240328|Paiement salaires|2500000,00|0,00||||20240328||
+BQ|Journal de banque|30|20240328|521000|Banque|||BV-2024-010|20240328|Paiement salaires|0,00|2500000,00||||20240328||
+BQ|Journal de banque|31|20240328|431000|Sécurité sociale|||BV-2024-011|20240328|Paiement CNSS|500000,00|0,00||||20240328||
+BQ|Journal de banque|31|20240328|521000|Banque|||BV-2024-011|20240328|Paiement CNSS|0,00|500000,00||||20240328||
+PA|Journal de paie|32|20240331|661000|Charges de personnel|||PA-2024-03|20240331|Salaires mars|2500000,00|0,00||||20240331||
+PA|Journal de paie|32|20240331|421000|Personnel|||PA-2024-03|20240331|Salaires mars|0,00|2500000,00||||20240331||
+PA|Journal de paie|32|20240331|661000|Charges de personnel|||PA-2024-03|20240331|Charges sociales mars|500000,00|0,00||||20240331||
+PA|Journal de paie|32|20240331|431000|Sécurité sociale|||PA-2024-03|20240331|Charges sociales mars|0,00|500000,00||||20240331||
+OD|Journal des opérations diverses|33|20240331|681000|Dotations aux amortissements|||OD-2024-03|20240331|Amortissement mars|500000,00|0,00||||20240331||
+OD|Journal des opérations diverses|33|20240331|281000|Amortissements bâtiments|||OD-2024-03|20240331|Amortissement mars|0,00|200000,00||||20240331||
+OD|Journal des opérations diverses|33|20240331|284100|Amortissements matériel|||OD-2024-03|20240331|Amortissement mars|0,00|150000,00||||20240331||
+OD|Journal des opérations diverses|33|20240331|284500|Amortissements matériel transport|||OD-2024-03|20240331|Amortissement mars|0,00|150000,00||||20240331||
+VE|Journal des ventes|34|20240405|411000|Clients|CL002|Client BETA|FV-2024-010|20240405|Vente marchandises|5900000,00|0,00||||20240405||
+VE|Journal des ventes|34|20240405|701000|Ventes de marchandises|||FV-2024-010|20240405|Vente marchandises|0,00|5000000,00||||20240405||
+VE|Journal des ventes|34|20240405|443100|TVA collectée|||FV-2024-010|20240405|Vente marchandises|0,00|900000,00||||20240405||
+VE|Journal des ventes|35|20240416|411000|Clients|CL001|Client ALPHA|FV-2024-011|20240416|Vente marchandises|5900000,00|0,00||||20240416||
+VE|Journal des ventes|35|20240416|701000|Ventes de marchandises|||FV-2024-011|20240416|Vente marchandises|0,00|5000000,00||||20240416||
+VE|Journal des ventes|35|20240416|443100|TVA collectée|||FV-2024-011|20240416|Vente marchandises|0,00|900000,00||||20240416||
+VE|Journal des ventes|36|20240428|411000|Clients|CL003|Client GAMMA|FV-2024-012|20240428|Vente marchandises|5900000,00|0,00||||20240428||
+VE|Journal des ventes|36|20240428|701000|Ventes de marchandises|||FV-2024-012|20240428|Vente marchandises|0,00|5000000,00||||20240428||
+VE|Journal des ventes|36|20240428|443100|TVA collectée|||FV-2024-012|20240428|Vente marchandises|0,00|900000,00||||20240428||
+AC|Journal des achats|37|20240410|601000|Achats de marchandises|||FA-2024-007|20240410|Achat marchandises|6000000,00|0,00||||20240410||
+AC|Journal des achats|37|20240410|445100|TVA déductible|||FA-2024-007|20240410|Achat marchandises|1080000,00|0,00||||20240410||
+AC|Journal des achats|37|20240410|401000|Fournisseurs|FR003|Sté ALPHA|FA-2024-007|20240410|Achat marchandises|0,00|7080000,00||||20240410||
+AC|Journal des achats|38|20240422|605000|Achats d'autres approvisionnements|||FA-2024-008|20240422|Achat fournitures|4000000,00|0,00||||20240422||
+AC|Journal des achats|38|20240422|445100|TVA déductible|||FA-2024-008|20240422|Achat fournitures|720000,00|0,00||||20240422||
+AC|Journal des achats|38|20240422|401000|Fournisseurs|FR004|Sté MATECO|FA-2024-008|20240422|Achat fournitures|0,00|4720000,00||||20240422||
+BQ|Journal de banque|39|20240412|521000|Banque|||BV-2024-012|20240412|Encaissement client|5900000,00|0,00||||20240412||
+BQ|Journal de banque|39|20240412|411000|Clients|CL002|Client BETA|BV-2024-012|20240412|Encaissement client|0,00|5900000,00||||20240412||
+BQ|Journal de banque|40|20240418|401000|Fournisseurs|FR003|Sté ALPHA|BV-2024-013|20240418|Paiement fournisseur|7080000,00|0,00||||20240418||
+BQ|Journal de banque|40|20240418|521000|Banque|||BV-2024-013|20240418|Paiement fournisseur|0,00|7080000,00||||20240418||
+BQ|Journal de banque|41|20240430|421000|Personnel|||BV-2024-014|20240430|Paiement salaires|2500000,00|0,00||||20240430||
+BQ|Journal de banque|41|20240430|521000|Banque|||BV-2024-014|20240430|Paiement salaires|0,00|2500000,00||||20240430||
+BQ|Journal de banque|42|20240430|431000|Sécurité sociale|||BV-2024-015|20240430|Paiement CNSS|500000,00|0,00||||20240430||
+BQ|Journal de banque|42|20240430|521000|Banque|||BV-2024-015|20240430|Paiement CNSS|0,00|500000,00||||20240430||
+PA|Journal de paie|43|20240430|661000|Charges de personnel|||PA-2024-04|20240430|Salaires avril|2500000,00|0,00||||20240430||
+PA|Journal de paie|43|20240430|421000|Personnel|||PA-2024-04|20240430|Salaires avril|0,00|2500000,00||||20240430||
+PA|Journal de paie|43|20240430|661000|Charges de personnel|||PA-2024-04|20240430|Charges sociales avril|500000,00|0,00||||20240430||
+PA|Journal de paie|43|20240430|431000|Sécurité sociale|||PA-2024-04|20240430|Charges sociales avril|0,00|500000,00||||20240430||
+OD|Journal des opérations diverses|44|20240430|681000|Dotations aux amortissements|||OD-2024-04|20240430|Amortissement avril|500000,00|0,00||||20240430||
+OD|Journal des opérations diverses|44|20240430|281000|Amortissements bâtiments|||OD-2024-04|20240430|Amortissement avril|0,00|200000,00||||20240430||
+OD|Journal des opérations diverses|44|20240430|284100|Amortissements matériel|||OD-2024-04|20240430|Amortissement avril|0,00|150000,00||||20240430||
+OD|Journal des opérations diverses|44|20240430|284500|Amortissements matériel transport|||OD-2024-04|20240430|Amortissement avril|0,00|150000,00||||20240430||
+VE|Journal des ventes|45|20240507|411000|Clients|CL004|Client DELTA|FV-2024-013|20240507|Vente marchandises|7080000,00|0,00||||20240507||
+VE|Journal des ventes|45|20240507|701000|Ventes de marchandises|||FV-2024-013|20240507|Vente marchandises|0,00|6000000,00||||20240507||
+VE|Journal des ventes|45|20240507|443100|TVA collectée|||FV-2024-013|20240507|Vente marchandises|0,00|1080000,00||||20240507||
+VE|Journal des ventes|46|20240515|411000|Clients|CL001|Client ALPHA|FV-2024-014|20240515|Vente marchandises|7080000,00|0,00||||20240515||
+VE|Journal des ventes|46|20240515|701000|Ventes de marchandises|||FV-2024-014|20240515|Vente marchandises|0,00|6000000,00||||20240515||
+VE|Journal des ventes|46|20240515|443100|TVA collectée|||FV-2024-014|20240515|Vente marchandises|0,00|1080000,00||||20240515||
+VE|Journal des ventes|47|20240528|411000|Clients|CL002|Client BETA|FV-2024-015|20240528|Vente marchandises|5900000,00|0,00||||20240528||
+VE|Journal des ventes|47|20240528|701000|Ventes de marchandises|||FV-2024-015|20240528|Vente marchandises|0,00|5000000,00||||20240528||
+VE|Journal des ventes|47|20240528|443100|TVA collectée|||FV-2024-015|20240528|Vente marchandises|0,00|900000,00||||20240528||
+AC|Journal des achats|48|20240509|601000|Achats de marchandises|||FA-2024-009|20240509|Achat marchandises|7000000,00|0,00||||20240509||
+AC|Journal des achats|48|20240509|445100|TVA déductible|||FA-2024-009|20240509|Achat marchandises|1260000,00|0,00||||20240509||
+AC|Journal des achats|48|20240509|401000|Fournisseurs|FR001|Sté SOBEMAP|FA-2024-009|20240509|Achat marchandises|0,00|8260000,00||||20240509||
+AC|Journal des achats|49|20240521|605000|Achats d'autres approvisionnements|||FA-2024-010|20240521|Achat fournitures|4000000,00|0,00||||20240521||
+AC|Journal des achats|49|20240521|445100|TVA déductible|||FA-2024-010|20240521|Achat fournitures|720000,00|0,00||||20240521||
+AC|Journal des achats|49|20240521|401000|Fournisseurs|FR002|Sté DIVERS|FA-2024-010|20240521|Achat fournitures|0,00|4720000,00||||20240521||
+BQ|Journal de banque|50|20240510|521000|Banque|||BV-2024-016|20240510|Encaissement client|5900000,00|0,00||||20240510||
+BQ|Journal de banque|50|20240510|411000|Clients|CL004|Client DELTA|BV-2024-016|20240510|Encaissement client|0,00|5900000,00||||20240510||
+BQ|Journal de banque|51|20240516|401000|Fournisseurs|FR001|Sté SOBEMAP|BV-2024-017|20240516|Paiement fournisseur|8260000,00|0,00||||20240516||
+BQ|Journal de banque|51|20240516|521000|Banque|||BV-2024-017|20240516|Paiement fournisseur|0,00|8260000,00||||20240516||
+BQ|Journal de banque|52|20240531|421000|Personnel|||BV-2024-018|20240531|Paiement salaires|2500000,00|0,00||||20240531||
+BQ|Journal de banque|52|20240531|521000|Banque|||BV-2024-018|20240531|Paiement salaires|0,00|2500000,00||||20240531||
+BQ|Journal de banque|53|20240531|431000|Sécurité sociale|||BV-2024-019|20240531|Paiement CNSS|500000,00|0,00||||20240531||
+BQ|Journal de banque|53|20240531|521000|Banque|||BV-2024-019|20240531|Paiement CNSS|0,00|500000,00||||20240531||
+PA|Journal de paie|54|20240531|661000|Charges de personnel|||PA-2024-05|20240531|Salaires mai|2500000,00|0,00||||20240531||
+PA|Journal de paie|54|20240531|421000|Personnel|||PA-2024-05|20240531|Salaires mai|0,00|2500000,00||||20240531||
+PA|Journal de paie|54|20240531|661000|Charges de personnel|||PA-2024-05|20240531|Charges sociales mai|500000,00|0,00||||20240531||
+PA|Journal de paie|54|20240531|431000|Sécurité sociale|||PA-2024-05|20240531|Charges sociales mai|0,00|500000,00||||20240531||
+OD|Journal des opérations diverses|55|20240531|681000|Dotations aux amortissements|||OD-2024-05|20240531|Amortissement mai|500000,00|0,00||||20240531||
+OD|Journal des opérations diverses|55|20240531|281000|Amortissements bâtiments|||OD-2024-05|20240531|Amortissement mai|0,00|200000,00||||20240531||
+OD|Journal des opérations diverses|55|20240531|284100|Amortissements matériel|||OD-2024-05|20240531|Amortissement mai|0,00|150000,00||||20240531||
+OD|Journal des opérations diverses|55|20240531|284500|Amortissements matériel transport|||OD-2024-05|20240531|Amortissement mai|0,00|150000,00||||20240531||
+VE|Journal des ventes|56|20240606|411000|Clients|CL003|Client GAMMA|FV-2024-016|20240606|Vente marchandises|7080000,00|0,00||||20240606||
+VE|Journal des ventes|56|20240606|701000|Ventes de marchandises|||FV-2024-016|20240606|Vente marchandises|0,00|6000000,00||||20240606||
+VE|Journal des ventes|56|20240606|443100|TVA collectée|||FV-2024-016|20240606|Vente marchandises|0,00|1080000,00||||20240606||
+VE|Journal des ventes|57|20240614|411000|Clients|CL001|Client ALPHA|FV-2024-017|20240614|Vente marchandises|5900000,00|0,00||||20240614||
+VE|Journal des ventes|57|20240614|701000|Ventes de marchandises|||FV-2024-017|20240614|Vente marchandises|0,00|5000000,00||||20240614||
+VE|Journal des ventes|57|20240614|443100|TVA collectée|||FV-2024-017|20240614|Vente marchandises|0,00|900000,00||||20240614||
+VE|Journal des ventes|58|20240621|411000|Clients|CL004|Client DELTA|FV-2024-018|20240621|Vente marchandises|5900000,00|0,00||||20240621||
+VE|Journal des ventes|58|20240621|701000|Ventes de marchandises|||FV-2024-018|20240621|Vente marchandises|0,00|5000000,00||||20240621||
+VE|Journal des ventes|58|20240621|443100|TVA collectée|||FV-2024-018|20240621|Vente marchandises|0,00|900000,00||||20240621||
+VE|Journal des ventes|59|20240628|411000|Clients|CL005|Client EPSILON|FV-2024-019|20240628|Vente marchandises|4720000,00|0,00||||20240628||
+VE|Journal des ventes|59|20240628|701000|Ventes de marchandises|||FV-2024-019|20240628|Vente marchandises|0,00|4000000,00||||20240628||
+VE|Journal des ventes|59|20240628|443100|TVA collectée|||FV-2024-019|20240628|Vente marchandises|0,00|720000,00||||20240628||
+AC|Journal des achats|60|20240611|601000|Achats de marchandises|||FA-2024-011|20240611|Achat marchandises|8000000,00|0,00||||20240611||
+AC|Journal des achats|60|20240611|445100|TVA déductible|||FA-2024-011|20240611|Achat marchandises|1440000,00|0,00||||20240611||
+AC|Journal des achats|60|20240611|401000|Fournisseurs|FR003|Sté ALPHA|FA-2024-011|20240611|Achat marchandises|0,00|9440000,00||||20240611||
+AC|Journal des achats|61|20240624|605000|Achats d'autres approvisionnements|||FA-2024-012|20240624|Achat fournitures|4000000,00|0,00||||20240624||
+AC|Journal des achats|61|20240624|445100|TVA déductible|||FA-2024-012|20240624|Achat fournitures|720000,00|0,00||||20240624||
+AC|Journal des achats|61|20240624|401000|Fournisseurs|FR004|Sté MATECO|FA-2024-012|20240624|Achat fournitures|0,00|4720000,00||||20240624||
+BQ|Journal de banque|62|20240612|521000|Banque|||BV-2024-020|20240612|Encaissement client|5900000,00|0,00||||20240612||
+BQ|Journal de banque|62|20240612|411000|Clients|CL003|Client GAMMA|BV-2024-020|20240612|Encaissement client|0,00|5900000,00||||20240612||
+BQ|Journal de banque|63|20240617|401000|Fournisseurs|FR003|Sté ALPHA|BV-2024-021|20240617|Paiement fournisseur|9440000,00|0,00||||20240617||
+BQ|Journal de banque|63|20240617|521000|Banque|||BV-2024-021|20240617|Paiement fournisseur|0,00|9440000,00||||20240617||
+BQ|Journal de banque|64|20240628|421000|Personnel|||BV-2024-022|20240628|Paiement salaires|2500000,00|0,00||||20240628||
+BQ|Journal de banque|64|20240628|521000|Banque|||BV-2024-022|20240628|Paiement salaires|0,00|2500000,00||||20240628||
+BQ|Journal de banque|65|20240628|431000|Sécurité sociale|||BV-2024-023|20240628|Paiement CNSS|500000,00|0,00||||20240628||
+BQ|Journal de banque|65|20240628|521000|Banque|||BV-2024-023|20240628|Paiement CNSS|0,00|500000,00||||20240628||
+PA|Journal de paie|66|20240630|661000|Charges de personnel|||PA-2024-06|20240630|Salaires juin|2500000,00|0,00||||20240630||
+PA|Journal de paie|66|20240630|421000|Personnel|||PA-2024-06|20240630|Salaires juin|0,00|2500000,00||||20240630||
+PA|Journal de paie|66|20240630|661000|Charges de personnel|||PA-2024-06|20240630|Charges sociales juin|500000,00|0,00||||20240630||
+PA|Journal de paie|66|20240630|431000|Sécurité sociale|||PA-2024-06|20240630|Charges sociales juin|0,00|500000,00||||20240630||
+OD|Journal des opérations diverses|67|20240630|681000|Dotations aux amortissements|||OD-2024-06|20240630|Amortissement juin|500000,00|0,00||||20240630||
+OD|Journal des opérations diverses|67|20240630|281000|Amortissements bâtiments|||OD-2024-06|20240630|Amortissement juin|0,00|200000,00||||20240630||
+OD|Journal des opérations diverses|67|20240630|284100|Amortissements matériel|||OD-2024-06|20240630|Amortissement juin|0,00|150000,00||||20240630||
+OD|Journal des opérations diverses|67|20240630|284500|Amortissements matériel transport|||OD-2024-06|20240630|Amortissement juin|0,00|150000,00||||20240630||
+OD|Journal des opérations diverses|68|20240630|443100|TVA collectée|||OD-2024-06|20240630|Déclaration TVA juin|5400000,00|0,00||||20240630||
+OD|Journal des opérations diverses|68|20240630|444000|État, TVA due|||OD-2024-06|20240630|Déclaration TVA juin|0,00|1080000,00||||20240630||
+OD|Journal des opérations diverses|68|20240630|445100|TVA déductible|||OD-2024-06|20240630|Déclaration TVA juin|0,00|4320000,00||||20240630||
+VE|Journal des ventes|69|20240705|411000|Clients|CL002|Client BETA|FV-2024-020|20240705|Vente marchandises|5900000,00|0,00||||20240705||
+VE|Journal des ventes|69|20240705|701000|Ventes de marchandises|||FV-2024-020|20240705|Vente marchandises|0,00|5000000,00||||20240705||
+VE|Journal des ventes|69|20240705|443100|TVA collectée|||FV-2024-020|20240705|Vente marchandises|0,00|900000,00||||20240705||
+VE|Journal des ventes|70|20240716|411000|Clients|CL001|Client ALPHA|FV-2024-021|20240716|Vente marchandises|4720000,00|0,00||||20240716||
+VE|Journal des ventes|70|20240716|701000|Ventes de marchandises|||FV-2024-021|20240716|Vente marchandises|0,00|4000000,00||||20240716||
+VE|Journal des ventes|70|20240716|443100|TVA collectée|||FV-2024-021|20240716|Vente marchandises|0,00|720000,00||||20240716||
+VE|Journal des ventes|71|20240726|411000|Clients|CL003|Client GAMMA|FV-2024-022|20240726|Vente marchandises|4720000,00|0,00||||20240726||
+VE|Journal des ventes|71|20240726|701000|Ventes de marchandises|||FV-2024-022|20240726|Vente marchandises|0,00|4000000,00||||20240726||
+VE|Journal des ventes|71|20240726|443100|TVA collectée|||FV-2024-022|20240726|Vente marchandises|0,00|720000,00||||20240726||
+AC|Journal des achats|72|20240709|601000|Achats de marchandises|||FA-2024-013|20240709|Achat marchandises|6000000,00|0,00||||20240709||
+AC|Journal des achats|72|20240709|445100|TVA déductible|||FA-2024-013|20240709|Achat marchandises|1080000,00|0,00||||20240709||
+AC|Journal des achats|72|20240709|401000|Fournisseurs|FR001|Sté SOBEMAP|FA-2024-013|20240709|Achat marchandises|0,00|7080000,00||||20240709||
+AC|Journal des achats|73|20240722|605000|Achats d'autres approvisionnements|||FA-2024-014|20240722|Achat fournitures|3000000,00|0,00||||20240722||
+AC|Journal des achats|73|20240722|445100|TVA déductible|||FA-2024-014|20240722|Achat fournitures|540000,00|0,00||||20240722||
+AC|Journal des achats|73|20240722|401000|Fournisseurs|FR002|Sté DIVERS|FA-2024-014|20240722|Achat fournitures|0,00|3540000,00||||20240722||
+BQ|Journal de banque|74|20240711|521000|Banque|||BV-2024-024|20240711|Encaissement client|5900000,00|0,00||||20240711||
+BQ|Journal de banque|74|20240711|411000|Clients|CL002|Client BETA|BV-2024-024|20240711|Encaissement client|0,00|5900000,00||||20240711||
+BQ|Journal de banque|75|20240716|401000|Fournisseurs|FR001|Sté SOBEMAP|BV-2024-025|20240716|Paiement fournisseur|7080000,00|0,00||||20240716||
+BQ|Journal de banque|75|20240716|521000|Banque|||BV-2024-025|20240716|Paiement fournisseur|0,00|7080000,00||||20240716||
+BQ|Journal de banque|76|20240731|421000|Personnel|||BV-2024-026|20240731|Paiement salaires|2500000,00|0,00||||20240731||
+BQ|Journal de banque|76|20240731|521000|Banque|||BV-2024-026|20240731|Paiement salaires|0,00|2500000,00||||20240731||
+BQ|Journal de banque|77|20240731|431000|Sécurité sociale|||BV-2024-027|20240731|Paiement CNSS|500000,00|0,00||||20240731||
+BQ|Journal de banque|77|20240731|521000|Banque|||BV-2024-027|20240731|Paiement CNSS|0,00|500000,00||||20240731||
+PA|Journal de paie|78|20240731|661000|Charges de personnel|||PA-2024-07|20240731|Salaires juillet|2500000,00|0,00||||20240731||
+PA|Journal de paie|78|20240731|421000|Personnel|||PA-2024-07|20240731|Salaires juillet|0,00|2500000,00||||20240731||
+PA|Journal de paie|78|20240731|661000|Charges de personnel|||PA-2024-07|20240731|Charges sociales juillet|500000,00|0,00||||20240731||
+PA|Journal de paie|78|20240731|431000|Sécurité sociale|||PA-2024-07|20240731|Charges sociales juillet|0,00|500000,00||||20240731||
+OD|Journal des opérations diverses|79|20240731|681000|Dotations aux amortissements|||OD-2024-07|20240731|Amortissement juillet|500000,00|0,00||||20240731||
+OD|Journal des opérations diverses|79|20240731|281000|Amortissements bâtiments|||OD-2024-07|20240731|Amortissement juillet|0,00|200000,00||||20240731||
+OD|Journal des opérations diverses|79|20240731|284100|Amortissements matériel|||OD-2024-07|20240731|Amortissement juillet|0,00|150000,00||||20240731||
+OD|Journal des opérations diverses|79|20240731|284500|Amortissements matériel transport|||OD-2024-07|20240731|Amortissement juillet|0,00|150000,00||||20240731||
+VE|Journal des ventes|80|20240806|411000|Clients|CL004|Client DELTA|FV-2024-023|20240806|Vente marchandises|4720000,00|0,00||||20240806||
+VE|Journal des ventes|80|20240806|701000|Ventes de marchandises|||FV-2024-023|20240806|Vente marchandises|0,00|4000000,00||||20240806||
+VE|Journal des ventes|80|20240806|443100|TVA collectée|||FV-2024-023|20240806|Vente marchandises|0,00|720000,00||||20240806||
+VE|Journal des ventes|81|20240814|411000|Clients|CL001|Client ALPHA|FV-2024-024|20240814|Vente marchandises|4720000,00|0,00||||20240814||
+VE|Journal des ventes|81|20240814|701000|Ventes de marchandises|||FV-2024-024|20240814|Vente marchandises|0,00|4000000,00||||20240814||
+VE|Journal des ventes|81|20240814|443100|TVA collectée|||FV-2024-024|20240814|Vente marchandises|0,00|720000,00||||20240814||
+VE|Journal des ventes|82|20240827|411000|Clients|CL005|Client EPSILON|FV-2024-025|20240827|Vente marchandises|4720000,00|0,00||||20240827||
+VE|Journal des ventes|82|20240827|701000|Ventes de marchandises|||FV-2024-025|20240827|Vente marchandises|0,00|4000000,00||||20240827||
+VE|Journal des ventes|82|20240827|443100|TVA collectée|||FV-2024-025|20240827|Vente marchandises|0,00|720000,00||||20240827||
+AC|Journal des achats|83|20240808|601000|Achats de marchandises|||FA-2024-015|20240808|Achat marchandises|5000000,00|0,00||||20240808||
+AC|Journal des achats|83|20240808|445100|TVA déductible|||FA-2024-015|20240808|Achat marchandises|900000,00|0,00||||20240808||
+AC|Journal des achats|83|20240808|401000|Fournisseurs|FR003|Sté ALPHA|FA-2024-015|20240808|Achat marchandises|0,00|5900000,00||||20240808||
+AC|Journal des achats|84|20240820|605000|Achats d'autres approvisionnements|||FA-2024-016|20240820|Achat fournitures|3000000,00|0,00||||20240820||
+AC|Journal des achats|84|20240820|445100|TVA déductible|||FA-2024-016|20240820|Achat fournitures|540000,00|0,00||||20240820||
+AC|Journal des achats|84|20240820|401000|Fournisseurs|FR004|Sté MATECO|FA-2024-016|20240820|Achat fournitures|0,00|3540000,00||||20240820||
+BQ|Journal de banque|85|20240813|521000|Banque|||BV-2024-028|20240813|Encaissement client|4720000,00|0,00||||20240813||
+BQ|Journal de banque|85|20240813|411000|Clients|CL004|Client DELTA|BV-2024-028|20240813|Encaissement client|0,00|4720000,00||||20240813||
+BQ|Journal de banque|86|20240819|401000|Fournisseurs|FR003|Sté ALPHA|BV-2024-029|20240819|Paiement fournisseur|5900000,00|0,00||||20240819||
+BQ|Journal de banque|86|20240819|521000|Banque|||BV-2024-029|20240819|Paiement fournisseur|0,00|5900000,00||||20240819||
+BQ|Journal de banque|87|20240830|421000|Personnel|||BV-2024-030|20240830|Paiement salaires|2500000,00|0,00||||20240830||
+BQ|Journal de banque|87|20240830|521000|Banque|||BV-2024-030|20240830|Paiement salaires|0,00|2500000,00||||20240830||
+BQ|Journal de banque|88|20240830|431000|Sécurité sociale|||BV-2024-031|20240830|Paiement CNSS|500000,00|0,00||||20240830||
+BQ|Journal de banque|88|20240830|521000|Banque|||BV-2024-031|20240830|Paiement CNSS|0,00|500000,00||||20240830||
+PA|Journal de paie|89|20240831|661000|Charges de personnel|||PA-2024-08|20240831|Salaires août|2500000,00|0,00||||20240831||
+PA|Journal de paie|89|20240831|421000|Personnel|||PA-2024-08|20240831|Salaires août|0,00|2500000,00||||20240831||
+PA|Journal de paie|89|20240831|661000|Charges de personnel|||PA-2024-08|20240831|Charges sociales août|500000,00|0,00||||20240831||
+PA|Journal de paie|89|20240831|431000|Sécurité sociale|||PA-2024-08|20240831|Charges sociales août|0,00|500000,00||||20240831||
+OD|Journal des opérations diverses|90|20240831|681000|Dotations aux amortissements|||OD-2024-08|20240831|Amortissement août|500000,00|0,00||||20240831||
+OD|Journal des opérations diverses|90|20240831|281000|Amortissements bâtiments|||OD-2024-08|20240831|Amortissement août|0,00|200000,00||||20240831||
+OD|Journal des opérations diverses|90|20240831|284100|Amortissements matériel|||OD-2024-08|20240831|Amortissement août|0,00|150000,00||||20240831||
+OD|Journal des opérations diverses|90|20240831|284500|Amortissements matériel transport|||OD-2024-08|20240831|Amortissement août|0,00|150000,00||||20240831||
+VE|Journal des ventes|91|20240905|411000|Clients|CL002|Client BETA|FV-2024-026|20240905|Vente marchandises|8260000,00|0,00||||20240905||
+VE|Journal des ventes|91|20240905|701000|Ventes de marchandises|||FV-2024-026|20240905|Vente marchandises|0,00|7000000,00||||20240905||
+VE|Journal des ventes|91|20240905|443100|TVA collectée|||FV-2024-026|20240905|Vente marchandises|0,00|1260000,00||||20240905||
+VE|Journal des ventes|92|20240913|411000|Clients|CL001|Client ALPHA|FV-2024-027|20240913|Vente marchandises|7080000,00|0,00||||20240913||
+VE|Journal des ventes|92|20240913|701000|Ventes de marchandises|||FV-2024-027|20240913|Vente marchandises|0,00|6000000,00||||20240913||
+VE|Journal des ventes|92|20240913|443100|TVA collectée|||FV-2024-027|20240913|Vente marchandises|0,00|1080000,00||||20240913||
+VE|Journal des ventes|93|20240925|411000|Clients|CL003|Client GAMMA|FV-2024-028|20240925|Vente marchandises|5900000,00|0,00||||20240925||
+VE|Journal des ventes|93|20240925|701000|Ventes de marchandises|||FV-2024-028|20240925|Vente marchandises|0,00|5000000,00||||20240925||
+VE|Journal des ventes|93|20240925|443100|TVA collectée|||FV-2024-028|20240925|Vente marchandises|0,00|900000,00||||20240925||
+AC|Journal des achats|94|20240910|601000|Achats de marchandises|||FA-2024-017|20240910|Achat marchandises|7000000,00|0,00||||20240910||
+AC|Journal des achats|94|20240910|445100|TVA déductible|||FA-2024-017|20240910|Achat marchandises|1260000,00|0,00||||20240910||
+AC|Journal des achats|94|20240910|401000|Fournisseurs|FR001|Sté SOBEMAP|FA-2024-017|20240910|Achat marchandises|0,00|8260000,00||||20240910||
+AC|Journal des achats|95|20240923|605000|Achats d'autres approvisionnements|||FA-2024-018|20240923|Achat fournitures|4000000,00|0,00||||20240923||
+AC|Journal des achats|95|20240923|445100|TVA déductible|||FA-2024-018|20240923|Achat fournitures|720000,00|0,00||||20240923||
+AC|Journal des achats|95|20240923|401000|Fournisseurs|FR002|Sté DIVERS|FA-2024-018|20240923|Achat fournitures|0,00|4720000,00||||20240923||
+BQ|Journal de banque|96|20240912|521000|Banque|||BV-2024-032|20240912|Encaissement client|5900000,00|0,00||||20240912||
+BQ|Journal de banque|96|20240912|411000|Clients|CL002|Client BETA|BV-2024-032|20240912|Encaissement client|0,00|5900000,00||||20240912||
+BQ|Journal de banque|97|20240918|401000|Fournisseurs|FR001|Sté SOBEMAP|BV-2024-033|20240918|Paiement fournisseur|8260000,00|0,00||||20240918||
+BQ|Journal de banque|97|20240918|521000|Banque|||BV-2024-033|20240918|Paiement fournisseur|0,00|8260000,00||||20240918||
+BQ|Journal de banque|98|20240930|421000|Personnel|||BV-2024-034|20240930|Paiement salaires|2500000,00|0,00||||20240930||
+BQ|Journal de banque|98|20240930|521000|Banque|||BV-2024-034|20240930|Paiement salaires|0,00|2500000,00||||20240930||
+BQ|Journal de banque|99|20240930|431000|Sécurité sociale|||BV-2024-035|20240930|Paiement CNSS|500000,00|0,00||||20240930||
+BQ|Journal de banque|99|20240930|521000|Banque|||BV-2024-035|20240930|Paiement CNSS|0,00|500000,00||||20240930||
+PA|Journal de paie|100|20240930|661000|Charges de personnel|||PA-2024-09|20240930|Salaires septembre|2500000,00|0,00||||20240930||
+PA|Journal de paie|100|20240930|421000|Personnel|||PA-2024-09|20240930|Salaires septembre|0,00|2500000,00||||20240930||
+PA|Journal de paie|100|20240930|661000|Charges de personnel|||PA-2024-09|20240930|Charges sociales septembre|500000,00|0,00||||20240930||
+PA|Journal de paie|100|20240930|431000|Sécurité sociale|||PA-2024-09|20240930|Charges sociales septembre|0,00|500000,00||||20240930||
+OD|Journal des opérations diverses|101|20240930|681000|Dotations aux amortissements|||OD-2024-09|20240930|Amortissement septembre|500000,00|0,00||||20240930||
+OD|Journal des opérations diverses|101|20240930|281000|Amortissements bâtiments|||OD-2024-09|20240930|Amortissement septembre|0,00|200000,00||||20240930||
+OD|Journal des opérations diverses|101|20240930|284100|Amortissements matériel|||OD-2024-09|20240930|Amortissement septembre|0,00|150000,00||||20240930||
+OD|Journal des opérations diverses|101|20240930|284500|Amortissements matériel transport|||OD-2024-09|20240930|Amortissement septembre|0,00|150000,00||||20240930||
+VE|Journal des ventes|102|20241007|411000|Clients|CL004|Client DELTA|FV-2024-029|20241007|Vente marchandises|8260000,00|0,00||||20241007||
+VE|Journal des ventes|102|20241007|701000|Ventes de marchandises|||FV-2024-029|20241007|Vente marchandises|0,00|7000000,00||||20241007||
+VE|Journal des ventes|102|20241007|443100|TVA collectée|||FV-2024-029|20241007|Vente marchandises|0,00|1260000,00||||20241007||
+VE|Journal des ventes|103|20241015|411000|Clients|CL001|Client ALPHA|FV-2024-030|20241015|Vente marchandises|7080000,00|0,00||||20241015||
+VE|Journal des ventes|103|20241015|701000|Ventes de marchandises|||FV-2024-030|20241015|Vente marchandises|0,00|6000000,00||||20241015||
+VE|Journal des ventes|103|20241015|443100|TVA collectée|||FV-2024-030|20241015|Vente marchandises|0,00|1080000,00||||20241015||
+VE|Journal des ventes|104|20241028|411000|Clients|CL005|Client EPSILON|FV-2024-031|20241028|Vente marchandises|7080000,00|0,00||||20241028||
+VE|Journal des ventes|104|20241028|701000|Ventes de marchandises|||FV-2024-031|20241028|Vente marchandises|0,00|6000000,00||||20241028||
+VE|Journal des ventes|104|20241028|443100|TVA collectée|||FV-2024-031|20241028|Vente marchandises|0,00|1080000,00||||20241028||
+AC|Journal des achats|105|20241009|601000|Achats de marchandises|||FA-2024-019|20241009|Achat marchandises|8000000,00|0,00||||20241009||
+AC|Journal des achats|105|20241009|445100|TVA déductible|||FA-2024-019|20241009|Achat marchandises|1440000,00|0,00||||20241009||
+AC|Journal des achats|105|20241009|401000|Fournisseurs|FR003|Sté ALPHA|FA-2024-019|20241009|Achat marchandises|0,00|9440000,00||||20241009||
+AC|Journal des achats|106|20241021|605000|Achats d'autres approvisionnements|||FA-2024-020|20241021|Achat fournitures|4000000,00|0,00||||20241021||
+AC|Journal des achats|106|20241021|445100|TVA déductible|||FA-2024-020|20241021|Achat fournitures|720000,00|0,00||||20241021||
+AC|Journal des achats|106|20241021|401000|Fournisseurs|FR004|Sté MATECO|FA-2024-020|20241021|Achat fournitures|0,00|4720000,00||||20241021||
+BQ|Journal de banque|107|20241014|521000|Banque|||BV-2024-036|20241014|Encaissement client|8260000,00|0,00||||20241014||
+BQ|Journal de banque|107|20241014|411000|Clients|CL004|Client DELTA|BV-2024-036|20241014|Encaissement client|0,00|8260000,00||||20241014||
+BQ|Journal de banque|108|20241018|401000|Fournisseurs|FR003|Sté ALPHA|BV-2024-037|20241018|Paiement fournisseur|9440000,00|0,00||||20241018||
+BQ|Journal de banque|108|20241018|521000|Banque|||BV-2024-037|20241018|Paiement fournisseur|0,00|9440000,00||||20241018||
+BQ|Journal de banque|109|20241031|421000|Personnel|||BV-2024-038|20241031|Paiement salaires|2500000,00|0,00||||20241031||
+BQ|Journal de banque|109|20241031|521000|Banque|||BV-2024-038|20241031|Paiement salaires|0,00|2500000,00||||20241031||
+BQ|Journal de banque|110|20241031|431000|Sécurité sociale|||BV-2024-039|20241031|Paiement CNSS|500000,00|0,00||||20241031||
+BQ|Journal de banque|110|20241031|521000|Banque|||BV-2024-039|20241031|Paiement CNSS|0,00|500000,00||||20241031||
+PA|Journal de paie|111|20241031|661000|Charges de personnel|||PA-2024-10|20241031|Salaires octobre|2500000,00|0,00||||20241031||
+PA|Journal de paie|111|20241031|421000|Personnel|||PA-2024-10|20241031|Salaires octobre|0,00|2500000,00||||20241031||
+PA|Journal de paie|111|20241031|661000|Charges de personnel|||PA-2024-10|20241031|Charges sociales octobre|500000,00|0,00||||20241031||
+PA|Journal de paie|111|20241031|431000|Sécurité sociale|||PA-2024-10|20241031|Charges sociales octobre|0,00|500000,00||||20241031||
+OD|Journal des opérations diverses|112|20241031|681000|Dotations aux amortissements|||OD-2024-10|20241031|Amortissement octobre|500000,00|0,00||||20241031||
+OD|Journal des opérations diverses|112|20241031|281000|Amortissements bâtiments|||OD-2024-10|20241031|Amortissement octobre|0,00|200000,00||||20241031||
+OD|Journal des opérations diverses|112|20241031|284100|Amortissements matériel|||OD-2024-10|20241031|Amortissement octobre|0,00|150000,00||||20241031||
+OD|Journal des opérations diverses|112|20241031|284500|Amortissements matériel transport|||OD-2024-10|20241031|Amortissement octobre|0,00|150000,00||||20241031||
+VE|Journal des ventes|113|20241106|411000|Clients|CL002|Client BETA|FV-2024-032|20241106|Vente marchandises|7080000,00|0,00||||20241106||
+VE|Journal des ventes|113|20241106|701000|Ventes de marchandises|||FV-2024-032|20241106|Vente marchandises|0,00|6000000,00||||20241106||
+VE|Journal des ventes|113|20241106|443100|TVA collectée|||FV-2024-032|20241106|Vente marchandises|0,00|1080000,00||||20241106||
+VE|Journal des ventes|114|20241115|411000|Clients|CL001|Client ALPHA|FV-2024-033|20241115|Vente marchandises|5900000,00|0,00||||20241115||
+VE|Journal des ventes|114|20241115|701000|Ventes de marchandises|||FV-2024-033|20241115|Vente marchandises|0,00|5000000,00||||20241115||
+VE|Journal des ventes|114|20241115|443100|TVA collectée|||FV-2024-033|20241115|Vente marchandises|0,00|900000,00||||20241115||
+VE|Journal des ventes|115|20241127|411000|Clients|CL003|Client GAMMA|FV-2024-034|20241127|Vente marchandises|5900000,00|0,00||||20241127||
+VE|Journal des ventes|115|20241127|701000|Ventes de marchandises|||FV-2024-034|20241127|Vente marchandises|0,00|5000000,00||||20241127||
+VE|Journal des ventes|115|20241127|443100|TVA collectée|||FV-2024-034|20241127|Vente marchandises|0,00|900000,00||||20241127||
+AC|Journal des achats|116|20241108|601000|Achats de marchandises|||FA-2024-021|20241108|Achat marchandises|7000000,00|0,00||||20241108||
+AC|Journal des achats|116|20241108|445100|TVA déductible|||FA-2024-021|20241108|Achat marchandises|1260000,00|0,00||||20241108||
+AC|Journal des achats|116|20241108|401000|Fournisseurs|FR001|Sté SOBEMAP|FA-2024-021|20241108|Achat marchandises|0,00|8260000,00||||20241108||
+AC|Journal des achats|117|20241120|605000|Achats d'autres approvisionnements|||FA-2024-022|20241120|Achat fournitures|3000000,00|0,00||||20241120||
+AC|Journal des achats|117|20241120|445100|TVA déductible|||FA-2024-022|20241120|Achat fournitures|540000,00|0,00||||20241120||
+AC|Journal des achats|117|20241120|401000|Fournisseurs|FR002|Sté DIVERS|FA-2024-022|20241120|Achat fournitures|0,00|3540000,00||||20241120||
+BQ|Journal de banque|118|20241113|521000|Banque|||BV-2024-040|20241113|Encaissement client|7080000,00|0,00||||20241113||
+BQ|Journal de banque|118|20241113|411000|Clients|CL002|Client BETA|BV-2024-040|20241113|Encaissement client|0,00|7080000,00||||20241113||
+BQ|Journal de banque|119|20241119|401000|Fournisseurs|FR001|Sté SOBEMAP|BV-2024-041|20241119|Paiement fournisseur|8260000,00|0,00||||20241119||
+BQ|Journal de banque|119|20241119|521000|Banque|||BV-2024-041|20241119|Paiement fournisseur|0,00|8260000,00||||20241119||
+BQ|Journal de banque|120|20241129|421000|Personnel|||BV-2024-042|20241129|Paiement salaires|2500000,00|0,00||||20241129||
+BQ|Journal de banque|120|20241129|521000|Banque|||BV-2024-042|20241129|Paiement salaires|0,00|2500000,00||||20241129||
+BQ|Journal de banque|121|20241129|431000|Sécurité sociale|||BV-2024-043|20241129|Paiement CNSS|500000,00|0,00||||20241129||
+BQ|Journal de banque|121|20241129|521000|Banque|||BV-2024-043|20241129|Paiement CNSS|0,00|500000,00||||20241129||
+PA|Journal de paie|122|20241130|661000|Charges de personnel|||PA-2024-11|20241130|Salaires novembre|2500000,00|0,00||||20241130||
+PA|Journal de paie|122|20241130|421000|Personnel|||PA-2024-11|20241130|Salaires novembre|0,00|2500000,00||||20241130||
+PA|Journal de paie|122|20241130|661000|Charges de personnel|||PA-2024-11|20241130|Charges sociales novembre|500000,00|0,00||||20241130||
+PA|Journal de paie|122|20241130|431000|Sécurité sociale|||PA-2024-11|20241130|Charges sociales novembre|0,00|500000,00||||20241130||
+OD|Journal des opérations diverses|123|20241130|681000|Dotations aux amortissements|||OD-2024-11|20241130|Amortissement novembre|500000,00|0,00||||20241130||
+OD|Journal des opérations diverses|123|20241130|281000|Amortissements bâtiments|||OD-2024-11|20241130|Amortissement novembre|0,00|200000,00||||20241130||
+OD|Journal des opérations diverses|123|20241130|284100|Amortissements matériel|||OD-2024-11|20241130|Amortissement novembre|0,00|150000,00||||20241130||
+OD|Journal des opérations diverses|123|20241130|284500|Amortissements matériel transport|||OD-2024-11|20241130|Amortissement novembre|0,00|150000,00||||20241130||
+VE|Journal des ventes|124|20241205|411000|Clients|CL004|Client DELTA|FV-2024-035|20241205|Vente marchandises|8260000,00|0,00||||20241205||
+VE|Journal des ventes|124|20241205|701000|Ventes de marchandises|||FV-2024-035|20241205|Vente marchandises|0,00|7000000,00||||20241205||
+VE|Journal des ventes|124|20241205|443100|TVA collectée|||FV-2024-035|20241205|Vente marchandises|0,00|1260000,00||||20241205||
+VE|Journal des ventes|125|20241213|411000|Clients|CL001|Client ALPHA|FV-2024-036|20241213|Vente marchandises|7080000,00|0,00||||20241213||
+VE|Journal des ventes|125|20241213|701000|Ventes de marchandises|||FV-2024-036|20241213|Vente marchandises|0,00|6000000,00||||20241213||
+VE|Journal des ventes|125|20241213|443100|TVA collectée|||FV-2024-036|20241213|Vente marchandises|0,00|1080000,00||||20241213||
+VE|Journal des ventes|126|20241220|411000|Clients|CL005|Client EPSILON|FV-2024-037|20241220|Vente marchandises|5900000,00|0,00||||20241220||
+VE|Journal des ventes|126|20241220|701000|Ventes de marchandises|||FV-2024-037|20241220|Vente marchandises|0,00|5000000,00||||20241220||
+VE|Journal des ventes|126|20241220|443100|TVA collectée|||FV-2024-037|20241220|Vente marchandises|0,00|900000,00||||20241220||
+VE|Journal des ventes|127|20241230|411000|Clients|CL002|Client BETA|FV-2024-038|20241230|Vente marchandises|4720000,00|0,00||||20241230||
+VE|Journal des ventes|127|20241230|701000|Ventes de marchandises|||FV-2024-038|20241230|Vente marchandises|0,00|4000000,00||||20241230||
+VE|Journal des ventes|127|20241230|443100|TVA collectée|||FV-2024-038|20241230|Vente marchandises|0,00|720000,00||||20241230||
+AC|Journal des achats|128|20241209|601000|Achats de marchandises|||FA-2024-023|20241209|Achat marchandises|8000000,00|0,00||||20241209||
+AC|Journal des achats|128|20241209|445100|TVA déductible|||FA-2024-023|20241209|Achat marchandises|1440000,00|0,00||||20241209||
+AC|Journal des achats|128|20241209|401000|Fournisseurs|FR003|Sté ALPHA|FA-2024-023|20241209|Achat marchandises|0,00|9440000,00||||20241209||
+AC|Journal des achats|129|20241223|605000|Achats d'autres approvisionnements|||FA-2024-024|20241223|Achat fournitures|5000000,00|0,00||||20241223||
+AC|Journal des achats|129|20241223|445100|TVA déductible|||FA-2024-024|20241223|Achat fournitures|900000,00|0,00||||20241223||
+AC|Journal des achats|129|20241223|401000|Fournisseurs|FR004|Sté MATECO|FA-2024-024|20241223|Achat fournitures|0,00|5900000,00||||20241223||
+BQ|Journal de banque|130|20241211|521000|Banque|||BV-2024-044|20241211|Encaissement client|8260000,00|0,00||||20241211||
+BQ|Journal de banque|130|20241211|411000|Clients|CL004|Client DELTA|BV-2024-044|20241211|Encaissement client|0,00|8260000,00||||20241211||
+BQ|Journal de banque|131|20241217|401000|Fournisseurs|FR003|Sté ALPHA|BV-2024-045|20241217|Paiement fournisseur|9440000,00|0,00||||20241217||
+BQ|Journal de banque|131|20241217|521000|Banque|||BV-2024-045|20241217|Paiement fournisseur|0,00|9440000,00||||20241217||
+BQ|Journal de banque|132|20241231|421000|Personnel|||BV-2024-046|20241231|Paiement salaires|2500000,00|0,00||||20241231||
+BQ|Journal de banque|132|20241231|521000|Banque|||BV-2024-046|20241231|Paiement salaires|0,00|2500000,00||||20241231||
+BQ|Journal de banque|133|20241231|431000|Sécurité sociale|||BV-2024-047|20241231|Paiement CNSS|500000,00|0,00||||20241231||
+BQ|Journal de banque|133|20241231|521000|Banque|||BV-2024-047|20241231|Paiement CNSS|0,00|500000,00||||20241231||
+PA|Journal de paie|134|20241231|661000|Charges de personnel|||PA-2024-12|20241231|Salaires décembre|2500000,00|0,00||||20241231||
+PA|Journal de paie|134|20241231|421000|Personnel|||PA-2024-12|20241231|Salaires décembre|0,00|2500000,00||||20241231||
+PA|Journal de paie|134|20241231|661000|Charges de personnel|||PA-2024-12|20241231|Charges sociales décembre|500000,00|0,00||||20241231||
+PA|Journal de paie|134|20241231|431000|Sécurité sociale|||PA-2024-12|20241231|Charges sociales décembre|0,00|500000,00||||20241231||
+OD|Journal des opérations diverses|135|20241231|681000|Dotations aux amortissements|||OD-2024-12|20241231|Amortissement décembre|500000,00|0,00||||20241231||
+OD|Journal des opérations diverses|135|20241231|281000|Amortissements bâtiments|||OD-2024-12|20241231|Amortissement décembre|0,00|200000,00||||20241231||
+OD|Journal des opérations diverses|135|20241231|284100|Amortissements matériel|||OD-2024-12|20241231|Amortissement décembre|0,00|150000,00||||20241231||
+OD|Journal des opérations diverses|135|20241231|284500|Amortissements matériel transport|||OD-2024-12|20241231|Amortissement décembre|0,00|150000,00||||20241231||
+OD|Journal des opérations diverses|136|20241231|443100|TVA collectée|||OD-2024-12|20241231|Déclaration TVA décembre|6480000,00|0,00||||20241231||
+OD|Journal des opérations diverses|136|20241231|444000|État, TVA due|||OD-2024-12|20241231|Déclaration TVA décembre|0,00|1296000,00||||20241231||
+OD|Journal des opérations diverses|136|20241231|445100|TVA déductible|||OD-2024-12|20241231|Déclaration TVA décembre|0,00|5184000,00||||20241231||
+OD|Journal des opérations diverses|137|20241231|891000|Impôts sur le résultat|||OD-2024-12|20241231|Provision IS|5000000,00|0,00||||20241231||
+OD|Journal des opérations diverses|137|20241231|441000|État, impôt sur les sociétés|||OD-2024-12|20241231|Provision IS|0,00|5000000,00||||20241231||
+OD|Journal des opérations diverses|138|20241231|603000|Variations des stocks|||OD-2024-12|20241231|Régularisation stocks|2000000,00|0,00||||20241231||
+OD|Journal des opérations diverses|138|20241231|311000|Marchandises|||OD-2024-12|20241231|Régularisation stocks|0,00|2000000,00||||20241231||
+OD|Journal des opérations diverses|139|20241231|671000|Intérêts des emprunts|||OD-2024-13|20241231|Intérêts emprunt déductibles|800000,00|0,00||||20241231||
+OD|Journal des opérations diverses|139|20241231|521000|Banque|||OD-2024-13|20241231|Intérêts emprunt déductibles|0,00|800000,00||||20241231||
+OD|Journal des opérations diverses|140|20241231|658000|Dons et libéralités|||OD-2024-14|20241231|Dons déductibles (1 pour mille CA)|200000,00|0,00||||20241231||
+OD|Journal des opérations diverses|140|20241231|521000|Banque|||OD-2024-14|20241231|Dons déductibles (1 pour mille CA)|0,00|200000,00||||20241231||
+OD|Journal des opérations diverses|141|20241231|658100|Cadeaux publicitaires|||OD-2024-15|20241231|Cadeaux publicitaires (3 pour mille CA)|600000,00|0,00||||20241231||
+OD|Journal des opérations diverses|141|20241231|521000|Banque|||OD-2024-15|20241231|Cadeaux publicitaires (3 pour mille CA)|0,00|600000,00||||20241231||
+OD|Journal des opérations diverses|142|20241231|625000|Primes d'assurance|||OD-2024-16|20241231|Primes assurance déductibles|1200000,00|0,00||||20241231||
+OD|Journal des opérations diverses|142|20241231|521000|Banque|||OD-2024-16|20241231|Primes assurance déductibles|0,00|1200000,00||||20241231||
+OD|Journal des opérations diverses|143|20241231|671200|Intérêts excédentaires|||OD-2024-17|20241231|Intérêts excédentaires (réintégration)|350000,00|0,00||||20241231||
+OD|Journal des opérations diverses|143|20241231|521000|Banque|||OD-2024-17|20241231|Intérêts excédentaires (réintégration)|0,00|350000,00||||20241231||
+OD|Journal des opérations diverses|144|20241231|647800|Pénalités fiscales|||OD-2024-18|20241231|Pénalités fiscales (non déductibles)|150000,00|0,00||||20241231||
+OD|Journal des opérations diverses|144|20241231|521000|Banque|||OD-2024-18|20241231|Pénalités fiscales (non déductibles)|0,00|150000,00||||20241231||
+OD|Journal des opérations diverses|145|20241231|658200|Dons excédentaires|||OD-2024-19|20241231|Dons excédentaires (réintégration)|100000,00|0,00||||20241231||
+OD|Journal des opérations diverses|145|20241231|521000|Banque|||OD-2024-19|20241231|Dons excédentaires (réintégration)|0,00|100000,00||||20241231||
+OD|Journal des opérations diverses|146|20241231|658300|Dépenses somptuaires|||OD-2024-20|20241231|Dépenses somptuaires (non déductibles)|250000,00|0,00||||20241231||
+OD|Journal des opérations diverses|146|20241231|571000|Caisse|||OD-2024-20|20241231|Dépenses somptuaires (non déductibles)|0,00|250000,00||||20241231||
+OD|Journal des opérations diverses|147|20241231|658400|Charges payées en espèces|||OD-2024-21|20241231|Charges espèces supérieures à 100 000 FCFA (non déductibles)|300000,00|0,00||||20241231||
+OD|Journal des opérations diverses|147|20241231|571000|Caisse|||OD-2024-21|20241231|Charges espèces supérieures à 100 000 FCFA (non déductibles)|0,00|300000,00||||20241231||
+OD|Journal des opérations diverses|148|20241231|891000|Impôts sur le résultat|||OD-2024-22|20241231|Constatation IS 2024|4845000,00|0,00||||20241231||
+OD|Journal des opérations diverses|148|20241231|441000|État, impôt sur les sociétés|||OD-2024-22|20241231|Constatation IS 2024|0,00|4845000,00||||20241231||

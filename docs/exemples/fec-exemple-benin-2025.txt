@@ -1,0 +1,26 @@
+JournalCode|JournalLib|EcritureNum|EcritureDate|CompteNum|CompteLib|CompAuxNum|CompAuxLib|PieceRef|PieceDate|EcritureLib|Debit|Credit|EcritureLet|DateLet|ValidDate|Montantdevise|Idevise
+VT|Ventes|00001|20250115|701000|Ventes marchandises coton|||FT001|20250115|Vente Lot Coton Cotonou||45000000|||||
+VT|Ventes|00002|20250210|707000|Prestations BTP Glo-Djigbé|||FT002|20250210|Prestation chantier||37500000|||||
+AC|Achats|00003|20250120|601000|Achats marchandises|FOURN001||FA001|20250120|Achat stock coton|28000000||||||
+AC|Achats|00004|20250205|605000|Achats matériel chantier|FOURN002||FA002|20250205|Matériel chantier|6000000||||||
+OD|Op. diverses|00005|20250130|613000|Loyers Godomey|||LOY01|20250130|Loyer siège Godomey|6000000||||||
+OD|Op. diverses|00006|20250215|622000|Honoraires expert-comptable|||HON01|20250215|Honoraires EC|3500000||||||
+OD|Op. diverses|00007|20250301|625000|Transports marchandises|TRAN001||TR001|20250301|Transport|2000000||||||
+OD|Op. diverses|00008|20250310|658000|Charges diverses exploitation|||DIV01|20250310|Frais divers|1500000||||||
+OD|Op. diverses|00009|20250331|681000|Dot. amortissements matériel|||AMO01|20250331|Amort. annuel|1000000||||||
+BQ|Banque|00010|20250131|661100|Salaires bruts janvier|||SAL01|20250131|Paie janv (5 employés)|3333333||||||
+BQ|Banque|00011|20250228|661100|Salaires bruts février|||SAL02|20250228|Paie fév|3333333||||||
+BQ|Banque|00012|20250331|661100|Salaires bruts mars|||SAL03|20250331|Paie mars|3333334||||||
+BQ|Banque|00013|20250131|664000|Cotisations CNSS janvier|||CNSS01|20250131|CNSS janv|666667||||||
+BQ|Banque|00014|20250228|664000|Cotisations CNSS février|||CNSS02|20250228|CNSS fév|666667||||||
+BQ|Banque|00015|20250331|664000|Cotisations CNSS mars|||CNSS03|20250331|CNSS mars|666666||||||
+VT|Ventes|00016|20250315|709700|RRR accordés clients|||AV001|20250315|Remise client|500000||||||
+AC|Achats|00017|20250320|609100|RRR obtenus fournisseurs|FOURN001||AV002|20250320|Remise fournisseur||400000|||||
+OD|Op. diverses|00018|20250331|658100|Pénalités et amendes fiscales DGI|||AMEN01|20250331|Amende fiscale DGI pénalité|500000||||||
+OD|Op. diverses|00019|20250331|671000|Charges HAO — cession matériel|||HAO01|20250331|Charge HAO non déductible|800000||||||
+OD|Op. diverses|00020|20250331|681730|Dot. provisions litige non déductible|||PROV01|20250331|Provision litige non déductible|1000000||||||
+OD|Op. diverses|00021|20250331|695000|Impôt sur les sociétés 2024|||IS01|20250331|IS comptabilisé 695|500000||||||
+OD|Op. diverses|00022|20250331|664800|Intérêts emprunt intragroupe|||INT01|20250331|Intérêts groupe Art.39|1200000||||||
+OD|Op. diverses|00023|20250331|623800|Dons et libéralités GDIZ|||DON01|20250331|Don libéralité|400000||||||
+VT|Ventes|00024|20250331|761000|Revenus participations dividendes|||DIV02|20250331|Dividendes mère-fille 761||1000000|||||
+OD|Op. diverses|00025|20250331|781000|Reprises provisions non imposables|||REP01|20250331|Reprise provision ND 781||700000|||||

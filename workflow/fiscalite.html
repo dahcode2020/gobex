@@ -1,0 +1,895 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Workflow Fiscalité — 5 Étapes Intelligentes • GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb;--fisc:#1976d2}body{font-family:Roboto;background:var(--light);min-height:100vh}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:300px;z-index:1000;overflow-y:auto}.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{font-family:Exo;font-weight:800;font-size:22px;color:#fff}.sidebar-logo span{color:var(--accent)}.menu-section{padding:14px 24px 6px;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,0.45);font-weight:700;margin-top:8px}.menu-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:rgba(255,255,255,0.75);text-decoration:none;border-left:3px solid transparent;font-size:13px;transition:.2s;cursor:pointer}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}.main{margin-left:300px;padding:20px}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:18px;border:1px solid #eef2f6;transition:.3s}.stepper{display:flex;gap:8px;overflow-x:auto;padding:6px 0}.step-pill{flex:1;min-width:140px;border-radius:14px;padding:12px;border:1px solid #e2e8f0;background:#fff;text-align:left;position:relative;cursor:pointer;opacity:0.6;transition:.2s}.step-pill.active{opacity:1;border-color:var(--fisc);background:#e3f2fd;box-shadow:0 6px 20px rgba(25,118,210,0.15)}.step-pill.done{opacity:1;border-color:#86efac;background:#f0fdf4}.step-pill .num{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;background:#f1f5f9;color:#0A2F5E}.step-pill.active .num{background:var(--fisc);color:#fff}.step-pill.done .num{background:#198754;color:#fff}.step-content{display:none}.step-content.active{display:block}.case-vide{border:1px solid #fecaca;background:#fff5f5;border-radius:10px;padding:10px;margin-bottom:8px}.case-ok{border:1px solid #bbf7d0;background:#f0fdf4;border-radius:10px;padding:10px;margin-bottom:8px}.alerte-c{border:2px solid #dc3545;background:#fff5f5;border-radius:12px;padding:14px}.rule-badge{font-size:10px;padding:3px 6px;border-radius:50px;background:#0A2F5E;color:#FFB81C;border:1px solid #FFB81C}.trace-item{font-size:11px;border-left:3px solid var(--fisc);padding:6px 10px;background:#f8fafc;margin-bottom:6px;border-radius:0 8px 8px 0}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}</style></head><body>
+<div class="sidebar" id="sidebar"><div class="sidebar-header"><div class="sidebar-logo">GOBEX <span>WORKFLOW</span></div><div style="font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,0.5);">Indépendant • Fiscalité 5 étapes</div><div class="mt-3 d-flex gap-2 align-items-center"><span class="badge" style="background:#1976d2;color:#fff;font-size:10px;"><i class="bi bi-calculator me-1"></i>FISCALITÉ</span><span class="badge bg-warning text-dark" style="font-size:10px;">5 ÉTAPES</span></div><div class="mt-2"><small style="color:rgba(255,255,255,0.6);">RB/ABC/15A3265 • CGI 2026</small></div></div>
+<div class="menu-section">Workflow 5 étapes</div>
+<a href="index.html" class="menu-item"><i class="bi bi-diagram-3"></i> Hub</a>
+<a href="fiscalite.html" class="menu-item active" style="border-left-color:#1976d2;background:rgba(25,118,210,0.15);"><i class="bi bi-calculator"></i> Fiscalité <span class="badge bg-success ms-auto" style="font-size:10px;">LIVE</span></a>
+<div style="padding:8px 24px;"><div class="d-flex flex-column gap-1 small" style="color:rgba(255,255,255,0.7);font-size:11px;"><span><span class="badge bg-light text-dark" style="font-size:9px;">1</span> Qualification</span><span><span class="badge bg-light text-dark" style="font-size:9px;">2</span> RuleBase</span><span><span class="badge bg-light text-dark" style="font-size:9px;">3</span> Échéanciers</span><span><span class="badge bg-light text-dark" style="font-size:9px;">4</span> Diagnostic</span><span><span class="badge bg-light text-dark" style="font-size:9px;">5</span> Traçabilité</span><span class="mt-1"><a href="calcul-impots.html" style="color:#FFB81C;text-decoration:none;"><span class="badge" style="background:#7c3aed;font-size:9px;">6</span> Calcul moteurs →</a></span></div></div>
+<a href="calcul-impots.html" class="menu-item" style="border-left-color:#7c3aed;"><i class="bi bi-cpu"></i> Calcul moteurs <span class="badge ms-auto" style="background:#7c3aed;font-size:9px;">34</span></a>
+<div class="menu-section">Indépendant</div>
+<a href="../admin/executive-manager.html" class="menu-item"><i class="bi bi-shield-check"></i> Portail Manager</a>
+<a href="../admin/crm.html" class="menu-item"><i class="bi bi-people"></i> CRM</a>
+<a href="../index.html" class="menu-item"><i class="bi bi-globe"></i> Site</a>
+<a href="#" onclick="logout()" class="menu-item" style="color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+<div style="padding:16px 24px;"><div class="p-3 rounded-3" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);"><small class="text-white-50"><i class="bi bi-shield-lock me-1"></i> Accès: Admin / désigné</small><br><small style="color:#FFB81C;" id="accessLbl">Vérification...</small></div></div>
+</div>
+<div class="main">
+<div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index:1080"></div>
+<div class="topbar"><div class="d-flex align-items-center gap-3"><button class="btn btn-light d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button><div><h5 class="mb-0" style="font-family:Exo;font-weight:800;color:#0A2F5E;letter-spacing:-0.5px;"><i class="bi bi-magic me-2" style="color:#1976d2;"></i>Workflow Fiscalité — 5 Étapes Intelligentes</h5><small class="text-muted">CGI Bénin versionné • Aucune règle en dur • Traçable Art. par Art. • Détaché du site</small></div></div><div class="d-flex gap-2 align-items-center flex-wrap"><span class="badge" style="background:#0A2F5E;color:#FFB81C;border:1px solid #FFB81C;">CGI 2026 • LF 2025-22</span><span class="badge bg-light text-dark border" id="authBadge">—</span><a href="index.html" class="btn btn-outline-dark rounded-pill btn-sm"><i class="bi bi-diagram-3 me-1"></i> Hub</a></div></div>
+
+<div id="accessGate" class="stat-card d-none mb-3" style="border:2px solid #dc3545;background:#fff5f5;"><div class="d-flex gap-3"><div style="width:44px;height:44px;border-radius:12px;background:#fee2e2;color:#dc3545;display:flex;align-items:center;justify-content:center;"><i class="bi bi-shield-lock-fill"></i></div><div><h6 style="color:#dc3545;">Accès restreint</h6><p class="small text-muted">Bouton Workflow réservé admin/désigné. <span id="gateUser"></span></p><a href="../admin/index.html" class="btn btn-dark-gobex btn-sm rounded-pill">Se connecter</a></div></div></div>
+
+<!-- Stepper -->
+<div class="stat-card mb-3"><div class="stepper" id="stepper"></div><div class="d-flex gap-2 mt-3 align-items-center"><div class="progress flex-grow-1" style="height:6px;background:#e2e8f0;"><div class="progress-bar" id="stepProgress" style="width:20%;background:#1976d2;"></div></div><small class="text-muted" id="stepLabel">Étape 1/5</small></div></div>
+
+<!-- ÉTAPE 1 -->
+<div id="pane1" class="step-content active">
+<div class="row g-3">
+<div class="col-lg-5"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-folder2-open me-2 text-primary"></i>1. Choix du dossier</h6><div class="d-flex gap-2 align-items-end"><div class="flex-grow-1"><label class="form-label small fw-bold mt-2">Dossier</label><select id="selDossier" class="form-select" onchange="onDossierChange()"><option value="">— Sélectionner dossier —</option></select></div><button class="btn btn-outline-dark btn-sm mb-1" onclick="initDossiers(); toast('Liste rafraîchie','—','success')" title="Rafraîchir la liste"><i class="bi bi-arrow-clockwise"></i></button></div><small class="text-muted" style="font-size:11px;">Depuis <code>gobex_exec_dossiers</code> — filtre fiscalité insensible à la casse, fallback tous dossiers si aucun Fiscalité. <a href="#" onclick="createDemoFisc(); return false;" style="color:#0A2F5E;text-decoration:underline;">Créer démo</a></small><div class="mt-3 p-3 bg-light rounded-3" id="dossierInfo" style="font-size:12px;">Sélectionnez un dossier.</div><div class="d-flex gap-2 mt-3"><button class="btn btn-main rounded-pill btn-sm" onclick="createDemoFisc()"><i class="bi bi-plus-lg me-1"></i> Dossier démo Fiscalité</button><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="qualifierFiche()"><i class="bi bi-magic me-1"></i> Qualifier</button></div></div>
+<div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-person-badge me-2"></i>Fiche client — Infos utiles</h6><div id="ficheInfo" class="small">—</div></div></div>
+<div class="col-lg-7">
+<div class="stat-card"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0" style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-exclamation-triangle me-2 text-warning"></i>Cases vides à fort impact</h6><span class="badge bg-light text-dark border" id="scoreBadge">Score —</span></div><div id="casesVides" class="mt-3">—</div><small class="text-muted" style="font-size:11px;">Toute case vide bloque une règle CGI — article traçable.</small><div id="editCasesForm" class="mt-3 p-3 border rounded-3 d-none" style="background:#f8fafc;"></div></div>
+<div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-question-circle me-2"></i>Compléments nécessaires</h6><div id="complements" class="small">—</div><div class="d-flex gap-2 mt-2"><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="saveComplements()"><i class="bi bi-save me-1"></i> Enregistrer compléments</button><small class="text-muted align-self-center" id="compFeedback"></small></div></div>
+<div class="stat-card mt-3"><h6 style="font-family:Exo;font-weight:700;font-size:13px;"><i class="bi bi-shield-check me-2 text-success"></i>Qualification & Statut d'existence</h6><div id="qualification" class="small">—</div><div id="alerteCasC" class="mt-2 d-none"></div><div class="d-flex gap-2 mt-3"><button class="btn btn-dark-gobex rounded-pill btn-sm" onclick="validerEtape1()"><i class="bi bi-check-lg me-1"></i> Valider Étape 1 → Charger RuleBase</button><span class="small text-muted align-self-center" id="etape1Feedback"></span></div></div>
+</div>
+</div>
+</div>
+
+<!-- ÉTAPE 2 -->
+<div id="pane2" class="step-content">
+<div class="stat-card"><div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><h6 class="mb-0" style="font-family:Exo;font-weight:700;"><i class="bi bi-database me-2 text-primary"></i>2. Base de règles versionnée</h6><div class="d-flex gap-2 align-items-center"><select id="ruleYear" class="form-select form-select-sm" style="width:120px;" onchange="chargerRuleBase(true)"><option value="2024">CGI 2024</option><option value="2025">CGI 2025</option><option value="2026" selected>CGI 2026</option><option value="2027">CGI 2027</option></select><span class="badge bg-light text-dark border" id="ruleVersion">—</span><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="chargerRuleBase(true)"><i class="bi bi-arrow-clockwise me-1"></i> Recharger</button><button class="btn btn-dark-gobex rounded-pill btn-sm" onclick="goStep(3)"><i class="bi bi-arrow-right me-1"></i> Étape 3</button></div></div><div class="alert alert-success small mt-3 mb-2" style="border:1px solid #86efac;"><i class="bi bi-check-circle-fill me-1 text-success"></i><strong>RuleBase active — CGI Bénin <span id="ruleYearLabel">2026</span></strong> : aucun taux/seuil codé en dur. Tout lu depuis <code id="rulePath">docs/cgibenin-2026.json</code> (version <span id="ruleVersion2">—</span>) — traçable <code>CGI Art.XXX</code> + <code>LF 2025-22</code>. <a href="#" onclick="voirRuleJSON(); return false;" style="color:#0A2F5E;text-decoration:underline;">Voir JSON</a></div><div class="row g-3 mt-1"><div class="col-md-4"><div class="p-3 bg-light rounded-3"><small class="text-muted fw-bold" style="font-size:10px;letter-spacing:0.8px;">BARÈMES</small><div id="reglesBaremes" class="small mt-2">—</div></div></div><div class="col-md-4"><div class="p-3 bg-light rounded-3"><small class="text-muted fw-bold" style="font-size:10px;letter-spacing:0.8px;">SEUILS & PLANCHERS</small><div id="reglesSeuils" class="small mt-2">—</div></div></div><div class="col-md-4"><div class="p-3 bg-light rounded-3"><small class="text-muted fw-bold" style="font-size:10px;letter-spacing:0.8px;">OBLIGATIONS & PÉNALITÉS</small><div id="reglesObligations" class="small mt-2">—</div></div></div></div><div class="mt-3 p-3 border rounded-3" style="background:#f8fafc;"><small class="text-muted fw-bold" style="font-size:11px;">Exemple de traçabilité (règle → article)</small><div id="reglesTrace" class="small mt-2">—</div></div></div>
+</div>
+
+<!-- ÉTAPE 3 -->
+<div id="pane3" class="step-content">
+<div class="stat-card"><div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><h6 class="mb-0" style="font-family:Exo;font-weight:700;"><i class="bi bi-calendar-week me-2 text-primary"></i>3.1 Échéancier général DGI — exhaustif <span class="badge bg-primary ms-2" id="countGeneral">—</span></h6><span class="badge bg-light text-dark border">CGI 2026 • 34 impôts (L1/L2/L3)</span></div><small class="text-muted">Calendrier national issu du CGI/LF en vigueur — tous contribuables concernés. Source <code>echeancier_general_exhaustif</code> (L1 directs / L2 indirects / L3 enregistrement) — traçable Art. par Art.</small>
+<div class="d-flex gap-2 mt-3 flex-wrap align-items-center">
+  <div class="btn-group btn-group-sm" role="group">
+    <button class="btn btn-dark active" onclick="filtrerGeneral('tous',this)">Tous (34)</button>
+    <button class="btn btn-outline-dark" onclick="filtrerGeneral('L1',this)">L1 Directs (17)</button>
+    <button class="btn btn-outline-dark" onclick="filtrerGeneral('L2',this)">L2 Indirects (15)</button>
+    <button class="btn btn-outline-dark" onclick="filtrerGeneral('L3',this)">L3 Enreg. (2)</button>
+  </div>
+  <input type="text" id="searchGeneral" class="form-control form-control-sm" style="width:240px;" placeholder="Filtrer (ex: TVA, IS, Art.51...)" oninput="filtrerGeneral()">
+  <span class="badge bg-warning text-dark" id="filterInfo">—</span>
+</div>
+<div class="table-responsive mt-3" style="max-height:440px;overflow-y:auto;border:1px solid #e2e8f0;border-radius:10px;"><table class="table table-sm small table-hover mb-0"><thead class="table-light" style="position:sticky;top:0;z-index:1;"><tr><th style="min-width:150px;">Livre / Titre</th><th>Obligation</th><th>Échéance</th><th>Art. CGI</th><th>Périod.</th></tr></thead><tbody id="echeGeneral"></tbody></table></div>
+<small class="text-muted">Source: <code>docs/cgibenin-2026.json • echeancier_general_exhaustif</code> — aucun ajout en dur.</small>
+</div>
+<div class="row g-3 mt-1">
+<div class="col-lg-6"><div class="stat-card"><h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-calendar-check me-2 text-success"></i>3.2 Échéancier spécifique au dossier</h6><small class="text-muted">Filtré par régime / type / activité / effectif / statut (Cas A/B/C).</small><div class="table-responsive mt-3"><table class="table table-sm small"><thead class="table-light"><tr><th>Obligation</th><th>Échéance perso</th><th>Art.</th><th>Base</th></tr></thead><tbody id="echeSpecifique"></tbody></table></div></div></div>
+<div class="col-lg-6"><div class="stat-card" style="border:1px solid #0A2F5E;"><h6 style="font-family:Exo;font-weight:700;"><i class="bi bi-arrow-left-right me-2"></i>3.3 Confrontation</h6><div id="confrontation" class="small">—</div><div class="d-flex gap-2 mt-3"><button class="btn btn-dark-gobex rounded-pill btn-sm" onclick="goStep(4)"><i class="bi bi-arrow-right me-1"></i> Diagnostiquer</button><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="exportEcheanciers()"><i class="bi bi-download me-1"></i> Exporter JSON</button></div></div></div>
+</div>
+</div>
+
+<!-- ÉTAPE 4 -->
+<div id="pane4" class="step-content">
+<div class="stat-card"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0" style="font-family:Exo;font-weight:700;"><i class="bi bi-clipboard-check me-2 text-success"></i>4. Diagnostic & recommandations</h6><span class="badge bg-warning text-dark" id="diagCount">—</span></div><div class="row g-3 mt-2"><div class="col-md-4"><div class="p-3 rounded-3" style="background:#e3f2fd;border:1px solid #90caf9;"><small class="text-muted fw-bold" style="font-size:10px;">OBLIGATIONS IDENTIFIÉES</small><div id="diagObligations" class="small mt-2">—</div></div></div><div class="col-md-4"><div class="p-3 rounded-3" style="background:#fff5f5;border:1px solid #fecaca;"><small class="text-muted fw-bold" style="font-size:10px;">RISQUES DÉTECTÉS</small><div id="diagRisques" class="small mt-2">—</div></div></div><div class="col-md-4"><div class="p-3 rounded-3" style="background:#f0fdf4;border:1px solid #bbf7d0;"><small class="text-muted fw-bold" style="font-size:10px;">ACTIONS RECOMMANDÉES</small><div id="diagActions" class="small mt-2">—</div></div></div></div><div class="d-flex gap-2 mt-3"><button class="btn btn-dark-gobex rounded-pill btn-sm" onclick="goStep(5)"><i class="bi bi-arrow-right me-1"></i> Voir traçabilité</button><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="notifierClientDiag()"><i class="bi bi-whatsapp me-1"></i> Notifier client (Cas C)</button></div></div>
+</div>
+
+<!-- ÉTAPE 5 -->
+<div id="pane5" class="step-content">
+<div class="stat-card"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0" style="font-family:Exo;font-weight:700;"><i class="bi bi-shield-check me-2 text-success"></i>5. Sortie & traçabilité</h6><div class="d-flex gap-2"><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="exportTrace()"><i class="bi bi-download me-1"></i> Export audit JSON</button><button class="btn btn-dark-gobex rounded-pill btn-sm" onclick="cloturerWorkflow()"><i class="bi bi-check-circle me-1"></i> Clôturer</button></div></div><p class="small text-muted mt-2">Chaque décision : <code>entrée → règle → Art. CGI → année LF → résultat</code>. Aucune décision sans article.</p><div id="traceList" class="mt-3">—</div><div class="mt-3 p-3 border rounded-3" style="background:#f8fafc;"><small class="text-muted">Dossier audité : <span id="traceDossier">—</span> • RuleBase : <span id="traceRule">—</span></small></div></div>
+<div class="stat-card mt-3" style="border:2px solid #0A2F5E;">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><h6 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Fiche de déclaration à soumettre à l'entreprise</h6><span class="badge bg-light text-dark border">PDF • A4 • GOBEX</span></div>
+  <p class="small text-muted mt-2">Générez la fiche officielle à remettre à l'entreprise (après traçabilité) — aperçu avant impression, puis PDF imprimable avec en-tête GOBEX, cachet et signatures.</p>
+  <div class="d-flex gap-2 flex-wrap mt-3">
+    <button class="btn btn-dark-gobex rounded-pill" onclick="genererFicheDeclaration()"><i class="bi bi-file-earmark-text me-1"></i> Générer la fiche</button>
+    <button class="btn btn-outline-dark rounded-pill" onclick="apercuFiche()"><i class="bi bi-eye me-1"></i> Aperçu avant impression</button>
+    <button class="btn btn-outline-dark rounded-pill" onclick="imprimerFiche()"><i class="bi bi-printer me-1"></i> Imprimer</button>
+    <button class="btn btn-primary rounded-pill" onclick="telechargerFichePDF()"><i class="bi bi-download me-1"></i> Télécharger PDF</button>
+  </div>
+  <small class="text-muted d-block mt-2"><i class="bi bi-info-circle me-1"></i>La fiche reprend : entête GOBEX (RB/ABC/15A3265 • IFU 1201502844807), dossier/entreprise, qualification IS/IBA/TPS/TVA, échéanciers spécifique, diagnostic, traçabilité et signatures.</small>
+</div>
+<div class="stat-card mt-3" style="border:2px solid #7c3aed; background:#f5f3ff;">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><h6 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-cpu me-2" style="color:#7c3aed;"></i>Étape 6 — Calcul des moteurs (34 impôts)</h6><span class="badge" style="background:#7c3aed;">P1+P2+P3</span></div>
+  <p class="small text-muted mt-2">Après les 5 étapes de déclaration, passez au <strong>calcul automatique des 34 impôts</strong> (IS/IBA/TPS/TVA/AIB, TAFA, accises, enregistrement…) — FEC/Balance/MECeF/Livre parsés live, 100% RuleBase.</p>
+  <div class="d-flex gap-2 flex-wrap mt-2">
+    <a href="calcul-impots.html" class="btn rounded-pill text-white" style="background:#7c3aed; border-color:#7c3aed;"><i class="bi bi-arrow-right-circle me-1"></i> Passer au calcul des moteurs →</a>
+    <a href="calcul-impots.html?v=debug" class="btn btn-outline-dark rounded-pill" target="_blank"><i class="bi bi-box-arrow-up-right me-1"></i> Ouvrir dans nouvel onglet</a>
+    <span class="small text-muted align-self-center">Le dossier qualifié est repris automatiquement</span>
+  </div>
+  <small class="text-muted d-block mt-2"><i class="bi bi-info-circle me-1"></i>Astuce : si la page reste blanche, désactive ton bloqueur pour <code>*.e2b.app</code> ou ouvre <code>workflow/debug-moteurs.html</code> (statique).</small>
+</div>
+</div>
+
+<div class="d-flex justify-content-between mt-3"><button class="btn btn-light rounded-pill" onclick="prevStep()"><i class="bi bi-arrow-left me-1"></i> Précédent</button><button class="btn btn-dark-gobex rounded-pill" onclick="nextStep()">Suivant <i class="bi bi-arrow-right ms-1"></i></button></div>
+
+</div>
+<!-- Modal Aperçu Fiche -->
+<div class="modal fade" id="ficheModal" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content"><div class="modal-header" style="background:#0A2F5E;color:#FFB81C;"><h5 class="modal-title" style="font-family:Exo;font-weight:700;"><i class="bi bi-file-earmark-pdf me-2"></i>Aperçu — Fiche de déclaration GOBEX</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body p-0" style="background:#f4f7fb;"><div id="ficheApercu" class="p-3"></div></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal">Fermer</button><button class="btn btn-outline-dark" onclick="imprimerFiche()"><i class="bi bi-printer me-1"></i> Imprimer</button><button class="btn btn-primary" onclick="telechargerFichePDF()"><i class="bi bi-download me-1"></i> Télécharger PDF</button></div></div></div></div>
+<div id="fichePrintable" class="d-none"></div>
+<style>
+@media print {
+  body * { visibility: hidden; }
+  #fichePrintable, #fichePrintable * { visibility: visible; }
+  #fichePrintable { position: absolute; left: 0; top: 0; width: 100%; }
+}
+@page { size: A4; margin: 12mm 10mm 12mm 10mm; }
+@media print {
+  html, body { background:#fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body * { visibility: hidden !important; }
+  #fichePrintable, #fichePrintable * { visibility: visible !important; }
+  #fichePrintable { position: absolute !important; left: 0; top: 0; width: 100% !important; margin:0 !important; padding:0 !important; display:block !important; }
+  .fiche-pdf { box-shadow:none !important; border:none !important; border-radius:0 !important; }
+  .no-print { display:none !important; }
+}
+.fiche-pdf { background:#fff; color:#1e293b; font-family:Roboto, sans-serif; padding:22px 24px; border:1px solid #e2e8f0; border-radius:12px; max-width:210mm; margin:0 auto; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.fiche-pdf h2 { font-family:Exo; font-weight:800; color:#0A2F5E; margin-bottom:2px; font-size:18px; letter-spacing:-0.3px; }
+.fiche-pdf h5 { font-family:Exo; font-weight:800; letter-spacing:0.8px; }
+.fiche-pdf h6 { font-family:Exo; font-size:11px; letter-spacing:0.3px; }
+.fiche-pdf .entete { border-bottom:3px solid #FFB81C; padding-bottom:10px; margin-bottom:14px; }
+.fiche-pdf .badge-pdf { font-size:8.5px; padding:2px 7px; border-radius:50px; background:#0A2F5E; color:#FFB81C; border:1px solid #FFB81C; font-weight:700; letter-spacing:0.3px; }
+.fiche-pdf table { width:100%; font-size:10.5px; border-collapse:collapse; table-layout:fixed; word-wrap:break-word; }
+.fiche-pdf table th { background:#0A2F5E; color:#FFB81C; padding:5px 6px; text-align:left; font-size:9px; font-weight:700; letter-spacing:0.4px; text-transform:uppercase; -webkit-print-color-adjust: exact; }
+.fiche-pdf table td { padding:4px 6px; border:1px solid #e2e8f0; vertical-align:top; }
+.fiche-pdf table tr { page-break-inside: avoid; }
+.fiche-pdf .signatures { display:flex; justify-content:space-between; margin-top:22px; gap:24px; page-break-inside: avoid; }
+.fiche-pdf .sign-box { flex:1; border:1px solid #e2e8f0; border-top:3px solid #0A2F5E; padding:12px 10px 18px; text-align:center; font-size:10.5px; border-radius:8px; background:#f8fafc; min-height:110px; }
+.fiche-pdf .footer-pdf { margin-top:14px; padding:8px 10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; font-size:8.5px; color:#64748b; text-align:center; }
+#ficheApercu .fiche-pdf { box-shadow:0 10px 30px rgba(0,0,0,0.12); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+let currentStep=1, selectedDossierId=null, selectedClient=null, ficheQualifiee=null, ruleBase=null, echeGeneral=[], echeSpecifique=[], confrontation={}, diagnostic=null, traceLog=[];
+
+function currentUser(){ return localStorage.getItem('gobex_admin_user')||localStorage.getItem('gobex_admin_email')||'admin'; }
+function isAuthed(){ return localStorage.getItem('gobex_admin_auth')==='true'; }
+function isAdmin(){ const u=currentUser().toLowerCase(); return u.includes('admin')||localStorage.getItem('gobex_admin_role')==='admin'||u==='godwin'||u==='gobex'; }
+function hasAccess(){ if(!isAuthed()) return false; if(isAdmin()) return true; try{const acc=JSON.parse(localStorage.getItem('gobex_workflow_access')||'{}'); return (acc.fiscalite||[]).includes(currentUser());}catch(e){return false;} }
+function activerEditionDemo(){ localStorage.setItem('gobex_admin_auth','true'); localStorage.setItem('gobex_admin_role','admin'); if(!localStorage.getItem('gobex_admin_user')) localStorage.setItem('gobex_admin_user','demo'); toast('Mode démo activé','Édition débloquée — admin/désigné','success'); try{ document.getElementById('accessGate')?.classList.add('d-none'); }catch(e){} init(); if(selectedDossierId) qualifierFiche(); }
+function toast(t,m,type='success'){ const c=document.getElementById('toastContainer'); const bg=type==='success'?'#0A2F5E':type==='warning'?'#f59e0b':'#dc3545'; const id='t'+Date.now(); c.insertAdjacentHTML('beforeend', `<div id="${id}" class="toast show border-0 mb-2" style="background:${bg};color:#fff;min-width:320px;border-radius:14px;"><div class="d-flex"><div class="toast-body d-flex gap-2"><i class="bi bi-check-circle-fill"></i><div><strong class="small">${t}</strong><br><small>${m}</small></div></div><button class="btn-close btn-close-white me-2 m-auto" onclick="document.getElementById('${id}').remove()"></button></div></div>`); setTimeout(()=>document.getElementById(id)?.remove(),5000); }
+function logout(){ localStorage.removeItem('gobex_admin_auth'); location.href='../admin/index.html'; }
+
+function renderStepper(){
+  const labels=['1. Qualification','2. RuleBase','3. Échéanciers','4. Diagnostic','5. Traçabilité'];
+  document.getElementById('stepper').innerHTML=labels.map((l,i)=>{
+    const n=i+1; const cls=n===currentStep?'active': n<currentStep?'done':''; const icon=n<currentStep?'bi-check-lg': 'bi-'+(n===1?'person-badge': n===2?'database': n===3?'calendar-week': n===4?'clipboard-check':'shield-check');
+    return `<button class="step-pill ${cls}" onclick="goStep(${n})"><div class="d-flex align-items-center gap-2"><span class="num">${n<currentStep?'✓':n}</span><strong style="font-size:12px;">${l}</strong></div><small class="text-muted" style="font-size:11px;"><i class="bi ${icon} me-1"></i>${n===1?'Dossier & fiche': n===2?'CGI versionné': n===3?'Général vs Spécifique': n===4?'Rapport': 'Audit'}</small></button>`;
+  }).join('');
+  document.getElementById('stepProgress').style.width=(currentStep/5*100)+'%';
+  document.getElementById('stepLabel').textContent=`Étape ${currentStep}/5`;
+  document.querySelectorAll('.step-content').forEach(el=> el.classList.remove('active'));
+  document.getElementById('pane'+currentStep)?.classList.add('active');
+}
+function goStep(n){ currentStep=Math.max(1,Math.min(5,n)); renderStepper(); if(n===2) chargerRuleBase(); if(n===3) genererEcheanciers(); if(n===4) genererDiagnostic(); if(n===5) renderTrace(); window.scrollTo({top:0,behavior:'smooth'}); }
+function nextStep(){ goStep(currentStep+1); }
+function prevStep(){ goStep(currentStep-1); }
+
+// Helpers
+function getDossiers(){ try{return JSON.parse(localStorage.getItem('gobex_exec_dossiers')||'[]')}catch(e){return []}}
+function getClients(){ try{return JSON.parse(localStorage.getItem('gobex_crm_clients')||'[]')}catch(e){return []}}
+function getAgents(){ try{return JSON.parse(localStorage.getItem('gobex_exec_agents')||'[]')}catch(e){return []}}
+function setDossiers(d){ localStorage.setItem('gobex_exec_dossiers', JSON.stringify(d)); }
+
+// Init: populate dossiers select (fiscalité only) — robuste + fallback
+function initDossiers(){
+  const sel=document.getElementById('selDossier');
+  if(!sel) return;
+  const all=getDossiers();
+  // Filtre fiscalité insensible à la casse + substring "fiscal" (couvre Département Fiscalité, Fiscalité, fiscalité)
+  let dossiers = all.filter(d=> {
+    const deps = (d.departements||[]).join(' ').toLowerCase();
+    const doms = (d.domaines||[]).join(' ').toLowerCase();
+    const preocs = (d.preoccupations||[]).map(p=> (p.domaine||'').toLowerCase()).join(' ');
+    const txt = (deps+' '+doms+' '+preocs);
+    return txt.includes('fiscal');
+  });
+  let fallback=false;
+  if(dossiers.length===0 && all.length>0){
+    dossiers=all;
+    fallback=true;
+  }
+  sel.disabled=false;
+  sel.style.pointerEvents='auto';
+  sel.style.opacity='1';
+  sel.innerHTML='<option value="">— Sélectionner dossier —</option>' + dossiers.map(d=> `<option value="${d.id}">${d.ref||d.id} • ${d.clientName} • ${d.statut} • Éch. ${d.echeance||'—'}</option>`).join('');
+  if(dossiers.length===0) sel.innerHTML+= '<option disabled>Aucun dossier — cliquez "Dossier démo Fiscalité"</option>';
+  else if(fallback) sel.innerHTML+= '<option disabled style="color:#f59e0b;">— Aucun dossier Fiscalité pur : affichage de tous les dossiers —</option>';
+  // Debug
+  console.log('[Workflow] initDossiers: total', all.length, 'fiscal', dossiers.length, 'fallback', fallback);
+  if(fallback) toast('Aucun dossier Fiscalité pur', all.length+' dossier(s) affiché(s) — tous domaines', 'warning');
+}
+function onDossierChange(){
+  try{
+    const sel=document.getElementById('selDossier');
+    selectedDossierId=sel.value;
+    console.log('[Workflow] onDossierChange', selectedDossierId);
+    if(!selectedDossierId){ document.getElementById('dossierInfo').innerHTML='<span class="text-muted">Sélectionnez un dossier pour afficher sa fiche.</span>'; document.getElementById('ficheInfo').innerHTML='—'; document.getElementById('casesVides').innerHTML='—'; document.getElementById('editCasesForm').classList.add('d-none'); return; }
+    const d=getDossiers().find(x=>x.id===selectedDossierId);
+    if(!d){ document.getElementById('dossierInfo').innerHTML='<span class="text-danger">Dossier introuvable — rafraîchissez la liste.</span>'; toast('Dossier introuvable','Rafraîchissez','warning'); return; }
+    document.getElementById('dossierInfo').innerHTML=`<strong>${d.clientName}</strong> <span class="badge bg-light text-dark border">${d.ref||d.id}</span><br><small class="text-muted">${(d.preoccupations||[]).map(p=>p.titre).join(' • ')||'—'}</small><br><span class="badge bg-light text-dark border">Statut ${d.statut}</span> <span class="badge bg-warning text-dark">Éch. ${d.echeance||'—'}</span> <span class="badge bg-light text-dark border">Av. ${d.avancement||0}%</span>`;
+    const clients=getClients();
+    selectedClient= (d.clientIdx!==undefined && clients[d.clientIdx]) ? clients[d.clientIdx] : clients.find(c=> c.name===d.clientName) || null;
+    if(!selectedClient) console.warn('Fiche client non trouvée pour', d.clientName, 'idx', d.clientIdx);
+    renderFicheInfo();
+    qualifierFiche();
+    toast('Dossier sélectionné', d.ref+' • '+d.clientName,'success');
+  }catch(e){
+    console.error('onDossierChange error', e);
+    toast('Erreur sélection', e.message,'warning');
+  }
+}
+function renderFicheInfo(){
+  if(!selectedClient){ document.getElementById('ficheInfo').innerHTML='<span class="text-danger">Fiche client introuvable — vérifiez CRM.</span>'; return; }
+  const c=selectedClient;
+  document.getElementById('ficheInfo').innerHTML=`
+    <div class="d-flex justify-content-between"><strong>${c.name}</strong><span class="badge bg-light text-dark border">${c.ref||''}</span></div>
+    <div class="small text-muted">IFU: <strong>${c.ifu||'<span class="text-danger">— vide</span>'}</strong> • RCCM: ${c.rccm||'—'} • Type: ${c.typeClient||c.type||'—'}</div>
+    <div class="small text-muted">Forme: ${c.formeJuridique||'—'} • Activité: ${c.activite||c.secteur||'—'} • CA: ${c.ca? (c.ca/1000000).toFixed(1)+'M':'—'} • Effectif: ${c.effectif||c.employes||'—'}</div>
+    <div class="small text-muted">Connu DGI: ${c.connuDGI===false? '<span class="badge bg-danger">Non</span>' : c.connuDGI===true? '<span class="badge bg-success">Oui</span>' : '—'} • BE: ${(c.beneficiairesEffectifs||[]).length||'—'}</div>
+  `;
+}
+function createDemoFisc(){
+  const clients=getClients(); if(clients.length===0){ toast('Aucun client','Créez d\'abord un client CRM','warning'); return; }
+  const idx=0; const cl=clients[idx]; const ref='DOS-'+new Date().getFullYear()+'-'+String(getDossiers().length+34).padStart(3,'0'); const ech=new Date(); ech.setDate(10); if(ech<new Date()) ech.setMonth(ech.getMonth()+1);
+  const d={ id:ref, ref:ref, clientIdx:idx, clientName:cl.name, clientRef:cl.ref, dateReception:new Date().toISOString(), secretaire:currentUser(), preoccupations:[{id:'P'+Date.now(), titre:'Déclaration TVA '+ech.toLocaleDateString('fr-FR',{month:'long'}), domaine:'Département Fiscalité'}], domaines:['Département Fiscalité'], departements:['Département Fiscalité'], statut:'Reçu', priorite:'Urgente', echeance:ech.toISOString().split('T')[0], avancement:10, versions:[{v:1,date:new Date().toISOString(), dept:'Secrétariat', auteur:currentUser(), commentaire:'Création', fichiers:[]}], communications:[], historique:[], traitement:{checklist:[]}, workflowFiscalite:0 };
+  const all=getDossiers(); all.unshift(d); setDossiers(all); initDossiers(); document.getElementById('selDossier').value=ref; onDossierChange(); toast('Dossier créé', ref+' • '+cl.name,'success');
+}
+
+// ÉTAPE 1 — Qualification
+function qualifierFiche(){
+  if(!selectedClient){ document.getElementById('casesVides').innerHTML='<span class="text-muted">Sélectionnez d\'abord un dossier.</span>'; return; }
+  const c=selectedClient;
+  const d=getDossiers().find(x=>x.id===selectedDossierId);
+  // Cases vides fort impact — lues depuis RuleBase si dispo, sinon fallback articles
+  const champsCritiques=[
+    {champ:'ifu', label:'IFU', article:'Art.460 (30j)', impact:'bloquant', test:()=> !c.ifu},
+    {champ:'typeEntite', label:'Type entité (PP/PM)', article:'Art.3-4 (IS) / Art.54 (IBA)', impact:'majeur', test:()=> !c.typeEntite && !c.typeClient},
+    {champ:'typeActivite', label:'Type activité (général/BTP/immo...)', article:'Art.64 MFP 1,5%/3%/10%', impact:'majeur', test:()=> !c.activite && !c.secteur},
+    {champ:'regimeFiscal', label:'Régime fiscal', article:'Art.1084-18 / Art.223 seuil 50M', impact:'majeur', test:()=> !c.regime},
+    {champ:'caAnnuel', label:'CA annuel', article:'Art.223 / 1084-18', impact:'bloquant', test:()=> !c.ca && !c.caAnnuel},
+    {champ:'effectifSalarie', label:'Effectif salarié', article:'Art.119 ITS / 191 VPS', impact:'majeur', test:()=> c.effectif===undefined && c.employes===undefined},
+    {champ:'connuDGI', label:'Connu DGI ?', article:'Art.135 AIB 5%', impact:'critique', test:()=> c.connuDGI===undefined},
+  ];
+  let score=100; const vides=[];
+  champsCritiques.forEach(ch=>{
+    if(ch.test()){
+      vides.push(ch);
+      if(ch.impact==='bloquant' || ch.impact==='critique') score-=18; else score-=10;
+    }
+  });
+  score=Math.max(0,score);
+  document.getElementById('scoreBadge').textContent='Score '+score+'/100';
+  document.getElementById('scoreBadge').className= score<50? 'badge bg-danger' : score<80? 'badge bg-warning text-dark' : 'badge bg-success';
+  document.getElementById('casesVides').innerHTML= vides.length? vides.map(v=> `<div class="case-vide"><div class="d-flex justify-content-between"><strong class="small">${v.label} — vide</strong><span class="rule-badge">${v.article}</span></div><small class="text-muted">Impact: <strong>${v.impact}</strong> — à compléter pour règle CGI traçable.</small></div>`).join('') : '<div class="case-ok"><i class="bi bi-check-circle-fill text-success me-1"></i><strong>Fiche complète</strong> — aucune case bloquante.</div>';
+  // Formulaire édition — uniquement admin/désigné
+  const editForm=document.getElementById('editCasesForm');
+  if(vides.length && hasAccess()){
+    editForm.classList.remove('d-none');
+    const canEdit = hasAccess();
+    const valOr = (v, def='')=> v||def;
+    // Génère champs adaptés
+    const fields = vides.map(v=>{
+      if(v.champ==='ifu') return `<div class="mb-2"><label class="form-label small fw-bold mb-1">IFU <span class="rule-badge">Art.460</span></label><input type="text" id="edit_ifu" class="form-control form-control-sm" placeholder="Ex: 3201501234567" value="${valOr(c.ifu)}"></div>`;
+      if(v.champ==='typeEntite') return `<div class="mb-2"><label class="form-label small fw-bold mb-1">Type entité <span class="rule-badge">Art.3-4/54</span></label><select id="edit_typeEntite" class="form-select form-select-sm"><option value="">— Choisir —</option><option value="pp" ${c.type==='pp'?'selected':''}>Personne physique (IBA)</option><option value="pm" ${c.type==='pm'?'selected':''}>Personne morale (IS)</option><option value="ong" ${c.type==='ong'?'selected':''}>ONG / Association</option><option value="ep" ${c.type==='ep'?'selected':''}>Établissement public</option></select></div>`;
+      if(v.champ==='typeActivite') return `<div class="mb-2"><label class="form-label small fw-bold mb-1">Type activité <span class="rule-badge">Art.64</span></label><select id="edit_typeActivite" class="form-select form-select-sm"><option value="">— Choisir —</option><option value="general">Général</option><option value="industriel">Industriel</option><option value="btp">BTP (MFP 3%)</option><option value="immobilier">Immobilier (MFP 10%)</option><option value="station_service">Station-service</option><option value="commerce_general">Commerce général</option><option value="prestation_service">Prestation service</option></select></div>`;
+      if(v.champ==='regimeFiscal') return `<div class="mb-2"><label class="form-label small fw-bold mb-1">Régime fiscal <span class="rule-badge">Art.1084-18</span></label><select id="edit_regime" class="form-select form-select-sm"><option value="">— Choisir —</option><option value="entreprenant">Entreprenant</option><option value="tps">TPS/TPU</option><option value="reel_simplifie">Réel simplifié</option><option value="reel_normal">Réel normal</option></select></div>`;
+      if(v.champ==='caAnnuel') return `<div class="mb-2"><label class="form-label small fw-bold mb-1">CA annuel (F) <span class="rule-badge">Art.223</span></label><input type="number" id="edit_ca" class="form-control form-control-sm" placeholder="Ex: 45000000" value="${valOr(c.ca||c.caAnnuel)}"></div>`;
+      if(v.champ==='effectifSalarie') return `<div class="mb-2"><label class="form-label small fw-bold mb-1">Effectif salarié <span class="rule-badge">Art.119/191</span></label><input type="number" id="edit_effectif" class="form-control form-control-sm" min="0" placeholder="Ex: 3" value="${valOr(c.effectif||c.employes)}"></div>`;
+      if(v.champ==='connuDGI') return `<div class="mb-2"><label class="form-label small fw-bold mb-1">Connu DGI ? <span class="rule-badge">Art.135</span></label><select id="edit_connuDGI" class="form-select form-select-sm"><option value="">— Choisir —</option><option value="true">Oui — connue</option><option value="false">Non — Cas C → AIB 5%</option></select></div>`;
+      return '';
+    }).join('');
+    editForm.innerHTML=`<h6 class="small fw-bold" style="color:#0A2F5E;"><i class="bi bi-pencil-square me-1"></i>Renseigner les informations manquantes <span class="badge bg-warning text-dark ms-2">Admin / désigné</span></h6><p class="small text-muted mb-2">Ces champs à fort impact ont été détectés vides. Renseignez-les pour débloquer le diagnostic CGI.</p>${fields}<div class="d-flex gap-2 mt-3"><button class="btn btn-dark-gobex rounded-pill btn-sm" onclick="saveEditCases()"><i class="bi bi-check-lg me-1"></i> Enregistrer dans fiche client</button><button class="btn btn-light rounded-pill btn-sm" onclick="document.getElementById('editCasesForm').classList.add('d-none')"><i class="bi bi-x-lg me-1"></i> Annuler</button><small class="text-muted align-self-center" id="editFeedback"></small></div>`;
+  } else if(!vides.length){
+    editForm.classList.add('d-none');
+    editForm.innerHTML='';
+  } else {
+    editForm.classList.remove('d-none');
+    editForm.innerHTML=`<div class="alert alert-warning small mb-2"><i class="bi bi-shield-lock me-1"></i><strong>Accès restreint</strong> — seul l'admin ou la personne désignée peut renseigner ces champs.<br><small class="text-muted">Vous voyez ce message car vous n'êtes pas connecté en admin ou non habilité.</small><div class="d-flex gap-2 mt-2"><button class="btn btn-warning btn-sm" onclick="activerEditionDemo()"><i class="bi bi-unlock me-1"></i> Activer l'édition (mode démo)</button><a href="../admin/index.html" class="btn btn-outline-dark btn-sm">Aller au Hub Workflow</a></div></div><div class="small text-muted">Ou demandez à l'admin de vous ajouter dans <code>gobex_workflow_access.fiscalite</code> via le Hub.</div>`;
+  }
+  // Compléments — cochables + renseignables (admin/désigné) — étendu TVA/TPS/Personnes imposables Art.3/54/178
+  const complements=[
+    {q:"Forme / Personne imposable précise (Art.3 IS vs Art.54 IBA)", article:'Art.3 / Art.54-57', input:{id:'comp_personne', type:'select', options:['— Choisir —','IS — SA / SAS / SARL / SCS / Coop (Art.3 §1)','IS — Entreprise publique / morale lucrative (Art.3 §2 a-i)','IS — Sur option : SNC / GIE / participation / civile (Art.3 §3)','IBA — Personne physique lucrative (Art.54)','IBA — Bénéfices indus/commerciaux/artisanaux (Art.55 1)','IBA — Agriculteur/éleveur/pêcheur/prof. libérale/PI (Art.55 2-4)','TPS — IBA avec CA ≤50M (Art.178)'], label:'Catégorie Art.3/54'}},
+    {q:"Assujetti à la TVA ? (seuil 50M Art.223)", article:'Art.223 / 248 bis', input:{id:'comp_tva', type:'select', options:['— Choisir —','Oui — CA >50M → TVA 18% due','Oui — option volontaire TVA','Non — CA ≤50M, non assujetti','Non — exonéré (TVA état, ONG...)','À déterminer par CA'], label:'Statut TVA'}},
+    {q:"Soumis à la TPS ? (CA ≤50M = TPS d'office, Art.178)", article:'Art.178-179', input:{id:'comp_tps', type:'select', options:['— Choisir —','Oui — TPS due (IBA, CA ≤50M, non IS)','Non — CA >50M → IBA (Art.182)','Non — personne IS de droit/option exclue (Art.179)','Exonéré — artiste / agricole / nouvelle 12 mois (Art.180)','À déterminer (CA + personne)'], label:'Statut TPS'}},
+    {q:"Option IS / IBA exercée ? (Art.3 §3 avant 30/11 / Art.181)", article:'Art.3 §3 / Art.181', input:{id:'comp_option', type:'select', options:['— Choisir —','Aucune option','Option IS (avant 30/11, irrévocable)','Option IBA — TPS → IBA (demande à tout moment)','Demande en cours (attente 8j Art.181)'], label:'Option + date demande'}},
+    {q:"Chiffre d'affaires prévisionnel N (si nouvelle)", article:'Art.1084-41', input:{id:'comp_ca_prev', type:'number', placeholder:'Ex: 25000000', label:'Montant prévisionnel (F CFA)'}},
+    {q:'Activité mixte (négoce + autre) ?', article:'Art.1084', input:{id:'comp_mixte_detail', type:'text', placeholder:'Ex: Négoce quincaillerie + prestation service'}},
+    {q:'Marché public >50M en cours ?', article:'Art.248 bis', input:{id:'comp_marche_montant', type:'number', placeholder:'Ex: 80000000', label:'Montant marché (F)'}},
+    {q:'Importations prévues ?', article:'Art.130', input:{id:'comp_import_detail', type:'text', placeholder:'Ex: Marchandises Chine — 1 conteneur'}},
+    {q:'Bénéficiaires effectifs déclarés (Art.462) ?', cond: (c.typeClient||c.type||'').includes('morale') || c.type==='pm', article:'Art.462', input:{id:'comp_be_detail', type:'text', placeholder:'Ex: Registre BE déposé le 15/09 — 3 bénéficiaires'}},
+  ].filter(cp=> cp.cond!==false);
+  const canEditComp = hasAccess();
+  const compWarning = !canEditComp ? `<div class="alert alert-warning small py-2 mb-2"><i class="bi bi-shield-lock me-1"></i>Accès restreint — compléments réservés admin/désigné. <button class="btn btn-warning btn-sm ms-2" onclick="activerEditionDemo()">Activer édition (démo)</button> <a href="../admin/index.html" class="btn btn-outline-dark btn-sm ms-1">Hub</a></div>` : '';
+  document.getElementById('complements').innerHTML= compWarning + complements.map((cp,i)=>{
+    let inputHtml='';
+    if(cp.input){
+      const opts = cp.input.options;
+      if(cp.input.type==='select' && opts){
+        inputHtml = `<div id="wrap_${cp.input.id}" class="mt-2 ms-4 d-none" style="max-width:380px;"><label class="form-label small mb-1">${cp.input.label||'Précisez'} <span class="rule-badge">${cp.article}</span></label><select id="${cp.input.id}" class="form-select form-select-sm" ${canEditComp?'':'disabled'}>${opts.map(o=> `<option value="${o}">${o}</option>`).join('')}</select></div>`;
+      } else {
+        inputHtml = `<div id="wrap_${cp.input.id}" class="mt-2 ms-4 d-none" style="max-width:360px;"><label class="form-label small mb-1">${cp.input.label||'Précisez'} <span class="rule-badge">${cp.article}</span></label><input type="${cp.input.type}" id="${cp.input.id}" class="form-control form-control-sm" placeholder="${cp.input.placeholder||''}" ${canEditComp?'':'disabled'}></div>`;
+      }
+    }
+    return `<div class="p-2 border rounded-3 mb-1" style="${canEditComp?'':'opacity:0.6;'}"><div class="d-flex gap-2 align-items-center"><input type="checkbox" id="comp${i}" class="form-check-input m-0" ${canEditComp?'':'disabled'} onchange="toggleCompInput(${i}, '${cp.input?cp.input.id:''}')"><label for="comp${i}" class="small flex-grow-1">${cp.q} <span class="rule-badge">${cp.article}</span></label></div>${inputHtml}</div>`;
+  }).join('') + `<small class="text-muted d-block mt-2" style="font-size:11px;"><i class="bi bi-info-circle me-1"></i>CA ≤50M → TPS d'office sauf IS (Art.179) ou option IS/IBA. Cochez et renseignez — chaque complément est traçable Art. CGI.</small>`;
+  // Désactive le bouton Enregistrer si non habilité
+  const btnSaveComp=document.querySelector('button[onclick="saveComplements()"]');
+  if(btnSaveComp) btnSaveComp.disabled=!canEditComp;
+  // Qualification — utilise RuleBase si chargée, sinon fallback + personnes imposables Art.3/54/178
+  const caBrut = c.ca || c.caAnnuel || 0;
+  let caPrevComp=null;
+  try{ const allD=getDossiers(); const dd=allD.find(x=>x.id===selectedDossierId); const prev=dd?.workflowComplements?.find(x=> x.question.includes("Chiffre d'affaires prévisionnel"))?.valeur; if(prev) caPrevComp=parseInt(prev); }catch(e){}
+  const ca = caBrut || caPrevComp || 0;
+  const _seuils = ruleBase ? ruleBase.seuils : {tva_assujettissement:50000000, tps_micro_max:20000000, tps_petite_max:50000000, tva_taux:0.18, mfp_taux:0.015, mfp_taux_btp:0.03, mfp_taux_immobilier:0.10};
+  let compTVA=null, compTPS=null, compOption=null, compPersonne=null;
+  try{ const allD=getDossiers(); const dd=allD.find(x=>x.id===selectedDossierId); compTVA=dd?.workflowComplements?.find(x=> x.question.includes("Assujetti à la TVA"))?.valeur || null; compTPS=dd?.workflowComplements?.find(x=> x.question.includes("Soumis à la TPS"))?.valeur || null; compOption=dd?.workflowComplements?.find(x=> x.question.includes("Option IS"))?.valeur || null; compPersonne=dd?.workflowComplements?.find(x=> x.question.includes("Personne imposable"))?.valeur || null; }catch(e){}
+  const _articles = ruleBase ? ruleBase.articles : {tva:'Art.223', is:'Art.3-65 / 54', tps:'Art.178-182', iba:'Art.54'};
+  const formeRaw=(c.formeJuridique||c.typeClient||c.type||'').toLowerCase();
+  let isIS=false, isIBA=false, catPersonne='indéterminé';
+  if(compPersonne){
+    if(compPersonne.includes('IS —')){ isIS=true; catPersonne=compPersonne; }
+    else if(compPersonne.includes('IBA —') || compPersonne.includes('TPS —')){ isIBA=true; catPersonne=compPersonne; if(compPersonne.includes('TPS')) isIBA=true; }
+  }
+  if(!isIS && !isIBA){
+    if(['sa','sas','sarl','scs','société anonyme','société par actions','coop','scoops'].some(k=> formeRaw.includes(k)) || ['pm','morale'].some(k=> formeRaw.includes(k) && (c.type==='pm' || (c.typeClient||'').toLowerCase().includes('morale')))){
+      if(formeRaw.includes('sa')||formeRaw.includes('sas')||formeRaw.includes('sarl')||c.type==='pm') { isIS=true; catPersonne='IS — forme Art.3 §1 (inféré)'; }
+    }
+    if(!isIS){
+      if(['pp','physique','individuel','personne physique'].some(k=> formeRaw.includes(k)) || c.type==='pp' || c.typeClient?.toLowerCase().includes('physique')) { isIBA=true; catPersonne='IBA — personne physique Art.54 (inféré)'; }
+      else if(!catPersonne.includes('IS')) { isIBA=true; catPersonne='IBA — défaut (personne physique par défaut Art.54)'; }
+    }
+  }
+  let tvaAssujetti=null, tvaMotif='';
+  if(compTVA){
+    if(compTVA.includes('Oui')) { tvaAssujetti=true; tvaMotif=compTVA; }
+    else if(compTVA.includes('Non')) { tvaAssujetti=false; tvaMotif=compTVA; }
+  }
+  if(tvaAssujetti===null){
+    const seuilTVA=_seuils.tva_assujettissement||50000000;
+    if(ca && ca>seuilTVA) { tvaAssujetti=true; tvaMotif=`CA ${ca/1000000}M > ${seuilTVA/1000000}M Art.223`; }
+    else if(ca && ca<=seuilTVA) { tvaAssujetti=false; tvaMotif=`CA ${ca/1000000}M ≤ ${seuilTVA/1000000}M Art.223`; }
+    else { tvaAssujetti=false; tvaMotif='CA non connu — présumé non assujetti'; }
+  }
+  let tpsSoumis=null, tpsMotif='';
+  if(compTPS){
+    if(compTPS.includes('Oui — TPS due')) { tpsSoumis=true; tpsMotif=compTPS; }
+    else if(compTPS.includes('Non —') || compTPS.includes('Exonéré')) { tpsSoumis=false; tpsMotif=compTPS; }
+  }
+  if(tpsSoumis===null){
+    const seuilTPS=_seuils.tps_petite_max||50000000;
+    if(isIS) { tpsSoumis=false; tpsMotif='Exclu TPS — personne IS Art.179'; }
+    else if(isIBA && ca && ca<=seuilTPS) { tpsSoumis=true; tpsMotif=`IBA CA ${ca/1000000}M ≤ ${seuilTPS/1000000}M → TPS Art.178`; }
+    else if(isIBA && ca && ca>seuilTPS) { tpsSoumis=false; tpsMotif=`IBA CA ${ca/1000000}M > ${seuilTPS/1000000}M → IBA (dépassement Art.182)`; }
+    else if(!ca) { tpsSoumis=null; tpsMotif='CA non connu — TPS à déterminer'; }
+  }
+  let optionInfo = compOption || 'Aucune option';
+  if(compOption && compOption.includes('Option IS')) { isIS=true; isIBA=false; catPersonne+=' + Option IS'; }
+  if(compOption && compOption.includes('Option IBA')) { isIBA=true; isIS=false; catPersonne+=' + Option IBA'; tpsSoumis=false; }
+  let regimeParDefaut='à déterminer';
+  if(isIS){
+    if(c.activite==='btp') regimeParDefaut=`IS — réel normal BTP (MFP ${_seuils.mfp_taux_btp*100}% ${_articles.is||'Art.3-65'})`;
+    else if(c.activite==='immobilier') regimeParDefaut=`IS — réel normal Immo (MFP ${_seuils.mfp_taux_immobilier*100}% ${_articles.is||'Art.3-65'})`;
+    else regimeParDefaut=`IS — réel normal (IS 30% / 25% ens. ${_articles.is||'Art.3-65'})` + (tvaAssujetti? ` + TVA 18% ${_articles.tva||'Art.223'}` : ` (non assujetti TVA)`);
+  } else if(tpsSoumis===true){
+    regimeParDefaut=`TPS — synthétique libératoire IBA/patente/VPS (${tpsMotif}) ${_articles.tps||'Art.178'}` + (tvaAssujetti? ` + TVA` : ` — non assujetti TVA`);
+  } else if(isIBA){
+    regimeParDefaut=`IBA — réel (BIC/BNC) ${_articles.iba||'Art.54'}` + (tvaAssujetti? ` + TVA 18%` : ` — non assujetti TVA`);
+  } else {
+    if(ca && ca <= _seuils.tps_micro_max) regimeParDefaut=`micro (TPS 2% ${_articles.tps||'Art.178'})` + (tvaAssujetti? ` + TVA` : '');
+    else if(ca && ca <= _seuils.tps_petite_max) regimeParDefaut=`petite (TPS 5% ${_articles.tps||'Art.178'})` + (tvaAssujetti? ` + TVA` : '');
+    else regimeParDefaut=`réel normal (TVA ${ruleBase? (ruleBase.seuils.tva_taux*100)+'%' : '18%'} ${_articles.tva||'Art.223'})`;
+  }
+
+  const typeEntite = c.typeClient||c.type||'—';
+  const typeAct = c.activite||c.secteur||'—';
+  const eff = c.effectif||c.employes||0;
+
+  // Statut existence
+  let statut='Cas B — Ancienne connue', alerte='';
+  const connu = c.connuDGI;
+  const isNew = c.dateCreation && (new Date() - new Date(c.dateCreation) < 365*86400000) && c.ifu;
+  if(isNew){ statut='Cas A — Nouvelle (IFU, <12 mois) Art.460'; }
+  else if(connu===false){ statut='Cas C — Ancienne NON connue DGI ⚠️'; alerte=`<div class="alerte-c"><strong class="text-danger"><i class="bi bi-exclamation-triangle-fill me-1"></i>Alerte Cas C — AIB 5% définitif</strong><br><small>Entreprise ancienne non connue du fichier DGI → <strong>AIB 5% sur toutes factures</strong> prélevé automatiquement par le système de facturation normalisé MECeF/DGI (Art.135-140 / Art.171). <br>Action : <strong>Notifier le client</strong> (Email + WhatsApp) et activer prélèvement 5%.</small><div class="d-flex gap-2 mt-2"><button class="btn btn-danger rounded-pill btn-sm" onclick="notifierCasC()"><i class="bi bi-whatsapp me-1"></i> Notifier client AIB 5%</button><button class="btn btn-outline-dark rounded-pill btn-sm" onclick="activerAIB5()">Activer AIB 5% auto</button></div><small class="text-muted">Réf: CGI Art.135-140, Art.171 — Traçable 2026</small></div>`; }
+
+  ficheQualifiee={ ...c, regimeParDefaut, typeEntite, typeAct, effectifSalarie: eff, statutExistence: statut, connuDGI: connu, caAnnuel: ca, tvaAssujetti, tpsSoumis, catPersonne, tvaMotif, tpsMotif, optionInfo, isIS, isIBA };
+  document.getElementById('qualification').innerHTML=`
+    <div class="small"><strong>Régime par défaut :</strong> ${regimeParDefaut} <span class="rule-badge">Art.3/54/178</span><br>
+    <strong>Personne imposable :</strong> ${catPersonne} <span class="rule-badge">Art.3 / Art.54</span> • <strong>Forme :</strong> ${typeEntite} <span class="rule-badge">Art.3-4</span> • <strong>Activité :</strong> ${typeAct} <span class="rule-badge">Art.64</span><br>
+    <strong>TVA :</strong> ${tvaAssujetti===true? '<span class="badge bg-success">Assujetti</span> '+tvaMotif : tvaAssujetti===false? '<span class="badge bg-light text-dark border">Non assujetti</span> '+tvaMotif : '<span class="badge bg-warning text-dark">À déterminer</span>'} <span class="rule-badge">Art.223</span> • <strong>TPS :</strong> ${tpsSoumis===true? '<span class="badge bg-warning text-dark">TPS due</span> '+tpsMotif : tpsSoumis===false? '<span class="badge bg-light text-dark border">Hors TPS</span> '+tpsMotif : '<span class="badge bg-warning text-dark">À déterminer</span>'} <span class="rule-badge">Art.178-179</span><br>
+    <strong>Option :</strong> ${optionInfo} <span class="rule-badge">Art.3 §3 / 181</span> • <strong>Effectif :</strong> ${eff} <span class="rule-badge">Art.119/191</span> • <strong>CA :</strong> ${ca? (ca/1000000).toFixed(1)+'M' : '—'}<br>
+    <strong>Statut :</strong> ${statut} <span class="rule-badge">Art.460 / 135</span></div>
+  `;
+  document.getElementById('alerteCasC').innerHTML=alerte;
+  document.getElementById('alerteCasC').classList.toggle('d-none', !alerte);
+  // Trace — inclut TVA/TPS/Personne imposable Art.3/54/178/223
+  const _seuilTPSpu = _seuils.tps_petite_max||50000000, _seuilTVAu=_seuils.tva_assujettissement||50000000;
+  traceLog.push({ decisionId:'qualif_'+Date.now(), input:{ca, typeEntite, catPersonne, tvaAssujetti, tpsSoumis, connuDGI: connu, caTVA: _seuilTVAu, caTPS: _seuilTPSpu}, rule:{id:'personnes_imposables', valeur:catPersonne, article:'Art.3 (IS) / Art.54 (IBA) / Art.178 (TPS) / Art.223 (TVA)', annee: ruleBase?.annee||2026, loi: ruleBase?.loiFinances||'2025-22'}, evaluation: `CA ${ca} vs TVA>${_seuilTVAu}→${tvaAssujetti} | TPS≤${_seuilTPSpu}→${tpsSoumis} | ${catPersonne}`, result:{regime:regimeParDefaut, statut, isIS, isIBA}, timestamp:new Date().toISOString(), acteur:'Moteur CGI' });
+}
+function toggleCompInput(i, inputId){
+  if(!inputId) return;
+  const wrap=document.getElementById('wrap_'+inputId);
+  const cb=document.getElementById('comp'+i);
+  if(!wrap || !cb) return;
+  wrap.classList.toggle('d-none', !cb.checked);
+  if(cb.checked) document.getElementById(inputId)?.focus();
+}
+function saveComplements(){
+  if(!hasAccess()){ toast('Accès restreint','Seul admin/désigné peut renseigner','warning'); return; }
+  const complementsData=[];
+  const checks=[...document.querySelectorAll('#complements input[type="checkbox"]')];
+  checks.forEach((cb,i)=>{
+    if(cb.checked){
+      const label=document.querySelector(`label[for="comp${i}"]`)?.textContent?.trim() || 'complément';
+      const article=label.match(/Art\.[^\]]+/)?.[0] || '';
+      // Trouve l'input/select associé s'il existe (supporte text/number/select)
+      const wrap=cb.closest('.p-2')?.querySelector('input, select');
+      let val= wrap ? wrap.value.trim() : '';
+      if(wrap && wrap.tagName==='SELECT' && (val==='— Choisir —' || val==='')) val='';
+      complementsData.push({ question: label, article, valeur: val||null, coche: true });
+    }
+  });
+  if(complementsData.length===0){ toast('Aucun complément coché','Cochez au moins un','warning'); return; }
+  // Stocke dans dossier (workflow) pour traçabilité
+  if(selectedDossierId){
+    const all=getDossiers(); const d=all.find(x=>x.id===selectedDossierId);
+    if(d){
+      d.workflowComplements = complementsData;
+      d.historique=d.historique||[]; d.historique.push({date:new Date().toISOString(), acteur:currentUser(), role:'Fiscalité', action:'Compléments renseignés', details: complementsData.map(c=> c.question + (c.valeur? ` = ${c.valeur}`:'')).join(' • ')});
+      setDossiers(all);
+      // Si CA prévisionnel renseigné, met à jour fiche client aussi
+      const caPrev = complementsData.find(c=> c.question.includes("Chiffre d'affaires prévisionnel"))?.valeur;
+      if(caPrev && selectedClient){
+        const clients=getClients(); const idx=clients.findIndex(x=> x.name===selectedClient.name);
+        if(idx!==-1){ clients[idx].caPrevisionnel=parseInt(caPrev); clients[idx].ca = clients[idx].ca || parseInt(caPrev); localStorage.setItem('gobex_crm_clients', JSON.stringify(clients)); selectedClient=clients[idx]; renderFicheInfo(); }
+      }
+    }
+  }
+  toast('Compléments enregistrés', complementsData.length+' compléments • '+(complementsData.filter(c=>c.valeur).length)+' avec valeurs','success');
+  document.getElementById('compFeedback').textContent='✅ '+complementsData.length+' enregistrés';
+  setTimeout(()=>document.getElementById('compFeedback').textContent='',2500);
+  traceLog.push({decisionId:'complements_'+Date.now(), input:{complements:complementsData}, rule:{id:'complements', article:'Art.1084-41/248 bis/130/462', annee:2026}, result:{saved:true, count:complementsData.length}, timestamp:new Date().toISOString()});
+  // Re-qualifie si CA prévisionnel impacte régime
+  qualifierFiche();
+}
+function saveEditCases(){
+  if(!hasAccess()){ toast('Accès restreint','Seul admin/désigné peut renseigner','warning'); return; }
+  if(!selectedClient){ toast('Aucune fiche','Sélectionnez un dossier','warning'); return; }
+  const clients=getClients();
+  const idx= clients.findIndex(c=> c.name===selectedClient.name && (c.ifu===selectedClient.ifu || c.ref===selectedClient.ref));
+  if(idx===-1){ toast('Fiche introuvable','Vérifiez CRM','warning'); return; }
+  const c=clients[idx];
+  let changed=[];
+  const v_ifu=document.getElementById('edit_ifu'); if(v_ifu && v_ifu.value.trim()){ c.ifu=v_ifu.value.trim(); changed.push('IFU'); }
+  const v_type=document.getElementById('edit_typeEntite'); if(v_type && v_type.value){ c.type=v_type.value; c.typeClient= v_type.value==='pp'?'Personne physique': v_type.value==='pm'?'Personne morale': v_type.value; changed.push('Type entité'); }
+  const v_act=document.getElementById('edit_typeActivite'); if(v_act && v_act.value){ c.activite=v_act.value; changed.push('Activité'); }
+  const v_reg=document.getElementById('edit_regime'); if(v_reg && v_reg.value){ c.regime=v_reg.value; c.regimeFiscal=v_reg.value; changed.push('Régime'); }
+  const v_ca=document.getElementById('edit_ca'); if(v_ca && v_ca.value){ c.ca=parseInt(v_ca.value); c.caAnnuel=c.ca; changed.push('CA'); }
+  const v_eff=document.getElementById('edit_effectif'); if(v_eff && v_eff.value!=='' ){ c.effectif=parseInt(v_eff.value); c.employes=c.effectif; changed.push('Effectif'); }
+  const v_connu=document.getElementById('edit_connuDGI'); if(v_connu && v_connu.value!=='' ){ c.connuDGI= v_connu.value==='true'; changed.push('Connu DGI'); }
+
+  if(changed.length===0){ toast('Aucune saisie','Renseignez au moins un champ','warning'); return; }
+  clients[idx]=c;
+  localStorage.setItem('gobex_crm_clients', JSON.stringify(clients));
+  selectedClient=c;
+  // Met à jour dossier aussi si besoin (ex: CA pour échéancier)
+  const all=getDossiers(); const d=all.find(x=>x.id===selectedDossierId);
+  if(d){ d.historique=d.historique||[]; d.historique.push({date:new Date().toISOString(), acteur:currentUser(), role:'Fiscalité', action:'Fiche complétée (admin)', details: changed.join(', ')}); setDossiers(all); }
+  document.getElementById('editFeedback').textContent='✅ '+changed.join(', ')+' enregistrés';
+  toast('Fiche mise à jour', changed.join(', ')+' — diagnostic débloqué','success');
+  traceLog.push({decisionId:'edit_fiche_'+Date.now(), input:{changed}, rule:{id:'cases_vides', article:'Art.460/64/223/135', annee:2026}, result:{updated:true}, timestamp:new Date().toISOString(), acteur:currentUser()});
+  // Re-qualifie et rafraîchit
+  renderFicheInfo(); qualifierFiche();
+  setTimeout(()=>{ document.getElementById('editFeedback').textContent=''; },3000);
+}
+function notifierCasC(){ const wa=(selectedClient.whatsapp||selectedClient.phone||'22997739046').replace(/\D/g,''); const msg=encodeURIComponent(`Bonjour ${selectedClient.name}, votre entreprise étant non connue du fichier DGI, une retenue AIB de 5% sera prélevée automatiquement sur vos factures (CGI Art.135). Merci de régulariser votre IFU. — Cabinet GOBEX`); window.open(`https://wa.me/${wa}?text=${msg}`,'_blank'); toast('Client notifié','Cas C — AIB 5%','success'); traceLog.push({decisionId:'notif_casC', input:{cas:'C'}, rule:{id:'aib_sans_ifu', valeur:0.05, article:'Art.135', annee:2026}, result:{notified:true}, timestamp:new Date().toISOString()}); }
+function activerAIB5(){ toast('AIB 5% activé','Prélèvement auto sur facturation normalisée','success'); }
+function validerEtape1(){ if(!selectedDossierId){ toast('Choisissez un dossier','Étape 1 incomplète','warning'); return; } if(!ficheQualifiee){ toast('Qualifiez d\'abord','Cliquez Qualifier','warning'); return; } goStep(2); }
+
+// ÉTAPE 2 — RuleBase (versionnée, aucune valeur en dur) — robuste + fallback local infaillible
+const FALLBACK_RULEBASE={
+  version:"2026.1 (fallback local)", annee:2026, loiFinances:"2025-22", source:"Fallback embarqué — CGI Bénin 2026",
+  seuils:{ tva_assujettissement:50000000, tva_taux:0.18, tps_micro_max:20000000, tps_petite_max:50000000, mfp_taux:0.015, mfp_min:500000, mfp_taux_btp:0.03, mfp_taux_immobilier:0.10, aib_avec_ifu:0.03, aib_sans_ifu:0.05, vps_taux:0.04, loyer_taux:0.12 },
+  taux:{ is:0.30, is_enseignement:0.25, tva:0.18, aib_avec_ifu:0.03, aib_sans_ifu:0.05, vps:0.04, loyer_taux:0.12 },
+  articles:{ is:"Art.3-65", tva:"Art.219-268", aib:"Art.130-140", vps:"Art.191-193", its:"Art.119-129", loyer:"Art.101-102", ifu:"Art.460 (30j)", beneficiaires_effectifs:"Art.462", comptabilite_ohada:"Art.479-480", sanctions:{defaut_ifu:"Art.495", be:"Art.496-4", retard_paiement:"Art.506", comptabilite:"Art.500"} },
+  echeanciers:{ is_acomptes:{dates:["10/03","10/06","10/09","10/12"], article:"Art.51"}, tps:{acomptes:["10/02","10/06"], article:"Art.1084-33"} },
+  echeances:{ is_acomptes:["03-10","06-10","09-10","12-10"], tps_trimestriel:"10 du mois suivant trimestre" }
+};
+function normalizeRuleBase(raw, year){
+  if(!raw) raw=FALLBACK_RULEBASE;
+  // Compatibilité: seuils contient parfois tous les taux (is_taux, tva_taux, etc.)
+  const sRaw=raw.seuils||{};
+  const tRaw=raw.taux||{};
+  const s={
+    tva_assujettissement: sRaw.tva_assujettissement ?? 50000000,
+    tva_taux: sRaw.tva_taux ?? tRaw.tva ?? 0.18,
+    tps_micro_max: sRaw.tps_micro_max ?? 20000000,
+    tps_petite_max: sRaw.tps_petite_max ?? 50000000,
+    mfp_taux: sRaw.mfp_taux ?? tRaw.mfp_taux ?? 0.015,
+    mfp_min: sRaw.mfp_min ?? 500000,
+    mfp_taux_btp: sRaw.mfp_taux_btp ?? 0.03,
+    mfp_taux_immobilier: sRaw.mfp_taux_immobilier ?? 0.10,
+    aib_avec_ifu: sRaw.aib_avec_ifu ?? tRaw.aib_avec_ifu ?? 0.03,
+    aib_sans_ifu: sRaw.aib_sans_ifu ?? tRaw.aib_sans_ifu ?? 0.05,
+    vps_taux: sRaw.vps_taux ?? tRaw.vps ?? 0.04,
+    loyer_taux: sRaw.loyer_taux ?? tRaw.loyer_taux ?? 0.12
+  };
+  const t={
+    is: tRaw.is ?? sRaw.is_taux ?? sRaw.is_taux ?? 0.30,
+    is_enseignement: tRaw.is_enseignement ?? sRaw.is_taux_enseignement ?? 0.25,
+    tva: tRaw.tva ?? sRaw.tva_taux ?? 0.18,
+    aib_avec_ifu: tRaw.aib_avec_ifu ?? sRaw.aib_avec_ifu ?? 0.03,
+    aib_sans_ifu: tRaw.aib_sans_ifu ?? sRaw.aib_sans_ifu ?? 0.05,
+    vps: tRaw.vps ?? sRaw.vps_taux ?? 0.04,
+    loyer_taux: tRaw.loyer_taux ?? sRaw.loyer_taux ?? 0.12
+  };
+  const a=raw.articles||FALLBACK_RULEBASE.articles;
+  // Normalise sanctions si string manquant
+  const sanctions=a.sanctions||FALLBACK_RULEBASE.articles.sanctions;
+  const aNorm={ is:a.is||"Art.3-65", tva:a.tva||"Art.219-268", aib:a.aib||"Art.130-140", vps:a.vps||"Art.191-193", its:a.its||"Art.119-129", loyer:a.loyer||"Art.101", ifu:a.ifu||"Art.460", beneficiaires_effectifs:a.beneficiaires_effectifs||"Art.462", comptabilite_ohada:a.comptabilite_ohada||"Art.479-480", sanctions };
+  const echeanciers=raw.echeanciers||{ is_acomptes:{dates: (raw.echeances?.is_acomptes||["03-10","06-10","09-10","12-10"]).map(d=> d.includes("/")?d: d.split("-").reverse().join("/")), article:"Art.51"}, tps:{acomptes:["10/02","10/06"], article: raw.articles?.tps||"Art.1084-33"} };
+  // Si echeances au lieu de echeanciers, convertir
+  if(!raw.echeanciers && raw.echeances){
+    echeanciers.is_acomptes.dates = (raw.echeances.is_acomptes||["03-10","06-10","09-10","12-10"]).map(d=> "10/"+d.split("-")[0]);
+    echeanciers.tps.acomptes = ["10/02","10/06"];
+  }
+  return {
+    ...raw,
+    version: raw.version||FALLBACK_RULEBASE.version,
+    annee: raw.annee||raw.year||parseInt(year)||2026,
+    loiFinances: raw.loiFinances||"2025-22",
+    source: raw.source||FALLBACK_RULEBASE.source,
+    seuils:s, taux:t, articles:aNorm, echeanciers,
+    _raw: raw
+  };
+}
+async function chargerRuleBase(force=false){
+  const year=document.getElementById('ruleYear')?.value || '2026';
+  const elV=document.getElementById('ruleVersion'), elV2=document.getElementById('ruleVersion2'), elY=document.getElementById('ruleYearLabel'), elP=document.getElementById('rulePath');
+  if(elY) elY.textContent=year;
+  if(elP) elP.textContent=`docs/cgibenin-${year}.json`;
+  if(elV) elV.textContent='Chargement...'; 
+  try{
+    let raw=null;
+    const cacheKey='gobex_cgi_'+year;
+    if(!force) try{ raw=JSON.parse(localStorage.getItem(cacheKey)||'null'); }catch(e){}
+    if(!raw){
+      const res=await fetch(`../docs/cgibenin-${year}.json`, {cache:'no-store'});
+      if(!res.ok){
+        if(year!=='2026'){ toast('CGI '+year+' non trouvé','Fallback CGI 2026','warning'); const sel=document.getElementById('ruleYear'); if(sel) sel.value='2026'; return chargerRuleBase(true); }
+        throw new Error('HTTP '+res.status+' — '+res.statusText);
+      }
+      raw=await res.json();
+      try{ localStorage.setItem(cacheKey, JSON.stringify(raw)); }catch(e){}
+    }
+    const rules=normalizeRuleBase(raw, year);
+    ruleBase=rules;
+    // Active : affiche version + loi finances
+    if(elV) elV.textContent=rules.version+' • '+rules.annee+' • '+rules.loiFinances;
+    if(elV2) elV2.textContent=rules.version;
+    if(elV) elV.className='badge bg-success';
+    // Barèmes — lus depuis RuleBase normalisée, jamais en dur
+    const t=rules.taux, s=rules.seuils, a=rules.articles;
+    const baremesEl=document.getElementById('reglesBaremes');
+    if(baremesEl) baremesEl.innerHTML=`
+      <div class="small">IS <strong>${(t.is*100).toFixed(0)}%</strong> (enseignement ${(t.is_enseignement*100).toFixed(0)}%) <span class="rule-badge">${a.is}</span><br>
+      TVA <strong>${(t.tva*100).toFixed(0)}%</strong> <span class="rule-badge">${a.tva}</span> • AIB <strong>${(t.aib_avec_ifu*100).toFixed(0)}% IFU / ${(t.aib_sans_ifu*100).toFixed(0)}% sans</strong> <span class="rule-badge">${a.aib}</span><br>
+      VPS <strong>${(t.vps*100).toFixed(0)}%</strong> <span class="rule-badge">${a.vps}</span> • Loyer <strong>${(t.loyer_taux*100).toFixed(0)}%</strong> (10% si bailleur IS) <span class="rule-badge">${a.loyer}</span><br>
+      <span class="badge bg-light text-dark border mt-1">Source: ${(rules.source||'').slice(0,65)}...</span></div>`;
+    const seuilsEl=document.getElementById('reglesSeuils');
+    if(seuilsEl) seuilsEl.innerHTML=`
+      <div class="small">TVA seuil <strong>${(s.tva_assujettissement/1000000).toFixed(0)}M</strong> <span class="rule-badge">Art.223</span><br>
+      TPS micro ≤<strong>${s.tps_micro_max/1000000}M</strong> (2%) / petite ≤<strong>${s.tps_petite_max/1000000}M</strong> (5%) <span class="rule-badge">Art.1084-18</span><br>
+      MFP <strong>${(s.mfp_taux*100).toFixed(1)}%</strong> min <strong>${(s.mfp_min/1000).toFixed(0)}k</strong> / BTP ${(s.mfp_taux_btp*100).toFixed(0)}% / Immo ${(s.mfp_taux_immobilier*100).toFixed(0)}% <span class="rule-badge">Art.64</span><br>
+      <span class="badge bg-warning text-dark mt-1">Version ${rules.version}</span></div>`;
+    const obligEl=document.getElementById('reglesObligations');
+    if(obligEl) obligEl.innerHTML=`
+      <div class="small">IFU 30j <span class="rule-badge">${a.ifu}</span> • BE Art.462 (1M) <span class="rule-badge">${a.beneficiaires_effectifs}</span><br>
+      Conservation 10 ans <span class="rule-badge">${a.comptabilite_ohada}</span> • Sanctions déf.IFU <span class="rule-badge">${a.sanctions.defaut_ifu}</span> • BE <span class="rule-badge">${a.sanctions.be}</span><br>
+      Retard <span class="rule-badge">${a.sanctions.retard_paiement}</span> • Compta <span class="rule-badge">${a.sanctions.comptabilite}</span></div>`;
+    const traceEl=document.getElementById('reglesTrace');
+    if(traceEl) traceEl.innerHTML=`
+      <div class="trace-item"><strong>tva_assujettissement</strong> = ${s.tva_assujettissement} <span class="rule-badge">Art.223 (${rules.annee})</span> — lu depuis <code>cgibenin-${year}.json</code></div>
+      <div class="trace-item"><strong>mfp_taux</strong> = ${s.mfp_taux} <span class="rule-badge">Art.64 (${rules.annee})</span> — LF ${rules.loiFinances}</div>
+      <div class="trace-item"><strong>aib_avec_ifu</strong> = ${t.aib_avec_ifu} <span class="rule-badge">${a.aib} (${rules.annee})</span></div>
+      <small class="text-muted">Toute règle est traçable : <code>règle.id → valeur → Art. CGI → année LF</code>. Aucun seuil codé en dur.</small>`;
+    toast('RuleBase active', `CGI ${rules.annee} • ${rules.version} • ${rules.loiFinances}`,'success');
+    traceLog.push({decisionId:'load_rules_'+Date.now(), input:{annee: rules.annee, yearAsked: year}, rule:{id:'version', valeur:rules.version, article:'LF '+rules.loiFinances, annee: rules.annee}, result:{loaded:true, source:`cgibenin-${year}.json`}, timestamp:new Date().toISOString(), acteur:'Moteur CGI'});
+    // Re-qualifie si une fiche est déjà sélectionnée (pour que les seuils dynamiques s'appliquent)
+    if(selectedClient) setTimeout(()=> { try{qualifierFiche()}catch(e){console.warn(e)} }, 100);
+  }catch(e){
+    console.error('chargerRuleBase error', e);
+    // Fallback infaillible — affiche quand même la RuleBase locale
+    try{
+      const rules=normalizeRuleBase(FALLBACK_RULEBASE, year);
+      ruleBase=rules;
+      if(elV){ elV.textContent=rules.version+' • '+rules.annee+' • '+rules.loiFinances+' (fallback)'; elV.className='badge bg-warning text-dark'; }
+      if(elV2) elV2.textContent=rules.version+' (fallback)';
+      const t=rules.taux, s=rules.seuils, a=rules.articles;
+      document.getElementById('reglesBaremes').innerHTML=`<div class="small text-muted">Fallback local actif — fetch a échoué: ${e.message}<br>IS ${(t.is*100).toFixed(0)}% • TVA ${(t.tva*100).toFixed(0)}% • AIB ${(t.aib_avec_ifu*100).toFixed(0)}%/${(t.aib_sans_ifu*100).toFixed(0)}%</div>`;
+      document.getElementById('reglesSeuils').innerHTML=`<div class="small">TVA ${s.tva_assujettissement/1000000}M • TPS micro ${s.tps_micro_max/1000000}M • MFP ${(s.mfp_taux*100).toFixed(1)}%</div>`;
+      document.getElementById('reglesObligations').innerHTML=`<div class="small">Fallback — Art.460/462/479</div>`;
+      document.getElementById('reglesTrace').innerHTML=`<div class="trace-item">Fallback local utilisé — ${e.message} — <code>cgibenin-${year}.json</code> non chargé</div>`;
+      toast('RuleBase fallback', 'Affichage local — vérifiez docs/cgibenin-'+year+'.json','warning');
+      traceLog.push({decisionId:'load_rules_fallback_'+Date.now(), input:{yearAsked:year}, rule:{id:'fallback', valeur:rules.version, article:'fallback local', annee:rules.annee}, result:{loaded:true, fallback:true, error:e.message}, timestamp:new Date().toISOString()});
+    }catch(e2){
+      if(elV) elV.textContent='Erreur — fallback échoué';
+      toast('Erreur RuleBase', e.message+' | '+(e2.message), 'warning');
+    }
+  }
+}
+function voirRuleJSON(){
+  if(!ruleBase){ toast('Aucune RuleBase','Chargez d\'abord','warning'); return; }
+  const blob=new Blob([JSON.stringify(ruleBase,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  window.open(url,'_blank');
+  toast('RuleBase JSON','Ouvert dans nouvel onglet','success');
+}
+
+// ÉTAPE 3 — Échéanciers — exhaustif L1/L2/L3
+let echeGeneralFull=[];
+let filtreLivreActuel='tous';
+function renderGeneralTable(list){
+  const tbody=document.getElementById('echeGeneral');
+  const countEl=document.getElementById('countGeneral');
+  const filterInfo=document.getElementById('filterInfo');
+  if(!tbody) return;
+  if(!list || !list.length){ tbody.innerHTML='<tr><td colspan="5" class="text-muted">Aucun impôt — vérifiez RuleBase</td></tr>'; if(countEl) countEl.textContent='0'; return; }
+  if(countEl) countEl.textContent=list.length+' impôts';
+  if(filterInfo) filterInfo.textContent= filtreLivreActuel==='tous' ? list.length+' affichés' : filtreLivreActuel+' • '+list.length;
+  tbody.innerHTML= list.map(g=> {
+    const livreBadge = g.livre?.includes('L1') ? 'bg-primary' : g.livre?.includes('L2') ? 'bg-success' : g.livre?.includes('L3') ? 'bg-warning text-dark' : 'bg-light text-dark border';
+    const natureBadge = g.nature==='direct' ? 'bg-primary' : g.nature==='indirect' ? 'bg-success' : 'bg-warning text-dark';
+    return `<tr><td><span class="badge ${livreBadge}" style="font-size:9px;">${g.livre||'—'}</span><br><small class="text-muted" style="font-size:10px;">${g.titre||''} ${g.chapitre? '• '+g.chapitre : ''}</small></td><td><strong>${g.libelle}</strong></td><td><span class="badge bg-light text-dark border">${g.echeance}</span></td><td><span class="rule-badge">${g.article}</span></td><td><span class="badge ${natureBadge}" style="font-size:9px;">${g.periodicite||g.nature||'—'}</span></td></tr>`;
+  }).join('');
+}
+function filtrerGeneral(livre, btn){
+  if(livre) filtreLivreActuel=livre;
+  // UI active
+  if(btn){
+    document.querySelectorAll('#pane3 .btn-group .btn').forEach(b=>{ b.classList.remove('btn-dark','active'); b.classList.add('btn-outline-dark'); });
+    btn.classList.remove('btn-outline-dark'); btn.classList.add('btn-dark','active');
+  }
+  const q=(document.getElementById('searchGeneral')?.value||'').toLowerCase().trim();
+  let list=[...echeGeneralFull];
+  if(filtreLivreActuel!=='tous') list=list.filter(g=> (g.livre||'').toLowerCase().includes(filtreLivreActuel.toLowerCase()));
+  if(q) list=list.filter(g=> (`${g.libelle} ${g.article} ${g.livre} ${g.titre} ${g.chapitre} ${g.echeance}`.toLowerCase().includes(q)));
+  renderGeneralTable(list);
+}
+function genererEcheanciers(){
+  if(!ruleBase){ document.getElementById('echeGeneral').innerHTML='<tr><td colspan="5" class="text-danger">Chargez d\'abord la RuleBase (Étape 2).</td></tr>'; return; }
+  // Général — exhaustif depuis RuleBase (34 impôts) — affiché même sans fiche qualifiée
+  let generalRaw = ruleBase.echeancier_general_exhaustif || ruleBase._raw?.echeancier_general_exhaustif || null;
+  let general;
+  if(generalRaw && Array.isArray(generalRaw) && generalRaw.length>15){
+    general = generalRaw.map(g=> ({...g, source:'LF '+ruleBase.loiFinances }));
+    echeGeneralFull=[...general];
+  } else {
+    // Fallback limité si RuleBase ancienne
+    general=[
+      {id:'tva', livre:'L2 — Impôts indirects', titre:'T1 — CA', chapitre:'TVA (99)', libelle:'Taxe sur la Valeur Ajoutée (TVA) 18%', echeance:'10 du mois suivant', article:ruleBase.articles.tva, source:'LF '+ruleBase.loiFinances, periodicite:'mensuel', nature:'indirect'},
+      {id:'aib', livre:'L1 — Impôts directs', titre:'T1 — Revenu', chapitre:'Retenues (64)', libelle:'AIB '+(ruleBase.taux.aib_avec_ifu*100)+'% / '+(ruleBase.taux.aib_sans_ifu*100)+'%', echeance:'10 du mois suivant', article:ruleBase.articles.aib, source:'LF '+ruleBase.loiFinances, periodicite:'mensuel', nature:'direct'},
+      {id:'is_acomptes', livre:'L1 — Impôts directs', titre:'T1 — Revenu', chapitre:'IS (5)', libelle:'IS acomptes', echeance: (ruleBase.echeanciers?.is_acomptes?.dates||['10/03','10/06','10/09','10/12']).join(' • '), article:ruleBase.echeanciers?.is_acomptes?.article||'Art.51', source:'LF '+ruleBase.loiFinances, periodicite:'acomptes', nature:'direct'},
+      {id:'is_annuel', livre:'L1 — Impôts directs', titre:'T1 — Revenu', chapitre:'IS/IBA', libelle:'IS/IBA annuel + salaires', echeance:'30 avril', article:'Art.49 / 472', source:'LF '+ruleBase.loiFinances, periodicite:'annuel', nature:'direct'},
+      {id:'its_vps', livre:'L1 — Impôts directs', titre:'T1 — Revenu', chapitre:'ITS/VPS', libelle:'ITS/VPS 4%', echeance:'10 du mois suivant', article:(ruleBase.articles.its||'Art.119')+' / '+(ruleBase.articles.vps||'Art.191'), source:'LF '+ruleBase.loiFinances, periodicite:'mensuel', nature:'direct'},
+      {id:'tps', livre:'L1 — Impôts directs', titre:'T3 — Autres directs', chapitre:'TPS (84)', libelle:'Taxe Professionnelle Synthétique (TPS)', echeance: (ruleBase.echeanciers?.tps?.acomptes||['10/02','10/06']).join(' + ') + ' + solde 30/04', article:ruleBase.echeanciers?.tps?.article||'Art.1084-33', source:'LF '+ruleBase.loiFinances, periodicite:'acomptes', nature:'direct'},
+    ];
+    echeGeneralFull=[...general];
+  }
+  renderGeneralTable(general);
+  document.getElementById('countGeneral').textContent=general.length+' impôts';
+  echeGeneral=general;
+  // Si pas de fiche qualifiée, afficher message dans spécifique mais garder général
+  if(!ficheQualifiee){
+    document.getElementById('echeSpecifique').innerHTML='<tr><td colspan="4" class="text-warning">Qualifiez d\'abord la fiche (Étape 1) pour voir l\'échéancier spécifique.</td></tr>';
+    document.getElementById('confrontation').innerHTML='<span class="text-muted">Qualifiez la fiche pour générer la confrontation.</span>';
+    return;
+  }
+
+  // Spécifique : filtré par fiche — précis TVA/TPS/IS/IBA Art.3/54/178/223
+  const spec=[];
+  const ca=ficheQualifiee.caAnnuel||0, regime=ficheQualifiee.regimeParDefaut||'', statut=ficheQualifiee.statutExistence||'';
+  const tvaDue = ficheQualifiee.tvaAssujetti===true;
+  const tpsDue = ficheQualifiee.tpsSoumis===true;
+  const isIS = ficheQualifiee.isIS===true;
+  const isIBA = ficheQualifiee.isIBA===true;
+  if(tvaDue) spec.push({id:'tva', libelle:'TVA 18% due', echeance:'10 du mois suivant', article:ruleBase.articles.tva, base: ficheQualifiee.tvaMotif||('CA '+(ca/1000000).toFixed(0)+'M >50M')});
+  else if(ficheQualifiee.tvaAssujetti===false) spec.push({id:'tva_non', libelle:'TVA non assujetti', echeance:'—', article:ruleBase.articles.tva, base: ficheQualifiee.tvaMotif||'CA ≤50M'});
+  if(statut.includes('Cas C')) spec.push({id:'aib_5', libelle:'AIB 5% définitif (Cas C)', echeance:'10 du mois suivant / chaque facture', article:ruleBase.articles.aib, base:'Cas C'});
+  else spec.push({id:'aib', libelle:'AIB '+(tvaDue? '3% IFU' : '1% import / 3% IFU'), echeance:'10 du mois suivant', article:ruleBase.articles.aib, base: ficheQualifiee.catPersonne||'IFU OK'});
+  if(isIS) spec.push({id:'is', libelle:'IS 30% (25% enseignement)', echeance:'10/03, 10/06, 10/09, 10/12 + solde 30/04', article:ruleBase.articles.is, base: regime});
+  else if(tpsDue) spec.push({id:'tps', libelle:'TPS synthétique libératoire', echeance: (ruleBase.echeanciers?.tps?.acomptes||['10/02','10/06']).join(' + ') + ' + solde 30/04', article:'Art.178-182', base: ficheQualifiee.tpsMotif||regime});
+  else if(isIBA) spec.push({id:'iba', libelle:'IBA — réel (BIC/BNC)', echeance:'30/04 + acomptes', article:ruleBase.articles.iba||'Art.54', base: regime});
+  else spec.push({id:'is_iba', libelle:'IS/IBA à déterminer', echeance:'10/03, 10/06, 10/09, 10/12 + 30/04', article:ruleBase.articles.is, base: regime});
+  if((ficheQualifiee.effectifSalarie||0)>0) spec.push({id:'its_vps', libelle:'ITS/VPS 4%', echeance:'10 du mois suivant', article:(ruleBase.articles.its||'Art.119')+' / '+(ruleBase.articles.vps||'Art.191'), base:'Effectif '+ficheQualifiee.effectifSalarie});
+
+  document.getElementById('echeSpecifique').innerHTML= spec.map(s=> `<tr><td>${s.libelle}</td><td><strong>${s.echeance}</strong></td><td><span class="rule-badge">${s.article}</span></td><td class="small text-muted">${s.base}</td></tr>`).join('');
+  echeSpecifique=spec;
+
+  // Confrontation
+  const communs= spec.filter(s=> general.some(g=> g.id===s.id)).length;
+  const manquants= general.filter(g=> !spec.some(s=> s.id===g.id)).map(g=> g.libelle).join(', ')||'—';
+  const specSeuls= spec.filter(s=> !general.some(g=> g.id===s.id)).map(s=> s.libelle).join(', ')||'—';
+  document.getElementById('confrontation').innerHTML=`
+    <div class="small"><strong>Communs :</strong> ${communs} • <strong>Spécifiques seuls (justifiés) :</strong> ${specSeuls||'—'} <span class="rule-badge">Art.135 Cas C</span> • <strong>Généraux non dus :</strong> ${manquants}</div>
+    <div class="mt-2 p-2 bg-light rounded-3 small"><strong>Écarts justifiés Art. par Art. :</strong><br>• AIB 5% Cas C vs AIB 3% général — justifié <span class="rule-badge">Art.135</span> LF ${ruleBase.loiFinances}<br>• TPS vs TVA — justifié <span class="rule-badge">Art.1084-18 seuil 50M</span></div>
+    <div class="mt-2"><span class="badge bg-warning text-dark">À signaler : échéance manquante 30/04 si non déposée</span> <span class="badge bg-danger">En retard si >10 du mois</span></div>
+  `;
+  confrontation={communs, manquants, specSeuls};
+  traceLog.push({decisionId:'echeanciers', input:{ca, regime, statut}, rule:{id:'echeanciers', article:'Art.249 bis / Art.51', annee:2026}, result:{general:general.length, specifique:spec.length}, timestamp:new Date().toISOString()});
+}
+function exportEcheanciers(){ const data={general:echeGeneral, specifique:echeSpecifique, confrontation, rule:ruleBase.version}; const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='echeanciers-'+(selectedDossierId||'dossier')+'.json'; a.click(); }
+
+// ÉTAPE 4 — Diagnostic
+function genererDiagnostic(){
+  if(!echeSpecifique.length) genererEcheanciers();
+  const risques=[];
+  if(!ficheQualifiee.ifu) risques.push({niveau:'critique', titre:'IFU manquant (>30j)', article:'Art.460+495', detail:'Amende 100k→200k'});
+  if(ficheQualifiee.statutExistence.includes('Cas C')) risques.push({niveau:'critique', titre:'AIB 5% définitif', article:'Art.135', detail:'Toutes factures +5% via MECeF'});
+  if((ficheQualifiee.effectifSalarie||0)>0 && !ficheQualifiee.connuDGI) risques.push({niveau:'majeur', titre:'VPS/ITS non déclaré', article:'Art.119/191', detail:'Retard 10/mois'});
+  const _seuilTVA2 = ruleBase ? ruleBase.seuils.tva_assujettissement : 50000000;
+  // Précis Art.223 / Art.178
+  if(ficheQualifiee.tvaAssujetti===true && ficheQualifiee.tpsSoumis===true) risques.push({niveau:'majeur', titre:'TVA + TPS incohérent', article:'Art.223 / 178', detail:'CA >50M → TVA due mais régime TPS indiqué — requalifier en IBA/IS + TVA'});
+  if(ficheQualifiee.isIS && ficheQualifiee.tpsSoumis===true) risques.push({niveau:'majeur', titre:'IS exclu TPS', article:'Art.179', detail:'Personne IS (Art.3) exclue TPS d\'office — passer IS réel'});
+  if(ficheQualifiee.caAnnuel > _seuilTVA2 && ficheQualifiee.tpsSoumis===true) risques.push({niveau:'majeur', titre:'Seuil TVA dépassé sous TPS', article:'Art.223 / 182', detail:`CA >${(_seuilTVA2/1000000).toFixed(0)}M → quitter TPS → IBA + TVA + MECeF`});
+  if(ficheQualifiee.catPersonne && ficheQualifiee.catPersonne.includes('indéterminé')) risques.push({niveau:'majeur', titre:'Personne imposable à préciser', article:'Art.3 / 54', detail:'Forme juridique non renseignée — IS vs IBA incertain'});
+  if(ficheQualifiee.tvaAssujetti===null || ficheQualifiee.tpsSoumis===null) risques.push({niveau:'majeur', titre:'Assujettissement à confirmer', article:'Art.223 / 178', detail:'TVA/TPS non coché dans compléments — CA + personne à vérifier'});
+
+  const obligations= echeSpecifique.map(e=> `<div class="small"><strong>${e.libelle}</strong> <span class="rule-badge">${e.article}</span> — ${e.echeance}</div>`).join('') || '—';
+  const risquesHtml= risques.length? risques.map(r=> `<div class="small mb-1"><span class="badge ${r.niveau==='critique'?'bg-danger':'bg-warning text-dark'}">${r.niveau}</span> <strong>${r.titre}</strong> <span class="rule-badge">${r.article}</span><br><span class="text-muted">${r.detail}</span></div>`).join('') : '<span class="text-success">Aucun risque majeur.</span>';
+  const actions= [
+    {p:1, a:'Immatriculer IFU sous 30j', e:'2026-10-27', art:'Art.460', resp:'Secrétariat'},
+    ...(risques.some(r=>r.titre.includes('AIB 5%'))? [{p:1, a:'Activer AIB 5% + notifier client', e:'immédiat', art:'Art.135', resp:'MECeF'}]:[]),
+    {p:2, a:'Déposer TVA/AIB avant 10 du mois', e:echeSpecifique.find(e=>e.id==='tva')?.echeance||'10/mois', art:'Art.249 bis', resp:'Fiscalité'},
+    {p:2, a:'Préparer IS acomptes 10/03-06-09-12', e:'10/03/2026', art:'Art.51', resp:'Fiscalité'},
+  ];
+  const actionsHtml= actions.map(ac=> `<div class="small mb-1"><span class="badge bg-dark">P${ac.p}</span> <strong>${ac.a}</strong> — ${ac.e} <span class="rule-badge">${ac.art}</span><br><span class="text-muted">Resp: ${ac.resp}</span></div>`).join('');
+
+  document.getElementById('diagObligations').innerHTML=obligations;
+  document.getElementById('diagRisques').innerHTML=risquesHtml;
+  document.getElementById('diagActions').innerHTML=actionsHtml;
+  document.getElementById('diagCount').textContent=obligations.split('</div>').length-1+' obligations • '+risques.length+' risques';
+  diagnostic={obligations: echeSpecifique, risques, actions};
+  traceLog.push({decisionId:'diagnostic', input:{specifique:echeSpecifique.length}, rule:{id:'diagnostic', article:'Art.135/460/223', annee:2026}, result:{risques:risques.length}, timestamp:new Date().toISOString()});
+}
+function notifierClientDiag(){ if(ficheQualifiee.statutExistence.includes('Cas C')) notifierCasC(); else toast('Notifier','Diagnostic envoyé via Teams/Elements','success'); }
+
+// ÉTAPE 5 — Traçabilité
+function renderTrace(){
+  document.getElementById('traceDossier').textContent=selectedDossierId||'—';
+  document.getElementById('traceRule').textContent=ruleBase? ruleBase.version+' • '+ruleBase.loiFinances : '—';
+  document.getElementById('traceList').innerHTML= traceLog.length? traceLog.map(t=> `<div class="trace-item"><div class="d-flex justify-content-between"><strong class="small">${t.decisionId}</strong><span class="badge bg-light text-dark border">${new Date(t.timestamp).toLocaleTimeString('fr-FR')}</span></div><small class="text-muted">Entrée: <code>${JSON.stringify(t.input).slice(0,120)}</code></small><br><small>Règle: <code>${t.rule.id}=${t.rule.valeur}</code> <span class="rule-badge">${t.rule.article} (${t.rule.annee})</span></small><br><small>Résultat: <code>${JSON.stringify(t.result).slice(0,120)}</code></small></div>`).join('') : '<span class="text-muted small">Aucune trace — parcourez les étapes.</span>';
+}
+function exportTrace(){ const data={dossier:selectedDossierId, fiche:ficheQualifiee, ruleBase:ruleBase?.version, trace:traceLog, exportedAt:new Date().toISOString()}; const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='audit-'+(selectedDossierId||'dossier')+'-'+new Date().toISOString().split('T')[0]+'.json'; a.click(); toast('Audit exporté','JSON traçable','success'); }
+function cloturerWorkflow(){ if(!selectedDossierId) return; const all=getDossiers(); const d=all.find(x=>x.id===selectedDossierId); if(d){ d.workflowTrace=traceLog; d.workflowDiag=diagnostic; d.workflowEche= {general:echeGeneral, specifique:echeSpecifique}; d.avancement=100; d.statut='Diagnostiqué'; setDossiers(all); toast('Workflow clôturé', d.ref+' • Audit enregistré','success'); } }
+
+// FICHE DE DÉCLARATION PDF — génération, aperçu, impression
+function buildFicheHTML(){
+  if(!selectedDossierId || !ficheQualifiee){ return '<div class="alert alert-warning">Sélectionnez d\'abord un dossier et qualifiez la fiche (Étape 1).</div>'; }
+  const d=getDossiers().find(x=>x.id===selectedDossierId) || {};
+  const c=ficheQualifiee;
+  const dateFiche=new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+  const hr=new Date().toLocaleDateString('fr-FR');
+  const refDossier=d.ref||selectedDossierId;
+  const clientName=c.name||d.clientName||'—';
+  const ruleV=ruleBase? `${ruleBase.version} • ${ruleBase.annee} • LF ${ruleBase.loiFinances}` : '—';
+  const tvaBadge=c.tvaAssujetti? '<span class="badge-pdf">Assujetti TVA 18% Art.223</span>' : '<span class="badge-pdf" style="background:#f1f5f9;color:#334155;border-color:#cbd5e1;">Non assujetti TVA</span>';
+  const tpsBadge=c.tpsSoumis? '<span class="badge-pdf" style="background:#FFB81C;color:#0A2F5E;border-color:#FFB81C;">TPS due Art.178</span>' : '<span class="badge-pdf" style="background:#f1f5f9;color:#334155;border-color:#cbd5e1;">Hors TPS</span>';
+  const regime=c.regimeParDefaut||'—';
+  const cat=c.catPersonne||'—';
+  const specRows=(echeSpecifique||[]).map(e=> `<tr><td><strong>${e.libelle}</strong></td><td style="white-space:nowrap;">${e.echeance}</td><td style="white-space:nowrap;"><span class="badge-pdf" style="font-size:7.5px;">${e.article}</span></td><td style="font-size:9.5px;color:#475569;">${e.base}</td></tr>`).join('') || '<tr><td colspan="4" style="text-align:center;color:#64748b;padding:12px;">Aucun échéancier spécifique — qualifiez la fiche</td></tr>';
+  const obligRows=(diagnostic?.obligations||echeSpecifique||[]).slice(0,8).map(o=> `<tr><td>${o.libelle||o.a||'—'}</td><td style="white-space:nowrap;">${o.echeance||o.e||'—'}</td><td><span class="badge-pdf" style="font-size:7.5px;">${o.article||o.art||'—'}</span></td></tr>`).join('') || specRows;
+  const risques=(diagnostic?.risques||[]).map(r=> `<tr><td><span class="badge ${r.niveau==='critique'?'bg-danger':'bg-warning text-dark'}" style="font-size:7.5px;padding:1px 5px;">${r.niveau}</span><br><strong style="font-size:9.5px;">${r.titre}</strong></td><td><span class="badge-pdf" style="font-size:7px;">${r.article}</span></td><td style="font-size:9px;">${r.detail}</td></tr>`).join('') || '<tr><td colspan="3" style="text-align:center;color:#64748b;">Aucun risque majeur détecté</td></tr>';
+  const actions=(diagnostic?.actions||[]).map(a=> `<tr><td style="text-align:center;"><span class="badge bg-dark" style="font-size:7.5px;">P${a.p}</span></td><td style="font-size:9px;">${a.a}</td><td style="white-space:nowrap;font-size:9px;">${a.e}</td><td><span class="badge-pdf" style="font-size:7px;">${a.art}</span></td><td style="font-size:9px;">${a.resp}</td></tr>`).join('') || '<tr><td colspan="5" style="text-align:center;">—</td></tr>';
+  const traceRows=(traceLog||[]).slice(-5).map(t=> `<tr><td style="font-size:8.5px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.decisionId}</td><td style="font-size:7.5px;"><code style="font-size:7px;background:#f1f5f9;padding:1px 3px;border-radius:3px;">${t.rule?.article||'—'}</code></td><td style="font-size:8px;max-width:160px;overflow:hidden;text-overflow:ellipsis;">${(t.result?.regime||JSON.stringify(t.result||'').slice(0,70))}</td><td style="font-size:7.5px;white-space:nowrap;">${new Date(t.timestamp).toLocaleTimeString('fr-FR')}</td></tr>`).join('') || '<tr><td colspan="4" style="text-align:center;">—</td></tr>';
+  return `
+  <div class="fiche-pdf" id="ficheContent">
+    <!-- En-tête -->
+    <div class="entete">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;">
+        <div style="flex:1;">
+          <div style="font-family:Exo;font-weight:800;font-size:20px;color:#0A2F5E;letter-spacing:-0.5px;line-height:1;">GOBEX <span style="color:#FFB81C;font-weight:700;">Godwin Business Expertise</span></div>
+          <div style="font-size:10px;color:#0A2F5E;font-weight:600;letter-spacing:0.4px;margin-top:2px;">CABINET D'EXPERTISE COMPTABLE & FISCALE — ABOMEY-CALAVI</div>
+          <div style="font-size:8.5px;color:#64748b;margin-top:4px;line-height:1.4;">Agrément RB/ABC/15A3265 • IFU 1201502844807 • RCCM RB/ABC/15A3265<br>Carrefour 02 Manguiers, Rue de Tankpê • Tél +229 97 739 046 • contact@gobex.bj • wa.me/22997739046</div>
+        </div>
+        <div style="text-align:right;min-width:140px;">
+          <div style="background:#0A2F5E;color:#FFB81C;border:1px solid #FFB81C;border-radius:50px;padding:4px 10px;font-size:9px;font-weight:700;display:inline-block;">CGI BÉNIN ${ruleBase?.annee||2026} • ${ruleBase?.version||'2026.1'}</div>
+          <div style="font-size:7.5px;color:#64748b;margin-top:4px;line-height:1.3;">${ruleV}<br>Fiche du ${dateFiche}<br><span style="color:#0A2F5E;font-weight:700;">Réf. ${refDossier}</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Titre -->
+    <div style="text-align:center;margin:10px 0 8px;">
+      <div style="font-family:Exo;font-weight:800;font-size:15px;color:#0A2F5E;letter-spacing:1px;">FICHE DE DÉCLARATION FISCALE</div>
+      <div style="font-size:9px;color:#64748b;letter-spacing:0.6px;text-transform:uppercase;">À soumettre à l'entreprise — Document officiel</div>
+      <div style="width:60px;height:3px;background:#FFB81C;margin:6px auto 0;border-radius:2px;"></div>
+    </div>
+    <!-- Identification -->
+    <table style="margin-bottom:10px;"><tr><th style="width:18%;">Réf. Dossier</th><td style="width:32%;"><strong style="color:#0A2F5E;">${refDossier}</strong></td><th style="width:18%;">Date</th><td style="width:32%;">${hr}</td></tr><tr><th>Entreprise</th><td><strong>${clientName}</strong><div style="font-size:8.5px;color:#64748b;">${c.ref||''} ${c.rccm? '• RCCM '+c.rccm : ''}</div></td><th>IFU</th><td style="font-family:monospace;font-size:10px;">${c.ifu||'—'}</td></tr><tr><th>Personne</th><td style="font-size:9.5px;">${cat}</td><th>Activité</th><td style="font-size:9.5px;">${c.activite||c.secteur||'—'}</td></tr><tr><th>CA annuel</th><td style="font-size:9.5px;"><strong>${c.caAnnuel? (c.caAnnuel/1000000).toFixed(1)+'M' : '—'}</strong> ${c.caPrevisionnel? '<span style="color:#64748b;">(prév. '+(c.caPrevisionnel/1000000).toFixed(1)+'M)</span>' : ''}</td><th>Effectif</th><td>${c.effectif||c.employes||'—'} salarié(s) • ${c.connuDGI===false? '<span style="color:#dc2626;font-weight:700;">Non connue DGI</span>' : c.connuDGI? 'Connue' : '—'}</td></tr></table>
+
+    <!-- Qualification -->
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 10px;margin-bottom:10px;page-break-inside:avoid;">
+      <div style="font-family:Exo;font-weight:700;font-size:10px;color:#0A2F5E;margin-bottom:6px;"><span style="display:inline-block;width:14px;height:14px;background:#FFB81C;border-radius:3px;vertical-align:middle;margin-right:6px;"></span>1. QUALIFICATION & RÉGIME <span style="background:#0A2F5E;color:#FFB81C;border-radius:50px;padding:1px 6px;font-size:8px;margin-left:6px;">${c.statutExistence||'—'}</span></div>
+      <table style="border:none;"><tr><td style="border:none;padding:2px 6px;width:50%;"><span style="font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Régime</span><br><strong style="font-size:11px;color:#0A2F5E;">${regime}</strong></td><td style="border:none;padding:2px 6px;width:50%;"><span style="font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Option</span><br><span style="font-size:10px;">${c.optionInfo||'Aucune'}</span></td></tr><tr><td style="border:none;padding:6px;"><span style="font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">TVA Art.223</span><br><span style="font-size:9px;">${c.tvaMotif||'—'}</span> <span style="margin-left:4px;">${tvaBadge}</span></td><td style="border:none;padding:6px;"><span style="font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">TPS Art.178-179</span><br><span style="font-size:9px;">${c.tpsMotif||'—'}</span> <span style="margin-left:4px;">${tpsBadge}</span></td></tr></table>
+    </div>
+
+    <!-- Échéancier -->
+    <div style="margin-bottom:10px;page-break-inside:avoid;">
+      <div style="font-family:Exo;font-weight:700;font-size:10px;color:#0A2F5E;margin-bottom:5px;"><span style="display:inline-block;width:14px;height:14px;background:#1976d2;border-radius:3px;vertical-align:middle;margin-right:6px;"></span>2. ÉCHÉANCIER SPÉCIFIQUE AU DOSSIER</div>
+      <table><thead><tr><th style="width:38%;">Obligation</th><th style="width:22%;">Échéance</th><th style="width:20%;">Art. CGI</th><th style="width:20%;">Base</th></tr></thead><tbody>${specRows}</tbody></table>
+      <div style="font-size:7.5px;color:#64748b;margin-top:3px;">Source RuleBase ${ruleV} — L1/L2/L3 vs spécifique filtré</div>
+    </div>
+
+    <!-- Diagnostic -->
+    <div style="margin-bottom:10px;">
+      <div style="font-family:Exo;font-weight:700;font-size:10px;color:#0A2F5E;margin-bottom:5px;"><span style="display:inline-block;width:14px;height:14px;background:#198754;border-radius:3px;vertical-align:middle;margin-right:6px;"></span>3. DIAGNOSTIC & RECOMMANDATIONS</div>
+      <table><thead><tr><th style="width:8%;">Prio</th><th style="width:38%;">Action</th><th style="width:18%;">Échéance</th><th style="width:18%;">Art.</th><th style="width:18%;">Resp.</th></tr></thead><tbody>${actions}</tbody></table>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <div style="flex:1;"><div style="font-size:8px;font-weight:700;color:#0A2F5E;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;">Risques détectés</div><table><thead><tr><th style="width:35%;">Risque</th><th style="width:20%;">Art.</th><th>Détail</th></tr></thead><tbody>${risques}</tbody></table></div>
+      </div>
+    </div>
+
+    <!-- Traçabilité -->
+    <div style="margin-bottom:12px;page-break-inside:avoid;">
+      <div style="font-family:Exo;font-weight:700;font-size:10px;color:#0A2F5E;margin-bottom:5px;"><span style="display:inline-block;width:14px;height:14px;background:#64748b;border-radius:3px;vertical-align:middle;margin-right:6px;"></span>4. TRAÇABILITÉ — 5 dernières décisions</div>
+      <table><thead><tr><th style="width:22%;">Décision</th><th style="width:22%;">Règle → Art.</th><th>Résultat</th><th style="width:14%;">Heure</th></tr></thead><tbody>${traceRows}</tbody></table>
+      <div style="font-size:7px;color:#64748b;margin-top:2px;text-align:center;">Chaque décision : entrée → règle → Art. CGI → année LF → résultat — traçable Art. par Art.</div>
+    </div>
+
+    <!-- Signatures -->
+    <div class="signatures">
+      <div class="sign-box"><div style="font-weight:800;color:#0A2F5E;font-size:11px;">CABINET GOBEX</div><div style="font-size:8.5px;color:#64748b;">Cachet & Signature</div><div style="font-size:8.5px;color:#0A2F5E;">Expert fiscal — ${currentUser()}</div><div style="height:55px;border:1px dashed #cbd5e1;border-radius:6px;margin:8px 0;background:#fff;"></div><div style="font-size:8.5px;">Date : <strong>${hr}</strong></div></div>
+      <div class="sign-box"><div style="font-weight:800;color:#0A2F5E;font-size:11px;">ENTREPRISE — ${clientName}</div><div style="font-size:8.5px;color:#64748b;">Lu et approuvé — Bon pour accord</div><div style="font-size:8.5px;color:#64748b;">Nom, qualité, signature</div><div style="height:55px;border:1px dashed #cbd5e1;border-radius:6px;margin:8px 0;background:#fff;"></div><div style="font-size:8.5px;">Date : ____ / ____ / 2026</div></div>
+    </div>
+    <div class="footer-pdf">
+      <strong>GOBEX — Godwin Business Expertise</strong> • RB/ABC/15A3265 • IFU 1201502844807 • Tél +229 97 739 046 • wa.me/22997739046 • contact@gobex.bj • Abomey-Calavi<br>Document généré automatiquement depuis le workflow fiscalité 5 étapes — RuleBase CGI 2026 v2026.1 LF 2025-22 — À conserver 10 ans Art.479-480 • Page 1/1
+    </div>
+  </div>`;
+}
+function genererFicheDeclaration(){
+  if(!selectedDossierId || !ficheQualifiee){ toast('Générez d\'abord','Sélectionnez dossier + Qualifier (Étape 1)','warning'); return; }
+  if(!ruleBase) { toast('Chargez RuleBase','Étape 2 requise','warning'); return; }
+  const html=buildFicheHTML();
+  document.getElementById('fichePrintable').innerHTML=html;
+  document.getElementById('fichePrintable').classList.remove('d-none');
+  document.getElementById('ficheApercu').innerHTML=html;
+  toast('Fiche générée','Aperçu prêt — imprimez ou téléchargez PDF','success');
+  // Trace
+  traceLog.push({decisionId:'fiche_'+Date.now(), input:{dossier:selectedDossierId, regime:ficheQualifiee.regimeParDefaut}, rule:{id:'fiche_declaration', article:'Art.49/460/223/178', annee: ruleBase.annee}, result:{generee:true}, timestamp:new Date().toISOString(), acteur:currentUser()});
+}
+function apercuFiche(){
+  if(!document.getElementById('fichePrintable').innerHTML || document.getElementById('fichePrintable').classList.contains('d-none')) genererFicheDeclaration();
+  const html=document.getElementById('fichePrintable').innerHTML;
+  if(!html || html.includes('Sélectionnez d')) { toast('Rien à afficher','Générez d\'abord','warning'); return; }
+  document.getElementById('ficheApercu').innerHTML=html;
+  const modal=new bootstrap.Modal(document.getElementById('ficheModal'));
+  modal.show();
+}
+function imprimerFiche(){
+  const printable=document.getElementById('fichePrintable');
+  if(!printable.innerHTML || printable.classList.contains('d-none')) genererFicheDeclaration();
+  const html=printable.innerHTML;
+  const styles=document.querySelectorAll('style');
+  let allCss=''; styles.forEach(s=> allCss+=s.innerHTML+'\n');
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Fiche Déclaration — ${selectedDossierId||'GOBEX'}</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"><style>${allCss} body{padding:16px;background:#fff;font-family:Roboto,sans-serif;} @page{size:A4;margin:10mm;} @media print{body{padding:0;}}</style></head><body>${html}<script>window.onload=function(){setTimeout(function(){window.print();},400);}<\/script></body></html>`);
+  w.document.close();
+  toast('Impression','Fenêtre d\'impression ouverte — choisissez Enregistrer en PDF si besoin','success');
+}
+function telechargerFichePDF(){
+  const printable=document.getElementById('fichePrintable');
+  if(!printable.innerHTML || printable.classList.contains('d-none')) genererFicheDeclaration();
+  const element=document.getElementById('fichePrintable').querySelector('.fiche-pdf');
+  if(!element){ toast('Rien à exporter','Générez d\'abord','warning'); return; }
+  const opt={ margin: [6,6,6,6], filename: `Fiche-Declaration-${(selectedDossierId||'GOBEX')}-${new Date().toISOString().split('T')[0]}.pdf`, image:{type:'jpeg',quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:'#ffffff', logging:false}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}, pagebreak:{mode:['css','legacy']} };
+  if(window.html2pdf){
+    toast('Génération PDF...','Veuillez patienter','success');
+    window.html2pdf().set(opt).from(element).save().then(()=> toast('PDF téléchargé','Fiche enregistrée','success')).catch(e=>{ console.error(e); toast('Erreur PDF', e.message,'warning'); });
+  } else {
+    imprimerFiche();
+  }
+}
+
+// Init
+function init(){
+  const authed=isAuthed(), access=hasAccess();
+  document.getElementById('authBadge').innerHTML= authed? (access? '<span class="badge bg-success">Habilité</span> '+currentUser() : '<span class="badge bg-warning text-dark">Non habilité</span>') : '<span class="badge bg-danger">Non connecté</span>';
+  document.getElementById('accessLbl').textContent= authed? (access? 'Habilité' : 'Non habilité') : 'Non connecté';
+  document.getElementById('gateUser').textContent= currentUser();
+  document.getElementById('accessGate').classList.toggle('d-none', authed && access);
+  initDossiers(); renderStepper(); chargerRuleBase();
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body></html>

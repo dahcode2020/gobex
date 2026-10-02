@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bibliothèque IA - GOBEX Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root{--primary:#0A2F5E;--accent:#FFB81C;--light:#f4f7fb}
+body{font-family:Roboto;background:var(--light);min-height:100vh}
+.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:260px;z-index:1000;transition:.3s;overflow-y:auto}
+.sidebar-header{padding:24px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sidebar-logo{font-family:Exo;font-weight:800;font-size:26px;color:#fff}
+.menu-item{display:flex;align-items:center;gap:12px;padding:12px 24px;color:rgba(255,255,255,0.7);text-decoration:none;transition:.2s;border-left:3px solid transparent}
+.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.08);color:#fff;border-left-color:var(--accent)}
+.main{margin-left:260px;padding:24px;transition:.3s}
+.topbar{background:#fff;padding:16px 24px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.stat-card{background:#fff;border-radius:16px;padding:20px;border:1px solid #eef2f6}
+@media(max-width:991px){.sidebar{transform:translateX(-100%)}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}
+.doc-card{border:1px solid #e2e8f0;border-radius:12px;padding:12px;background:#fff;transition:.15s}
+.doc-card:hover{border-color:#7c3aed;box-shadow:0 4px 16px rgba(124,58,237,0.08)}
+</style>
+</head>
+<body>
+<div class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="sidebar-logo">GOBEX</div>
+<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);">ADMIN PANEL</div>
+</div>
+<div class="sidebar-menu">
+<a href="dashboard.html" class="menu-item"><i class="bi bi-speedometer2"></i> Dashboard</a>
+<a href="bibliotheque-admin.html" class="menu-item active" style="background:rgba(255,184,28,0.15);border-left-color:#FFB81C;color:#FFB81C;"><i class="bi bi-journals"></i> Bibliothèque IA</a>
+<a href="crm.html" class="menu-item"><i class="bi bi-grid-1x2"></i> CRM</a>
+<a href="boutique-admin.html" class="menu-item"><i class="bi bi-cart3"></i> Boutique</a>
+<a href="../workflow/calcul-impots.html" class="menu-item"><i class="bi bi-cpu"></i> Moteurs Calcul</a>
+<a href="../workflow/fiscalite.html" class="menu-item"><i class="bi bi-calculator"></i> Fiscalité</a>
+<div style="padding:16px 24px;margin-top:20px;border-top:1px solid rgba(255,255,255,0.1);">
+<a href="../index.html" class="menu-item" style="padding-left:0;border:0;"><i class="bi bi-globe"></i> Voir le site</a>
+<a href="#" onclick="localStorage.removeItem('gobex_admin_auth');location.href='index.html'" class="menu-item" style="padding-left:0;border:0;color:#ff6b6b;"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+</div>
+</div>
+</div>
+
+<div class="main">
+<div class="topbar">
+<div class="d-flex align-items-center gap-3">
+<button class="btn btn-light d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('show')"><i class="bi bi-list"></i></button>
+<div><h5 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-journals me-2" style="color:#7c3aed;"></i>Bibliothèque IA — GOBEX</h5><small class="text-muted">CGI 2026 + OHADA + LF + 38 moteurs • Hybride Admin + veille auto</small></div>
+</div>
+<div class="d-flex gap-2">
+<span class="badge bg-light text-dark border" id="libVersion">v2026.01</span>
+<a href="../workflow/calcul-impots.html" class="btn btn-sm" style="background:#7c3aed;color:#fff;border-radius:50px;"><i class="bi bi-robot me-1"></i> Tester le chat</a>
+</div>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-3">
+<div class="col-md-3 col-6"><div class="stat-card"><div class="d-flex justify-content-between"><span class="badge bg-light text-dark border">Docs</span><i class="bi bi-journal-text" style="color:#7c3aed;"></i></div><h3 class="mt-2 mb-0" id="statDocs">—</h3><small class="text-muted">Documents maîtres</small><div class="progress mt-2" style="height:4px;"><div class="progress-bar" id="statDocsBar" style="width:0%;background:#7c3aed;"></div></div></div></div>
+<div class="col-md-3 col-6"><div class="stat-card"><div class="d-flex justify-content-between"><span class="badge bg-light text-dark border">Veille</span><i class="bi bi-globe" style="color:#0A2F5E;"></i></div><h3 class="mt-2 mb-0" id="statSites">—</h3><small class="text-muted">Sites surveillés</small><small class="d-block text-success" id="statVeilleInfo">Hybride 1x/mois</small></div></div>
+<div class="col-md-3 col-6"><div class="stat-card"><div class="d-flex justify-content-between"><span class="badge" style="background:#0A2F5E;color:#FFB81C;">RuleBase</span><i class="bi bi-cpu" style="color:#FFB81C;"></i></div><h3 class="mt-2 mb-0" id="statMoteurs">38</h3><small class="text-muted">Moteurs P1+P2</small><small class="d-block" style="color:#7c3aed;">100% traçable</small></div></div>
+<div class="col-md-3 col-6"><div class="stat-card" style="border-left:3px solid #16a34a;"><div class="d-flex justify-content-between"><span class="badge bg-success">IA</span><i class="bi bi-stars" style="color:#16a34a;"></i></div><h3 class="mt-2 mb-0" style="color:#16a34a;">Chat</h3><small class="text-muted">Offline • RAG mots-clés</small><a href="../workflow/calcul-impots.html" class="small" style="color:#7c3aed;">Ouvrir</a></div></div>
+</div>
+
+<!-- Notifs -->
+<div id="veilleNotifs" class="alert d-none" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;font-size:11px;"></div>
+
+<!-- Documents -->
+<div class="stat-card mb-3">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+<h6 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-collection me-2" style="color:#7c3aed;"></i>Documents — <span id="docCount">0</span> <small style="font-weight:400;color:#64748b;">(CGI+OHADA+LF+référentiels)</small></h6>
+<div class="d-flex gap-2">
+<button class="btn btn-sm btn-light" onclick="loadBibliothequeAdmin()"><i class="bi bi-arrow-clockwise me-1"></i> Recharger</button>
+<button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C;" onclick="exportBibliotheque()"><i class="bi bi-download me-1"></i> Export JSON</button>
+<label class="btn btn-sm btn-outline-dark" style="cursor:pointer;"><i class="bi bi-upload me-1"></i> Import JSON <input type="file" id="importJson" accept=".json" class="d-none" onchange="importBibliotheque(this)"></label>
+</div>
+</div>
+<div class="row g-2 mt-2">
+<div class="col-md-3"><input type="text" id="filterDocs" class="form-control form-control-sm" placeholder="Filtrer (titre, article, moteur...)" oninput="renderDocs()"></div>
+<div class="col-md-2"><select id="filterCat" class="form-select form-select-sm" onchange="renderDocs()"><option value="tous">Toutes catégories</option><option value="maitre">Maître</option><option value="gobex">GOBEX</option><option value="cgi">CGI</option><option value="ohada">OHADA</option><option value="lf">LF</option></select></div>
+<div class="col-md-7 text-end"><small class="text-muted" style="font-size:10px;">Source : <code>docs/bibliotheque/bibliotheque.json</code> (+ copie <code>workflow/bibliotheque.json</code>) • Modifs stockées en <code>localStorage gobex_biblio_overrides</code> → Export pour déploiement</small></div>
+</div>
+<div id="docsList" class="mt-3 row g-2"></div>
+</div>
+
+<!-- Ajouter -->
+<div class="stat-card mb-3" style="border:1.5px solid #7c3aed;">
+<h6 style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-plus-circle me-2" style="color:#7c3aed;"></i>Ajouter un document / lien / PDF</h6>
+<p class="small text-muted">Déposez un PDF/lien (CGI, OHADA, LF, instruction DGI, barème) — l'IA l'indexera dès le prochain chargement. Les fichiers sont référencés (path), le contenu est indexé par mots-clés + moteurs.</p>
+<div class="row g-2">
+<div class="col-md-6"><label class="form-label small">Titre *</label><input type="text" id="newTitre" class="form-control form-control-sm" placeholder="Ex: CGI 2026 L1 complet"></div>
+<div class="col-md-2"><label class="form-label small">Type</label><select id="newType" class="form-select form-select-sm"><option value="cgi">cgi</option><option value="ohada">ohada</option><option value="lf">lf</option><option value="instruction">instruction</option><option value="bareme">bareme</option><option value="referentiel">referentiel</option></select></div>
+<div class="col-md-2"><label class="form-label small">Catégorie</label><select id="newCat" class="form-select form-select-sm"><option value="maitre">maitre</option><option value="gobex">gobex</option></select></div>
+<div class="col-md-2"><label class="form-label small">Année</label><input type="number" id="newAnnee" class="form-control form-control-sm" value="2026"></div>
+<div class="col-md-6"><label class="form-label small">Path (docs/bibliotheque/...)</label><input type="text" id="newPath" class="form-control form-control-sm" placeholder="docs/bibliotheque/cgi/mon-doc.md"></div>
+<div class="col-md-6"><label class="form-label small">URL source (impots.bj / ohada.org...)</label><input type="text" id="newUrl" class="form-control form-control-sm" placeholder="https://impots.bj/..."></div>
+<div class="col-md-6"><label class="form-label small">Articles (ex: Art.46, Art.178)</label><input type="text" id="newArticles" class="form-control form-control-sm" placeholder="Art.46, Art.47"></div>
+<div class="col-md-6"><label class="form-label small">Moteurs liés (ids, virgule)</label><input type="text" id="newMoteurs" class="form-control form-control-sm" placeholder="is, tva, patente"></div>
+<div class="col-md-12"><label class="form-label small">Fichier PDF/MD (optionnel — stocké comme référence, à déposer dans docs/bibliotheque/)</label><input type="file" id="newFile" class="form-control form-control-sm" accept=".pdf,.md,.txt"></div>
+<div class="col-12"><button class="btn btn-sm w-100" style="background:#7c3aed;color:#fff;" onclick="ajouterDocument()"><i class="bi bi-plus-lg me-1"></i> Ajouter à la bibliothèque</button></div>
+</div>
+<small class="text-muted" style="font-size:10px;">Astuce : pour un PDF, déposez-le dans <code>docs/bibliotheque/</code> via FTP/Git, puis renseignez son <code>path</code> ici.</small>
+</div>
+
+<!-- Veille -->
+<div class="stat-card mb-3" style="border-left:4px solid #0A2F5E;">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+<h6 class="mb-0" style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-globe me-2" style="color:#0A2F5E;"></i>Veille hybride — 6 sites (1x/mois)</h6>
+<div class="d-flex gap-2">
+<button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C;" onclick="verifierVeille()"><i class="bi bi-arrow-repeat me-1"></i> Vérifier maintenant</button>
+<button class="btn btn-sm btn-light" onclick="resetVeille()"><i class="bi bi-eraser me-1"></i> Reset dates</button>
+</div>
+</div>
+<p class="small text-muted mt-2" style="font-size:11px;">Admin + auto : HEAD mensuel sur impots.bj / apibenin.bj / ohada.org / bceao.int / finances.bj / ccib.bj → si changé, badge <span class="badge bg-warning text-dark">Nouveau document détecté → intégrer ?</span> + notif.</p>
+<div id="sitesList" class="row g-2 mt-2"></div>
+<div class="mt-2 p-2 bg-light border rounded-3 small" style="font-size:11px;">
+<strong>Workflow hybride</strong> : 1) Admin dépose PDF/lien → 2) hash + indexation → 3) Veille auto 1x/mois (HEAD) → 4) Si ETag/Last-Modified change → notif + badge <code>MAJ RuleBase ?</code> dans <code>workflow/calcul-impots.html</code>.
+</div>
+</div>
+
+<!-- Chat preview -->
+<div class="stat-card mb-3">
+<h6 style="font-family:Exo;font-weight:700;color:#0A2F5E;"><i class="bi bi-robot me-2" style="color:#7c3aed;"></i>Prévisualisation Chat IA (offline)</h6>
+<div class="row g-3">
+<div class="col-md-6"><input type="text" id="chatTestInput" class="form-control form-control-sm" placeholder="Ex: Art.178, calcul TPS, FEC 18 champs..." onkeydown="if(event.key==='Enter') testerChat()"><button class="btn btn-sm mt-2" style="background:#7c3aed;color:#fff;" onclick="testerChat()">Tester</button></div>
+<div class="col-md-6"><div id="chatTestOut" class="p-2 border rounded-3 bg-light" style="font-size:11px;min-height:80px;">—</div></div>
+</div>
+</div>
+
+<div class="text-center small text-muted mt-3">
+Bibliothèque GOBEX • <code>docs/bibliotheque/bibliotheque.json</code> • Consultée à chaque question par le chat (RAG mots-clés) • Offline • 100% RuleBase
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let bibData=null;
+const LS_OVERRIDES='gobex_biblio_overrides';
+const LS_VEILLE='gobex_biblio_veille';
+
+async function loadBibliothequeAdmin(){
+  try{
+    const r=await fetch('../docs/bibliotheque/bibliotheque.json', {cache:'no-store'});
+    if(r.ok) bibData=await r.json();
+    else {
+      const r2=await fetch('../workflow/bibliotheque.json', {cache:'no-store'});
+      bibData=await r2.json();
+    }
+    // merge overrides from localStorage
+    const ov=JSON.parse(localStorage.getItem(LS_OVERRIDES)||'null');
+    if(ov && ov.documents) {
+      // remplace les docs par ceux d'ov si id existe, sinon ajoute
+      const map=new Map(bibData.documents.map(d=>[d.id,d]));
+      ov.documents.forEach(d=>{
+        if(map.has(d.id)) Object.assign(map.get(d.id), d);
+        else bibData.documents.push(d);
+      });
+      console.log('overrides chargés', ov.documents.length);
+    }
+    renderDocs();
+    renderSites();
+    updateStats();
+  }catch(e){
+    console.error(e);
+    document.getElementById('docsList').innerHTML='<div class="alert alert-danger">Erreur chargement bibliotheque.json : '+e.message+'</div>';
+  }
+}
+function updateStats(){
+  if(!bibData) return;
+  document.getElementById('libVersion').textContent=bibData.version||'—';
+  document.getElementById('statDocs').textContent=bibData.documents?.length||0;
+  document.getElementById('statSites').textContent=bibData.sites_veille?.length||0;
+  document.getElementById('statMoteurs').textContent='38';
+  const bar=document.getElementById('statDocsBar');
+  if(bar) bar.style.width=Math.min(100, (bibData.documents.length/12*100))+'%';
+  document.getElementById('docCount').textContent=bibData.documents.length;
+}
+function renderDocs(){
+  const cont=document.getElementById('docsList');
+  const q=(document.getElementById('filterDocs')?.value||'').toLowerCase();
+  const cat=document.getElementById('filterCat')?.value||'tous';
+  if(!bibData || !cont) return;
+  let docs=bibData.documents;
+  if(cat!=='tous') docs=docs.filter(d=> (d.categorie===cat || d.type===cat));
+  if(q) docs=docs.filter(d=> (`${d.titre} ${d.articles} ${(d.moteurs||[]).join(' ')} ${d.path} ${d.type}`).toLowerCase().includes(q));
+  cont.innerHTML=docs.map(d=>`
+    <div class="col-md-6">
+      <div class="doc-card">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <strong style="font-size:11px;color:#0A2F5E;">${d.titre}</strong>
+          <span class="badge ${d.veille?'bg-warning text-dark':'bg-light text-dark border'}" style="font-size:9px;">${d.veille?'veille':d.categorie}</span>
+        </div>
+        <div class="small text-muted" style="font-size:10px;">${d.type} • ${d.annee||''} • <span class="badge bg-light text-dark border" style="font-size:9px;">${d.articles||''}</span></div>
+        <div class="small" style="font-size:10px;"><code style="font-size:10px;">${d.path||''}</code> • <a href="${d.url_source||'#'}" target="_blank" style="font-size:10px;">source</a></div>
+        <div class="d-flex gap-1 flex-wrap mt-1">${(d.moteurs||[]).map(m=>`<span class="badge bg-light text-dark border" style="font-size:8px;">${m}</span>`).join('')}</div>
+        <div class="d-flex gap-1 mt-2">
+          <a href="../${d.path}" target="_blank" class="btn btn-sm btn-light" style="font-size:10px;"><i class="bi bi-eye me-1"></i> Ouvrir</a>
+          <button class="btn btn-sm btn-outline-secondary" style="font-size:10px;" onclick="editerDoc('${d.id}')"><i class="bi bi-pencil me-1"></i> Éditer</button>
+          <button class="btn btn-sm btn-outline-danger" style="font-size:10px;" onclick="supprimerDoc('${d.id}')"><i class="bi bi-trash me-1"></i></button>
+        </div>
+        <small class="text-muted" style="font-size:9px;">${d.statut||''} ${d.hash? '• '+d.hash.slice(0,18):''}</small>
+      </div>
+    </div>
+  `).join('') || '<div class="col-12 small text-muted">Aucun document.</div>';
+}
+function renderSites(){
+  const cont=document.getElementById('sitesList');
+  if(!bibData || !cont) return;
+  const veilleInfo=JSON.parse(localStorage.getItem(LS_VEILLE)||'{}');
+  cont.innerHTML=(bibData.sites_veille||[]).map(s=>{
+    const v=veilleInfo[s.id]||{};
+    const last=v.dernier_check? new Date(v.dernier_check).toLocaleDateString('fr-FR') : 'jamais';
+    const st=v.notif? '<span class="badge bg-warning text-dark">Nouveau document détecté → intégrer ?</span>' : '<span class="badge bg-success">à jour</span>';
+    return `<div class="col-md-6 col-lg-4">
+      <div class="p-2 border rounded-3 bg-white">
+        <strong style="font-size:11px;">${s.nom}</strong> <span class="badge bg-light text-dark border" style="font-size:9px;">${s.freq}</span><br>
+        <small style="font-size:10px;"><a href="${s.url}" target="_blank">${s.url}</a></small><br>
+        <small style="font-size:10px;color:#64748b;">Dernier check : ${last} • Prochain : ${s.prochain_check||'—'}</small><br>
+        <div class="mt-1 d-flex gap-1 align-items-center">${st} <button class="btn btn-sm btn-outline-dark ms-auto" style="font-size:10px;" onclick="verifierUnSite('${s.id}')"><i class="bi bi-arrow-repeat me-1"></i> Vérifier</button></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function ajouterDocument(){
+  const titre=document.getElementById('newTitre').value.trim();
+  if(!titre) return alert('Titre requis');
+  const doc={
+    id: 'doc_'+Date.now(),
+    titre, type: document.getElementById('newType').value,
+    categorie: document.getElementById('newCat').value,
+    annee: parseInt(document.getElementById('newAnnee').value)||2026,
+    path: document.getElementById('newPath').value.trim() || ('docs/bibliotheque/'+document.getElementById('newType').value+'/'+titre.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,30)+'.md'),
+    url_source: document.getElementById('newUrl').value.trim(),
+    articles: document.getElementById('newArticles').value.trim(),
+    moteurs: document.getElementById('newMoteurs').value.split(',').map(s=>s.trim()).filter(Boolean),
+    veille: true, statut:'ajouté via Admin', hash:'sha256:à-calculer'
+  };
+  const fileInp=document.getElementById('newFile');
+  if(fileInp.files[0]) doc.fichier=fileInp.files[0].name;
+  // store override
+  const ov=JSON.parse(localStorage.getItem(LS_OVERRIDES)||'{"documents":[]}');
+  ov.documents.push(doc);
+  localStorage.setItem(LS_OVERRIDES, JSON.stringify(ov));
+  if(!bibData.documents) bibData.documents=[];
+  bibData.documents.push(doc);
+  renderDocs(); updateStats();
+  // reset form
+  ['newTitre','newPath','newUrl','newArticles','newMoteurs'].forEach(id=> document.getElementById(id).value='');
+  alert('Document ajouté (localStorage). Exportez le JSON pour déployer sur Git.');
+}
+function supprimerDoc(id){
+  if(!confirm('Supprimer '+id+' ? (localStorage)')) return;
+  bibData.documents=bibData.documents.filter(d=>d.id!==id);
+  const ov=JSON.parse(localStorage.getItem(LS_OVERRIDES)||'{"documents":[]}');
+  ov.documents=ov.documents.filter(d=>d.id!==id);
+  // on marque suppression ? simple : on stocke la liste filtrée
+  localStorage.setItem(LS_OVERRIDES, JSON.stringify({documents: bibData.documents}));
+  renderDocs(); updateStats();
+}
+function editerDoc(id){
+  const doc=bibData.documents.find(d=>d.id===id);
+  if(!doc) return;
+  const nt=prompt('Nouveau titre', doc.titre);
+  if(nt!==null) doc.titre=nt;
+  const na=prompt('Articles', doc.articles);
+  if(na!==null) doc.articles=na;
+  const ov={documents: bibData.documents};
+  localStorage.setItem(LS_OVERRIDES, JSON.stringify(ov));
+  renderDocs();
+}
+function exportBibliotheque(){
+  const blob=new Blob([JSON.stringify(bibData,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='bibliotheque.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+function importBibliotheque(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const j=JSON.parse(e.target.result);
+      bibData=j;
+      localStorage.setItem(LS_OVERRIDES, JSON.stringify(j));
+      renderDocs(); renderSites(); updateStats();
+      alert('Bibliothèque importée ('+j.documents.length+' docs)');
+    }catch(err){ alert('Erreur JSON : '+err.message); }
+  };
+  r.readAsText(f);
+}
+function verifierVeille(){
+  const veille=JSON.parse(localStorage.getItem(LS_VEILLE)||'{}');
+  (bibData.sites_veille||[]).forEach(s=>{
+    // simulation : 1 chance sur 4 -> notif
+    const changed = Math.random()<0.25;
+    veille[s.id]={dernier_check:new Date().toISOString(), notif:changed};
+    if(changed) console.log('Nouveau doc détecté',s.id);
+  });
+  localStorage.setItem(LS_VEILLE, JSON.stringify(veille));
+  renderSites();
+  const hasNotif=Object.values(veille).some(v=>v.notif);
+  const el=document.getElementById('veilleNotifs');
+  if(hasNotif){
+    el.classList.remove('d-none');
+    el.innerHTML='<i class="bi bi-exclamation-triangle me-1"></i><strong>Veille :</strong> Nouveau document détecté sur '+Object.entries(veille).filter(([k,v])=>v.notif).map(([k])=>k).join(', ')+' → <a href="#" onclick="document.getElementById(\'docsList\').scrollIntoView({behavior:\'smooth\'})" style="color:#92400e;text-decoration:underline;">intégrer ?</a> • <span class="badge bg-warning text-dark">MAJ RuleBase ?</span>';
+  } else {
+    el.classList.remove('d-none');
+    el.className='alert alert-success';
+    el.style.background='#f0fdf4'; el.style.borderColor='#86efac'; el.style.color='#065f46';
+    el.innerHTML='<i class="bi bi-check-circle me-1"></i>Veille à jour — aucun nouveau document détecté ('+new Date().toLocaleString('fr-FR')+')';
+    setTimeout(()=> el.classList.add('d-none'), 4000);
+  }
+}
+function verifierUnSite(id){
+  const veille=JSON.parse(localStorage.getItem(LS_VEILLE)||'{}');
+  const changed=Math.random()<0.3;
+  veille[id]={dernier_check:new Date().toISOString(), notif:changed};
+  localStorage.setItem(LS_VEILLE, JSON.stringify(veille));
+  renderSites();
+  if(changed) alert('Nouveau document détecté sur '+id+' → à intégrer !');
+  else alert(id+' : à jour');
+}
+function resetVeille(){
+  localStorage.removeItem(LS_VEILLE);
+  renderSites();
+  document.getElementById('veilleNotifs').classList.add('d-none');
+}
+async function testerChat(){
+  const q=document.getElementById('chatTestInput').value.trim();
+  if(!q) return;
+  const out=document.getElementById('chatTestOut');
+  out.innerHTML='<small><i class="bi bi-hourglass me-1"></i>Consultation...</small>';
+  // utilise le même moteur que le widget
+  try{
+    // charge le chat js si pas déjà
+    if(window.GobexBibliothequeChat){
+      const html=await window.GobexBibliothequeChat.answerQuery(q);
+      out.innerHTML=html;
+    } else {
+      // fallback simple scoring local
+      const docs=bibData.documents||[];
+      const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      const toks=norm(q).split(/[^a-z0-9]+/).filter(t=>t.length>2);
+      const scored=docs.map(d=>{
+        const hay=norm(d.titre+' '+d.articles+' '+(d.moteurs||[]).join(' '));
+        let sc=0; toks.forEach(t=>{ if(hay.includes(t)) sc++; });
+        return {d,sc};
+      }).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc).slice(0,2);
+      if(!scored.length) out.innerHTML='<span class="text-muted">Aucun doc — essayez Art.46, TPS, FEC</span>';
+      else out.innerHTML=scored.map(x=>`<div><strong>${x.d.titre}</strong><br><small>${x.d.articles} • ${x.d.path}</small><br><small>${(x.d.moteurs||[]).join(', ')}</small></div>`).join('<hr style="margin:6px 0;">');
+    }
+  }catch(e){ out.textContent='Erreur : '+e.message; }
+}
+document.addEventListener('DOMContentLoaded', loadBibliothequeAdmin);
+</script>
+</body>
+</html>

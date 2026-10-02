@@ -1,0 +1,182 @@
+{
+  "version": "2026.01-bibliotheque",
+  "date": "2026-10-03",
+  "description": "Bibliothèque GOBEX 100% RuleBase — CGI 2026 + OHADA + LF + référentiels 38 moteurs, consultée par l'IA guide rapide (RAG simple mots-clés + article→moteur→calcul)",
+  "mode": "hybride",
+  "consultation": "L'IA consulte à chaque question : bibliotheque.json + moteurs-calcul-2026.json + docs/bibliotheque/**/*.md (RAG mots-clés, citation article, traçable). Évolution possible embeddings.",
+  "statut": "active",
+  "documents": [
+    {
+      "id": "cgi2026_l1",
+      "titre": "CGI Bénin 2026 — Livre 1 : Impôts directs (IS, IBA, TPS, IRCM, IRF, TPVI, ITS, VPS, TFU)",
+      "type": "cgi",
+      "categorie": "maitre",
+      "annee": 2026,
+      "articles": "Art.1 à Art.230 (L1)",
+      "path": "docs/bibliotheque/cgi/cgi-2026-l1.md",
+      "url_source": "https://impots.bj/documentation/code-general-des-impots",
+      "moteurs": ["is","iba","tps","ircm","irf","tpvi","its","vps","tfu"],
+      "veille": true,
+      "hash": "sha256:à-calculer-après-intégration-pdf",
+      "statut": "à-ingérer"
+    },
+    {
+      "id": "cgi2026_l2",
+      "titre": "CGI Bénin 2026 — Livre 2 : TVA, AIB et Retenues (AIB 1%/3%/5%, 10%, 20%, 0,30F/L)",
+      "type": "cgi",
+      "categorie": "maitre",
+      "annee": 2026,
+      "articles": "Art.231 à Art.290 (TVA Art.223-263, AIB Art.130-144, TPS Art.178-190)",
+      "path": "docs/bibliotheque/cgi/cgi-2026-l2.md",
+      "url_source": "https://impots.bj/documentation/code-general-des-impots",
+      "moteurs": ["tva","aib","prelev_non_connu","retenue_non_resident","prelev_hydro","tps"],
+      "veille": true,
+      "hash": "sha256:à-calculer",
+      "statut": "à-ingérer"
+    },
+    {
+      "id": "cgi2026_l3",
+      "titre": "CGI Bénin 2026 — Livre 3 : Impôts locaux, indirects et droits (Patente, TFU, TVM, Taxis, TAFA, Accises, Enregistrement, Timbre, Armes...)",
+      "type": "cgi",
+      "categorie": "maitre",
+      "annee": 2026,
+      "articles": "Art.291 à Art.459+ (Séjour 291, CDL 296, Occasion 304, Pacage 305, Spectacles 307, Boissons 308, Pub 309, Énergie 316, Enregistrement 317, Timbre 399, Armes 172...)",
+      "path": "docs/bibliotheque/cgi/cgi-2026-l3.md",
+      "url_source": "https://impots.bj/documentation/code-general-des-impots",
+      "moteurs": ["patente","licence","taxe_taxis","tvm","taxe_pirogues","taxe_sport","teom","tafa","taxe_jeux","taxe_com","taxe_accise","contrib_locale","prelev_occasion","taxe_pacage","taxe_spectacles","taxe_boissons","taxe_pub","taxe_energie","droits_enreg","timbre","taxe_armes","tsu_petrolier","taxe_tourisme","taxe_sejour"],
+      "veille": true,
+      "hash": "sha256:à-calculer",
+      "statut": "à-ingérer"
+    },
+    {
+      "id": "ohada_audcif",
+      "titre": "OHADA — Acte Uniforme Droit Comptable (AUDCIF) + SYSCOHADA — FEC 18/21 champs, Balance, États financiers",
+      "type": "ohada",
+      "categorie": "maitre",
+      "annee": 2024,
+      "articles": "AUDCIF Art.1-... + Guide FEC 18 champs OHADA",
+      "path": "docs/bibliotheque/ohada/ohada-audcif-syscohada.md",
+      "url_source": "https://www.ohada.org/index.php/fr/droit-ohada/textes",
+      "moteurs": ["is","iba","tva"],
+      "veille": true,
+      "hash": "sha256:ohada",
+      "statut": "à-ingérer"
+    },
+    {
+      "id": "lf2023",
+      "titre": "Loi de Finances 2023 — Bénin (Art.106, Art.108...)",
+      "type": "lf",
+      "categorie": "maitre",
+      "annee": 2023,
+      "articles": "LF2023 Art.106,108 + IS 25% industriel, TVA prorata...",
+      "path": "docs/bibliotheque/lf/lf-2023.md",
+      "url_source": "https://finances.bj/loi-de-finances/",
+      "moteurs": ["is","tva"],
+      "veille": true,
+      "statut": "à-ingérer"
+    },
+    {
+      "id": "lf2024",
+      "titre": "Loi de Finances 2024 — Bénin (Art.123, Art.101...)",
+      "type": "lf",
+      "categorie": "maitre",
+      "annee": 2024,
+      "articles": "LF2024 Art.123,101,110 + TPS 5% flat, TFU, Patente...",
+      "path": "docs/bibliotheque/lf/lf-2024.md",
+      "url_source": "https://finances.bj/loi-de-finances/",
+      "moteurs": ["tps","tfu","patente"],
+      "veille": true,
+      "statut": "à-ingérer"
+    },
+    {
+      "id": "lf2025",
+      "titre": "Loi de Finances 2025 — Bénin (Art.69, Art.101, Art.110...)",
+      "type": "lf",
+      "categorie": "maitre",
+      "annee": 2025,
+      "articles": "LF2025 Art.69,101,110 + IRCM 5%/10%/15%, TPVI, Patente exos...",
+      "path": "docs/bibliotheque/lf/lf-2025.md",
+      "url_source": "https://finances.bj/loi-de-finances/",
+      "moteurs": ["ircm","tpvi","patente"],
+      "veille": true,
+      "statut": "à-ingérer"
+    },
+    {
+      "id": "instr_dgi_tva",
+      "titre": "Instructions DGI — TVA, AIB, MECeF (facturier normalisé)",
+      "type": "instruction",
+      "categorie": "maitre",
+      "annee": 2024,
+      "articles": "TVA 18%, MECeF, retenue 100%/40%",
+      "path": "docs/bibliotheque/instructions/dgi-tva-mecef.md",
+      "url_source": "https://impots.bj/instructions",
+      "moteurs": ["tva","aib"],
+      "veille": true,
+      "statut": "à-ingérer"
+    },
+    {
+      "id": "baremes_2026",
+      "titre": "Barèmes 2026 — ITS (0%/10%/15%/19%/30% +1000/3000), TPS 5% min10k+4k ORTB, SMIG 52 000, BCEAO +3pts, taux MFP 1%/3%/10%",
+      "type": "bareme",
+      "categorie": "maitre",
+      "annee": 2026,
+      "articles": "Art.125 ITS, Art.183 TPS, Art.47 MFP",
+      "path": "docs/bibliotheque/instructions/baremes-2026.md",
+      "url_source": "https://www.bceao.int + https://impots.bj/baremes",
+      "moteurs": ["its","tps","is"],
+      "veille": true,
+      "statut": " SYNTHÈSE FAITE"
+    },
+    {
+      "id": "ref_moteurs2026",
+      "titre": "Référentiel GOBEX — 38 moteurs P1+P2 + 4 retenues — RuleBase 2026.28.5 (100% traçable Art. par Art.)",
+      "type": "referentiel",
+      "categorie": "gobex",
+      "annee": 2026,
+      "articles": "Art.46 (IS 30%/25%) + Art.47 MFP... + Art.291-459",
+      "path": "docs/moteurs-calcul-2026.json",
+      "url_source": "local",
+      "moteurs": ["is","iba","tps","tva","aib","ircm","irf","its","vps","tfu","patente","licence","tvm","taxe_taxis","taxe_pirogues","tafa","taxe_jeux","taxe_com","taxe_accise","contrib_locale","prelev_occasion","taxe_pacage","taxe_spectacles","taxe_boissons","taxe_pub","taxe_energie","droits_enreg","timbre","taxe_armes","taxe_tourisme","taxe_sejour","tsu_petrolier","taxe_sport","teom","tpvi","prelev_non_connu","retenue_non_resident","prelev_hydro"],
+      "veille": false,
+      "statut": "actif — consulté à chaque question"
+    },
+    {
+      "id": "ref_fec_exemple",
+      "titre": "FEC exemple Bénin 2025 + Balance + MECeF + Livre (OHADA 18 champs, Tab/|)",
+      "type": "referentiel",
+      "categorie": "gobex",
+      "annee": 2025,
+      "articles": "Mapping FEC OHADA 18 champs",
+      "path": "docs/exemples/fec-exemple-benin-2025.txt",
+      "url_source": "local",
+      "moteurs": ["is","tva","aib"],
+      "veille": false,
+      "statut": "actif"
+    }
+  ],
+  "sites_veille": [
+    {"id":"dgi","nom":"DGI Bénin — impots.bj","url":"https://impots.bj","freq":"mensuelle","type":"scrape","dernier_check":null,"prochain_check":"2026-11-03","methode":"Admin + fetch HEAD / manuel","notif":true},
+    {"id":"apibenin","nom":"API Bénin — apibenin.bj","url":"https://apibenin.bj","freq":"mensuelle","type":"scrape","dernier_check":null,"notif":true},
+    {"id":"ohada","nom":"OHADA — ohada.org","url":"https://www.ohada.org","freq":"mensuelle","type":"scrape","dernier_check":null,"notif":true},
+    {"id":"bceao","nom":"BCEAO — bceao.int (taux directeur, SMIG)","url":"https://www.bceao.int","freq":"mensuelle","type":"scrape","dernier_check":null,"notif":true},
+    {"id":"finances","nom":"Ministère Finances — finances.bj (LF)","url":"https://finances.bj","freq":"mensuelle","type":"scrape","dernier_check":null,"notif":true},
+    {"id":"ccib","nom":"CCIB — ccib.bj","url":"https://ccib.bj","freq":"trimestrielle","type":"scrape","dernier_check":null,"notif":true}
+  ],
+  "veille": {
+    "mode": "hybride",
+    "admin_url": "admin/bibliotheque-admin.html",
+    "workflow": "Admin dépose PDF/lien → hash + indexation → notif 'Nouveau document détecté → intégrer ?' → veille auto 1x/mois (HEAD + comparatif) → si changé, notif + badge 'MAJ RuleBase ?'",
+    "notifs": []
+  },
+  "indexation": {
+    "methode": "RAG simple (mots-clés + article→moteur→calcul) — sans vecteur au démarrage",
+    "champs": ["titre","articles","moteurs","path","categorie"],
+    "evolution": "Embeddings (phase 2) si volume > 500 docs"
+  },
+  "acces_ia": {
+    "widget": "workflow/calcul-impots.html#gobexChatWidget + workflow/fiscalite.html",
+    "consultation": "À chaque question : fetch bibliotheque.json + moteurs-calcul-2026.json + docs/bibliotheque/*.md → scoring mots-clés → top3 citations (article + path + extrait + moteur)",
+    "offline": true,
+    "langue": "fr"
+  }
+}

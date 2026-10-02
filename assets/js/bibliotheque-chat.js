@@ -1,7 +1,6 @@
 /**
- * GOBEX Bibliothèque Chat — Guide rapide IA (offline, 100% RuleBase)
- * Consulte à chaque question : bibliotheque.json + moteurs-calcul-2026.json + docs/bibliotheque/*.md
- * RAG simple mots-clés + article→moteur→calcul, citation traçable.
+ * GOBEX Bibliothèque Chat — Assistant conversationnel guide & assiste (offline, 100% RuleBase)
+ * Comprendre la préoccupation → Réfléchir → Fouiller bibliothèque.json + moteurs-calcul-2026.json → Guider avec citation paragraphe
  */
 (function(){
   const BIB_PATHS = [
@@ -19,6 +18,8 @@
 
   let bibData=null, ruleData=null, bibLoaded=false;
   let chatOpen=false;
+  let conversationHistory=[];
+  let context={ lastIntent:null, lastMoteur:null, lastCA:null, pending:null, turn:0 };
 
   async function tryFetch(paths){
     for(const p of paths){
@@ -33,13 +34,12 @@
     if(bibLoaded) return;
     try{
       const b=await tryFetch(BIB_PATHS);
-      if(b){ bibData=b.data; console.log('[GOBEX Chat] bibliotheque chargée',b.path, bibData.documents?.length); }
+      if(b){ bibData=b.data; console.log('[GOBEX Chat] bibliotheque',b.path, bibData.documents?.length); }
       const r=await tryFetch(RULE_PATHS);
       if(r){ ruleData=r.data; console.log('[GOBEX Chat] ruleBase',r.path, ruleData.version); }
-      // fallback : si pas de bibliothèque, construit depuis ruleBase
       if(!bibData && ruleData){
         bibData={version:ruleData.version, documents:[
-          {id:'ref_moteurs', titre:'Référentiel 38 moteurs RuleBase', path:'docs/moteurs-calcul-2026.json', articles:'Art.46-459', moteurs: ruleData.moteurs_P1?.concat(ruleData.moteurs_P2||[]).map(m=>m.id)||[] }
+          {id:'ref_moteurs', titre:'Référentiel 38 moteurs RuleBase', path:'docs/moteurs-calcul-2026.json', articles:'Art.46 à Art.459', moteurs: (ruleData.moteurs_P1||[]).concat(ruleData.moteurs_P2||[]).map(m=>m.id) }
         ], sites_veille:[]};
       }
       bibLoaded=true;
@@ -48,6 +48,134 @@
 
   function normalize(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
   function tokenize(q){ return normalize(q).split(/[^a-z0-9]+/).filter(t=>t.length>2); }
+
+  // --- entity extraction ---
+  function extractCA(query){
+    const q = normalize(query);
+    // patterns: 45M, 45 M, 50 millions, 12 000 000, 12.000.000, 500k
+    let m;
+    // 45M / 45 M / 50 millions
+    m = query.match(/(\d[\d\s\.,]*)\s*(M\b|million|milliard|k\b|mille)/i);
+    if(m){
+      let numStr=m[1].replace(/[\s\.]/g,'').replace(',','.'); 
+      let v=parseFloat(numStr);
+      if(isNaN(v)) return null;
+      const unit=m[2].toLowerCase();
+      if(unit.startsWith('m') && !unit.startsWith('mil')){ // M
+        // could be million, check if original had 'M' vs 'milliard'
+        if(/milliard/i.test(query)) v*=1e9; else v*=1e6;
+      } else if(unit.startsWith('k')||unit.includes('mille')) v*=1e3;
+      else if(unit.includes('million')) v*=1e6;
+      else if(unit.includes('milliard')) v*=1e9;
+      return Math.round(v);
+    }
+    // plain number like 45000000 or 45 000 000
+    m = query.match(/(\d[\d\s\.,]{4,})/);
+    if(m){
+      let raw=m[1].replace(/[\s]/g,'');
+      // handle 45,5M already handled, here we handle plain
+      // remove dots as thousand separator if comma is decimal? simple: remove spaces and dots, keep comma-> dot
+      // try heuristic: if contains both . and , then . is thousand
+      let cleaned = raw.replace(/\./g,'').replace(',','.');
+      // if raw had spaces like 45 000 000 -> remove spaces already
+      cleaned=cleaned.replace(/[^0-9\.]/g,'');
+      let v=parseFloat(cleaned);
+      if(!isNaN(v) && v>=1000) return Math.round(v);
+    }
+    return null;
+  }
+  function extractArticle(query){
+    const m=query.match(/art\.?\s*(\d{1,3})\b/i);
+    return m? parseInt(m[1]): null;
+  }
+  function formatMontant(n){
+    if(n==null) return '—';
+    return n.toLocaleString('fr-FR') + ' F';
+  }
+  function formatParagraphe(art){
+    if(!art) return '';
+    // Art.46 §1 -> Art.46, paragraphe 1
+    return art.replace(/§\s*/g,'paragraphe ').replace(/\s+/g,' ').trim();
+  }
+
+  // --- intent detection ---
+  const INTENT_KEYWORDS={
+    salutation: ['bonjour','salut','coucou','hello','bonsoir','bjr','cc','hey'],
+    tps: ['tps','taxe professionnelle synthetique','synthetique','liberatoire','art.178','art178','seuil 50','50m tps'],
+    is: [' is ','impot societe','impot sur les societes','art.46','art46','minimum perception','mfp','art.47','resultat fiscal'],
+    iba: ['iba','benefice affaires','bic','art.63','art.64'],
+    tva: ['tva','valeur ajoutee','aib','prorata','mec ef','mecef','art.241','18%','collectee'],
+    its: ['its','vps','salaire','traitement','paie','smig','cnss','barème','bareme','art.125','ortb','retenue salaire'],
+    tfu: ['tfu','fonciere unique','valeur locative'],
+    tvm: ['tvm','vehicule moteur','carte grise cv'],
+    patente: ['patente','licence boisson'],
+    fec: ['fec','ohada','syscohada','audcif','balance','grand livre','ecriture comptable','18 champs','21 champs'],
+    article: ['art.','article'],
+    calcul: ['calcul','combien','payer','montant','cout','estimer','simulation','prix','du ','dû'],
+    seuil: ['seuil','plafond','limite','depassement','dépassement','50m','50 m'],
+    procedure: ['comment','demarche','declarer','déclarer','echeance','échéance','quand','ou payer','ou déclarer','procedure','formalite'],
+    thanks: ['merci','thanks','super','parfait']
+  };
+
+  function detectIntent(query){
+    const qn=normalize(query);
+    const tokens=tokenize(query);
+    let scores={};
+    for(const intent in INTENT_KEYWORDS){
+      let sc=0;
+      INTENT_KEYWORDS[intent].forEach(kw=>{
+        const kn=normalize(kw);
+        if(qn.includes(kn)) sc+= (kw.length>4? 3:2);
+        // token partial
+        tokens.forEach(t=>{ if(kn.includes(t) && t.length>3) sc+=0.5; });
+      });
+      scores[intent]=sc;
+    }
+    // boost moteur id direct
+    if(ruleData){
+      const all=[...(ruleData.moteurs_P1||[]), ...(ruleData.moteurs_P2||[])];
+      all.forEach(m=>{
+        if(qn.includes(normalize(m.id))) scores[m.id]? scores[m.id]+=5 : null;
+        // map moteur id to intent
+        const map={tps:'tps', is:'is', iba:'iba', tva:'tva', its:'its', vps:'its', tfu:'tfu', tvm:'tvm', patente:'patente', licence:'patente', irf:'is', ircm:'is', tpvi:'is', taxe_sejour:'procedure', taxe_com:'procedure'};
+        if(map[m.id] && qn.includes(m.id)) scores[map[m.id]]=(scores[map[m.id]]||0)+4;
+      });
+    }
+    // detect article explicit
+    const artNum=extractArticle(query);
+    if(artNum){
+      scores['article']=(scores['article']||0)+6;
+      if(artNum>=178 && artNum<=190) scores['tps']=(scores['tps']||0)+4;
+      if(artNum>=46 && artNum<=53) scores['is']=(scores['is']||0)+4;
+      if(artNum>=119 && artNum<=129) scores['its']=(scores['its']||0)+4;
+      if(artNum>=223 && artNum<=263) scores['tva']=(scores['tva']||0)+4;
+    }
+    // isCalcul flag
+    const isCalcul = /calcul|combien|montant|estimer|simulation|payer|cout|prix/.test(qn) || extractCA(query)!=null;
+    // salutation has priority if starts with bonjour
+    if(/^\s*(bonjour|salut|coucou|hello|bjr|hey)/i.test(query) && query.trim().split(/\s+/).length<=6) {
+      return {primary:'salutation', scores, isCalcul, artNum};
+    }
+    // pick primary
+    let best='general', bestScore=0;
+    for(const k in scores){ if(scores[k]>bestScore){ bestScore=scores[k]; best=k; } }
+    if(bestScore===0) best='general';
+    // if calcul wins but a specific tax intent is close, prefer specific (guide mieux que générique)
+    if(best==='calcul' && isCalcul){
+      let secondBest=null, secondScore=0;
+      for(const k in scores){ if(k!=='calcul' && scores[k]>secondScore){ secondScore=scores[k]; secondBest=k; } }
+      if(secondBest && secondScore>=2.5) { best=secondBest; bestScore=secondScore; }
+    }
+    // CA seul sans mot-clé impôt : inférence TPS vs IS/IBA par seuil 50M
+    const caTmp = extractCA(query);
+    if(caTmp!=null && (best==='general' || best==='calcul')){
+      if(caTmp <= 50000000) { best='tps'; bestScore=Math.max(bestScore, 3); }
+      else if(caTmp > 50000000) { best='is'; bestScore=Math.max(bestScore, 3); }
+    }
+    // thanks handling
+    if(scores['thanks']>2 && bestScore<=2) best='thanks';
+    return {primary:best, scores, isCalcul, artNum, bestScore};
+  }
 
   function scoreDoc(doc, tokens, queryNorm){
     let score=0;
@@ -65,14 +193,10 @@
       if((doc.moteurs||[]).some(m=> normalize(m).includes(t))) score+=4;
       if(normalize(doc.articles||'').includes(t)) score+=2;
     });
-    // bonus article exact e.g. "art.178"
     if(/art\.\s*\d+/i.test(queryNorm)){
       const m=queryNorm.match(/art\.\s*(\d+)/i);
       if(m && normalize(doc.articles).includes('art.'+m[1])) score+=10;
     }
-    // moteur exact
-    const moteursAll = (bibData?.documents||[]).flatMap(d=>d.moteurs||[]);
-    // also check ruleData
     return score;
   }
 
@@ -87,9 +211,12 @@
       tokens.forEach(t=>{ if(hay.includes(t)) s+=2; });
       if(normalize(m.id)===normalize(queryNorm.replace(/\s+/g,''))) s+=10;
       if(queryNorm.includes(normalize(m.id))) s+=5;
+      // article exact
+      const artNum=queryNorm.match(/art\.\s*(\d+)/);
+      if(artNum && m.article && m.article.includes(artNum[1])) s+=8;
       if(s>bestScore){ bestScore=s; best=m; }
     });
-    return bestScore>0? best : null;
+    return bestScore>1? best : null;
   }
 
   async function searchBibliotheque(query){
@@ -99,58 +226,392 @@
     if(!bibData) return {docs:[], moteur:null};
     const scored = (bibData.documents||[]).map(d=> ({doc:d, score: scoreDoc(d,tokens,qNorm)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,3);
     const moteur = findMoteur(qNorm);
-    return {docs: scored.map(s=>s.doc), moteur, tokens};
+    return {docs: scored.map(s=>s.doc), moteur, tokens, rawScores:scored};
   }
 
-  function formatMoteurCard(m){
+  function getMoteurById(id){
+    if(!ruleData) return null;
+    const all=[...(ruleData.moteurs_P1||[]), ...(ruleData.moteurs_P2||[])];
+    return all.find(m=>m.id===id)||null;
+  }
+
+  // --- conversational composition ---
+  function intentLabel(primary){
+    const map={
+      salutation:'salutation',
+      tps:'TPS (taxe professionnelle synthétique)',
+      is:'IS (impôt sur les sociétés)',
+      iba:'IBA',
+      tva:'TVA & AIB',
+      its:'ITS / VPS (salaires)',
+      tfu:'TFU',
+      tvm:'TVM',
+      patente:'Patente / Licence',
+      fec:'FEC & OHADA',
+      article:'référence article',
+      calcul:'calcul / estimation',
+      seuil:'seuil & régime',
+      procedure:'démarche & échéance',
+      general:'votre question',
+      thanks:'remerciement'
+    };
+    return map[primary]||primary;
+  }
+
+  function getSuggestions(primary){
+    const map={
+      tps: ['J\'ai 32M de CA, combien ?', 'Mon CA dépasse 50M, je bascule ?', 'Échéances TPS ?', 'TPS libère quoi exactement ?'],
+      is: ['IS 30% vs 25% industriel ?', 'MFP Art.47 : 1% / 3% / 10% ?', 'Acomptes IS quand ?', 'Comment calculer résultat fiscal ?'],
+      tva: ['Seuil TVA 50M ?', 'TVA 18% + prorata ?', 'Facture MECeF obligatoire ?', 'TVA déductible ?'],
+      its: ['Barème ITS 0-30% ?', 'SMIG 52 000 F ?', 'VPS 4% / 2% ?', 'ORTB 1 000 / 3 000 F ?'],
+      fec: ['Exemple FEC 18 champs ?', 'Mapping OHADA 70* ?', 'Alternative sans FEC ?', 'Balance vs FEC ?'],
+      patente: ['Patente fixe + proportionnel ?', 'Licence boisson ?', 'Marché 0,5% ?'],
+      general: ['Comment calculer la TPS ?', 'Art.178 libératoire ?', 'FEC OHADA 18 champs ?', 'Barème ITS ?']
+    };
+    return map[primary]||map.general;
+  }
+
+  function computeTPSExample(ca){
+    if(ca==null) return null;
+    const base = Math.round(ca*0.05);
+    const tpsHorsORTB = Math.max(base, 10000);
+    const total = tpsHorsORTB + 4000;
+    return {base, tpsHorsORTB, total};
+  }
+
+  function buildReflectionHtml(query, intentInfo, entities, searchRes){
+    const artTxt = entities.article? `Art.${entities.article}` : '—';
+    const caTxt = entities.ca? formatMontant(entities.ca) : 'non précisé';
+    const moteurTxt = searchRes.moteur? `${searchRes.moteur.id.toUpperCase()} — ${searchRes.moteur.libelle.slice(0,60)}` : 'aucun moteur détecté';
+    const docsTxt = searchRes.docs.length? searchRes.docs.map(d=>d.titre.slice(0,35)).join(' ; ') : 'aucun doc exact';
+    return `<details style="background:#f8fafc;border:1px dashed #cbd5e1;border-radius:8px;padding:6px 8px;margin-bottom:8px;"><summary style="cursor:pointer;font-size:10px;color:#475569;font-weight:600;"><i class="bi bi-search me-1"></i>Ma réflexion <span style="font-weight:400;color:#64748b;">— comment j'ai compris</span></summary>
+      <div style="font-size:10px;color:#334155;line-height:1.6;margin-top:6px;">
+        <div><strong>1. Votre besoin :</strong> ${intentLabel(intentInfo.primary)} ${intentInfo.isCalcul? '• intention <em>calcul</em> détectée':''} — <em>"${query.slice(0,90)}"</em></div>
+        <div><strong>2. Indices :</strong> CA = ${caTxt} • Article = ${artTxt} • Mots-clés = ${(searchRes.tokens||[]).slice(0,6).join(', ')||'—'}</div>
+        <div><strong>3. Fouille bibliothèque v${bibData?.version||'2026'} :</strong> ${searchRes.docs.length} doc(s) — ${docsTxt} • Moteur = ${moteurTxt}</div>
+        <div><strong>4. Règle mobilisée :</strong> ${searchRes.moteur? formatParagraphe(searchRes.moteur.article||'') : (entities.article? `Art.${entities.article}` : 'RuleBase 2026')}</div>
+      </div></details>`;
+  }
+
+  function formatMoteurCard(m, caForCalc){
     if(!m) return '';
-    const taux = m.taux ? JSON.stringify(m.taux) : (m.formule? m.formule.slice(0,120):'');
-    return `<div style="margin-top:8px;padding:8px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;font-size:11px;">
-      <strong style="color:#0A2F5E;"><i class="bi bi-cpu me-1" style="color:#7c3aed;"></i>${m.libelle} <span class="badge bg-light text-dark border" style="font-size:9px;">${m.id.toUpperCase()}</span></strong><br>
-      <span class="badge" style="background:#0A2F5E;color:#FFB81C;font-size:9px;">${m.article||''}</span> <span style="color:#64748b;">${(m.livre||'')}</span><br>
-      <small style="color:#334155;">${(m.formule||'').slice(0,180)}${m.formule&&m.formule.length>180?'…':''}</small><br>
-      <small style="color:#7c3aed;">Taux/Seuil RuleBase : ${taux? `<code style="font-size:10px;">${taux}</code>` : 'voir JSON'}</small>
-      <div class="mt-1"><button class="btn btn-sm py-0 px-2" style="font-size:10px;background:#7c3aed;color:#fff;" onclick="try{ moteursSel.has('${m.id}')? toggleMoteur('${m.id}',false) : toggleMoteur('${m.id}',true); toast('Moteur','${m.id.toUpperCase()} '+(moteursSel.has('${m.id}')?'retiré':'ajouté'),'success'); }catch(e){}">Appliquer ${m.id.toUpperCase()}</button></div>
+    const taux = m.taux ? JSON.stringify(m.taux).slice(0,140) : (m.formule? m.formule.slice(0,120):'');
+    let calculExample='';
+    if(m.id==='tps' && caForCalc){
+      const ex=computeTPSExample(caForCalc);
+      if(ex) calculExample=`<div style="margin-top:6px;padding:6px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:6px;"><strong style="color:#065f46;"><i class="bi bi-calculator me-1"></i>Simulation pour ${formatMontant(caForCalc)} :</strong><br><span style="font-size:11px;color:#064e3b;">${formatMontant(caForCalc)} × 5 % = ${formatMontant(ex.base)} → max(10 000) = ${formatMontant(ex.tpsHorsORTB)} + 4 000 ORTB = <strong>${formatMontant(ex.total)}</strong></span><br><small style="color:#047857;">Art.183, paragraphes 1 à 3 — due par commune/établissement</small></div>`;
+    }
+    const articlePretty = formatParagraphe(m.article||'');
+    return `<div style="margin-top:8px;padding:10px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:10px;font-size:11px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
+        <strong style="color:#0A2F5E;"><i class="bi bi-cpu me-1" style="color:#7c3aed;"></i>${m.libelle} <span class="badge bg-light text-dark border" style="font-size:9px;">${m.id.toUpperCase()}</span></strong>
+        <span class="badge" style="background:#0A2F5E;color:#FFB81C;font-size:9px;">${articlePretty||''}</span>
+      </div>
+      <div style="color:#64748b;font-size:10px;">${(m.livre||'')} • ${articlePretty}</div>
+      <div style="margin-top:4px;color:#334155;"><small>${(m.formule||'').slice(0,220)}${m.formule&&m.formule.length>220?'…':''}</small></div>
+      <small style="color:#7c3aed;">RuleBase : <code style="font-size:10px;">${taux||'voir JSON'}</code></small>
+      ${calculExample}
+      <div class="mt-2 d-flex gap-2">
+        <button class="btn btn-sm py-1 px-2" style="font-size:10px;background:#7c3aed;color:#fff;border-radius:20px;" onclick="try{ toggleMoteur('${m.id}',true); toast('Moteur','${m.id.toUpperCase()} appliqué','success'); }catch(e){ quickAsk('Appliquer ${m.id.toUpperCase()}') }"><i class="bi bi-lightning me-1"></i>Appliquer ${m.id.toUpperCase()}</button>
+        <button class="btn btn-sm py-1 px-2 btn-light border" style="font-size:10px;border-radius:20px;" onclick="quickAsk('Explique ${m.id.toUpperCase()} Art.${(m.article||'').match(/\\d+/)?.[0]||''} en détail')"><i class="bi bi-info-circle me-1"></i>Détail</button>
+      </div>
     </div>`;
   }
 
-  async function answerQuery(query){
-    const {docs, moteur} = await searchBibliotheque(query);
-    let html = `<div style="font-size:11px;line-height:1.6;color:#334155;">`;
-    if(!query.trim()) html+= `<em>Posez une question : « Comment calculer la TPS ? », « Art.178 TPS libératoire », « FEC 18 champs », « patente »…</em>`;
-    else {
-      html+= `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
-        <span class="badge bg-light text-dark border" style="font-size:9px;">Bibliothèque ${bibData?.version||''}</span>
-        <span class="badge" style="background:#0A2F5E;color:#FFB81C;font-size:9px;">${docs.length} doc(s) • ${moteur? '1 moteur':''}</span>
+  function composeConversationalAnswer(query, intentInfo, entities, searchRes){
+    const primary=intentInfo.primary;
+    const ca=entities.ca!=null? entities.ca : context.lastCA;
+    const hasCA = ca!=null;
+    const moteur=searchRes.moteur;
+    const docs=searchRes.docs;
+    const artNum=entities.article || intentInfo.artNum;
+    let html = `<div style="font-size:11px;line-height:1.7;color:#334155;">`;
+    // reflection
+    html+= buildReflectionHtml(query, intentInfo, {...entities, ca}, searchRes);
+
+    // --- empathetic intro per intent ---
+    let intro='';
+    if(primary==='salutation'){
+      intro=`<div style="background:linear-gradient(135deg,#0A2F5E 0%,#1e3a5f 100%);color:#FFB81C;padding:10px;border-radius:10px;margin-bottom:8px;">
+        <strong>Bonjour ! Je suis votre guide GOBEX. 👋</strong><br><span style="color:#fff;font-size:11px;">Je comprends vos préoccupations fiscales & comptables, je fouille <em>à chaque question</em> la bibliothèque CGI 2026 + OHADA + LF + 38 moteurs, et je vous réponds pas à pas — avec l'article exact et le calcul traçable.</span>
+      </div>
+      <div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;">Comment puis-je vous assister aujourd'hui ?</strong><br>
+        <small>Exemples : <em>« Mon CA est de 45M, que dois-je payer ? »</em> • <em>« Explique l'Art.178 »</em> • <em>« Mon FEC est incomplet »</em></small>
       </div>`;
-      if(moteur){
-        html+= `<div style="margin-bottom:6px;"><strong style="color:#4c1d95;">→ Moteur détecté :</strong> ${moteur.id.toUpperCase()} — ${moteur.libelle.slice(0,80)}</div>`;
-        html+= formatMoteurCard(moteur);
+      html+=intro;
+    } else if(primary==='thanks'){
+      html+= `<div style="padding:8px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;"><strong style="color:#065f46;">Avec plaisir ! 🙏</strong><br><small>Je reste disponible pour toute autre question — calcul, FEC, OHADA ou article. N'hésitez pas.</small></div>`;
+    } else {
+      // generic empathetic header
+      let empathy='';
+      if(primary==='tps'){
+        empathy = `Je comprends : vous vous demandez si vous relevez de la <strong>TPS</strong> et combien vous auriez réellement à payer. C'est une préoccupation très courante pour les petites activités.`;
+      } else if(primary==='is'){
+        empathy = `Je vois que vous vous interrogez sur l'<strong>IS</strong> — taux, minimum de perception et acomptes. Je vais vous guider clairement.`;
+      } else if(primary==='tva'){
+        empathy = `Vous souhaitez y voir clair sur la <strong>TVA</strong> (seuil, taux 18 %, déductible). Je fouille la bibliothèque L2 pour vous répondre précisément.`;
+      } else if(primary==='its'){
+        empathy = `Vous pensez aux <strong>salaires & ITS/VPS</strong> — barème, SMIG, ORTB. Je vous explique le cheminement paie.`;
+      } else if(primary==='fec'){
+        empathy = `Vous préparez votre <strong>compta OHADA / FEC</strong>. C'est le cœur de la fiabilité — je vous guide sur les 18 champs et les alternatives.`;
+      } else if(primary==='article' && artNum){
+        empathy = `Vous cherchez l'<strong>Art.${artNum}</strong> précisément. Je vais vous l'expliquer avec le moteur associé.`;
+      } else if(primary==='patente'){
+        empathy = `Vous vous interrogez sur <strong>patente / licence</strong> — droit fixe + proportionnel. Je vous détaille.`;
+      } else if(intentInfo.isCalcul){
+        empathy = `Je comprends que vous voulez <strong>estimer un montant</strong> à payer. Je vais fouiller la règle exacte et vous faire une simulation traçable.`;
+      } else {
+        empathy = `J'ai bien saisi votre question sur <strong>${intentLabel(primary)}</strong>. Je fouille la bibliothèque pour vous répondre pas à pas.`;
       }
+      html+= `<div style="display:flex;gap:8px;align-items:flex-start;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:8px;margin-bottom:6px;">
+        <span style="width:28px;height:28px;border-radius:50%;background:#0A2F5E;color:#FFB81C;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">G</span>
+        <div style="flex:1;"><strong style="color:#0A2F5E;font-size:11px;">💬 Je comprends votre préoccupation</strong><br><span style="font-size:11px;color:#1e3a5f;">${empathy}</span></div>
+      </div>`;
+    }
+
+    if(primary==='salutation' || primary==='thanks'){
+      // add quick suggestions
+      const sug=getSuggestions('general');
+      html+= `<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">${sug.map(s=>`<button class="gobexChatQuick" onclick="quickAsk('${s.replace(/'/g,"\\'")}')">${s}</button>`).join('')}</div>`;
+      // docs minimal
+      html+= `</div>`;
+      return html;
+    }
+
+    // --- core answer per intent ---
+    let core='';
+    if(primary==='tps' || (moteur && moteur.id==='tps')){
+      const m = getMoteurById('tps') || moteur;
+      if(!hasCA){
+        core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+          <strong style="color:#0A2F5E;">🔎 Ce que dit la bibliothèque — Art.178 & Art.183</strong><br>
+          <span style="font-size:11px;">La <strong>TPS est libératoire</strong> (Art.178, paragraphe 1) : si votre CA annuel ≤ <strong>50 M F</strong> (seuil fixé par arrêté du ministre), elle remplace <strong>4 impôts</strong> : IBA + Patente + Licence + VPS. Au-delà, vous basculez à l'IBA de plein droit le mois suivant (Art.182).</span><br>
+          <div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:11px;">
+            <strong>Formule RuleBase (Art.183, paragraphes 1 à 3) :</strong><br>
+            TPS = max(CA × <strong>5 %</strong>, 10 000 F) + <strong>4 000 F</strong> ORTB — due <em>par commune et par établissement</em> (Art.183, paragraphe 4)<br>
+            <small>Échéances : 10/02 et 10/06 (acomptes sur N-1) + solde 30/04 (Art.185)</small>
+          </div>
+          <div style="margin-top:6px;font-size:11px;color:#92400e;"><i class="bi bi-lightbulb me-1"></i><strong>Pour vous guider précisément</strong>, quel est votre chiffre d'affaires annuel HT ? <em>Ex : 32M, 45 000 000 F, 12M</em><br>Indiquez-le et je vous donne le montant exact + échéances + ce que la TPS vous évite.</div>
+        </div>`;
+        context.pending='tps_ca';
+        context.lastIntent='tps';
+      } else {
+        const isTPS = ca <= 50000000;
+        const ex=computeTPSExample(ca);
+        if(isTPS){
+          core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+            <strong style="color:#065f46;"><i class="bi bi-check-circle me-1"></i>Avec ${formatMontant(ca)} → vous êtes bien en TPS</strong><br>
+            <span style="font-size:11px;">CA ≤ 50 M → <strong>régime TPS libératoire</strong> (Art.178, paragraphe 1). Vous <strong>n'aurez pas</strong> à payer séparément : IBA, patente, licence et VPS — c'est inclus.</span>
+            <div style="margin-top:6px;padding:8px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;">
+              <strong style="color:#065f46;">Votre estimation traçable (Art.183) :</strong><br>
+              <span style="font-size:11px;color:#064e3b;">${formatMontant(ca)} × 5 % = ${formatMontant(ex.base)} → plancher 10 000 F → ${formatMontant(ex.tpsHorsORTB)} + 4 000 F ORTB = <strong style="font-size:12px;">${formatMontant(ex.total)} / an</strong></span><br>
+              <small style="color:#047857;">Par commune/établissement (Art.183, paragraphe 4) — 50 % État / 50 % collectivité (Art.190)</small><br>
+              <small style="color:#334155;">Échéances : <strong>10/02</strong> (acompte), <strong>10/06</strong> (acompte), <strong>solde 30/04</strong> (Art.185, paragraphes 1-2) — forains : intégral avant 01/03 (Art.189)</small>
+            </div>
+            <div style="margin-top:6px;font-size:10px;color:#64748b;"><i class="bi bi-info-circle me-1"></i>Citation : <strong>${formatParagraphe(m? m.article : 'Art.183, paragraphes 1-3')}</strong> — ${m? m.libelle : 'TPS'} • v${bibData?.version||'2026'}</div>
+          </div>`;
+          core+= `<div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:11px;"><strong style="color:#0A2F5E;">Prochaine étape utile :</strong> Voulez-vous que j'applique le moteur <strong>TPS</strong> et masque IBA/patente dans le calculateur ? Ou que je simule avec un autre CA ?</div>`;
+        } else {
+          core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+            <strong style="color:#b91c1c;"><i class="bi bi-exclamation-triangle me-1"></i>Avec ${formatMontant(ca)} → vous dépassez le seuil TPS</strong><br>
+            <span style="font-size:11px;">CA > 50 M → vous <strong>n'êtes plus en TPS</strong> mais à l'<strong>IBA de plein droit</strong> dès le mois suivant le dépassement (Art.182, paragraphe 1). TPS déjà payée imputée 50/50 (Art.182, paragraphe 3).</span>
+            <div style="margin-top:6px;padding:6px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;font-size:11px;">
+              <strong>Ce qui change :</strong> IBA à 30 % (25 % école) + MFP 1,5 % (3 % BTP / 10 % immo) min 250 000 F + 4 000 ORTB (Art.63-64) — et patente/licence/VPS redeviennent dus séparément.
+            </div>
+            <small style="color:#64748b;">Voulez-vous une simulation IBA pour ce CA ?</small>
+          </div>`;
+        }
+        context.lastCA=ca;
+        context.lastMoteur=m;
+        context.pending=null;
+      }
+    } else if(primary==='is' || primary==='iba' || (moteur && (moteur.id==='is' || moteur.id==='iba'))){
+      const m = moteur && (moteur.id==='is'||moteur.id==='iba')? moteur : (getMoteurById('is')|| getMoteurById('iba'));
+      const isIBA = primary==='iba' || (m && m.id==='iba');
+      const label = isIBA? 'IBA' : 'IS';
+      const articleTxt = isIBA? 'Art.63 (taux) + Art.64 (MFP)' : 'Art.46 (taux) + Art.47 (MFP)';
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;">${label} — ${formatParagraphe(articleTxt)}</strong><br>
+        <span style="font-size:11px;">${isIBA? 'Bénéfice BIC/BNC' : 'Résultat fiscal'} × <strong>30 %</strong> (25 % industriel hors extractive / écoles privées — Art.46, paragraphe 1) — le plus élevé entre ce théorique et le <strong>minimum de perception</strong> (MFP).</span><br>
+        <div style="margin-top:6px;padding:6px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;font-size:11px;">
+          <strong>MFP (Art.47) :</strong> max(250 000 F, CA encaissable × <strong>${isIBA? '1,5 %' : '1 %'}</strong> général / 3 % BTP / 10 % immo) — station 0,60 F/L + 4 000 F ORTB au 10/03<br>
+          ${m && m.formule? `<small style="color:#4c1d95;">Formule : ${m.formule.slice(0,160)}…</small>`:''}
+        </div>
+        ${hasCA? `<div style="margin-top:6px;font-size:11px;color:#334155;">Avec CA ${formatMontant(ca)} : MFP indicatif = ${formatMontant(Math.max(250000, Math.round(ca*(isIBA?0.015:0.01))))} (+ 4 000 ORTB). Le résultat fiscal reste nécessaire — le FEC (18 champs OHADA) donne le plus juste.</div>` : `<div style="margin-top:6px;font-size:11px;color:#92400e;"><i class="bi bi-lightbulb me-1"></i>Indiquez votre <strong>CA ou résultat fiscal</strong> et je vous donne l'IS/IBA exact (théorique vs MFP).</div>`}
+      </div>`;
+      context.lastMoteur=m;
+    } else if(primary==='tva' || (moteur && moteur.id==='tva')){
+      const m=getMoteurById('tva')||moteur;
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;">TVA — Art.241 18 % (export 0 %) + Art.223 seuil 50 M</strong><br>
+        <span style="font-size:11px;">TVA due = TVA collectée (CA taxable × 18 %) − TVA déductible × prorata (Art.248, paragraphe 1). Seuil assujettissement 50 M (Art.223) — en dessous, exonéré sauf option (Art.225).</span>
+        <div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:11px;">
+          <strong>Prorata mixte :</strong> ceil((CA taxable + export)/CA total ×100) — hors éléments Art.249, paragraphe 2 — régul. au 30/04 N+1<br>
+          <strong>Exclusions Art.247 :</strong> véhicules tourisme, carburant BTP plaf 90 %, logement/réception… — retenue source 100 % / 40 % (Art.263)
+        </div>
+        <div style="margin-top:6px;font-size:11px;"><i class="bi bi-receipt me-1"></i>Besoin d'une simulation ? Dites : <em>« CA taxable 10M, TVA achats 800k »</em></div>
+      </div>`;
+      context.lastMoteur=m;
+    } else if(primary==='its' || (moteur && (moteur.id==='its' || moteur.id==='vps'))){
+      const m=getMoteurById('its')||moteur;
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;">ITS — Barème Art.125 + VPS 4 % (2 % enseignement)</strong><br>
+        <span style="font-size:11px;">ITS par tranches mensuelles : 0-60k <strong>0 %</strong>, 60-150k <strong>10 %</strong>, 150-250k <strong>15 %</strong>, 250-500k <strong>19 %</strong>, >500k <strong>30 %</strong> (Art.125, paragraphe 1) + 1 000 F mars / 3 000 F juin si >60k.</span>
+        <div style="margin-top:6px;padding:6px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;font-size:11px;">
+          Exemple : 250 000 F → 0 + 9 000 + 15 000 = <strong>24 000 F</strong> ; 600 000 F → <strong>101 500 F</strong> (+ ORTB)<br>
+          <strong>VPS</strong> = même base ITS × 4 % (2 % enseignement privé — Art.194) — 7 cas d'affranchissement Art.192 (TPS, 1er emploi 2 ans, sportif ≤208k, etc.)<br>
+          SMIG 52 000 F — base avantages nature forfait (logement 15 %, véhicule 4R 30k/15k…)
+        </div>
+        ${hasCA && ca<1000000? `<div style="margin-top:6px;font-size:11px;">Pour un brut de ${formatMontant(ca)} : ITS ≈ <strong>${formatMontant((()=>{let s=ca, r=0; if(s>500000){r+=(s-500000)*0.3; s=500000;} if(s>250000){r+=(s-250000)*0.19; s=250000;} if(s>150000){r+=(s-150000)*0.15; s=150000;} if(s>60000){r+=(s-60000)*0.10;} return Math.round(r); })())}</strong> (+ ORTB si >60k)</div>` : `<small style="color:#64748b;">Indiquez un brut (ex: 180k) pour une simulation instantanée.</small>`}
+      </div>`;
+      context.lastMoteur=m;
+    } else if(primary==='fec' || primary==='article' && artNum && artNum<50){
+      // FEC / OHADA
+      const hasArticleDetail = artNum && moteur;
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;">FEC OHADA & Compta — 18 champs + SYSCOHADA</strong><br>
+        <span style="font-size:11px;">Le FEC (Art.9 OHADA) est la source primaire fiable (niveau A). Format : <code>CodeJournal|LibJournal|NumEcriture|DateEcriture|NumCompte|LibCompte|...|MontDebit|MontCredit|...|CodeDevise</code> — 18 champs (21 si trésorerie), séparateur Tab ou <code>|</code>, dates AAAAMMJJ, montants virgule décimale.</span>
+        <div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:11px;">
+          <strong>Extraction auto bibliothèque :</strong> CA HT = Σ Crédit 70* (701-709) • Achats 60* • Résultat = Σ 7* − Σ 6*<br>
+          Si pas de FEC complet : <em>balance</em> (Compte/Débit/Crédit/Solde) ou <em>livre recettes-dépenses</em> + relevés bancaires/MoMo — le moteur bascule en mode simplifié (fiabilité B/C) et reste traçable CGI 2026.
+        </div>
+        <small style="color:#64748b;"><i class="bi bi-file-text me-1"></i>Exemple fourni : <code>docs/exemples/fec-exemple-benin-2025.txt</code> • Guide <code>mapping_fec_ohada</code> dans RuleBase</small>
+      </div>`;
+      if(hasArticleDetail) core+= `<div style="margin-top:6px;font-size:10px;color:#4c1d95;">Vous visiez ${formatParagraphe('Art.'+artNum)} — voir moteur ${moteur.id.toUpperCase()} ci-dessous.</div>`;
+    } else if(primary==='patente' || (moteur && (moteur.id==='patente' || moteur.id==='licence'))){
+      const m=getMoteurById('patente')||moteur;
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;">Patente — Art.199 (fixe + proportionnel) + complémentaire 0,5 %</strong><br>
+        <span style="font-size:11px;">Patente = Droit fixe (CA N-1 — 70k/60k si ≤1B +10k/B) + Droit proportionnel (VL × taux commune 12-25 % — Cotonou 17 %, min 1/3 fixe) + <strong>0,5 % HT marchés</strong> (Art.207).</span>
+        <div style="margin-top:6px;font-size:10px;color:#92400e;"><i class="bi bi-lightbulb me-1"></i>Rappel : si CA ≤ 50 M, la TPS est libératoire → patente incluse (Art.178). Dites votre CA + commune pour une simulation.</div>
+      </div>`;
+      context.lastMoteur=m;
+    } else if(artNum && moteur){
+      // generic article lookup with moteur
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;">${formatParagraphe('Art.'+artNum)} — ${moteur.libelle}</strong><br>
+        <span style="font-size:11px;">${moteur.article? formatParagraphe(moteur.article) : ''} — ${moteur.livre||''}</span><br>
+        <small style="color:#334155;">${(moteur.base||moteur.formule||'').slice(0,220)}</small>
+        <div style="margin-top:6px;font-size:10px;color:#64748b;">Cette réponse s'appuie sur le RuleBase 2026 traçable — posez une question de calcul et je vous simule.</div>
+      </div>`;
+    } else {
+      // fallback general conversational
       if(docs.length){
-        html+= `<div style="margin-top:8px;"><strong style="font-size:11px;color:#0A2F5E;"><i class="bi bi-journals me-1"></i> Documents maîtres :</strong></div>`;
+        core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+          <strong style="color:#0A2F5E;">Voilà ce que dit la bibliothèque pour votre question :</strong><br>
+          <span style="font-size:11px;">J'ai interrogé <strong>${docs.length} document(s) maître(s)</strong> et le référentiel <strong>38 moteurs</strong>. Voici le plus pertinent :</span>
+          <div style="margin-top:6px;padding:6px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:11px;"><strong>${docs[0].titre}</strong><br><small style="color:#7c3aed;">${docs[0].articles||''}</small> • <small style="color:#64748b;">${docs[0].path||''}</small><br><small>Moteurs : ${(docs[0].moteurs||[]).slice(0,8).join(', ')}</small></div>
+          <div style="margin-top:6px;font-size:11px;color:#334155;">Souhaitez-vous que je détaille un point précis ? Par exemple : <em>« explique le calcul »</em>, <em>« donne un exemple chiffré »</em>, ou <em>« cite l'article exact »</em>.</div>
+        </div>`;
+      } else {
+        core+= `<div style="padding:8px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;">
+          <strong style="color:#92400e;">Je n'ai pas trouvé de document exact pour « ${query.slice(0,60)} »</strong><br>
+          <span style="font-size:11px;">Mais je peux vous guider : reformulez avec un mot-clé comme <code>Art.46</code>, <code>TPS</code>, <code>FEC</code>, <code>patente</code>, <code>ITS</code> ou <code>OHADA</code>, ou donnez votre CA / situation et je vous réponds pas à pas.</span>
+          <div style="margin-top:6px;font-size:11px;">Exemples qui marchent bien : <em>« Mon CA 45M, TPS ? »</em> • <em>« Art.178 libératoire »</em> • <em>« FEC 18 champs mapping »</em></div>
+        </div>`;
+      }
+      // try to keep moteur if any
+    }
+
+    html+= core;
+
+    // moteur card (if not already shown in core TPS etc. avoid duplicate)
+    const showMoteurCard = moteur && !(primary==='tps' && hasCA) && !(primary==='salutation');
+    // for TPS with CA we already showed via formatMoteurCard calcul, but we included ex already — still show card for completeness if moteur exists and not duplicate
+    if(showMoteurCard){
+      // For tps without CA, we already will show card below? currently not, so show
+      // To avoid double for is/tva etc where core already describes, we still show interactive card
+      const caForCard = (primary==='tps' || (moteur&&moteur.id==='tps'))? ca : null;
+      html+= formatMoteurCard(moteur, caForCard);
+    } else if(moteur && primary==='tps' && hasCA){
+      // we already displayed TPS ex, but still show concise card without duplicate calc? formatMoteurCard includes calc, so we should show it only once
+      // we already included calc in core, so skip card to avoid double - but we already skipped, so we need to show minimal card without calc?
+      // Instead we show card with calcul via formatMoteurCard which we skipped — replace core calc with card?
+      // For consistency, if hasCA and tps, we already have core calc, we can still add card button without calc duplicate
+      html+= formatMoteurCard(moteur, null);
+    }
+
+    // docs list (if docs and not already main)
+    if(docs.length && primary!=='salutation'){
+      // if we already displayed docs[0] in fallback, avoid duplicate
+      const alreadyDisplayedFallback = (docs.length && !['tps','is','tva','its','fec','patente'].includes(primary) && !moteur);
+      if(!alreadyDisplayedFallback){
+        html+= `<div style="margin-top:8px;"><strong style="font-size:11px;color:#0A2F5E;"><i class="bi bi-journals me-1"></i>Sources maître consultées :</strong></div>`;
         docs.forEach(d=>{
-          const ve = d.veille? `<span class="badge bg-warning text-dark" style="font-size:8px;">veille</span>`: `<span class="badge bg-light text-dark border" style="font-size:8px;">${d.categorie||''}</span>`;
+          const veilleBadge = d.veille? `<span class="badge bg-warning text-dark" style="font-size:8px;">veille</span>`: `<span class="badge bg-light text-dark border" style="font-size:8px;">${d.categorie||''}</span>`;
           html+= `<div style="padding:6px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;margin-top:6px;">
-            <strong style="font-size:11px;color:#0A2F5E;">${d.titre}</strong> ${ve}<br>
-            <small style="color:#7c3aed;"><i class="bi bi-bookmark me-1"></i>${d.articles||''}</small> • <small style="color:#64748b;">${d.path||''}</small><br>
+            <strong style="font-size:11px;color:#0A2F5E;">${d.titre}</strong> ${veilleBadge}<br>
+            <small style="color:#7c3aed;"><i class="bi bi-bookmark me-1"></i>${formatParagraphe(d.articles||'')}</small> • <small style="color:#64748b;">${d.path||''}</small><br>
             <small style="font-size:10px;color:#475569;">Moteurs : ${(d.moteurs||[]).map(m=>`<span class="badge bg-light text-dark border" style="font-size:8px;">${m}</span>`).join(' ')}</small><br>
             <small><a href="${d.url_source||'#'}" target="_blank" style="color:#7c3aed;font-size:10px;">Source : ${d.url_source||'local'}</a> ${d.path? `• <a href="../${d.path}" target="_blank" style="font-size:10px;">Ouvrir doc</a>`:''}</small>
           </div>`;
         });
       }
-      if(!docs.length && !moteur){
-        html+= `<div class="alert alert-warning small p-2" style="font-size:11px;"><i class="bi bi-search me-1"></i>Aucun document trouvé pour « ${query} » — essayez : <code>Art.46</code>, <code>TPS</code>, <code>FEC</code>, <code>patente</code>, <code>ITS</code>, <code>OHADA</code>.</div>`;
-        // fallback : list 3 docs les plus proches par moteur name
-        if(bibData && bibData.documents){
-          html+= `<div class="small text-muted" style="font-size:10px;">Suggestions : ${bibData.documents.slice(0,3).map(d=>d.titre.slice(0,40)).join(' • ')}</div>`;
+    }
+
+    // citation traçable
+    if(moteur && moteur.article){
+      html+= `<div class="mt-2 small text-muted" style="font-size:10px;border-top:1px dashed #e2e8f0;padding-top:6px;"><i class="bi bi-shield-check me-1" style="color:#16a34a;"></i>Citation traçable : <strong>${formatParagraphe(moteur.article)}</strong> — ${moteur.libelle} — <code>${moteur.livre||'RuleBase 2026'}</code> • v${ruleData?.version||bibData?.version||'2026'}</div>`;
+    } else if(artNum){
+      html+= `<div class="mt-2 small text-muted" style="font-size:10px;border-top:1px dashed #e2e8f0;padding-top:6px;"><i class="bi bi-bookmark-check me-1"></i>Source : CGI Bénin 2026 — <strong>Art.${artNum}</strong> • Bibliothèque v${bibData?.version||'2026'}</div>`;
+    }
+
+    // suggestions
+    const sug = getSuggestions(primary==='general' && moteur? moteur.id : primary);
+    if(sug && sug.length){
+      html+= `<div style="margin-top:8px;"><small style="color:#64748b;font-size:10px;">Poursuivre :</small><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">${sug.slice(0,4).map(s=>`<button class="gobexChatQuick" onclick="quickAsk('${s.replace(/'/g,"\\'")}')">${s}</button>`).join('')}</div></div>`;
+    }
+
+    // update context
+    context.lastIntent=primary;
+    if(moteur) context.lastMoteur=moteur;
+    if(entities.ca) context.lastCA=entities.ca;
+    context.turn++;
+
+    html+= `</div>`;
+    return html;
+  }
+
+  async function answerQuery(query){
+    await loadBibliotheque();
+    const trimmed=query.trim();
+    if(!trimmed){
+      return `<div style="font-size:11px;color:#64748b;"><em>Posez une question : « Mon CA 45M TPS ? », « Art.178 », « FEC 18 champs », « calcul ITS 250k »…</em></div>`;
+    }
+    // --- gestion conversationnelle multi-tours ---
+    let effectiveQuery=trimmed;
+    let entities={ca: extractCA(trimmed), article: extractArticle(trimmed)};
+    let intentInfo=detectIntent(trimmed);
+    // si on attendait un CA (TPS sans CA), toute réponse avec CA devient TPS
+    if(context.pending==='tps_ca' && entities.ca){
+      intentInfo.primary='tps';
+      intentInfo.isCalcul=true;
+      context.pending=null;
+    }
+    // suivi court "Et pour 60M ?" ou juste "60M" : on garde le dernier sujet fiscal
+    const isShortFollowUp = trimmed.split(/\s+/).length <= 5 && entities.ca!=null;
+    const hasFollowMarker = /et\s*pour|et\s*si|et\s*avec|pour\s*\d|avec\s*\d/i.test(trimmed);
+    if(isShortFollowUp && context.lastIntent && (hasFollowMarker || intentInfo.bestScore < 4)){
+      if(['tps','is','iba','tva','its','patente','fec','tvm','tfu'].includes(context.lastIntent)){
+        const isExplicitNewTopic = intentInfo.bestScore>=4 && intentInfo.primary!==context.lastIntent && ['tps','is','iba','tva','its','patente','fec'].includes(intentInfo.primary);
+        if(!isExplicitNewTopic){
+          intentInfo.primary = context.lastIntent;
+          intentInfo.isCalcul=true;
         }
       }
-      if(moteur && moteur.article){
-        html+= `<div class="mt-2 small text-muted" style="font-size:10px;"><i class="bi bi-info-circle me-1"></i>Citation traçable : <strong>${moteur.article}</strong> — ${moteur.libelle} — consulté dans <code>${moteur.path||'moteurs-calcul-2026.json'}</code></div>`;
-      }
     }
-    html+= `</div>`;
+
+    const searchRes = await searchBibliotheque(effectiveQuery);
+    // if no moteur but lastMoteur and CA follow-up, inject lastMoteur
+    if(!searchRes.moteur && entities.ca && context.lastMoteur){
+      searchRes.moteur = context.lastMoteur;
+    }
+    const html = composeConversationalAnswer(effectiveQuery, intentInfo, entities, searchRes);
+    // store history
+    conversationHistory.push({role:'user', text:query});
+    conversationHistory.push({role:'assistant', text:html});
+    if(conversationHistory.length>20) conversationHistory.shift();
     return html;
   }
 
@@ -167,18 +628,24 @@
       #gobexChatBody{flex:1;overflow-y:auto;padding:12px;background:#f8fafc;}
       #gobexChatInputBar{padding:8px;border-top:1px solid #e2e8f0;background:#fff;display:flex;gap:6px;}
       #gobexChatInput{flex:1;border:1px solid #e2e8f0;border-radius:10px;padding:8px 10px;font-size:11px;}
+      #gobexChatInput:focus{outline:none;border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.12);}
       .gobexChatMsg{margin-bottom:10px;padding:8px 10px;border-radius:12px;max-width:90%;font-size:11px;line-height:1.5;}
       .gobexChatMsg.user{margin-left:auto;background:#0A2F5E;color:#FFB81C;border-bottom-right-radius:4px;}
       .gobexChatMsg.bot{margin-right:auto;background:#fff;border:1px solid #e2e8f0;border-bottom-left-radius:4px;}
-      .gobexChatQuick{font-size:10px;padding:4px 8px;border-radius:50px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;}
+      .gobexChatQuick{font-size:10px;padding:4px 8px;border-radius:50px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;transition:.15s;}
       .gobexChatQuick:hover{background:#f5f3ff;border-color:#7c3aed;color:#7c3aed;}
+      .gobexTyping{font-size:10px;color:#64748b;display:flex;align-items:center;gap:6px;}
+      .gobexTypingDots span{width:4px;height:4px;background:#7c3aed;border-radius:50%;display:inline-block;animation:bounce 1.1s infinite;}
+      .gobexTypingDots span:nth-child(2){animation-delay:.15s}
+      .gobexTypingDots span:nth-child(3){animation-delay:.3s}
+      @keyframes bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
       @media(max-width:480px){#gobexChatWidget{right:8px;left:8px;width:auto;}}
     `;
     document.head.appendChild(style);
 
     const btn=document.createElement('button');
     btn.id='gobexChatBtn';
-    btn.title='Assistant GOBEX — Guide rapide fiscalité & compta (bibliothèque)';
+    btn.title='Assistant GOBEX — Guide & assiste (bibliothèque)';
     btn.innerHTML='<i class="bi bi-robot"></i>';
     btn.onclick=()=> toggleChat();
     document.body.appendChild(btn);
@@ -190,48 +657,51 @@
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="width:28px;height:28px;border-radius:50%;background:#FFB81C;color:#0A2F5E;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;">G</span>
           <div>
-            <strong><i class="bi bi-stars me-1"></i>Assistant GOBEX</strong><br><small style="font-size:10px;opacity:.9;">Fiscalité & Compta — Bibliothèque CGI+OHADA</small>
+            <strong><i class="bi bi-stars me-1"></i>Assistant GOBEX</strong><br><small style="font-size:10px;opacity:.9;">Guide & assiste — fiscalité & compta</small>
           </div>
         </div>
         <div style="display:flex;gap:4px;">
-          <a href="../docs/bibliotheque/bibliotheque.json" target="_blank" class="btn btn-sm" style="font-size:10px;background:rgba(255,184,28,.15);color:#FFB81C;border:1px solid #FFB81C;padding:2px 6px;" title="Ouvrir bibliothèque.json"><i class="bi bi-journal-text"></i></a>
-          <a href="../admin/bibliotheque-admin.html" target="_blank" class="btn btn-sm" style="font-size:10px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);padding:2px 6px;" title="Admin bibliothèque"><i class="bi bi-gear"></i></a>
+          <a href="../docs/bibliotheque/bibliotheque.json" target="_blank" class="btn btn-sm" style="font-size:10px;background:rgba(255,184,28,.15);color:#FFB81C;border:1px solid #FFB81C;padding:2px 6px;" title="Bibliothèque"><i class="bi bi-journal-text"></i></a>
+          <a href="../admin/bibliotheque-admin.html" target="_blank" class="btn btn-sm" style="font-size:10px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);padding:2px 6px;" title="Admin"><i class="bi bi-gear"></i></a>
           <button class="btn btn-sm" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:4px 8px;" onclick="toggleChat()"><i class="bi bi-x-lg"></i></button>
         </div>
       </div>
       <div id="gobexChatBody">
         <div class="gobexChatMsg bot">
-          <strong>Bonjour ! Je maîtrise votre bibliothèque.</strong><br>
-          <small>CGI 2026 (L1-L3) + OHADA + LF 2023-25 + 38 moteurs RuleBase. Posez : « Art.178 », « calcul TPS », « FEC 18 champs », « patente »… Je cite l'article et le moteur.</small>
-          <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-            <button class="gobexChatQuick" onclick="quickAsk('Comment calculer la TPS 5% ?')">TPS 5%</button>
-            <button class="gobexChatQuick" onclick="quickAsk('Art.178 TPS libératoire')">Art.178</button>
-            <button class="gobexChatQuick" onclick="quickAsk('FEC OHADA 18 champs')">FEC</button>
-            <button class="gobexChatQuick" onclick="quickAsk('Patente Art.196')">Patente</button>
+          <strong>Bonjour ! Je suis votre assistant GOBEX. 👋</strong><br>
+          <small>Je <strong>comprends votre préoccupation</strong>, je <strong>réfléchis</strong> et je <strong>fouille à chaque question</strong> la bibliothèque CGI 2026 + OHADA + LF 2023-25 + 38 moteurs RuleBase — pour vous <strong>guider pas à pas</strong> avec l'article exact (paragraphe) et le calcul traçable.</small>
+          <div style="margin-top:8px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:10px;">
+            <strong style="color:#0A2F5E;">Parlez-moi comme à un conseiller :</strong><br>
+            <em>« Mon CA est de 45M, que dois-je payer ? »</em> • <em>« Explique l'Art.178 »</em> • <em>« Mon FEC est incomplet, que faire ? »</em>
           </div>
-          <div style="margin-top:6px;font-size:10px;color:#64748b;"><i class="bi bi-book me-1"></i>Librairie : <code>docs/bibliotheque/bibliotheque.json</code> • <span id="gobexChatLibCount">chargement…</span></div>
+          <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="gobexChatQuick" onclick="quickAsk('Mon CA est de 45M, que dois-je payer ?')">CA 45M → TPS ?</button>
+            <button class="gobexChatQuick" onclick="quickAsk('Explique l\\'Art.178 TPS libératoire')">Art.178</button>
+            <button class="gobexChatQuick" onclick="quickAsk('FEC OHADA 18 champs, comment faire ?')">FEC OHADA</button>
+            <button class="gobexChatQuick" onclick="quickAsk('Barème ITS et VPS')">ITS / VPS</button>
+          </div>
+          <div style="margin-top:6px;font-size:10px;color:#64748b;"><i class="bi bi-book me-1"></i>Bibliothèque : <code>bibliotheque.json</code> • <span id="gobexChatLibCount">chargement…</span> • 100% offline</div>
         </div>
       </div>
       <div style="padding:0 12px 6px 12px;display:flex;gap:6px;flex-wrap:wrap;">
-        <span style="font-size:10px;color:#64748b;">Veille hybride :</span>
+        <span style="font-size:10px;color:#64748b;">Veille :</span>
         <span class="badge bg-light text-dark border" style="font-size:9px;">impots.bj</span><span class="badge bg-light text-dark border" style="font-size:9px;">ohada.org</span><span class="badge bg-light text-dark border" style="font-size:9px;">bceao.int</span>
         <span class="badge" style="background:#7c3aed;color:#fff;font-size:9px;">mensuelle</span>
       </div>
       <div id="gobexChatInputBar">
-        <input id="gobexChatInput" placeholder="Ex: Art.46 taux IS, calcul ITS, OHADA..." onkeydown="if(event.key==='Enter') sendGobexChat()">
+        <input id="gobexChatInput" placeholder="Ex: Mon CA 45M, Art.46 IS, FEC incomplet..." onkeydown="if(event.key==='Enter') sendGobexChat()">
         <button class="btn btn-sm" style="background:#7c3aed;color:#fff;border-radius:10px;padding:6px 12px;" onclick="sendGobexChat()"><i class="bi bi-send"></i></button>
       </div>
     `;
     document.body.appendChild(widget);
 
-    // expose globals for inline onclick
     window.toggleChat = toggleChat;
     window.sendGobexChat = sendGobexChat;
     window.quickAsk = (q)=>{ document.getElementById('gobexChatInput').value=q; sendGobexChat(); };
 
     loadBibliotheque().then(()=>{
       const el=document.getElementById('gobexChatLibCount');
-      if(el && bibData) el.textContent = (bibData.documents?.length||0)+' docs • '+(bibData.sites_veille?.length||0)+' sites veille';
+      if(el && bibData) el.textContent = (bibData.documents?.length||0)+' docs • '+(bibData.sites_veille?.length||0)+' sites • '+(ruleData? '38 moteurs':'');
     });
   }
 
@@ -257,25 +727,24 @@
     userDiv.textContent=q;
     body.appendChild(userDiv);
     body.scrollTop=body.scrollHeight;
-    // bot typing
     const botDiv=document.createElement('div');
     botDiv.className='gobexChatMsg bot';
-    botDiv.innerHTML='<small style="color:#64748b;"><i class="bi bi-hourglass-split me-1"></i>Consultation bibliothèque…</small>';
+    botDiv.innerHTML='<div class="gobexTyping"><span>Je réfléchis & fouille la bibliothèque...</span><span class="gobexTypingDots"><span></span><span></span><span></span></span></div>';
     body.appendChild(botDiv);
     body.scrollTop=body.scrollHeight;
     try{
+      // petit délai pour effet conversationnel (perception réflexion)
+      await new Promise(r=> setTimeout(r, 380));
       const html=await answerQuery(q);
       botDiv.innerHTML=html;
     }catch(e){
-      botDiv.innerHTML=`<span style="color:#dc3545;">Erreur : ${e.message}</span>`;
+      botDiv.innerHTML=`<span style="color:#dc3545;">Oups, je n'ai pas pu consulter la bibliothèque : ${e.message}</span>`;
     }
     body.scrollTop=body.scrollHeight;
   }
 
   document.addEventListener('DOMContentLoaded', ()=>{
-    // inject after a short delay to not block
     setTimeout(injectWidget, 500);
   });
-  // also expose for manual
-  window.GobexBibliothequeChat={loadBibliotheque, searchBibliotheque, answerQuery};
+  window.GobexBibliothequeChat={loadBibliotheque, searchBibliotheque, answerQuery, detectIntent, extractCA, formatMontant};
 })();

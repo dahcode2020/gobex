@@ -2494,15 +2494,15 @@ setTimeout(()=> setPresetMode(presetMode), 300);
 
 // ── Détection auto moteurs depuis FEC / Livres ─────────────────────────────────
 const DETECTION_RULES = [
-  {id:'is', comptes:['70','60','61','62','63','68'], keywords:[], note:'CA/charges 70*/6* → IS probable', test: (ctx)=> ctx.hasPref('70') || ctx.ca>0 },
-  {id:'iba', comptes:['70'], keywords:[], note:'Complément IS', test:(ctx)=> ctx.detectedIds.has('is') || ctx.hasPref('70') },
-  {id:'tps', comptes:['70'], keywords:[], note:'CA ≤50M → TPS', test:(ctx)=> ctx.ca>0 && ctx.ca<=50000000 },
-  {id:'tva', comptes:['443','445','4456','70'], keywords:['tva'], note:'443/445 ou CA>50M', test:(ctx)=> ctx.hasPref('443') || ctx.hasPref('445') || ctx.ca>50000000 || ctx.hasMecef },
-  {id:'aib', comptes:['60','601','443','445'], keywords:['aib','retenue'], note:'Achats 60* / TVA → AIB', test:(ctx)=> ctx.hasPref('60') || ctx.detectedIds.has('tva') || ctx.hasPref('443') },
+  {id:'is', comptes:['70','60','61','62','63','68','441','44'], keywords:[], note:'CA/charges 70*/6* + 441 IS État → IS (société morale)', test: (ctx)=> (ctx.hasPref('70') || ctx.ca>0) && ctx.isSoumisIS!==false },
+  {id:'iba', comptes:['70','441'], keywords:[], note:'CA>50M et non IS → IBA (Art.63) — Forme EI/physique', test:(ctx)=> (ctx.detectedIds.has('is') || ctx.hasPref('70')) && ctx.isSoumisIS!==true && ctx.ca>50000000 },
+  {id:'tps', comptes:['70'], keywords:[], note:'CA ≤50M → TPS d\'office (Art.178) — CA constaté FEC fait foi', test:(ctx)=> ctx.ca>0 && ctx.ca<=50000000 },
+  {id:'tva', comptes:['443','445','4456','442','4431','4451','44'], keywords:['tva'], note:'443/445/44* État ou CA>50M constaté (Art.223) — non assujetti si ≤50M', test:(ctx)=> (ctx.hasPref('443') || ctx.hasPref('445') || ctx.hasPref('44')) && ctx.ca>50000000 || ctx.ca>50000000 || (ctx.hasPref('443') && ctx.ca>50000000) || ctx.hasMecef && ctx.ca>50000000 },
+  {id:'aib', comptes:['447','442','443','445','60','601'], keywords:['aib','retenue','etat'], note:'Achats 60* / 447/442 État → AIB — comptes État prioritaires', test:(ctx)=> ctx.hasPref('60') || ctx.detectedIds.has('tva') || ctx.hasPref('443') || ctx.hasPref('447') },
   {id:'ircm', comptes:['761','762','764','767','76'], keywords:['dividende','intérêt','interet','capitaux','revenu mobili'], note:'76* dividendes/intérêts', test:(ctx)=> ctx.hasPref('761') || ctx.hasPref('764') || ctx.hasKeyword('dividende') || ctx.hasKeyword('intérêt') },
   {id:'irf', comptes:['752','758','75','706'], keywords:['loyer','bail','location','foncier','loyers'], note:'75* loyers', test:(ctx)=> ctx.hasPref('75') || ctx.hasKeyword('loyer') || ctx.hasKeyword('bail') },
-  {id:'its', comptes:['641','642','661','664','66'], keywords:['salaire','paie','personnel','rémunération','remuneration'], note:'64*/661* salaires', test:(ctx)=> ctx.hasPaie || ctx.hasPref('641') || ctx.hasPref('661') || ctx.masse>0 || ctx.eff>0 },
-  {id:'vps', comptes:['641','661'], keywords:[], note:'Assiette ITS → VPS', test:(ctx)=> ctx.detectedIds.has('its') },
+  {id:'its', comptes:['447','4471','421','641','642','661','664','66'], keywords:['salaire','paie','personnel','rémunération','remuneration','etat'], note:'447 État ITS + 64*/661* salaires — comptes État prioritaires', test:(ctx)=> ctx.hasPaie || ctx.hasPref('641') || ctx.hasPref('661') || ctx.hasPref('447') || ctx.masse>0 || ctx.eff>0 },
+  {id:'vps', comptes:['447','4472','641','661'], keywords:[], note:'4472 État VPS + assiette ITS → VPS (libéré si TPS)', test:(ctx)=> ctx.detectedIds.has('its') },
   {id:'tfu', comptes:['24','231','232','211','22'], keywords:['terrain','bâtiment','batiment','immeuble','foncier','construction','titre foncier'], note:'24* immo/foncier', test:(ctx)=> ctx.hasPref('24') || ctx.hasPref('211') || ctx.hasKeyword('terrain') || ctx.hasImmo },
   {id:'patente', comptes:['70'], keywords:['patente'], note:'Activité 70* → patente', test:(ctx)=> ctx.hasPref('70') || ctx.ca>0 },
   {id:'licence', comptes:['70','707'], keywords:['boisson','bière','biere','alcool','bar','débit','debit','licence'], note:'Vente boissons', test:(ctx)=> ctx.hasKeyword('boisson') || ctx.hasKeyword('alcool') || ctx.hasKeyword('bière') || ctx.hasKeyword('bar') },
@@ -2539,24 +2539,85 @@ function getSeuilTpsArt178(){ try{ const v=ruleBase?.moteurs_P1?.find(m=>m.id===
 const SEUIL_TPS_ART178 = SEUIL_TPS_ART178_FALLBACK; // compat
 const MOTEURS_LIBERES_TPS = ['iba','patente','licence','vps']; // Art.178 libératoires
 function getCAReference(){
+// Précision 2026-10-03 (2) : CA constaté fichiers comptables (FEC/balance/livre/MECeF) fait foi, pas CA/capital dossier
   try{
-    const vMan = parseInt(document.getElementById('manCA')?.value)||0;
-    if(vMan>0) return vMan;
     if(dataSources.fec?.parsed?.ca) return dataSources.fec.parsed.ca;
     if(dataSources.balance?.parsed?.ca) return dataSources.balance.parsed.ca;
-    if(dataSources.mecef?.parsed?.ca) return dataSources.mecef.parsed.ca;
     if(dataSources.livre?.parsed?.ca) return dataSources.livre.parsed.ca;
+    if(dataSources.mecef?.parsed?.ca) return dataSources.mecef.parsed.ca;
+    const vMan = parseInt(document.getElementById('manCA')?.value)||0;
+    if(vMan>0) return vMan;
     const d=getDossiers().find(x=>x.id===selDossierCalc);
-    if(d) return parseInt(d.ca||d.chiffreAffaires||0)||0;
+    if(d) return parseInt(d.ca||d.chiffreAffaires||d.caPrevisionnel||0)||0;
   }catch(e){}
   return 0;
 }
+function getCAConstate(){
+// CA constaté uniquement depuis fichiers comptables — hors dossier/manuel — pour traçabilité précision 2
+  try{
+    if(dataSources.fec?.parsed?.ca) return {value:dataSources.fec.parsed.ca, source:'FEC'};
+    if(dataSources.balance?.parsed?.ca) return {value:dataSources.balance.parsed.ca, source:'Balance'};
+    if(dataSources.livre?.parsed?.ca) return {value:dataSources.livre.parsed.ca, source:'Livre'};
+    if(dataSources.mecef?.parsed?.ca) return {value:dataSources.mecef.parsed.ca, source:'MECeF'};
+  }catch(e){}
+  return null;
+}
+function getEcartCADossier(){
+// Écart dossier vs constaté — alerte si >5% ou >1M
+  try{
+    const constate=getCAConstate();
+    const d=getDossiers().find(x=>x.id===selDossierCalc);
+    const caDossier = d? (parseInt(d.ca||d.chiffreAffaires||d.caPrevisionnel||0)||0) : (parseInt(document.getElementById('manCA')?.value)||0);
+    if(!constate || !caDossier) return null;
+    const ecart = constate.value - caDossier;
+    if(Math.abs(ecart)<1000) return null;
+    const pct = caDossier? Math.abs(ecart)/caDossier : 0;
+    return {constate:constate.value, source:constate.source, dossier:caDossier, ecart, pct};
+  }catch(e){ return null; }
+}
+function getDossierClient(){
+  try{
+    const d=getDossiers().find(x=>x.id===selDossierCalc);
+    if(!d) return null;
+    return getClients().find(x=>x.name===d.clientName)||null;
+  }catch(e){ return null; }
+}
+function isSoumisIS(){
+// Précision 2026-10-03 (3) : IBA si CA>50M ET non soumis IS — distinction forme juridique/option IS
+  try{
+    const c=getDossierClient();
+    if(!c) return null;
+    if(c.isSoumis===true || c.sousmisIS===true || c.regimeIS==='IS') return true;
+    if(c.isSoumis===false || c.sousmisIS===false || c.regimeIS==='IBA') return false;
+    const typeField=(c.type||c.forme||c.catPersonne||'').toString();
+    if(/morale/i.test(c.catPersonne)) return true;
+    if(/physique/i.test(c.catPersonne)) return false;
+    if(/(SARL|SA\b|SAS|SELARL|SELAS|GIE|SNC|SCS)/i.test(typeField)) return true;
+    if(/(EI\b|entreprise individuelle|personne physique|artisan|micro|auto.?entrepreneur)/i.test(typeField)) return false;
+    if(/(SCI|SCM)/i.test(typeField)) return false;
+    if(c.optionIS===true) return true;
+    if(c.optionIS===false) return false;
+    return null;
+  }catch(e){ return null; }
+}
 function isRegimeTPS(){
+// Précision 2026-10-03 (1) : CA ≤50M → TPS d'office par défaut
   const ca=getCAReference();
   return ca>0 && ca <= getSeuilTpsArt178();
 }
+function isNonAssujettiTVA(){
+// Précision 2026-10-03 (1) : CA ≤50M → non assujetti TVA Art.223 — sauf option Art.225
+  return isRegimeTPS();
+}
 function estLibereParTPS(id){
-  return MOTEURS_LIBERES_TPS.includes(id) && isRegimeTPS();
+// Art.178 libératoire + précision 1 : TVA non assujetti en TPS
+  if(MOTEURS_LIBERES_TPS.includes(id) && isRegimeTPS()) return true;
+  if(id==='tva' && isNonAssujettiTVA()) return true;
+  return false;
+}
+function estExcluParTPS(id){
+// alias pour TVA inclus
+  return estLibereParTPS(id);
 }
 let dernierDetect = [];
 function analyserComptaPourMoteurs(){
@@ -2568,7 +2629,7 @@ function analyserComptaPourMoteurs(){
   const txtLower = (dataSources.fec?.txt||'') + '\n' + (dataSources.balance?.preview||'') + '\n' + aggRaw;
   const allTxtForComptes = txtLower;
   while((m=reCompte.exec(allTxtForComptes))!==null){ compteHits.add(m[1]); }
-  const ca = parseInt(document.getElementById('manCA')?.value)|| dataSources.fec?.parsed?.ca || dataSources.balance?.parsed?.ca || dataSources.mecef?.parsed?.ca || dataSources.livre?.parsed?.ca || 0;
+  const ca = getCAReference() || 0;
   const masse = parseInt(document.getElementById('manMasse')?.value)|| dataSources.fec?.parsed?.masse || 0;
   const eff = parseInt(document.getElementById('manEff')?.value)|| dataSources.paie?.parsed?.nb || 0;
   const hasMecef = !!dataSources.mecef;
@@ -2586,8 +2647,9 @@ function analyserComptaPourMoteurs(){
   // first pass: fort checks on comptes exact, then probable
   const results=[];
   // we iterate in order, allowing iba/vps/teom to see prior detected
+  const _isSoumisIS_forCtx = (typeof isSoumisIS==='function'? isSoumisIS() : null);
   for(const rule of DETECTION_RULES){
-    let ok=false; try{ ok = rule.test({hasPref, hasKeyword, ca, masse, eff, hasMecef, hasPaie, hasImmo, hasPrefFunc:hasPref, detectedIds, compteHits, agg}); }catch(e){ ok=false; }
+    let ok=false; try{ ok = rule.test({hasPref, hasKeyword, ca, masse, eff, hasMecef, hasPaie, hasImmo, hasPrefFunc:hasPref, detectedIds, compteHits, agg, isSoumisIS:_isSoumisIS_forCtx}); }catch(e){ ok=false; }
     if(!ok) continue;
     // confidence
     let conf='probable';
@@ -2621,16 +2683,50 @@ function analyserComptaPourMoteurs(){
     const evidence = (evidenceParts.join(' • ') || rule.note) + ' — ' + rule.note;
     results.push({id:rule.id, label:(moteursDef.find(x=>x.id===rule.id)?.libelle||rule.id), confidence:conf, evidence, note:rule.note});
   }
-  // Art.178 : filtre les 4 libérés si régime TPS
+  // Précision 2026-10-03 (1) : TPS d'office → filtre libérés + TVA non assujetti
   const tpsRegime = isRegimeTPS();
+  const _isSoumisIS_val = (typeof isSoumisIS==='function'? isSoumisIS() : null);
+  // enrichir ctx pour règles IS/IBA qui testent soumis
+  // (on a déjà enrichi via hasPref mais ici on force post-filtre)
   if(tpsRegime){
-    const libSet=new Set(MOTEURS_LIBERES_TPS);
+    const libSet=new Set([...MOTEURS_LIBERES_TPS, 'tva']);
     for(let i=results.length-1;i>=0;i--) if(libSet.has(results[i].id)) results.splice(i,1);
-    // Ajoute note TPS si pas déjà présent
     if(!results.find(r=> r.id==='tps')){
       const ca=getCAReference();
-      results.unshift({id:'tps', label:(moteursDef.find(x=>x.id==='tps')?.libelle||'TPS'), confidence:'fort', evidence:`CA ${(ca/1e6).toFixed(1)}M ≤50M → TPS Art.178 libératoire IBA/Patente/Licence/VPS`, note:'Art.178 libératoire'});
+      const ecart=getEcartCADossier();
+      const ecartNote = ecart? ` — écart dossier ${ (ecart.dossier/1e6).toFixed(1)}M vs ${ecart.source} ${(ecart.constate/1e6).toFixed(1)}M` : '';
+      results.unshift({id:'tps', label:(moteursDef.find(x=>x.id==='tps')?.libelle||'TPS'), confidence:'fort', evidence:`CA constaté ${(ca/1e6).toFixed(1)}M ≤50M → TPS d'office Art.178 libératoire IBA/Patente/Licence/VPS + non assujetti TVA Art.223${ecartNote}`, note:'Art.178 libératoire + Art.223 non assujetti — CA constaté FEC fait foi'});
       results.find(r=> r.id==='tps') && (results.find(r=> r.id==='tps').confidence='fort');
+    }
+  }
+  // Précision 2026-10-03 (3) : IBA vs IS exclusif selon forme juridique / option IS
+  if(_isSoumisIS_val===true){
+    for(let i=results.length-1;i>=0;i--) if(results[i].id==='iba') results.splice(i,1);
+  } else if(_isSoumisIS_val===false){
+    for(let i=results.length-1;i>=0;i--) if(results[i].id==='is') results.splice(i,1);
+  } else {
+    // si indéterminé et CA>50M et les deux présents, garder les deux mais annoter
+    if(results.find(r=>r.id==='is') && results.find(r=>r.id==='iba')){
+      const isRes=results.find(r=>r.id==='is'); if(isRes) isRes.evidence += ' • vérifier forme: SARL/SA → IS, EI/physique → IBA (précision 3)';
+      const ibaRes=results.find(r=>r.id==='iba'); if(ibaRes) ibaRes.evidence += ' • si non soumis IS (EI/personne physique) → IBA, sinon IS (précision 3)';
+    }
+  }
+  // Précision 2026-10-03 (4) : porter attention particulière aux comptes État/collectivités 44*/443*/445*/447*/441*
+  const etatComptesList=[...compteHits].filter(c=> c.startsWith('44') || c.startsWith('431') || c.startsWith('432'));
+  const hasEtat = etatComptesList.length>0;
+  if(hasEtat){
+    const etatSensitive=['tva','aib','its','vps','ircm','irf','is','iba','patente','tfu','retenue_non_resident','prelev_non_connu','prelev_hydro'];
+    for(const r of results){
+      if(etatSensitive.includes(r.id) && r.confidence!=='fort'){
+        // si compte État présent, promouvoir confiance
+        const hasMatchingEtat = etatComptesList.some(c=> r.comptes ? r.comptes.some(p=> c.startsWith(p)) : c.startsWith('44'));
+        if(hasMatchingEtat || r.id==='tva' || r.id==='its' || r.id==='aib'){
+          r.confidence='fort';
+          r.evidence = (r.evidence||'') + ' • État ' + etatComptesList.slice(0,3).join(',')+'* (précision 4 — comptes État prioritaires)';
+        }
+      } else if(etatSensitive.includes(r.id) && r.confidence==='fort'){
+        if(!r.evidence.includes('État')) r.evidence += ' • État ' + etatComptesList.slice(0,2).join(',')+'* confirmé';
+      }
     }
   }
   // dédoublonne déjà ajout via Set, tri fort first
@@ -2832,6 +2928,36 @@ function renderFecDetection(){
   document.getElementById('fecDetectAllCount').textContent=cnt;
   const hint=document.getElementById('fecDetectHint');
   if(hint) hint.textContent = cnt? `${fortCnt} fort • ${cnt-fortCnt} probable/contexte` : '';
+  // Précision 2 & 4 : bannières CA constaté vs dossier et comptes État
+  try{
+    const ecart=getEcartCADossier();
+    const caC=getCAConstate();
+    const etatHits=[... (dets.length? (function(){const s=new Set(); const re=/\b(44\d{2,6})\b/g; let m; const txt=(dataSources.fec?.txt||'')+(dataSources.balance?.preview||''); while((m=re.exec(txt))!==null) s.add(m[1]); return s;})() : [])];
+    // Inject banner si écart
+    let bannerHtml='';
+    if(ecart){
+      bannerHtml+=`<div class="alert d-flex align-items-start gap-2 mb-2" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;font-size:10px;padding:6px 8px;border-radius:8px;"><i class="bi bi-exclamation-triangle" style="margin-top:2px;"></i><div><strong>CA constaté vs dossier :</strong> dossier ${(ecart.dossier/1e6).toFixed(1)}M vs ${ecart.source} ${(ecart.constate/1e6).toFixed(1)}M — le <strong>${ecart.source} fait foi</strong> (précision 2). Seuil 50M appliqué sur CA constaté → ${ecart.constate<=50000000? 'TPS d\'office' : 'IS/IBA+TVA'}. ${Math.abs(ecart.pct)>0.05? 'Écart >5% — vérifier reclassement Art.182.' : ''}</div></div>`;
+    } else if(caC){
+      bannerHtml+=`<div class="alert d-flex align-items-center gap-2 mb-2" style="background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;font-size:10px;padding:6px 8px;border-radius:8px;"><i class="bi bi-check-circle"></i><div>CA constaté <strong>${(caC.value/1e6).toFixed(1)}M</strong> via ${caC.source} — fait foi pour seuil 50M (TPS vs IS/IBA+TVA) — précision 2.</div></div>`;
+    }
+    // Comptes État banner (précision 4)
+    const etatList=[... (function(){const s=new Set(); const re=/\b(44\d{1,6})\b/g; let m; const txt=(dataSources.fec?.txt||'')+' '+(dataSources.balance?.preview||'')+' '+(dataSources.fec?.preview||''); while((m=re.exec(txt))!==null) s.add(m[1]); return s;})()];
+    if(etatList.length){
+      const has443=etatList.some(c=>c.startsWith('443')); const has445=etatList.some(c=>c.startsWith('445')); const has447=etatList.some(c=>c.startsWith('447')); const has441=etatList.some(c=>c.startsWith('441'));
+      bannerHtml+=`<div class="alert d-flex align-items-start gap-2 mb-2" style="background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;font-size:10px;padding:6px 8px;border-radius:8px;"><i class="bi bi-bank" style="margin-top:2px;"></i><div><strong>Comptes État/collectivités détectés (${etatList.slice(0,6).join(', ')}${etatList.length>6? ' +'+(etatList.length-6):''})</strong> — attention particulière (précision 4) : ${has443? '443 TVA collectée ' : ''}${has445? '445 TVA déductible ' : ''}${has447? '447 retenues ITS/VPS/AIB ' : ''}${has441? '441 IS ' : ''}— ces comptes confirment en priorité les impôts dus. ${tpsRegimeNow? 'TPS d\'office → TVA non assujettie malgré 443/445' : ''}</div></div>`;
+    }
+    if(bannerHtml){
+      // Inject before chips
+      const boxEl=document.getElementById('fecDetectionBox');
+      let inj=document.getElementById('fecPrecisionBanner');
+      if(!inj){
+        inj=document.createElement('div');
+        inj.id='fecPrecisionBanner';
+        boxEl.insertBefore(inj, boxEl.firstChild);
+      }
+      inj.innerHTML=bannerHtml;
+    }
+  }catch(e){ console.warn('banner precision',e); }
   const chipsEl=document.getElementById('fecDetectedChips');
   const detailsEl=document.getElementById('fecDetectionDetails');
   if(!cnt){
@@ -3072,17 +3198,25 @@ function onMoteursSearch(v){ searchQuery=v||''; renderMoteurs(); }
 function getMoteursRecommandes(){
   try{
     const d=getDossiers().find(x=>x.id===selDossierCalc) || {};
-    const ca= getCAReference() || parseInt(d.ca||d.chiffreAffaires||0) || 0;
+    const ca= getCAReference() || parseInt(d.ca||d.chiffreAffaires||d.caPrevisionnel||0) || 0;
     const eff= parseInt(d.effectif||0) || parseInt(document.getElementById('manEff')?.value)||0 || (dataSources.paie?.count||0) || 0;
     const rec=new Set();
     const tpsRegime = ca>0 && ca <= getSeuilTpsArt178();
+    const _soumisIS = (typeof isSoumisIS==='function'? isSoumisIS() : null);
     if(tpsRegime){
-      rec.add('tps'); // Art.178 libératoire
-      rec.add('aib'); // AIB reste dû même en TPS (retenue) — Art.178 4 taxes seulement
-      // IBA, Patente, Licence, VPS libérés → NE PAS ajouter
+      rec.add('tps'); // Art.178 libératoire — d'office ≤50M constaté
+      rec.add('aib'); // AIB peut rester dû sur flux avec retenue — TVA non
+      // IBA, Patente, Licence, VPS, TVA exclus (précision 1)
     } else {
       rec.add('patente'); rec.add('aib');
-      if(ca>0 && ca<=getSeuilTpsArt178()) rec.add('tps'); else if(ca>getSeuilTpsArt178()){ rec.add('is'); rec.add('iba'); rec.add('tva'); } else { rec.add('is'); rec.add('tva'); }
+      if(ca>0 && ca<=getSeuilTpsArt178()) rec.add('tps'); else if(ca>getSeuilTpsArt178()){
+        if(_soumisIS===true){ rec.add('is'); rec.add('tva'); }
+        else if(_soumisIS===false){ rec.add('iba'); rec.add('tva'); }
+        else { rec.add('is'); rec.add('iba'); rec.add('tva'); }
+      } else {
+        if(_soumisIS===true) rec.add('is'); else if(_soumisIS===false) rec.add('iba'); else rec.add('is');
+        rec.add('tva');
+      }
       if(eff>0) { rec.add('its'); if(!tpsRegime) rec.add('vps'); } else if(!tpsRegime && eff===0 && ca>getSeuilTpsArt178()){ rec.add('its'); }
     }
     if(eff>0 && !tpsRegime) { rec.add('its'); rec.add('vps'); }
@@ -3090,8 +3224,10 @@ function getMoteursRecommandes(){
     if(ca>=1000000000) rec.add('taxe_sport');
     if(d.vehicules || document.getElementById('tvmPuissance')?.value) rec.add('tvm');
     if(d.foncier || document.getElementById('tfuBase')?.value) rec.add('tfu');
-    // Nettoie libérés si tpsRegime
-    if(tpsRegime){ MOTEURS_LIBERES_TPS.forEach(id=> rec.delete(id)); }
+    // Nettoie libérés + TVA si TPS (précision 1)
+    if(tpsRegime){ [...MOTEURS_LIBERES_TPS, 'tva'].forEach(id=> rec.delete(id)); }
+    if(_soumisIS===true) rec.delete('iba');
+    if(_soumisIS===false) rec.delete('is');
     return Array.from(rec).slice(0,8);
   }catch(e){ return ['tps','aib','its']; }
 }
@@ -3387,7 +3523,7 @@ function updateVisibility(){
   if(secAjust) secAjust.classList.toggle('d-none', !needIsFields);
 }
 function syncTpsCaDeclare(){
-  const caDeclare=parseInt(document.getElementById('manCA')?.value)|| (dataSources.fec?.parsed?.ca||0) || 0;
+  const caDeclare=getCAReference()||0;
   const el=document.getElementById('tpsCaDeclare');
   if(el) el.value=caDeclare||'';
   updateTpsCorrection();
@@ -3413,9 +3549,24 @@ function updateTpsCorrection(){
   }
 }
 function syncTvaCaTotal(){
-  const caTotal=parseInt(document.getElementById('manCA')?.value)|| (dataSources.fec?.parsed?.ca||0) || parseInt(document.getElementById('tvaCaTotal')?.value)||0;
+  const caTotal=getCAReference()|| parseInt(document.getElementById('tvaCaTotal')?.value)||0;
   const el=document.getElementById('tvaCaTotal');
   if(el && !el.value) el.value=caTotal||'';
+  // Précision 1 : si TPS, TVA non assujetti — griser
+  try{
+    const tps=isRegimeTPS();
+    if(el){
+      el.disabled=tps;
+      el.placeholder=tps? 'Non assujetti TVA (TPS ≤50M)' : 'Ex: 80000000';
+      el.title=tps? 'CA ≤50M → TPS d\'office, non assujetti TVA Art.223' : 'CA constaté FEC';
+      el.style.background=tps? '#f0fdf4' : '';
+    }
+    const badge=document.getElementById('tvaSeuilBadge');
+    if(badge && tps){
+      badge.textContent='Non assujetti TVA — TPS d\'office Art.223/178';
+      badge.className='badge bg-success';
+    }
+  }catch(e){}
   updateTvaProrata();
 }
 function syncTvaExclus(){
@@ -5397,21 +5548,40 @@ function chargerExempleAjustements(){
 function getQualifIS(){ return document.getElementById("manQualifIS")?.value||"normal"; }
 function updateFiabilite(){let f='C'; if(dataSources.fec && dataSources.fec.parsed) f='A'; else if(dataSources.fec||dataSources.balance||dataSources.alt.length) f=dataSources.alt.length||dataSources.balance?'B':'A'; dataSources.fiabilite=f; document.getElementById('fiabiliteBadge').textContent='Fiabilité '+f+' — '+(f==='A'?'FEC parsé':'B: alternatif/reconstitué'); document.getElementById('fiabiliteBadge').className=f==='A'?'badge bg-success':f==='B'?'badge bg-warning text-dark':'badge bg-secondary'; try{ const qF=document.getElementById('quickFiabiliteBadge'); if(qF){ qF.textContent=document.getElementById('fiabiliteBadge').textContent; qF.className=document.getElementById('fiabiliteBadge').className; }}catch(e){} try{ syncQuickSourcesUI(); }catch(e){}}
 function extractPreview(){
-  const ca=parseInt(document.getElementById('manCA').value)||0;
+  const caManual=parseInt(document.getElementById('manCA').value)||0;
+  const caRef=getCAReference()||0;
+  const caConstate=getCAConstate();
+  const ecart=getEcartCADossier();
   const charges=parseInt(document.getElementById('manCharges').value)||0;
   const masse=parseInt(document.getElementById('manMasse').value)||0;
   const secteur=document.getElementById('manSecteur')?.value||'general';
-  dataSources.manual={ca,charges,masse,eff:parseInt(document.getElementById('manEff').value)||0, secteur, qualifIS:getQualifIS()};
+  dataSources.manual={ca:caManual,charges,masse,eff:parseInt(document.getElementById('manEff').value)||0, secteur, qualifIS:getQualifIS()};
   let html='';
   if(dataSources.fec){
     const p=dataSources.fec.parsed;
-    html+=`<div><span class="badge bg-success">FEC</span> ${dataSources.fec.name} • ${(dataSources.fec.size/1024).toFixed(1)} Ko ${p? `→ CA <strong>${(p.ca/1000000).toFixed(1)}M</strong> • Charges ${(p.charges/1000000).toFixed(1)}M`:''}</div>`;
+    html+=`<div><span class="badge bg-success">FEC</span> ${dataSources.fec.name} • ${(dataSources.fec.size/1024).toFixed(1)} Ko ${p? `→ CA constaté <strong>${(p.ca/1000000).toFixed(1)}M</strong> • Charges ${(p.charges/1000000).toFixed(1)}M`:''}</div>`;
   }
-  if(dataSources.balance) html+=`<div><span class="badge bg-light text-dark border">Balance</span> ${dataSources.balance.name}${dataSources.balance.parsed? ' • parsée':''}</div>`;
+  if(dataSources.balance) html+=`<div><span class="badge bg-light text-dark border">Balance</span> ${dataSources.balance.name}${dataSources.balance.parsed? ' • CA '+(dataSources.balance.parsed.ca/1e6).toFixed(1)+'M' : ''}</div>`;
   if(dataSources.alt.length) html+=`<div><span class="badge bg-warning text-dark">Alternatif</span> ${dataSources.alt.map(a=>a.name).join(', ')}</div>`;
   if(dataSources.paie) html+=`<div><span class="badge bg-light text-dark border">Paie</span> ${dataSources.paie.name}</div>`;
-  html+=`<div class="mt-2 p-2 bg-white border rounded-3">CA HT: <strong>${(ca/1000000).toFixed(1)}M</strong> • Charges: ${(charges/1000000).toFixed(1)}M • Masse: ${(masse/1000000).toFixed(1)}M • Secteur: <strong>${secteur}</strong></div>`;
-  html+=`<div class='mt-1 small text-muted' style='font-size:10px;'><i class='bi bi-shield-check me-1'></i>RuleBase <strong>${(ruleBase?.version||'2026.1')} • ${ruleBase?.loiFinances||'2025-22'} • ${ruleBase?.annee||2026}</strong> — <a href='../docs/IS-cheminement-etape1.md' target='_blank' style='color:#7c3aed;'>Cheminement IS Étape 1</a> • <a href='../docs/RuleBase-README.md' target='_blank' style='color:#7c3aed;'>MAJ future ?</a></div>`;
+  // CA synthèse avec précision 2
+  if(caConstate){
+    html+=`<div class="mt-2 p-2 bg-white border rounded-3" style="border-left:3px solid #16a34a;"><strong>CA retenu (constaté) : ${(caRef/1e6).toFixed(1)}M</strong> <span class="badge bg-success" style="font-size:9px;">${caConstate.source}</span> • FEC/balance fait foi (précision 2026-10-03 point 2) — pas CA dossier/capital<br><small class="text-muted" style="font-size:10px;">Σ Crédit 70* FEC • Si dossier=${ecart? (ecart.dossier/1e6).toFixed(1)+'M' : '—'} → écart ${(ecart? ecart.ecart.toLocaleString('fr-FR')+'F ('+(ecart.pct*100).toFixed(1)+'%)' : 'n/a')} ${ecart && Math.abs(ecart.pct)>0.05? '<span class="badge bg-danger" style="font-size:9px;">⚠️ écart >5% — reclassement Art.182 possible</span>' : ''}</small></div>`;
+    if(ecart && Math.abs(ecart.ecart)>1000000){
+      html+=`<div class="mt-1 p-2 bg-warning bg-opacity-10 border border-warning rounded-3" style="font-size:10px;color:#92400e;"><i class="bi bi-exclamation-triangle me-1"></i><strong>Écart CA dossier vs FEC détecté :</strong> dossier ${(ecart.dossier/1e6).toFixed(1)}M vs ${ecart.source} ${(ecart.constate/1e6).toFixed(1)}M → le <strong>FEC prime</strong> pour le seuil 50M (TPS d'office ≤50M, sinon IS/IBA + TVA). Régularisez ou justifiez l'écart (reclassement Art.182 paragraphe 4 si >50M).</div>`;
+    }
+    if(caManual && caConstate && caManual!==caConstate.value){
+      html+=`<div class="mt-1 p-1 bg-light border rounded-2" style="font-size:10px;"><i class="bi bi-info-circle me-1"></i>CA manuel saisi (${(caManual/1e6).toFixed(1)}M) <strong>ignoré</strong> car FEC présent — CA constaté retenu. Effacez le FEC pour utiliser le manuel (mode simplifié).</div>`;
+    }
+  } else {
+    html+=`<div class="mt-2 p-2 bg-white border rounded-3">CA HT: <strong>${(caRef/1e6).toFixed(1)}M</strong> ${caManual? '<span class="badge bg-light text-dark border" style="font-size:9px;">manuel/dossier</span>' : ''} • Charges: ${(charges/1000000).toFixed(1)}M • Masse: ${(masse/1000000).toFixed(1)}M • Secteur: <strong>${secteur}</strong><br><small class="text-muted" style="font-size:10px;">Aucun FEC/balance → CA dossier/manuel retenu (fiabilité B/C). Dès dépôt FEC, le CA constaté fera foi (précision 2).</small></div>`;
+  }
+  // Régime TPS vs TVA (précision 1)
+  if(caRef){
+    const tps=isRegimeTPS();
+    html+=`<div class="mt-2 p-2 border rounded-3" style="font-size:10px;${tps?'background:#ecfdf5;border-color:#a7f3d0;color:#065f46;':'background:#eff6ff;border-color:#bfdbfe;color:#1e40af;'}"><i class="bi ${tps?'bi-shield-check':'bi-receipt'} me-1"></i>${tps? '<strong>TPS d\'office ≤50M</strong> — non assujetti TVA Art.223 (sauf option Art.225) • IBA/Patente/Licence/VPS libérés Art.178' : '<strong>Hors TPS >50M</strong> — IS/IBA + TVA 18% dus (selon forme EI→IBA, SARL→IS — précision 3)'} • CA constaté ${(caRef/1e6).toFixed(1)}M</div>`;
+  }
+  html+=`<div class='mt-1 small text-muted' style='font-size:10px;'><i class='bi bi-shield-check me-1'></i>RuleBase <strong>${(ruleBase?.version||'2026.1')} • ${ruleBase?.loiFinances||'2025-22'} • ${ruleBase?.annee||2026}</strong> — <a href='../docs/IS-cheminement-etape1.md' target='_blank' style='color:#7c3aed;'>Cheminement IS Étape 1</a> • <a href='../docs/RuleBase-README.md' target='_blank' style='color:#7c3aed;'>MAJ future ?</a> • CA constaté FEC fait foi (précision 2)</div>`;
   if(!html) html='— Aucun fichier —';
   document.getElementById('dataExtract').innerHTML=html;
   try{syncTpsCaDeclare();}catch(e){}

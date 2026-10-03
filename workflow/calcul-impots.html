@@ -2495,7 +2495,7 @@ setTimeout(()=> setPresetMode(presetMode), 300);
 // ── Détection auto moteurs depuis FEC / Livres ─────────────────────────────────
 const DETECTION_RULES = [
   {id:'is', comptes:['70','60','61','62','63','68','441','44'], keywords:[], note:'CA/charges 70*/6* + 441 IS État → IS (société morale)', test: (ctx)=> (ctx.hasPref('70') || ctx.ca>0) && ctx.isSoumisIS!==false },
-  {id:'iba', comptes:['70','441'], keywords:[], note:'CA>50M et non IS → IBA (Art.63) — Forme EI/physique', test:(ctx)=> (ctx.detectedIds.has('is') || ctx.hasPref('70')) && ctx.isSoumisIS!==true && ctx.ca>50000000 },
+  {id:'iba', comptes:['70','441'], keywords:[], note:'CA>50M et non IS → IBA (Art.63) — Forme EI/physique (exclusif IS ; société IS → associés IBA/IRCM perso)', test:(ctx)=> (ctx.detectedIds.has('is') || ctx.hasPref('70')) && ctx.isSoumisIS===false && ctx.ca>50000000 },
   {id:'tps', comptes:['70'], keywords:[], note:'CA ≤50M → TPS d\'office (Art.178) — CA constaté FEC fait foi', test:(ctx)=> ctx.ca>0 && ctx.ca<=50000000 },
   {id:'tva', comptes:['443','445','4456','442','4431','4451','44'], keywords:['tva'], note:'443/445/44* État ou CA>50M constaté (Art.223) — non assujetti si ≤50M', test:(ctx)=> (ctx.hasPref('443') || ctx.hasPref('445') || ctx.hasPref('44')) && ctx.ca>50000000 || ctx.ca>50000000 || (ctx.hasPref('443') && ctx.ca>50000000) || ctx.hasMecef && ctx.ca>50000000 },
   {id:'aib', comptes:['447','442','443','445','60','601'], keywords:['aib','retenue','etat'], note:'Achats 60* / 447/442 État → AIB — comptes État prioritaires', test:(ctx)=> ctx.hasPref('60') || ctx.detectedIds.has('tva') || ctx.hasPref('443') || ctx.hasPref('447') },
@@ -2702,13 +2702,24 @@ function analyserComptaPourMoteurs(){
   // Précision 2026-10-03 (3) : IBA vs IS exclusif selon forme juridique / option IS
   if(_isSoumisIS_val===true){
     for(let i=results.length-1;i>=0;i--) if(results[i].id==='iba') results.splice(i,1);
+    const isResTrue=results.find(r=>r.id==='is');
+    if(isResTrue && !isResTrue.evidence.includes('associés')) isResTrue.evidence += ' • Société à l\'IS (personne morale, exclusif IBA) — ses associés restent soumis à l\'IBA/IRCM à titre personnel sur dividendes/quotes-parts Art.68-69.';
   } else if(_isSoumisIS_val===false){
     for(let i=results.length-1;i>=0;i--) if(results[i].id==='is') results.splice(i,1);
+    const ibaResTrue=results.find(r=>r.id==='iba');
+    if(ibaResTrue && !ibaResTrue.evidence.includes('associés')) ibaResTrue.evidence += ' • EI/personne physique à l\'IBA (exclusif IS) — une société morale serait à l\'IS, ses associés à l\'IBA perso.';
   } else {
-    // si indéterminé et CA>50M et les deux présents, garder les deux mais annoter
+    // indéterminé → exclusivité stricte : une même entreprise ne peut être IS et IBA
     if(results.find(r=>r.id==='is') && results.find(r=>r.id==='iba')){
-      const isRes=results.find(r=>r.id==='is'); if(isRes) isRes.evidence += ' • vérifier forme: SARL/SA → IS, EI/physique → IBA (précision 3)';
-      const ibaRes=results.find(r=>r.id==='iba'); if(ibaRes) ibaRes.evidence += ' • si non soumis IS (EI/personne physique) → IBA, sinon IS (précision 3)';
+      for(let i=results.length-1;i>=0;i--) if(results[i].id==='iba') results.splice(i,1);
+      const isRes=results.find(r=>r.id==='is');
+      if(isRes) isRes.evidence += ' • Forme non renseignée → IS retenu par défaut (société morale, exclusif IBA). Si EI/personne physique → ce serait IBA. Associés d\'une société à l\'IS restent soumis à l\'IBA/IRCM à titre personnel (Art.68-69).';
+    } else if(results.find(r=>r.id==='iba') && !results.find(r=>r.id==='is')){
+      const ibaRes=results.find(r=>r.id==='iba');
+      if(ibaRes) ibaRes.evidence += ' • IBA retenu (EI/physique, exclusif IS) — société IS → associés IBA/IRCM perso.';
+    } else {
+      const isRes2=results.find(r=>r.id==='is');
+      if(isRes2 && !isRes2.evidence.includes('associés')) isRes2.evidence += ' • IS retenu par défaut (exclusif IBA) — associés à l\'IBA/IRCM perso.';
     }
   }
   // Précision 2026-10-03 (4) : porter attention particulière aux comptes État/collectivités 44*/443*/445*/447*/441*
@@ -3212,7 +3223,7 @@ function getMoteursRecommandes(){
       if(ca>0 && ca<=getSeuilTpsArt178()) rec.add('tps'); else if(ca>getSeuilTpsArt178()){
         if(_soumisIS===true){ rec.add('is'); rec.add('tva'); }
         else if(_soumisIS===false){ rec.add('iba'); rec.add('tva'); }
-        else { rec.add('is'); rec.add('iba'); rec.add('tva'); }
+        else { rec.add('is'); rec.add('tva'); /* forme non renseignée → IS par défaut (exclusif) ; IBA uniquement si EI/physique ; associés IS→IBA perso */ }
       } else {
         if(_soumisIS===true) rec.add('is'); else if(_soumisIS===false) rec.add('iba'); else rec.add('is');
         rec.add('tva');

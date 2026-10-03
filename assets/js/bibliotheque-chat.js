@@ -119,8 +119,8 @@
   const INTENT_KEYWORDS={
     salutation: ['bonjour','salut','coucou','hello','bonsoir','bjr','cc','hey'],
     tps: ['tps','taxe professionnelle synthetique','synthetique','liberatoire','art.178','art178','seuil 50','50m tps','ca 50m','cinquante million'],
-    is: [' is ','impot societe','impot sur les societes','art.46','art46','minimum perception','mfp','art.47','resultat fiscal','societe soumise is','sarl is','sa is'],
-    iba: ['iba','benefice affaires','bic','art.63','art.64','entreprise individuelle','personne physique','non soumis is','bénéfice industriel'],
+    is: [' is ','impot societe','impot sur les societes','art.46','art46','minimum perception','mfp','art.47','resultat fiscal','societe soumise is','sarl is','sa is','associe','associes','personne morale'],
+    iba: ['iba','benefice affaires','bic','art.63','art.64','entreprise individuelle','personne physique','non soumis is','bénéfice industriel','associe','associes'],
     tva: ['tva','valeur ajoutee','aib','prorata','mec ef','mecef','art.241','18%','collectee','art.223','seuil tva','non assujetti tva'],
     its: ['its','vps','salaire','traitement','paie','smig','cnss','barème','bareme','art.125','ortb','retenue salaire','447','etat retenue','collectivite'],
     tfu: ['tfu','fonciere unique','valeur locative'],
@@ -418,8 +418,46 @@
       return html;
     }
 
-    // --- core answer per intent ---
+    // --- core answer per intent --- (précision associé)
     let core='';
+    // Cas spécifique : question sur associés d'une société IS → IBA perso (exclusif)
+    if(/associ/i.test(query)){
+      const caAssoc=ca;
+      const formeAssoc=detectFormeJuridique(query);
+      const mIsAssoc=getMoteurById('is')||moteur;
+      const mIbaAssoc=getMoteurById('iba');
+      const isSociete = formeAssoc ? formeAssoc.soumisIS : (primary==='is' || (moteur && moteur.id==='is'));
+      // Toujours expliquer le principe d'exclusivité + deux niveaux
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;"><i class="bi bi-people me-1"></i>Société à l'IS (personne morale) et associés à l'IBA/IRCM — deux niveaux d'imposition, jamais la même entreprise</strong><br>
+        <span style="font-size:11px;">Une même entreprise <strong>ne peut être soumise à l'IS et à l'IBA</strong> : la <strong>société</strong> (personne morale, SARL/SA/SAS) relève de l'<strong>IS</strong> (Art.46-47, 30%/25% + MFP 1%/3%/10%) sur son résultat ; ses <strong>associés</strong> (personnes physiques) relèvent de l'<strong>IBA</strong> (Art.63-64, 30%/25% + MFP 1,5%/3%/10%) ou de l'<strong>IRCM</strong> (Art.68-86, 5%/10%/15% sur dividendes) <strong>à titre personnel</strong> sur les distributions/quotes-parts — pas la société.</span>
+        <div style="margin-top:6px;padding:6px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;font-size:11px;">
+          <strong>Quand ?</strong> CA société >50M constaté (FEC 70*) → IS dû par la société ; CA EI >50M → IBA dû par l'EI. TPS ≤50M → ni IS ni IBA pour la société (TPS libératoire Art.178).<br>
+          ${caAssoc? `<strong>Votre CA ${formatMontant(caAssoc)} :</strong> ${caAssoc<=50000000? 'TPS d\'office — ni IS ni IBA (société)' : (isSociete? 'IS pour la société' : 'IBA pour l\'EI')} + IBA/IRCM perso pour les associés sur leurs revenus.` : ''}
+          <br><small><strong>Comptes État prioritaires :</strong> 441 IS société, 443/445 TVA, 447 retenues AIB/ITS/VPS, 76* produits financiers — leur mouvement dans FEC/balance confirme le niveau (précision 4).</small><br>
+          <small style="color:#4c1d95;">Traçabilité : IS Art.46-47, IBA Art.63-64, IRCM Art.68-86 — RuleBase 2026.</small>
+        </div>
+        ${formeAssoc? `<div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:10px;"><strong>Forme détectée :</strong> ${formeAssoc.label} → ${formeAssoc.soumisIS? 'IS société' : 'IBA EI'} (exclusif).</div>` : `<div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-lightbulb me-1"></i>Précisez : <strong>SARL/SA → IS société</strong>, <strong>EI → IBA</strong> — la même entité jamais les deux. Ex : SARL 80M → IS société + IBA/IRCM associés.</div>`}
+      </div>`;
+      if(mIsAssoc) core+= formatMoteurCard(mIsAssoc, caAssoc);
+      if(mIbaAssoc && (!mIsAssoc || mIbaAssoc.id!==mIsAssoc.id)) core+= formatMoteurCard(mIbaAssoc, caAssoc);
+      // ajouter suggestion et bypass le reste
+      html+= core;
+      // docs + citation + suggestions
+      if(mIsAssoc && mIsAssoc.article){
+        html+= `<div class="mt-2 small text-muted" style="font-size:10px;border-top:1px dashed #e2e8f0;padding-top:6px;"><i class="bi bi-shield-check me-1" style="color:#16a34a;"></i>Citation traçable : <strong>${formatParagraphe(mIsAssoc.article)}</strong> + IBA/IRCM Art.63-68 — <code>RuleBase 2026</code> • v${ruleData?.version||bibData?.version||'2026'}</div>`;
+      }
+      const sugAssoc=getSuggestions('is');
+      if(sugAssoc && sugAssoc.length){
+        html+= `<div style="margin-top:8px;"><small style="color:#64748b;font-size:10px;">Poursuivre :</small><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">${sugAssoc.slice(0,4).map(s=>`<button class="gobexChatQuick" onclick="quickAsk('${s.replace(/'/g,"\\'")}')">${s}</button>`).join('')}</div></div>`;
+      }
+      context.lastIntent=primary;
+      if(mIsAssoc) context.lastMoteur=mIsAssoc;
+      if(caAssoc) context.lastCA=caAssoc;
+      context.turn++;
+      html+= `</div>`;
+      return html;
+    }
     if(primary==='tps' || (moteur && moteur.id==='tps')){
       const m = getMoteurById('tps') || moteur;
       if(!hasCA){
@@ -467,7 +505,7 @@
             <span style="font-size:11px;">CA > 50 M → vous <strong>n'êtes plus en TPS</strong> mais à l'<strong>${labelImp} de plein droit</strong> dès le mois suivant le dépassement (Art.182, paragraphe 1). TPS déjà payée imputée 50/50 (Art.182, paragraphe 3). <strong>TVA devient due 18 %</strong> (Art.241) sauf exon.</span>
             <div style="margin-top:6px;padding:6px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;font-size:11px;">
               <strong>Ce qui change (${labelImp}) :</strong> ${detailImp} — et patente/licence/VPS redeviennent dus séparément.<br>
-              ${formeInfo2? `<small style="color:#7f1d1d;">Forme détectée : <strong>${formeInfo2.label}</strong> → ${isIBAcas? 'IBA' : 'IS'} retenu (précision 2026-10-03 point 3).</small>` : `<small style="color:#92400e;"><i class="bi bi-question-circle me-1"></i>Précisez votre forme (SARL/SA → IS, EI/personne physique → IBA) pour que je cible le bon impôt.</small>`}
+              ${formeInfo2? `<small style="color:#7f1d1d;">Forme détectée : <strong>${formeInfo2.label}</strong> → ${isIBAcas? 'IBA' : 'IS'} retenu (précision 2026-10-03 point 3, exclusif — même entreprise jamais IS+IBA ; société IS → associés IBA/IRCM perso).</small>` : `<small style="color:#92400e;"><i class="bi bi-question-circle me-1"></i>Précisez votre forme (SARL/SA → IS, EI/personne physique → IBA) — exclusif pour la même entreprise ; société IS et associés IBA perso.</small>`}
             </div>
             ${etatHint}
             <small style="color:#64748b;">Voulez-vous une simulation ${isIBAcas? 'IBA':'IS'} pour ce CA constaté ?</small>
@@ -490,10 +528,10 @@
       const label = isIBA? 'IBA' : 'IS';
       const articleTxt = isIBA? 'Art.63 (taux) + Art.64 (MFP)' : 'Art.46 (taux) + Art.47 (MFP)';
       const etatHint2 = hasEtatCompteMention(query)? `<div style="margin-top:6px;padding:6px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-bank me-1" style="color:#92400e;"></i><strong>Comptes État 44* mouvementés :</strong> vérifiez 441 (IS dû), 447 (retenues), 443/445 (TVA) — ils confirment les impôts dus.</div>` : '';
-      const formeNote = formeInfo3? `<div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:10px;"><strong>Forme détectée :</strong> ${formeInfo3.label} → <strong>${label} retenu</strong> (précision 2026-10-03 point 3 : IBA si CA>50M et non soumis IS).</div>` : `<div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-question-circle me-1"></i><strong>IS ou IBA ?</strong> Précisez : <strong>SARL/SA/SAS → IS</strong>, <strong>EI / personne physique / artisan → IBA</strong>. Sans précision, je détaille IS par défaut.</div>`;
+      const formeNote = formeInfo3? `<div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:10px;"><strong>Forme détectée :</strong> ${formeInfo3.label} → <strong>${label} retenu</strong> (précision 2026-10-03 point 3 : IBA si CA>50M et non soumis IS, exclusif).<br><small style="color:#475569;">Rappel : une même entreprise ne peut être IS et IBA — une société à l'IS (personne morale) et ses associés à l'IBA/IRCM à titre personnel (dividendes, quotes-parts Art.68-69).</small></div>` : `<div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-question-circle me-1"></i><strong>IS ou IBA ? Exclusif.</strong> Précisez : <strong>SARL/SA/SAS → IS</strong>, <strong>EI / personne physique / artisan → IBA</strong>. Sans précision, je détaille IS par défaut (exclusif : même entité jamais IS+IBA).<br><small>Une société à l'IS et ses associés à l'IBA/IRCM personnel.</small></div>`;
       core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
         <strong style="color:#0A2F5E;">${label} — ${formatParagraphe(articleTxt)}</strong><br>
-        <span style="font-size:11px;">${isIBA? 'Bénéfice BIC/BNC' : 'Résultat fiscal'} × <strong>30 %</strong> (25 % industriel hors extractive / écoles privées — Art.46, paragraphe 1) — le plus élevé entre ce théorique et le <strong>minimum de perception</strong> (MFP).</span><br>
+        <span style="font-size:11px;">${isIBA? 'Bénéfice BIC/BNC (EI/physique)' : 'Résultat fiscal (société morale)'} × <strong>30 %</strong> (25 % industriel hors extractive / écoles privées — Art.46, paragraphe 1) — le plus élevé entre ce théorique et le <strong>minimum de perception</strong> (MFP). <em>Exclusif : même entreprise jamais IS et IBA.</em></span><br>
         <div style="margin-top:6px;padding:6px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;font-size:11px;">
           <strong>MFP (Art.47) :</strong> max(250 000 F, CA encaissable × <strong>${isIBA? '1,5 %' : '1 %'}</strong> général / 3 % BTP / 10 % immo) — station 0,60 F/L + 4 000 F ORTB au 10/03<br>
           ${m && m.formule? `<small style="color:#4c1d95;">Formule : ${m.formule.slice(0,160)}…</small>`:''}
@@ -573,6 +611,20 @@
         <small style="color:#334155;">${(moteur.base||moteur.formule||'').slice(0,220)}</small>
         <div style="margin-top:6px;font-size:10px;color:#64748b;">Cette réponse s'appuie sur le RuleBase 2026 traçable — posez une question de calcul et je vous simule.</div>
       </div>`;
+    } else if(/associ/i.test(query) && (primary==='is' || primary==='iba' || hasCA || /société|societe|morale|personne/i.test(query))){
+      // Précision 2026-10-03 complément : société IS vs associés IBA perso — exclusif pour même entité
+      const mIs=getMoteurById('is')||getMoteurById('iba');
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;"><i class="bi bi-people me-1"></i>Société à l'IS (personne morale) et associés à l'IBA/IRCM — deux niveaux, jamais la même entité</strong><br>
+        <span style="font-size:11px;">Une même entreprise <strong>ne peut être soumise à l'IS et à l'IBA</strong> (exclusif). La <strong>société</strong> (personne morale, SARL/SA/SAS) relève de l'<strong>IS</strong> (Art.46-47, 30%/25% + MFP 1%/3%/10%) sur son résultat fiscal ; ses <strong>associés</strong> (personnes physiques) relèvent de l'<strong>IBA</strong> (Art.63-64, 30%/25% + MFP 1,5%/3%/10%) ou de l'<strong>IRCM</strong> (Art.68-69, 5%/10%/15% dividendes) <strong>à titre personnel</strong> sur les distributions/quotes-parts, pas la société.</span>
+        <div style="margin-top:6px;padding:6px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;font-size:11px;">
+          <strong>Quand ?</strong> CA société >50M constaté (FEC 70*) → IS dû ; CA EI >50M → IBA dû. TPS ≤50M → ni IS ni IBA pour la société (TPS libératoire Art.178).<br>
+          <strong>Comptes État à vérifier en priorité :</strong> 441 IS, 443/445 TVA, 447 retenues, 42* personnel — leur mouvement confirme le niveau d'imposition (précision 4).<br>
+          <strong>Traçabilité :</strong> IS Art.46-47, IBA Art.63-64, IRCM Art.68-86 — RuleBase 2026 traçable.
+        </div>
+        <div style="margin-top:6px;font-size:10px;color:#475569;"><em>Exemples :</em> SARL 80M → IS 30% sur bénéfice société + associés IBA/IRCM sur dividendes ; EI 60M → IBA direct sur bénéfice.</div>
+      </div>`;
+      if(mIs) core+= formatMoteurCard(mIs, ca);
     } else if(/dossier/i.test(query) && /fec|balance|constate|fichier comptable/i.test(query)){
       // Précision 2026-10-03 point 2 : CA constaté vs CA dossier
       core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">

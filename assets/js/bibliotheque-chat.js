@@ -97,22 +97,39 @@
     // Art.46 §1 -> Art.46, paragraphe 1
     return art.replace(/§\s*/g,'paragraphe ').replace(/\s+/g,' ').trim();
   }
+  // Précision 2026-10-03 : helpers régime & forme juridique
+  function detectFormeJuridique(query){
+    const qn=normalize(query);
+    if(/\b(sarl|sa\b|s\.a|sas|selarl|selas|gie|snc|scs|s\.a\.r\.l)/i.test(query)) return {soumisIS:true, label:'société morale (IS)'};
+    if(/entreprise individuelle|\bei\b|personne physique|artisan|micro.?entreprise|auto.?entrepreneur|ei\b/i.test(qn)) return {soumisIS:false, label:'entreprise individuelle / personne physique (IBA)'};
+    if(/sci|scm|societe civile/i.test(qn) && !/option is/i.test(qn)) return {soumisIS:false, label:'société civile (hors option IS) — IBA'};
+    if(/option is|soumis.*is|opte.*is/i.test(qn)) return {soumisIS:true, label:'option IS'};
+    return null;
+  }
+  function regimeLabelCA(ca){
+    if(ca==null) return 'CA non précisé';
+    if(ca<=50000000) return 'CA '+formatMontant(ca)+' ≤50M → TPS d\'office (non assujetti TVA)';
+    return 'CA '+formatMontant(ca)+' >50M → hors TPS (IS/IBA + TVA)';
+  }
+  function hasEtatCompteMention(query){
+    return /44[0-9]|443|445|447|441|442|etat|collectivit/i.test(query);
+  }
 
   // --- intent detection ---
   const INTENT_KEYWORDS={
     salutation: ['bonjour','salut','coucou','hello','bonsoir','bjr','cc','hey'],
-    tps: ['tps','taxe professionnelle synthetique','synthetique','liberatoire','art.178','art178','seuil 50','50m tps'],
-    is: [' is ','impot societe','impot sur les societes','art.46','art46','minimum perception','mfp','art.47','resultat fiscal'],
-    iba: ['iba','benefice affaires','bic','art.63','art.64'],
-    tva: ['tva','valeur ajoutee','aib','prorata','mec ef','mecef','art.241','18%','collectee'],
-    its: ['its','vps','salaire','traitement','paie','smig','cnss','barème','bareme','art.125','ortb','retenue salaire'],
+    tps: ['tps','taxe professionnelle synthetique','synthetique','liberatoire','art.178','art178','seuil 50','50m tps','ca 50m','cinquante million'],
+    is: [' is ','impot societe','impot sur les societes','art.46','art46','minimum perception','mfp','art.47','resultat fiscal','societe soumise is','sarl is','sa is','associe','associes','personne morale'],
+    iba: ['iba','benefice affaires','bic','art.63','art.64','entreprise individuelle','personne physique','non soumis is','bénéfice industriel','associe','associes'],
+    tva: ['tva','valeur ajoutee','aib','prorata','mec ef','mecef','art.241','18%','collectee','art.223','seuil tva','non assujetti tva'],
+    its: ['its','vps','salaire','traitement','paie','smig','cnss','barème','bareme','art.125','ortb','retenue salaire','447','etat retenue','collectivite'],
     tfu: ['tfu','fonciere unique','valeur locative'],
     tvm: ['tvm','vehicule moteur','carte grise cv'],
     patente: ['patente','licence boisson'],
-    fec: ['fec','ohada','syscohada','audcif','balance','grand livre','ecriture comptable','18 champs','21 champs'],
+    fec: ['fec','ohada','syscohada','audcif','balance','grand livre','ecriture comptable','18 champs','21 champs','ca constate','fichier comptable','capital dossier'],
     article: ['art.','article'],
     calcul: ['calcul','combien','payer','montant','cout','estimer','simulation','prix','du ','dû'],
-    seuil: ['seuil','plafond','limite','depassement','dépassement','50m','50 m'],
+    seuil: ['seuil','plafond','limite','depassement','dépassement','50m','50 m','ca constate','ca dossier'],
     procedure: ['comment','demarche','declarer','déclarer','echeance','échéance','quand','ou payer','ou déclarer','procedure','formalite'],
     thanks: ['merci','thanks','super','parfait']
   };
@@ -166,11 +183,33 @@
       for(const k in scores){ if(k!=='calcul' && scores[k]>secondScore){ secondScore=scores[k]; secondBest=k; } }
       if(secondBest && secondScore>=2.5) { best=secondBest; bestScore=secondScore; }
     }
-    // CA seul sans mot-clé impôt : inférence TPS vs IS/IBA par seuil 50M
+    // Précision 2026-10-03 (1)(2)(3) : CA constaté fait foi, ≤50M TPS non TVA, >50M IS vs IBA selon forme
     const caTmp = extractCA(query);
+    const formeInfo = detectFormeJuridique(query);
+    // TVA : si CA ≤50M, forcer TPS et bloquer TVA (non assujetti)
+    if(caTmp!=null && caTmp <= 50000000 && (best==='tva' || qn.includes('tva'))){
+      // rester en TPS par défaut, sauf option Art.225 explicite
+      if(!qn.includes('option') && !qn.includes('opte')){
+        best='tps'; bestScore=Math.max(bestScore, 4);
+        scores['tps']=(scores['tps']||0)+5;
+      }
+    }
+    // CA seul sans mot-clé impôt : inférence TPS vs IS/IBA par seuil 50M
     if(caTmp!=null && (best==='general' || best==='calcul')){
       if(caTmp <= 50000000) { best='tps'; bestScore=Math.max(bestScore, 3); }
-      else if(caTmp > 50000000) { best='is'; bestScore=Math.max(bestScore, 3); }
+      else if(caTmp > 50000000) {
+        if(formeInfo && formeInfo.soumisIS===false) { best='iba'; bestScore=Math.max(bestScore, 4); }
+        else { best='is'; bestScore=Math.max(bestScore, 3); }
+      }
+    }
+    // IBA vs IS selon forme juridique explicite
+    if(formeInfo && caTmp!=null && caTmp>50000000){
+      if(formeInfo.soumisIS===false) { scores['iba']=(scores['iba']||0)+4; if(best==='is') { best='iba'; bestScore=scores['iba']; } }
+      if(formeInfo.soumisIS===true) { scores['is']=(scores['is']||0)+4; if(best==='iba') { best='is'; bestScore=scores['is']; } }
+    }
+    // Précision 4 : comptes État 44* → booster TVA/ITS/VPS/AIB
+    if(hasEtatCompteMention(query)){
+      ['tva','its','aib'].forEach(k=>{ scores[k]=(scores[k]||0)+1.5; });
     }
     // thanks handling
     if(scores['thanks']>2 && bestScore<=2) best='thanks';
@@ -379,47 +418,97 @@
       return html;
     }
 
-    // --- core answer per intent ---
+    // --- core answer per intent --- (précision associé)
     let core='';
+    // Cas spécifique : question sur associés d'une société IS → IBA perso (exclusif)
+    if(/associ/i.test(query)){
+      const caAssoc=ca;
+      const formeAssoc=detectFormeJuridique(query);
+      const mIsAssoc=getMoteurById('is')||moteur;
+      const mIbaAssoc=getMoteurById('iba');
+      const isSociete = formeAssoc ? formeAssoc.soumisIS : (primary==='is' || (moteur && moteur.id==='is'));
+      // Toujours expliquer le principe d'exclusivité + deux niveaux
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;"><i class="bi bi-people me-1"></i>Société à l'IS (personne morale) et associés à l'IBA/IRCM — deux niveaux d'imposition, jamais la même entreprise</strong><br>
+        <span style="font-size:11px;">Une même entreprise <strong>ne peut être soumise à l'IS et à l'IBA</strong> : la <strong>société</strong> (personne morale, SARL/SA/SAS) relève de l'<strong>IS</strong> (Art.46-47, 30%/25% + MFP 1%/3%/10%) sur son résultat ; ses <strong>associés</strong> (personnes physiques) relèvent de l'<strong>IBA</strong> (Art.63-64, 30%/25% + MFP 1,5%/3%/10%) ou de l'<strong>IRCM</strong> (Art.68-86, 5%/10%/15% sur dividendes) <strong>à titre personnel</strong> sur les distributions/quotes-parts — pas la société.</span>
+        <div style="margin-top:6px;padding:6px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;font-size:11px;">
+          <strong>Quand ?</strong> CA société >50M constaté (FEC 70*) → IS dû par la société ; CA EI >50M → IBA dû par l'EI. TPS ≤50M → ni IS ni IBA pour la société (TPS libératoire Art.178).<br>
+          ${caAssoc? `<strong>Votre CA ${formatMontant(caAssoc)} :</strong> ${caAssoc<=50000000? 'TPS d\'office — ni IS ni IBA (société)' : (isSociete? 'IS pour la société' : 'IBA pour l\'EI')} + IBA/IRCM perso pour les associés sur leurs revenus.` : ''}
+          <br><small><strong>Comptes État prioritaires :</strong> 441 IS société, 443/445 TVA, 447 retenues AIB/ITS/VPS, 76* produits financiers — leur mouvement dans FEC/balance confirme le niveau (précision 4).</small><br>
+          <small style="color:#4c1d95;">Traçabilité : IS Art.46-47, IBA Art.63-64, IRCM Art.68-86 — RuleBase 2026.</small>
+        </div>
+        ${formeAssoc? `<div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:10px;"><strong>Forme détectée :</strong> ${formeAssoc.label} → ${formeAssoc.soumisIS? 'IS société' : 'IBA EI'} (exclusif).</div>` : `<div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-lightbulb me-1"></i>Précisez : <strong>SARL/SA → IS société</strong>, <strong>EI → IBA</strong> — la même entité jamais les deux. Ex : SARL 80M → IS société + IBA/IRCM associés.</div>`}
+      </div>`;
+      if(mIsAssoc) core+= formatMoteurCard(mIsAssoc, caAssoc);
+      if(mIbaAssoc && (!mIsAssoc || mIbaAssoc.id!==mIsAssoc.id)) core+= formatMoteurCard(mIbaAssoc, caAssoc);
+      // ajouter suggestion et bypass le reste
+      html+= core;
+      // docs + citation + suggestions
+      if(mIsAssoc && mIsAssoc.article){
+        html+= `<div class="mt-2 small text-muted" style="font-size:10px;border-top:1px dashed #e2e8f0;padding-top:6px;"><i class="bi bi-shield-check me-1" style="color:#16a34a;"></i>Citation traçable : <strong>${formatParagraphe(mIsAssoc.article)}</strong> + IBA/IRCM Art.63-68 — <code>RuleBase 2026</code> • v${ruleData?.version||bibData?.version||'2026'}</div>`;
+      }
+      const sugAssoc=getSuggestions('is');
+      if(sugAssoc && sugAssoc.length){
+        html+= `<div style="margin-top:8px;"><small style="color:#64748b;font-size:10px;">Poursuivre :</small><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">${sugAssoc.slice(0,4).map(s=>`<button class="gobexChatQuick" onclick="quickAsk('${s.replace(/'/g,"\\'")}')">${s}</button>`).join('')}</div></div>`;
+      }
+      context.lastIntent=primary;
+      if(mIsAssoc) context.lastMoteur=mIsAssoc;
+      if(caAssoc) context.lastCA=caAssoc;
+      context.turn++;
+      html+= `</div>`;
+      return html;
+    }
     if(primary==='tps' || (moteur && moteur.id==='tps')){
       const m = getMoteurById('tps') || moteur;
       if(!hasCA){
         core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
-          <strong style="color:#0A2F5E;">🔎 Ce que dit la bibliothèque — Art.178 & Art.183</strong><br>
-          <span style="font-size:11px;">La <strong>TPS est libératoire</strong> (Art.178, paragraphe 1) : si votre CA annuel ≤ <strong>50 M F</strong> (seuil fixé par arrêté du ministre), elle remplace <strong>4 impôts</strong> : IBA + Patente + Licence + VPS. Au-delà, vous basculez à l'IBA de plein droit le mois suivant (Art.182).</span><br>
+          <strong style="color:#0A2F5E;">🔎 Ce que dit la bibliothèque — Art.178 & Art.183 & Art.223</strong><br>
+          <span style="font-size:11px;">La <strong>TPS est due d'office par défaut</strong> si votre CA annuel ≤ <strong>50 M F</strong> (seuil arrêté ministre — Art.178, paragraphe 1). Elle est <strong>libératoire</strong> de 4 impôts : IBA + Patente + Licence + VPS. <strong>Vous êtes alors non assujetti à la TVA</strong> (Art.223 seuil 50M) sauf option Art.225. <br>Au-delà de 50M, bascule à l'IS ou IBA de plein droit le mois suivant (Art.182) et TVA due 18%.</span><br>
           <div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:11px;">
             <strong>Formule RuleBase (Art.183, paragraphes 1 à 3) :</strong><br>
             TPS = max(CA × <strong>5 %</strong>, 10 000 F) + <strong>4 000 F</strong> ORTB — due <em>par commune et par établissement</em> (Art.183, paragraphe 4)<br>
             <small>Échéances : 10/02 et 10/06 (acomptes sur N-1) + solde 30/04 (Art.185)</small>
           </div>
-          <div style="margin-top:6px;font-size:11px;color:#92400e;"><i class="bi bi-lightbulb me-1"></i><strong>Pour vous guider précisément</strong>, quel est votre chiffre d'affaires annuel HT ? <em>Ex : 32M, 45 000 000 F, 12M</em><br>Indiquez-le et je vous donne le montant exact + échéances + ce que la TPS vous évite.</div>
+          <div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:10px;"><strong>⚠️ CA à retenir (précision 2026) :</strong> c'est le <strong>CA constaté dans vos fichiers comptables</strong> (FEC 70*, balance, livre — <code>bibliotheque.json</code> mapping_ohada) qui fait foi, pas le CA ou le capital du dossier/tableau de bord. Si écart dossier vs FEC, le FEC prime et un reclassement Art.182 paragraphe 4 peut s'appliquer.</div>
+          <div style="margin-top:6px;font-size:11px;color:#92400e;"><i class="bi bi-lightbulb me-1"></i><strong>Pour vous guider précisément</strong>, quel est votre chiffre d'affaires annuel HT <strong>constaté en compta</strong> ? <em>Ex : 32M, 45 000 000 F, 12M</em><br>Indiquez-le et je vous donne le montant exact + échéances + ce que la TPS vous évite.</div>
         </div>`;
         context.pending='tps_ca';
         context.lastIntent='tps';
       } else {
         const isTPS = ca <= 50000000;
         const ex=computeTPSExample(ca);
+        const formeInfo2 = detectFormeJuridique(query) || (context.lastIntent==='iba'? {soumisIS:false, label:'IBA'} : null);
+        const etatHint = hasEtatCompteMention(query)? `<div style="margin-top:6px;padding:6px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-bank me-1" style="color:#92400e;"></i><strong>Comptes État/collectivités détectés (443/445/447/441) :</strong> je porte une attention particulière aux écritures avec l'État — retenues AIB/ITS/VPS et TVA collectée/déductible sont vérifiées en priorité (précision 2026-10-03, point 4).</div>` : '';
         if(isTPS){
           core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
-            <strong style="color:#065f46;"><i class="bi bi-check-circle me-1"></i>Avec ${formatMontant(ca)} → vous êtes bien en TPS</strong><br>
-            <span style="font-size:11px;">CA ≤ 50 M → <strong>régime TPS libératoire</strong> (Art.178, paragraphe 1). Vous <strong>n'aurez pas</strong> à payer séparément : IBA, patente, licence et VPS — c'est inclus.</span>
+            <strong style="color:#065f46;"><i class="bi bi-check-circle me-1"></i>Avec ${formatMontant(ca)} → vous êtes bien en TPS <span class="badge bg-success" style="font-size:9px;">d'office</span></strong><br>
+            <span style="font-size:11px;">CA ≤ 50 M → <strong>régime TPS d'office par défaut</strong> (Art.178, paragraphe 1). Vous <strong>n'aurez pas</strong> à payer séparément : IBA, patente, licence et VPS — inclus. <strong>Et vous êtes non assujetti à la TVA</strong> (Art.223) — pas de TVA collectée/déductible à déclarer, sauf option Art.225.</span>
             <div style="margin-top:6px;padding:8px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;">
-              <strong style="color:#065f46;">Votre estimation traçable (Art.183) :</strong><br>
+              <strong style="color:#065f46;">Votre estimation traçable (Art.183) — CA constaté FEC :</strong><br>
               <span style="font-size:11px;color:#064e3b;">${formatMontant(ca)} × 5 % = ${formatMontant(ex.base)} → plancher 10 000 F → ${formatMontant(ex.tpsHorsORTB)} + 4 000 F ORTB = <strong style="font-size:12px;">${formatMontant(ex.total)} / an</strong></span><br>
               <small style="color:#047857;">Par commune/établissement (Art.183, paragraphe 4) — 50 % État / 50 % collectivité (Art.190)</small><br>
               <small style="color:#334155;">Échéances : <strong>10/02</strong> (acompte), <strong>10/06</strong> (acompte), <strong>solde 30/04</strong> (Art.185, paragraphes 1-2) — forains : intégral avant 01/03 (Art.189)</small>
             </div>
-            <div style="margin-top:6px;font-size:10px;color:#64748b;"><i class="bi bi-info-circle me-1"></i>Citation : <strong>${formatParagraphe(m? m.article : 'Art.183, paragraphes 1-3')}</strong> — ${m? m.libelle : 'TPS'} • v${bibData?.version||'2026'}</div>
+            <div style="margin-top:6px;padding:6px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:8px;font-size:10px;color:#475569;"><strong>CA retenu :</strong> CA constaté fichiers comptables (FEC/balance/livre) fait foi — pas le CA capital du dossier. Si votre dossier indiquait un CA différent, le <strong>FEC prime</strong> (reclassement Art.182 paragraphe 4 possible).</div>
+            ${etatHint}
+            <div style="margin-top:6px;font-size:10px;color:#64748b;"><i class="bi bi-info-circle me-1"></i>Citation : <strong>${formatParagraphe(m? m.article : 'Art.183, paragraphes 1-3')}</strong> — ${m? m.libelle : 'TPS'} • v${bibData?.version||'2026'} • Art.223 non-assujetti TVA</div>
           </div>`;
-          core+= `<div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:11px;"><strong style="color:#0A2F5E;">Prochaine étape utile :</strong> Voulez-vous que j'applique le moteur <strong>TPS</strong> et masque IBA/patente dans le calculateur ? Ou que je simule avec un autre CA ?</div>`;
+          core+= `<div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:11px;"><strong style="color:#0A2F5E;">Prochaine étape utile :</strong> Voulez-vous que j'applique le moteur <strong>TPS</strong> (et masque IBA/patente/TVA) dans le calculateur ? Ou que je simule avec un autre CA constaté ?</div>`;
         } else {
+          // >50M : IS vs IBA selon forme
+          const soumisISLabel = formeInfo2 ? (formeInfo2.soumisIS? 'IS' : 'IBA') : 'IS/IBA';
+          const isIBAcas = formeInfo2 && formeInfo2.soumisIS===false;
+          const labelImp = isIBAcas? 'IBA' : (formeInfo2 && formeInfo2.soumisIS===true? 'IS' : 'IS (ou IBA si non soumis à IS)');
+          const detailImp = isIBAcas? 'IBA à 30 % (25 % école) + MFP 1,5 % (3 % BTP / 10 % immo) min 250 000 F + 4 000 ORTB (Art.63-64)' : 'IS à 30 % (25 % industriel/école) + MFP 1 % (3 % BTP / 10 % immo) min 250 000 F (Art.46-47)';
           core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
             <strong style="color:#b91c1c;"><i class="bi bi-exclamation-triangle me-1"></i>Avec ${formatMontant(ca)} → vous dépassez le seuil TPS</strong><br>
-            <span style="font-size:11px;">CA > 50 M → vous <strong>n'êtes plus en TPS</strong> mais à l'<strong>IBA de plein droit</strong> dès le mois suivant le dépassement (Art.182, paragraphe 1). TPS déjà payée imputée 50/50 (Art.182, paragraphe 3).</span>
+            <span style="font-size:11px;">CA > 50 M → vous <strong>n'êtes plus en TPS</strong> mais à l'<strong>${labelImp} de plein droit</strong> dès le mois suivant le dépassement (Art.182, paragraphe 1). TPS déjà payée imputée 50/50 (Art.182, paragraphe 3). <strong>TVA devient due 18 %</strong> (Art.241) sauf exon.</span>
             <div style="margin-top:6px;padding:6px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;font-size:11px;">
-              <strong>Ce qui change :</strong> IBA à 30 % (25 % école) + MFP 1,5 % (3 % BTP / 10 % immo) min 250 000 F + 4 000 ORTB (Art.63-64) — et patente/licence/VPS redeviennent dus séparément.
+              <strong>Ce qui change (${labelImp}) :</strong> ${detailImp} — et patente/licence/VPS redeviennent dus séparément.<br>
+              ${formeInfo2? `<small style="color:#7f1d1d;">Forme détectée : <strong>${formeInfo2.label}</strong> → ${isIBAcas? 'IBA' : 'IS'} retenu (précision 2026-10-03 point 3, exclusif — même entreprise jamais IS+IBA ; société IS → associés IBA/IRCM perso).</small>` : `<small style="color:#92400e;"><i class="bi bi-question-circle me-1"></i>Précisez votre forme (SARL/SA → IS, EI/personne physique → IBA) — exclusif pour la même entreprise ; société IS et associés IBA perso.</small>`}
             </div>
-            <small style="color:#64748b;">Voulez-vous une simulation IBA pour ce CA ?</small>
+            ${etatHint}
+            <small style="color:#64748b;">Voulez-vous une simulation ${isIBAcas? 'IBA':'IS'} pour ce CA constaté ?</small>
           </div>`;
         }
         context.lastCA=ca;
@@ -428,30 +517,57 @@
       }
     } else if(primary==='is' || primary==='iba' || (moteur && (moteur.id==='is' || moteur.id==='iba'))){
       const m = moteur && (moteur.id==='is'||moteur.id==='iba')? moteur : (getMoteurById('is')|| getMoteurById('iba'));
-      const isIBA = primary==='iba' || (m && m.id==='iba');
+      const formeInfo3 = detectFormeJuridique(query);
+      let isIBA = primary==='iba' || (m && m.id==='iba');
+      // Précision 3 : si forme détectée, forcer IS vs IBA
+      if(formeInfo3){
+        isIBA = !formeInfo3.soumisIS;
+      } else if(ca!=null && ca>50000000 && primary==='is' && !formeInfo3){
+        // garder IS par défaut, mais suggérer vérification
+      }
       const label = isIBA? 'IBA' : 'IS';
       const articleTxt = isIBA? 'Art.63 (taux) + Art.64 (MFP)' : 'Art.46 (taux) + Art.47 (MFP)';
+      const etatHint2 = hasEtatCompteMention(query)? `<div style="margin-top:6px;padding:6px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-bank me-1" style="color:#92400e;"></i><strong>Comptes État 44* mouvementés :</strong> vérifiez 441 (IS dû), 447 (retenues), 443/445 (TVA) — ils confirment les impôts dus.</div>` : '';
+      const formeNote = formeInfo3? `<div style="margin-top:6px;padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:10px;"><strong>Forme détectée :</strong> ${formeInfo3.label} → <strong>${label} retenu</strong> (précision 2026-10-03 point 3 : IBA si CA>50M et non soumis IS, exclusif).<br><small style="color:#475569;">Rappel : une même entreprise ne peut être IS et IBA — une société à l'IS (personne morale) et ses associés à l'IBA/IRCM à titre personnel (dividendes, quotes-parts Art.68-69).</small></div>` : `<div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-question-circle me-1"></i><strong>IS ou IBA ? Exclusif.</strong> Précisez : <strong>SARL/SA/SAS → IS</strong>, <strong>EI / personne physique / artisan → IBA</strong>. Sans précision, je détaille IS par défaut (exclusif : même entité jamais IS+IBA).<br><small>Une société à l'IS et ses associés à l'IBA/IRCM personnel.</small></div>`;
       core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
         <strong style="color:#0A2F5E;">${label} — ${formatParagraphe(articleTxt)}</strong><br>
-        <span style="font-size:11px;">${isIBA? 'Bénéfice BIC/BNC' : 'Résultat fiscal'} × <strong>30 %</strong> (25 % industriel hors extractive / écoles privées — Art.46, paragraphe 1) — le plus élevé entre ce théorique et le <strong>minimum de perception</strong> (MFP).</span><br>
+        <span style="font-size:11px;">${isIBA? 'Bénéfice BIC/BNC (EI/physique)' : 'Résultat fiscal (société morale)'} × <strong>30 %</strong> (25 % industriel hors extractive / écoles privées — Art.46, paragraphe 1) — le plus élevé entre ce théorique et le <strong>minimum de perception</strong> (MFP). <em>Exclusif : même entreprise jamais IS et IBA.</em></span><br>
         <div style="margin-top:6px;padding:6px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;font-size:11px;">
           <strong>MFP (Art.47) :</strong> max(250 000 F, CA encaissable × <strong>${isIBA? '1,5 %' : '1 %'}</strong> général / 3 % BTP / 10 % immo) — station 0,60 F/L + 4 000 F ORTB au 10/03<br>
           ${m && m.formule? `<small style="color:#4c1d95;">Formule : ${m.formule.slice(0,160)}…</small>`:''}
         </div>
-        ${hasCA? `<div style="margin-top:6px;font-size:11px;color:#334155;">Avec CA ${formatMontant(ca)} : MFP indicatif = ${formatMontant(Math.max(250000, Math.round(ca*(isIBA?0.015:0.01))))} (+ 4 000 ORTB). Le résultat fiscal reste nécessaire — le FEC (18 champs OHADA) donne le plus juste.</div>` : `<div style="margin-top:6px;font-size:11px;color:#92400e;"><i class="bi bi-lightbulb me-1"></i>Indiquez votre <strong>CA ou résultat fiscal</strong> et je vous donne l'IS/IBA exact (théorique vs MFP).</div>`}
+        ${formeNote}
+        ${hasCA? `<div style="margin-top:6px;font-size:11px;color:#334155;">Avec CA constaté <strong>${formatMontant(ca)}</strong> : MFP indicatif = ${formatMontant(Math.max(250000, Math.round(ca*(isIBA?0.015:0.01))))} (+ 4 000 ORTB). Le résultat fiscal reste nécessaire — le FEC (18 champs OHADA) donne le plus juste. CA dossier ≠ CA FEC ? Le <strong>FEC prime</strong>.</div>` : `<div style="margin-top:6px;font-size:11px;color:#92400e;"><i class="bi bi-lightbulb me-1"></i>Indiquez votre <strong>CA constaté en compta</strong> et je vous donne l'IS/IBA exact (théorique vs MFP).</div>`}
+        ${etatHint2}
       </div>`;
       context.lastMoteur=m;
     } else if(primary==='tva' || (moteur && moteur.id==='tva')){
       const m=getMoteurById('tva')||moteur;
-      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
-        <strong style="color:#0A2F5E;">TVA — Art.241 18 % (export 0 %) + Art.223 seuil 50 M</strong><br>
-        <span style="font-size:11px;">TVA due = TVA collectée (CA taxable × 18 %) − TVA déductible × prorata (Art.248, paragraphe 1). Seuil assujettissement 50 M (Art.223) — en dessous, exonéré sauf option (Art.225).</span>
-        <div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:11px;">
-          <strong>Prorata mixte :</strong> ceil((CA taxable + export)/CA total ×100) — hors éléments Art.249, paragraphe 2 — régul. au 30/04 N+1<br>
-          <strong>Exclusions Art.247 :</strong> véhicules tourisme, carburant BTP plaf 90 %, logement/réception… — retenue source 100 % / 40 % (Art.263)
-        </div>
-        <div style="margin-top:6px;font-size:11px;"><i class="bi bi-receipt me-1"></i>Besoin d'une simulation ? Dites : <em>« CA taxable 10M, TVA achats 800k »</em></div>
-      </div>`;
+      const isTPSca = hasCA && ca<=50000000;
+      const etatHintTva = hasEtatCompteMention(query)? `<div style="margin-top:6px;padding:6px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-bank me-1" style="color:#92400e;"></i><strong>Comptes État 443/445/447 détectés :</strong> TVA collectée 443*, déductible 445*, retenues 447* — ils confirment l'assujettissement (piste prioritaire précision 4).</div>` : '';
+      if(isTPSca){
+        core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+          <strong style="color:#065f46;">TVA — non assujetti (Art.223) car TPS d'office</strong><br>
+          <span style="font-size:11px;">Avec CA constaté <strong>${formatMontant(ca)} ≤50M</strong> → vous êtes en <strong>TPS d'office</strong> et <strong>non assujetti à la TVA</strong> (Art.223). Pas de TVA à collecter ni à déduire, sauf <strong>option Art.225</strong> (lettre, réponse 8j, compta OHADA + expert/CCA, compte pro, enseigne Art.463).</span>
+          <div style="margin-top:6px;padding:6px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;font-size:11px;">
+            Si vous étiez assujetti (CA>50M) : TVA due = TVA collectée (CA ×18% Art.241) − TVA déductible × prorata (Art.248) — prorata ceil((taxable+export)/total×100) hors Art.249 paragraphe 2, régul. 30/04 N+1.
+          </div>
+          ${etatHintTva}
+          <div style="margin-top:6px;font-size:10px;color:#64748b;"><em>CA retenu = CA constaté FEC/balance fait foi, pas CA dossier. Si vous passez >50M le mois suivant, TVA due dès le mois du dépassement (Art.182).</em></div>
+        </div>`;
+      } else {
+        core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+          <strong style="color:#0A2F5E;">TVA — Art.241 18 % (export 0 %) + Art.223 seuil 50 M</strong><br>
+          <span style="font-size:11px;">TVA due = TVA collectée (CA taxable × 18 %) − TVA déductible × prorata (Art.248, paragraphe 1). Seuil assujettissement 50 M constaté en compta (Art.223) — en dessous, <strong>non assujetti</strong> sauf option (Art.225) ; au-delà, redevable.</span>
+          <div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:11px;">
+            <strong>Prorata mixte :</strong> ceil((CA taxable + export)/CA total ×100) — hors éléments Art.249, paragraphe 2 — régul. au 30/04 N+1<br>
+            <strong>Exclusions Art.247 :</strong> véhicules tourisme, carburant BTP plaf 90 %, logement/réception… — retenue source 100 % / 40 % (Art.263)<br>
+            <small>Comptes État à vérifier en priorité : <strong>443 TVA collectée, 445 TVA déductible/à décaisser, 447 retenues</strong> — leur présence dans le FEC signale l'exigibilité (précision 4).</small>
+          </div>
+          ${etatHintTva}
+          <div style="margin-top:6px;font-size:11px;"><i class="bi bi-receipt me-1"></i>Besoin d'une simulation ? Dites : <em>« CA taxable 10M, TVA achats 800k »</em> — avec CA constaté FEC.</div>
+        </div>`;
+      }
       context.lastMoteur=m;
     } else if(primary==='its' || (moteur && (moteur.id==='its' || moteur.id==='vps'))){
       const m=getMoteurById('its')||moteur;
@@ -494,6 +610,44 @@
         <span style="font-size:11px;">${moteur.article? formatParagraphe(moteur.article) : ''} — ${moteur.livre||''}</span><br>
         <small style="color:#334155;">${(moteur.base||moteur.formule||'').slice(0,220)}</small>
         <div style="margin-top:6px;font-size:10px;color:#64748b;">Cette réponse s'appuie sur le RuleBase 2026 traçable — posez une question de calcul et je vous simule.</div>
+      </div>`;
+    } else if(/associ/i.test(query) && (primary==='is' || primary==='iba' || hasCA || /société|societe|morale|personne/i.test(query))){
+      // Précision 2026-10-03 complément : société IS vs associés IBA perso — exclusif pour même entité
+      const mIs=getMoteurById('is')||getMoteurById('iba');
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;"><i class="bi bi-people me-1"></i>Société à l'IS (personne morale) et associés à l'IBA/IRCM — deux niveaux, jamais la même entité</strong><br>
+        <span style="font-size:11px;">Une même entreprise <strong>ne peut être soumise à l'IS et à l'IBA</strong> (exclusif). La <strong>société</strong> (personne morale, SARL/SA/SAS) relève de l'<strong>IS</strong> (Art.46-47, 30%/25% + MFP 1%/3%/10%) sur son résultat fiscal ; ses <strong>associés</strong> (personnes physiques) relèvent de l'<strong>IBA</strong> (Art.63-64, 30%/25% + MFP 1,5%/3%/10%) ou de l'<strong>IRCM</strong> (Art.68-69, 5%/10%/15% dividendes) <strong>à titre personnel</strong> sur les distributions/quotes-parts, pas la société.</span>
+        <div style="margin-top:6px;padding:6px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;font-size:11px;">
+          <strong>Quand ?</strong> CA société >50M constaté (FEC 70*) → IS dû ; CA EI >50M → IBA dû. TPS ≤50M → ni IS ni IBA pour la société (TPS libératoire Art.178).<br>
+          <strong>Comptes État à vérifier en priorité :</strong> 441 IS, 443/445 TVA, 447 retenues, 42* personnel — leur mouvement confirme le niveau d'imposition (précision 4).<br>
+          <strong>Traçabilité :</strong> IS Art.46-47, IBA Art.63-64, IRCM Art.68-86 — RuleBase 2026 traçable.
+        </div>
+        <div style="margin-top:6px;font-size:10px;color:#475569;"><em>Exemples :</em> SARL 80M → IS 30% sur bénéfice société + associés IBA/IRCM sur dividendes ; EI 60M → IBA direct sur bénéfice.</div>
+      </div>`;
+      if(mIs) core+= formatMoteurCard(mIs, ca);
+    } else if(/dossier/i.test(query) && /fec|balance|constate|fichier comptable/i.test(query)){
+      // Précision 2026-10-03 point 2 : CA constaté vs CA dossier
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;"><i class="bi bi-file-text me-1"></i>CA à retenir : le CA constaté en compta fait foi (précision 2026-10-03)</strong><br>
+        <span style="font-size:11px;">C'est le <strong>CA constaté dans vos fichiers comptables</strong> (FEC comptes 70*, balance, livre recettes-dépenses) qui fait foi, <strong>pas le CA ou le capital du dossier / tableau de bord</strong>. Le moteur calcule sur le FEC, pas sur le dossier.</span>
+        <div style="margin-top:6px;padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;font-size:11px;">
+          <strong>Concrètement :</strong> si dossier = 32M mais FEC = 45M → on retient <strong>45M</strong> (toujours TPS ≤50M ici, mais base 45M). Si FEC dépasse 50M alors que dossier était ≤50M → <strong>reclassement Art.182 paragraphe 4</strong> en IBA/IS + rappel droits.<br>
+          Vérifiez : <code>Σ Crédit 70* FEC</code> vs CA dossier. Écart >5% ou >1M → alerte à régulariser.
+        </div>
+        ${hasCA? `<div style="margin-top:6px;font-size:11px;color:#334155;">Vous avez indiqué <strong>${formatMontant(ca)}</strong> (premier CA détecté). Si vous avez deux valeurs (dossier vs FEC), donnez le <strong>CA FEC</strong> et je recalcule le régime (TPS vs TVA) + montant.</div>` : `<div style="margin-top:6px;font-size:11px;color:#92400e;"><i class="bi bi-lightbulb me-1"></i>Donnez le <strong>CA FEC (70*)</strong> et je vous dis : TPS d'office ou IS/IBA + TVA, avec simulation traçable.</div>`}
+        ${hasEtatCompteMention(query)? `<div style="margin-top:6px;padding:6px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:10px;"><i class="bi bi-bank me-1" style="color:#92400e;"></i><strong>Comptes État :</strong> les comptes 44*/443/445/447 confirment en priorité les impôts dus — leur présence dans le FEC est le signal le plus fiable.</div>` : ''}
+      </div>`;
+    } else if(hasEtatCompteMention(query) && !hasCA){
+      core+= `<div style="padding:8px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;">
+        <strong style="color:#0A2F5E;"><i class="bi bi-bank me-1"></i>Comptes mouvementés avec l'État/collectivités — piste prioritaire (précision 4)</strong><br>
+        <span style="font-size:11px;">Vous mentionnez <strong>44*/443/445/447/441</strong> — c'est bien le <strong>signal prioritaire non exclusif</strong> pour détecter les impôts dus : leur mouvement dans le FEC/balance fait foi, même sans mot-clé.</span>
+        <div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:10px;">
+          <div style="padding:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;"><strong>443 TVA collectée</strong> → TVA due (si CA>50M)<br><strong>445 TVA déductible/à décaisser</strong> → TVA déductible</div>
+          <div style="padding:6px;background:#fefce8;border:1px solid #fde68a;border-radius:8px;"><strong>447 ITS/VPS/AIB</strong> → ITS/VPS/AIB retenues<br><strong>441 IS</strong> → IS dû</div>
+          <div style="padding:6px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;"><strong>442/448 autres impôts État</strong> → à ventiler</div>
+          <div style="padding:6px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;"><strong>44* créditeur</strong> → impôt à payer à l'échéance</div>
+        </div>
+        <div style="margin-top:6px;font-size:11px;color:#334155;"><i class="bi bi-search me-1"></i>Envoyez un extrait FEC/balance (comptes 44*) ou donnez votre CA constaté + forme (SARL/EI) et je vous dis le panier d'impôts exact (TPS vs IS/IBA + TVA + ITS/VPS…) avec citation paragraphe.</div>
       </div>`;
     } else {
       // fallback general conversational

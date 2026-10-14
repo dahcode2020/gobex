@@ -1,0 +1,84 @@
+{
+  "version": "2026.29.0-Mensuel",
+  "annee": 2026,
+  "loiFinances": "2021-15 + 2023 + 2024 + 2025-22 + CGI 2026",
+  "source": "CGI Bénin 2026 — Déclarations mensuelles",
+  "principe": "Données mensuelles extraites du FEC/balance/livres (groupBy YYYY-MM via DateEcriture) + saisie manuelle mensuelle. Chaque moteur mensuel réutilise la formule annuelle mais sur base mensuelle. Traçabilité Art. par Art.",
+  "declarations_mensuelles": [
+    {
+      "id": "decl_tva_mensuelle",
+      "libelle": "Déclaration TVA mensuelle",
+      "article": "Art.223-263 + Art.241 18% + Art.248-249 prorata",
+      "periodicite": "mensuelle",
+      "echeance": "15 du mois N+1 (10 si retenue source)",
+      "base": "Mois M : CA HT total, CA taxable HT, CA export, TVA collectée (443), TVA achats déductibles (445), exclusions Art.247",
+      "formule": "TVA_due_M = TVA_collectee_M (443) - TVA_deductible_M(445) × prorata_M ; prorata_M = ceil((CA_taxable + export)/CA_total ×100) hors Art.249 §2 ; si affectation exclusive → 100% ou 0% (Art.248)",
+      "sources": ["FEC 443/445/70*", "Balance 443/445", "Facturier MECeF"],
+      "champs_mensuels": ["ca_total_ht", "ca_taxable_ht", "ca_export_ht", "tva_collectee", "tva_achats", "exclusions_247", "affectation"],
+      "taux": 0.18,
+      "sortie": "PDF déclaration TVA mensuelle + CSV récap"
+    },
+    {
+      "id": "decl_aib_mensuelle",
+      "libelle": "AIB mensuel (achats/imports/prestations)",
+      "article": "Art.130-134",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1, imputation 31/12",
+      "base": "Mois M : achats HT avec IFU (1%), prestations HT avec IFU (3%), opérations sans IFU (5%)",
+      "formule": "AIB_M = Σ achats_avecIFU_M×1% + prestations_avecIFU_M×3% + sansIFU_M×5% (base douane/prix TTC hors TVA)",
+      "sources": ["FEC 60*/61*/62* + 447/443", "Balance 60*", "Registre achats"],
+      "champs_mensuels": ["achats_avec_ifu", "prestations_avec_ifu", "sans_ifu"],
+      "taux": {"avec_ifu_achat": 0.01, "avec_ifu_prestation": 0.03, "sans_ifu": 0.05},
+      "sortie": "PDF AIB"
+    },
+    {
+      "id": "decl_its_vps_mensuelle",
+      "libelle": "ITS + VPS mensuels (salaires)",
+      "article": "Art.119-129 (ITS) + Art.191-195 (VPS)",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Mois M : salaires bruts par salarié (ou masse salariale), effectif",
+      "formule": "ITS_M = Σ barème Art.125 par salarié (0-60k 0%, 60-150k 10%, 150-250k 15%, 250-500k 19%, >500k 30%) + 1000F mars/3000F juin si >60k ; VPS_M = base ITS ×4% (2% enseignement privé Art.194)",
+      "sources": ["FEC 641/661/664", "Livre paie", "Balance 64*"],
+      "champs_mensuels": ["salaires_bruts_list", "masse_salariale", "effectif", "enseignement_prive"],
+      "sortie": "PDF ITS/VPS + annexe par salarié"
+    },
+    {
+      "id": "decl_ircm_mensuelle",
+      "libelle": "IRCM mensuel (dividendes, intérêts)",
+      "article": "Art.68-93",
+      "periodicite": "mensuelle (mois de distribution)",
+      "echeance": "10 du mois N+1",
+      "base": "Mois M : dividendes, intérêts, jetons, avances dirigeants",
+      "formule": "IRCM_M = Σ revenus mobiliers × taux (5% titres État, 10% dividendes, 15% autres, obligations 6%/3%/0%/5% Art.86-89)",
+      "sources": ["FEC 76*/761/764", "Registre distributions"],
+      "champs_mensuels": ["dividendes", "interets", "jetons", "category"],
+      "sortie": "PDF IRCM"
+    },
+    {
+      "id": "decl_irf_mensuelle",
+      "libelle": "IRF / Retenue locative mensuelle",
+      "article": "Art.101-107",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1 (4 acomptes Trésor)",
+      "base": "Mois M : loyers bruts encaissés (bâtis/non bâtis, meublée), dépenses",
+      "formule": "IRF_M = (loyers_bruts - dépenses) ×12% + 4000 ORTB (10% si IBA/IS) ; retenue locataire 12% si >3 ans",
+      "sources": ["FEC 75*/752/758", "Contrats baux"],
+      "champs_mensuels": ["loyers_bruts", "depenses", "duree_bail"],
+      "sortie": "PDF IRF"
+    },
+    {
+      "id": "decl_retenues_mensuelle",
+      "libelle": "Déclaration mensuelle unique des retenues (ITS/VPS/AIB/IRCM/IRF + 10%/20%)",
+      "article": "Art.130-144 groupé + Art.134/140/143",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Mois M : agrégat M1-M6 + prélèvements 10% non connus, 20% non-résidents, 0,30F/L hydro",
+      "formule": "Total_retenues_M = Σ (AIB_M + ITS_M + VPS_M + IRCM_M + IRF_M + 10%_M + 20%_M + hydro_M)",
+      "sources": ["Agrégat des 6 moteurs mensuels"],
+      "champs_mensuels": ["total_retenues"],
+      "sortie": "PDF déclaration unique officielle (reproduction) + CSV"
+    }
+  ],
+  "notes": "TPS acomptes 10/02-10/06 non mensuels — hors scope. Données mensuelles extraites via DateEcriture AAAAMMJJ → YYYY-MM. Si pas de FEC mensuel, saisie manuelle 12 mois. 44* État prioritaire pour détection."
+}

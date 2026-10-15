@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Déclarations Mensuelles — CGI 2026 • GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--calc:#7c3aed;--light:#f4f7fb}body{font-family:Roboto;background:var(--light);min-height:100vh}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px;z-index:1000;overflow-y:auto}.main{margin-left:280px;padding:20px}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:16px;border:1px solid #eef2f6;margin-bottom:12px}.dropzone{border:2px dashed #cbd5e1;border-radius:12px;padding:14px;text-align:center;background:#f8fafc;cursor:pointer;transition:.2s}.dropzone:hover{border-color:var(--calc);background:#f5f3ff}.dropzone.filled{border-color:#86efac;background:#f0fdf4;border-style:solid}.badge-rule{background:var(--primary);color:var(--accent);border:1px solid var(--accent);font-size:10px;padding:3px 8px;border-radius:50px}.table-mensuelle{font-size:11px}.table-mensuelle th{font-size:10px;white-space:nowrap;background:#f8fafc;position:sticky;top:0;z-index:2}.table-mensuelle td{vertical-align:middle;padding:4px 6px}.table-mensuelle input{font-size:11px;padding:2px 6px;height:28px;border:1px solid #e2e8f0;border-radius:6px;width:100%}.table-mensuelle input:focus{border-color:var(--calc);box-shadow:0 0 0 2px rgba(124,58,237,.12);outline:none}.month-pill{border-radius:50px;padding:6px 12px;font-size:11px;font-weight:600;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;white-space:nowrap}.month-pill.active{background:var(--primary);color:var(--accent);border-color:var(--primary)}.month-pill.has-data{border-color:#86efac;background:#f0fdf4}.decl-card{border:1px solid #e2e8f0;border-radius:12px;padding:12px;background:#fff;transition:.15s}.decl-card.has-amount{border-color:var(--calc);background:#f5f3ff}.decl-card.exonere{border-color:#86efac;background:#f0fdf4;opacity:.85}.fiche-decl{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}.legende-para{font-size:10px;color:#64748b;background:#f8fafc;border:1px dashed #e2e8f0;border-radius:8px;padding:8px;margin-top:10px}.abbr-para{cursor:help;border-bottom:1px dotted #7c3aed}</style></head><body>
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Déclarations Mensuelles — CGI 2026 • GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--calc:#7c3aed;--light:#f4f7fb}body{font-family:Roboto;background:var(--light);min-height:100vh}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px;z-index:1000;overflow-y:auto}.main{margin-left:280px;padding:20px}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:16px;border:1px solid #eef2f6;margin-bottom:12px}.dropzone{border:2px dashed #cbd5e1;border-radius:12px;padding:14px;text-align:center;background:#f8fafc;cursor:pointer;transition:.2s}.dropzone:hover{border-color:var(--calc);background:#f5f3ff}.dropzone.filled{border-color:#86efac;background:#f0fdf4;border-style:solid}.badge-rule{background:var(--primary);color:var(--accent);border:1px solid var(--accent);font-size:10px;padding:3px 8px;border-radius:50px}.table-mensuelle{font-size:11px}.table-mensuelle th{font-size:10px;white-space:nowrap;background:#f8fafc;position:sticky;top:0;z-index:2}.table-mensuelle td{vertical-align:middle;padding:4px 6px}.table-mensuelle input{font-size:11px;padding:2px 6px;height:28px;border:1px solid #e2e8f0;border-radius:6px;width:100%}.table-mensuelle input:focus{border-color:var(--calc);box-shadow:0 0 0 2px rgba(124,58,237,.12);outline:none}.month-pill{border-radius:50px;padding:6px 12px;font-size:11px;font-weight:600;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;white-space:nowrap}.month-pill.active{background:var(--primary);color:var(--accent);border-color:var(--primary)}.month-pill.has-data{border-color:#86efac;background:#f0fdf4}.decl-card{border:1px solid #e2e8f0;border-radius:12px;padding:12px;background:#fff;transition:.15s}.decl-card.has-amount{border-color:var(--calc);background:#f5f3ff}.decl-card.exonere{border-color:#86efac;background:#f0fdf4;opacity:.85}.fiche-decl{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}#tableAutresMatrice input{font-size:10px;padding:2px 4px;height:24px;border:1px solid #ddd6fe;border-radius:6px;width:90px}#tableAutresMatrice input:focus{border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.15);outline:none}
+.legende-para{font-size:10px;color:#64748b;background:#f8fafc;border:1px dashed #e2e8f0;border-radius:8px;padding:8px;margin-top:10px}.abbr-para{cursor:help;border-bottom:1px dotted #7c3aed}</style></head><body>
 <div class="sidebar" id="sidebar"><div style="padding:20px;border-bottom:1px solid rgba(255,255,255,.1)"><div style="font-family:Exo;font-weight:800;font-size:20px;">GOBEX <span style="color:#FFB81C;">MENSUEL</span></div><div style="font-size:10px;letter-spacing:1.2px;color:rgba(255,255,255,.5)">DÉCLARATIONS • CGI 2026</div><div class="mt-2"><span class="badge" style="background:#7c3aed">MENSUEL</span> <span class="badge bg-warning text-dark">6 moteurs</span> <span class="badge bg-info text-dark">FEC → mois</span></div><small style="color:rgba(255,255,255,.5)">RB/ABC/15A3265 • CGI 2026</small></div>
 <div style="padding:12px 20px;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.45);font-weight:700">WORKFLOW</div>
 <a href="index.html" class="menu-item" style="display:flex;gap:12px;padding:10px 20px;color:rgba(255,255,255,.7);text-decoration:none"><i class="bi bi-diagram-3"></i> Hub</a>
@@ -15,7 +16,7 @@
 <div class="alert small d-flex align-items-start gap-2" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e">
   <i class="bi bi-info-circle mt-1" style="color:#d97706"></i>
   <div>
-    <strong>Précisions 2026-10-03 appliquées en mensuel :</strong> (1) CA annuel ≤50M → TPS d’office, TVA mensuelle non assujettie toute l’année ; (2) CA mensuel constaté FEC (70* du mois) fait foi vs CA dossier ; (3) IS/IBA exclusifs — société IS → associés IBA/IRCM perso ; (4) comptes État 44*/443/445/447/441 prioritaires pour détection mensuelle. <span class="badge bg-light text-dark border" style="font-size:9px">RuleBase 2026.29.0-Mensuel</span>
+    <strong>Précisions 2026-10-03 appliquées en mensuel :</strong> (1) CA annuel ≤50M → TPS d’office, TVA mensuelle non assujettie toute l’année ; (2) CA mensuel constaté FEC (70* du mois) fait foi vs CA dossier ; (3) IS/IBA exclusifs — société IS → associés IBA/IRCM perso ; (4) comptes État 44*/443/445/447/441 prioritaires pour détection mensuelle. <span class="badge bg-light text-dark border" style="font-size:9px">RuleBase 2026.30.0-Mensuel</span>
     <br><small><strong>Source mensuelle :</strong> FEC → <code>DateEcriture AAAAMMJJ → YYYY-MM</code> (groupBy). Si pas de FEC mensuel → table 12 mois manuelle.</small>
   </div>
 </div>
@@ -132,13 +133,89 @@
 </div>
 </div>
 
+
+<!-- ===== AUTRES DÉCLARATIONS MENSUELLES — NON COURANTES — TABLEAU ISOLÉ ===== -->
+<div class="stat-card" style="border:2px dashed #7c3aed;background:linear-gradient(135deg,#ffffff 0%, #f5f3ff 100%);position:relative;overflow:hidden">
+  <div style="position:absolute;top:0;right:0;background:#7c3aed;color:#fff;padding:4px 12px;border-radius:0 16px 0 12px;font-size:10px;font-weight:800;letter-spacing:0.8px"><i class="bi bi-layers me-1"></i>ISOLÉ • NON COURANT</div>
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+    <div>
+      <h6 class="mb-1" style="font-family:Exo;font-weight:800;color:#0A2F5E"><i class="bi bi-collection me-2" style="color:#7c3aed"></i>Autres déclarations mensuelles — non courantes</h6>
+      <p class="small mb-1" style="color:#5b21b6">Tableau <strong>isolé</strong> des déclarations <strong>mensuelles mais non courantes</strong> (secteurs spécifiques). À remplir <strong>uniquement si activité concernée</strong>. Totals <strong>séparés</strong> du récap courant — n’impacte pas TVA/AIB/ITS/VPS/IRCM/IRF.</p>
+      <div class="d-flex gap-1 flex-wrap">
+        <span class="badge" style="background:#7c3aed;color:#fff">10 déclarations</span>
+        <span class="badge bg-light text-dark border">Art.128 à 145 • TAFA 293-1</span>
+        <span class="badge bg-light text-dark border">10 N+1</span>
+        <span class="badge bg-warning text-dark"><i class="bi bi-shield-check me-1"></i>Isolé</span>
+      </div>
+    </div>
+    <div class="d-flex gap-2 align-items-center flex-wrap">
+      <button class="btn btn-sm" style="background:#7c3aed;color:#fff" onclick="toggleAutresCollapse()"><i class="bi bi-eye me-1"></i><span id="btnAutresToggleLbl">Afficher le tableau</span></button>
+      <button class="btn btn-sm btn-light" onclick="exportAutresCSV()"><i class="bi bi-download me-1"></i>CSV isolé</button>
+      <button class="btn btn-sm btn-outline-dark" onclick="exportAutresJSON()"><i class="bi bi-code me-1"></i>JSON</button>
+    </div>
+  </div>
+
+  <div class="alert small mt-3 mb-2 d-flex gap-2" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e">
+    <i class="bi bi-info-circle mt-1"></i>
+    <div>
+      <strong>Usage :</strong> cochez <em>Concerné</em> si votre dossier exerce l’activité (ex: hôtel → Taxe de séjour, brasserie → accise, régie → pub). Seules les lignes cochées sont comptées. Saisie <strong>mensuelle</strong> (12 colonnes) ou <strong>mois sélectionné</strong> (<span id="autresMoisLabel" style="font-weight:800;color:#7c3aed">2026-01</span>). Totaux isolés en violet.
+      <br><small><strong>Sources CGI 2026 :</strong> L2 — Echéancier général exhaustif — 10 lignes mensuelles non courantes (hors TVA/ITS/VPS/IRCM/IRF/AIB).</small>
+    </div>
+  </div>
+
+  <div id="autresCollapse" class="d-none">
+    <!-- Référence rapide -->
+    <div class="table-responsive" style="max-height:320px;overflow:auto;border:1px solid #eef2f6;border-radius:10px">
+      <table class="table table-sm mb-0" style="font-size:11px" id="tableAutresRef">
+        <thead style="position:sticky;top:0;z-index:2;background:#0A2F5E;color:#FFB81C">
+          <tr>
+            <th style="min-width:36px;text-align:center"><input type="checkbox" id="checkAllAutres" onchange="toggleAllAutres(this.checked)" title="Tout cocher"></th>
+            <th style="min-width:200px">Déclaration (non courante)</th>
+            <th style="min-width:120px">Article CGI</th>
+            <th style="min-width:80px">Échéance</th>
+            <th style="min-width:220px">Assiette / Taux — Base mensuelle</th>
+            <th style="min-width:160px">Secteur concerné</th>
+            <th style="min-width:110px">Mois <span id="autresMoisCol">2026-01</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbodyAutresRef"></tbody>
+      </table>
+    </div>
+    <small class="text-muted" style="font-size:10px"><i class="bi bi-lightbulb me-1"></i>Coche = déclaration due ce mois. Montant du mois sélectionné uniquement ; le 12-mois ci-dessous fait la somme.</small>
+
+    <!-- Matrice 12 mois éditable — isolée -->
+    <h6 class="mt-3" style="font-family:Exo;font-weight:800;font-size:12px;color:#5b21b6"><i class="bi bi-calendar3-range me-1"></i>Matrice 12 mois — montants dus (F) — isolé</h6>
+    <div class="table-responsive" style="border:1px solid #ddd6fe;border-radius:10px;overflow:auto">
+      <table class="table table-sm mb-0 table-mensuelle" id="tableAutresMatrice" style="font-size:10px">
+        <thead><tr id="theadAutresMatrice"></tr></thead>
+        <tbody id="tbodyAutresMatrice"></tbody>
+        <tfoot style="background:#7c3aed;color:#fff;font-weight:700"><tr id="tfootAutresMatrice"></tr></tfoot>
+      </table>
+    </div>
+    <div class="d-flex gap-2 mt-2 flex-wrap">
+      <button class="btn btn-sm" style="background:#7c3aed;color:#fff" onclick="genererPDFAutresMois()"><i class="bi bi-file-earmark-pdf me-1"></i>PDF mois <span class="autresMoisLabel2">2026-01</span></button>
+      <button class="btn btn-sm btn-light" onclick="effacerAutresMois()"><i class="bi bi-eraser me-1"></i>Effacer mois sélectionné</button>
+      <button class="btn btn-sm btn-outline-danger" onclick="effacerTousAutres()"><i class="bi bi-trash me-1"></i>Tout effacer (isolé)</button>
+      <span class="badge ms-auto" style="background:#f5f3ff;color:#5b21b6;border:1px solid #ddd6fe" id="autresTotalBadge">Total isolé 2026 : 0 F</span>
+    </div>
+
+    <div class="legende-para mt-2">
+      <strong>Légende :</strong> <span class="abbr-para" title="Article du CGI">Art.</span> = Article CGI Bénin 2026 (Loi 2021-15 + LF 2025-22) • <em>10 N+1</em> = 10 du mois suivant • <em>Source isolée</em> = ne s’agrège pas au récap courant (M1-M6). Traçabilité : chaque ligne = <code>déclaration → article → mois → montant → source manuel/FEC</code>. Offline.
+    </div>
+  </div>
+
+  <!-- Zone printable isolée -->
+  <div id="autresPrintable" class="d-none"></div>
+</div>
+
 <div class="text-center small text-muted mt-3" style="font-size:10px">
-  GOBEX • RB/ABC/15A3265 • IFU 1201502844807 • Tel +229 97 739 046 • RuleBase 2026.29.0-Mensuel • Offline • <a href="../docs/declarations-mensuelles-2026.json" target="_blank">JSON mensuel</a> • <a href="../docs/RuleBase-README.md" target="_blank">MAJ LF ?</a>
+
+  GOBEX • RB/ABC/15A3265 • IFU 1201502844807 • Tel +229 97 739 046 • RuleBase 2026.30.0-Mensuel • Offline • <a href="../docs/declarations-mensuelles-2026.json" target="_blank">JSON mensuel</a> • <a href="../docs/RuleBase-README.md" target="_blank">MAJ LF ?</a>
 </div>
 
 </div>
 
-<script id="embeddedMensuel" type="application/json">{"version":"2026.29.0-Mensuel","annee":2026,"declarations_mensuelles":[{"id":"decl_tva_mensuelle","libelle":"Déclaration TVA mensuelle","article":"Art.223-263 + Art.241 18% + Art.248-249 prorata","periodicite":"mensuelle","echeance":"15 N+1","formule":"TVA_due_M = TVA_collectee_M - TVA_deductible_M × prorata_M"},{"id":"decl_aib_mensuelle","libelle":"AIB mensuel","article":"Art.130-134","echeance":"10 N+1","formule":"AIB_M = achats×1%/3%/5%"},{"id":"decl_its_vps_mensuelle","libelle":"ITS + VPS mensuels","article":"Art.119-129 + Art.191-195","echeance":"10 N+1","formule":"ITS barème 0-30% + VPS 4%/2%"},{"id":"decl_ircm_mensuelle","libelle":"IRCM mensuel","article":"Art.68-93","echeance":"10 N+1","formule":"IRCM = dividendes×5%/10%/15%"},{"id":"decl_irf_mensuelle","libelle":"IRF mensuel","article":"Art.101-107","echeance":"10 N+1","formule":"IRF = loyers×12% +4000 ORTB"},{"id":"decl_retenues_mensuelle","libelle":"Déclaration unique retenues","article":"Art.130-144 groupé","echeance":"10 N+1","formule":"Σ retenues mensuelles"}]}</script>
+<script id="embeddedMensuel" type="application/json">{"version": "2026.30.0-Mensuel", "annee": 2026, "declarations_mensuelles": [{"id": "decl_tva_mensuelle", "libelle": "Déclaration TVA mensuelle", "article": "Art.223-263 + Art.241 18% + Art.248-249 prorata", "periodicite": "mensuelle", "echeance": "15 du mois N+1 (10 si retenue source)", "base": "Mois M : CA HT total, CA taxable HT, CA export, TVA collectée (443), TVA achats déductibles (445), exclusions Art.247", "formule": "TVA_due_M = TVA_collectee_M (443) - TVA_deductible_M(445) × prorata_M ; prorata_M = ceil((CA_taxable + export)/CA_total ×100) hors Art.249 paragraphe 2 ; si affectation exclusive → 100% ou 0% (Art.248)", "sources": ["FEC 443/445/70*", "Balance 443/445", "Facturier MECeF"], "champs_mensuels": ["ca_total_ht", "ca_taxable_ht", "ca_export_ht", "tva_collectee", "tva_achats", "exclusions_247", "affectation"], "taux": 0.18, "sortie": "PDF déclaration TVA mensuelle + CSV récap"}, {"id": "decl_aib_mensuelle", "libelle": "AIB mensuel (achats/imports/prestations)", "article": "Art.130-134", "periodicite": "mensuelle", "echeance": "10 du mois N+1, imputation 31/12", "base": "Mois M : achats HT avec IFU (1%), prestations HT avec IFU (3%), opérations sans IFU (5%)", "formule": "AIB_M = Σ achats_avecIFU_M×1% + prestations_avecIFU_M×3% + sansIFU_M×5% (base douane/prix TTC hors TVA)", "sources": ["FEC 60*/61*/62* + 447/443", "Balance 60*", "Registre achats"], "champs_mensuels": ["achats_avec_ifu", "prestations_avec_ifu", "sans_ifu"], "taux": {"avec_ifu_achat": 0.01, "avec_ifu_prestation": 0.03, "sans_ifu": 0.05}, "sortie": "PDF AIB"}, {"id": "decl_its_vps_mensuelle", "libelle": "ITS + VPS mensuels (salaires)", "article": "Art.119-129 (ITS) + Art.191-195 (VPS)", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Mois M : salaires bruts par salarié (ou masse salariale), effectif", "formule": "ITS_M = Σ barème Art.125 par salarié (0-60k 0%, 60-150k 10%, 150-250k 15%, 250-500k 19%, >500k 30%) + 1000F mars/3000F juin si >60k ; VPS_M = base ITS ×4% (2% enseignement privé Art.194)", "sources": ["FEC 641/661/664", "Livre paie", "Balance 64*"], "champs_mensuels": ["salaires_bruts_list", "masse_salariale", "effectif", "enseignement_prive"], "sortie": "PDF ITS/VPS + annexe par salarié"}, {"id": "decl_ircm_mensuelle", "libelle": "IRCM mensuel (dividendes, intérêts)", "article": "Art.68-93", "periodicite": "mensuelle (mois de distribution)", "echeance": "10 du mois N+1", "base": "Mois M : dividendes, intérêts, jetons, avances dirigeants", "formule": "IRCM_M = Σ revenus mobiliers × taux (5% titres État, 10% dividendes, 15% autres, obligations 6%/3%/0%/5% Art.86-89)", "sources": ["FEC 76*/761/764", "Registre distributions"], "champs_mensuels": ["dividendes", "interets", "jetons", "category"], "sortie": "PDF IRCM"}, {"id": "decl_irf_mensuelle", "libelle": "IRF / Retenue locative mensuelle", "article": "Art.101-107", "periodicite": "mensuelle", "echeance": "10 du mois N+1 (4 acomptes Trésor)", "base": "Mois M : loyers bruts encaissés (bâtis/non bâtis, meublée), dépenses", "formule": "IRF_M = (loyers_bruts - dépenses) ×12% + 4000 ORTB (10% si IBA/IS) ; retenue locataire 12% si >3 ans", "sources": ["FEC 75*/752/758", "Contrats baux"], "champs_mensuels": ["loyers_bruts", "depenses", "duree_bail"], "sortie": "PDF IRF"}, {"id": "decl_retenues_mensuelle", "libelle": "Déclaration mensuelle unique des retenues (ITS/VPS/AIB/IRCM/IRF + 10%/20%)", "article": "Art.130-144 groupé + Art.134/140/143", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Mois M : agrégat M1-M6 + prélèvements 10% non connus, 20% non-résidents, 0,30F/L hydro", "formule": "Total_retenues_M = Σ (AIB_M + ITS_M + VPS_M + IRCM_M + IRF_M + 10%_M + 20%_M + hydro_M)", "sources": ["Agrégat des 6 moteurs mensuels"], "champs_mensuels": ["total_retenues"], "sortie": "PDF déclaration unique officielle (reproduction) + CSV"}], "declarations_mensuelles_non_courantes": [{"id": "tafa", "libelle": "TAFA — Taxe sur Activités Financières et Assurances", "article": "Art.293-1 à 293-5", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Intérêts, commissions, primes assurance, agios (banques, IMF, assurances)", "taux": "10% à 15% selon nature (Art.293-3) — exonérations Art.293-2", "secteur": "Banques, assurances, IMF, établissements financiers", "source_cgi": "L2 — T1 — CA — TAFA (125)", "non_courant": true}, {"id": "taxe_jeux", "libelle": "Taxe sur les Jeux de Hasard", "article": "Art.128", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Produit brut des jeux (loterie, paris, casino)", "taux": "Selon catégorie (fixe + proportionnel, barème Art.128)", "secteur": "Opérateurs jeux, loterie nationale, casinos", "source_cgi": "L2 — T1 — CA — Jeux (128)", "non_courant": true}, {"id": "taxe_com", "libelle": "Contribution sur Vente de Services de Communications", "article": "Art.129", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Chiffre d'affaires télécom / services communications électroniques", "taux": "5% (Art.129) — assise CA HT communications", "secteur": "Opérateurs GSM, FAI, télécoms", "source_cgi": "L2 — T1 — CA — Com (129)", "non_courant": true}, {"id": "taxe_accise", "libelle": "Taxe sur Produits Spécifiques (accise)", "article": "Art.131", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Boissons alcoolisées, tabacs, produits pétroliers, cosmétiques de luxe (quantités/valeurs)", "taux": "Barème spécifique (forfaitaire + ad valorem Art.131)", "secteur": "Brasseries, importateurs alcools/tabacs, pétroliers", "source_cgi": "L2 — T2 — Accises — Accise (131)", "non_courant": true}, {"id": "taxe_sejour", "libelle": "Taxe de Séjour", "article": "Art.135", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Nuitée × catégorie hôtel (1* à 5*, résidence, auberge)", "taux": "500F à 2 000F par nuitée selon classement (Art.135 bis)", "secteur": "Hôtels, résidences, maisons d'hôtes, campements", "source_cgi": "L2 — T3 — Autres — Séjour (135)", "non_courant": true}, {"id": "cdl", "libelle": "Contribution au Développement Local (CDL)", "article": "Art.136", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "CA HT extrait / commercialisation produits locaux (selon délibération communale Art.136)", "taux": "Forfait ou proportionnel selon commune (barème communal)", "secteur": "Carrières, exploitants ressources locales, producteurs", "source_cgi": "L2 — T3 — Autres — CDL (136)", "non_courant": true}, {"id": "taxe_spectacles", "libelle": "Taxe sur Spectacles, Jeux et Divertissements", "article": "Art.141", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Recettes spectacles, concerts, cinéma, manifestations, jeux", "taux": "5% à 15% des recettes brutes (Art.141) + droits fixes", "secteur": "Organisateurs spectacles, cinémas, parcs, promoteurs", "source_cgi": "L2 — T3 — Autres — Spectacles (141)", "non_courant": true}, {"id": "taxe_boissons", "libelle": "Taxe sur Vente de Boissons Fermentées de Préparation Artisanale", "article": "Art.142", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Volume / CA boissons fermentées artisanales (tchoukoutou, sodabi, etc.)", "taux": "Barème communal (forfait mensuel ou % Art.142)", "secteur": "Producteurs, débits artisanaux, bars traditionnels", "source_cgi": "L2 — T3 — Autres — Boissons (142)", "non_courant": true}, {"id": "taxe_pub", "libelle": "Taxe sur la Publicité", "article": "Art.143", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Surface affichage, enseignes, écrans, distribution prospectus", "taux": "2 000F à 25 000F /m²/an selon support et zone (Art.143)", "secteur": "Régies pub, annonceurs avec enseignes, panneaux", "source_cgi": "L2 — T3 — Autres — Pub (143)", "non_courant": true}, {"id": "taxe_energie", "libelle": "Taxe sur Consommation d'Électricité et d'Eau", "article": "Art.145", "periodicite": "mensuelle", "echeance": "10 du mois N+1 (retenue à la source SBEE/SONEB)", "base": "kWh consommés / m³ eau — retenue par distributeur", "taux": "Barème kWh (Art.145) : 5F à 50F/kWh selon tranche + eau", "secteur": "Distributeurs SBEE/SONEB, gros consommateurs (retenue)", "source_cgi": "L2 — T3 — Autres — Énergie (145)", "non_courant": true}]}</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -158,7 +235,7 @@ function initMensuelDossiers(){ensureDemoDossiers();const sel=document.getElemen
 function onDossierMensuelChange(){selDossierMensuel=document.getElementById('selDossierMensuel').value;const d=getDossiers().find(x=>x.id===selDossierMensuel);const c=getClients().find(x=>x.name===d?.clientName);document.getElementById('dossierMensuelInfo').innerHTML=d?`<strong>${d.clientName}</strong> <span class="badge bg-light text-dark border">${d.ref}</span><br><small>CA annuel: ${c?.ca? (c.ca/1e6).toFixed(1)+'M':'—'} • ${c?.type||''} ${c?.catPersonne||''}</small>`:'Sélectionnez un dossier.';updateRegimeBadge();renderMensuelTable();renderDeclarationsMois()}
 function prevMois(){const d=new Date(moisActif+'-01');d.setMonth(d.getMonth()-1);moisActif=d.toISOString().slice(0,7);document.getElementById('moisInput').value=moisActif;onMoisChange()}
 function nextMois(){const d=new Date(moisActif+'-01');d.setMonth(d.getMonth()+1);moisActif=d.toISOString().slice(0,7);document.getElementById('moisInput').value=moisActif;onMoisChange()}
-function onMoisChange(){moisActif=document.getElementById('moisInput').value||'2026-01';document.getElementById('declMoisLabel').textContent=moisActif;const echeance=new Date(moisActif+'-01');echeance.setMonth(echeance.getMonth()+1);echeance.setDate(15);document.getElementById('declMoisEcheance').textContent=echeance.toLocaleDateString('fr-FR');document.getElementById('moisEcheanceInfo').innerHTML=`Échéance : <strong>15/${String(echeance.getMonth()+1).padStart(2,'0')}/${echeance.getFullYear()}</strong> (TVA) / <strong>10/${String(echeance.getMonth()+1).padStart(2,'0')}</strong> (retenues) — Mois <strong>${moisActif}</strong>`;highlightMoisPills();renderDeclarationsMois();updateRegimeBadge()}
+function onMoisChange(){moisActif=document.getElementById('moisInput').value||'2026-01';document.getElementById('declMoisLabel').textContent=moisActif;const echeance=new Date(moisActif+'-01');echeance.setMonth(echeance.getMonth()+1);echeance.setDate(15);document.getElementById('declMoisEcheance').textContent=echeance.toLocaleDateString('fr-FR');document.getElementById('moisEcheanceInfo').innerHTML=`Échéance : <strong>15/${String(echeance.getMonth()+1).padStart(2,'0')}/${echeance.getFullYear()}</strong> (TVA) / <strong>10/${String(echeance.getMonth()+1).padStart(2,'0')}</strong> (retenues) — Mois <strong>${moisActif}</strong>`;highlightMoisPills();renderDeclarationsMois();updateRegimeBadge();try{updateAutresMoisLabel(); renderAutresRef(); renderAutresMatrice();}catch(e){}}
 function updateRegimeBadge(){const caAnnuel=Object.values(mensuelData).reduce((s,m)=>s+(m.ca||0),0) || (getClients().find(c=>c.name===getDossiers().find(d=>d.id===selDossierMensuel)?.clientName)?.ca||0);const isTPS=caAnnuel>0 && caAnnuel<=50000000;const el=document.getElementById('regimeMensuelBadge');if(!el)return;if(caAnnuel===0) el.innerHTML='<span class="badge bg-light text-dark border">CA annuel —</span>'; else if(isTPS) el.innerHTML=`<span class="badge bg-success">TPS d'office ≤50M — TVA mensuelle non assujettie toute l'année (Art.223)</span> <small style="font-size:10px;color:#065f46">CA annuel ${(caAnnuel/1e6).toFixed(1)}M</small>`; else el.innerHTML=`<span class="badge" style="background:#0A2F5E;color:#FFB81C">Hors TPS >50M — IS/IBA + TVA mensuelle due</span> <small style="font-size:10px">CA ${(caAnnuel/1e6).toFixed(1)}M</small>`;}
 
 // ===== Mensuel Data Init (12 mois) =====
@@ -218,7 +295,172 @@ if(selDossierMensuel){const cli=getClients().find(c=>c.name===getDossiers().find
 // ===== Récap annuel =====
 function renderRecap(){const tbody=document.getElementById('tbodyRecap');tbody.innerHTML='';let totTva=0,totAib=0,totIts=0,totVps=0,totIrcm=0,totIrf=0;for(let i=1;i<=12;i++){const m=`2026-${String(i).padStart(2,'0')}`;const tva=calcTvaMensuel(m);const aib=calcAibMensuel(m);const itsVps=calcItsMensuel(m);const ircm=calcIrcmMensuel(m);const irf=calcIrfMensuel(m);const isTPS=isRegimeTPSAnnuel();const tvaDue=isTPS?0:tva.due;totTva+=tvaDue;totAib+=aib;totIts+=itsVps.its;totVps+=itsVps.vps;totIrcm+=ircm;totIrf+=irf;tbody.innerHTML+=`<tr><td>${m}</td><td>${formatF(tvaDue)}</td><td>${formatF(aib)}</td><td>${formatF(itsVps.its)}</td><td>${formatF(itsVps.vps)}</td><td>${formatF(ircm)}</td><td>${formatF(irf)}</td><td><strong>${formatF(aib+itsVps.its+itsVps.vps+ircm+irf)}</strong></td></tr>`}document.getElementById('totalTva').textContent=formatF(totTva);document.getElementById('totalAib').textContent=formatF(totAib);document.getElementById('totalIts').textContent=formatF(totIts);document.getElementById('totalVps').textContent=formatF(totVps);document.getElementById('totalIrcm').textContent=formatF(totIrcm);document.getElementById('totalIrf').textContent=formatF(totIrf);document.getElementById('totalRet').textContent=formatF(totAib+totIts+totVps+totIrcm+totIrf)}
 
+
+// ===== AUTRES DÉCLARATIONS MENSUELLES NON COURANTES — ISOLÉ =====
+let autresData = {}; // id -> { '2026-01': 0, ..., applicable: bool }
+let autresCollapseVisible = false;
+function initAutresData(){
+  try{
+    const j = JSON.parse(document.getElementById('embeddedMensuel').textContent);
+    const list = j.declarations_mensuelles_non_courantes || [];
+    list.forEach(item=>{
+      if(!autresData[item.id]) autresData[item.id]={applicable:false, source:'manuel'};
+      for(let i=1;i<=12;i++){const m=`2026-${String(i).padStart(2,'0')}`; if(autresData[item.id][m]==null) autresData[item.id][m]=0;}
+    });
+  }catch(e){console.error('initAutresData',e)}
+  renderAutresRef();
+  renderAutresMatrice();
+  updateAutresMoisLabel();
+}
+function updateAutresMoisLabel(){
+  document.querySelectorAll('#autresMoisLabel, #autresMoisCol, .autresMoisLabel2').forEach(el=>{el.textContent=moisActif});
+}
+function toggleAutresCollapse(){
+  autresCollapseVisible=!autresCollapseVisible;
+  const el=document.getElementById('autresCollapse');
+  const lbl=document.getElementById('btnAutresToggleLbl');
+  if(autresCollapseVisible){el.classList.remove('d-none'); lbl.textContent='Masquer le tableau'; updateAutresMoisLabel(); renderAutresRef(); renderAutresMatrice();}
+  else {el.classList.add('d-none'); lbl.textContent='Afficher le tableau';}
+}
+function renderAutresRef(){
+  const tbody=document.getElementById('tbodyAutresRef');
+  if(!tbody) return;
+  let j; try{ j=JSON.parse(document.getElementById('embeddedMensuel').textContent)}catch(e){return}
+  const list=j.declarations_mensuelles_non_courantes||[];
+  tbody.innerHTML='';
+  list.forEach(it=>{
+    const d=autresData[it.id]||{};
+    const val=d[moisActif]||0;
+    const chk=d.applicable?'checked':'';
+    const rowClass=d.applicable?'style="background:#f5f3ff"':'style="opacity:0.65"';
+    tbody.innerHTML+=`<tr ${rowClass}>
+      <td style="text-align:center"><input type="checkbox" ${chk} onchange="toggleAutreApplicable('${it.id}', this.checked)"></td>
+      <td><strong style="font-size:11px;color:#0A2F5E">${it.libelle}</strong><br><span class="badge bg-light text-dark border" style="font-size:8px">${it.id}</span></td>
+      <td><span class="badge-rule" style="font-size:9px">${it.article}</span></td>
+      <td><span class="badge bg-light text-dark border" style="font-size:9px">${it.echeance}</span></td>
+      <td style="font-size:10px;color:#4b5563">${it.taux}<br><small style="color:#6b7280">${it.base}</small></td>
+      <td><small style="font-size:10px">${it.secteur}</small></td>
+      <td><input type="number" value="${val||''}" placeholder="0" style="font-size:11px;padding:4px 6px;height:30px;border:1px solid #ddd6fe;border-radius:6px;width:110px" onchange="updateAutreRefMois('${it.id}', this.value)" ${d.applicable?'':'disabled title=Cochez Concerné d’abord'}></td>
+    </tr>`;
+  });
+}
+function renderAutresMatrice(){
+  const thead=document.getElementById('theadAutresMatrice');
+  const tbody=document.getElementById('tbodyAutresMatrice');
+  const tfoot=document.getElementById('tfootAutresMatrice');
+  if(!thead||!tbody) return;
+  let j; try{ j=JSON.parse(document.getElementById('embeddedMensuel').textContent)}catch(e){return}
+  const list=j.declarations_mensuelles_non_courantes||[];
+  // header
+  let h='<th style="min-width:180px;background:#f5f3ff;position:sticky;left:0;z-index:2">Déclaration</th>';
+  for(let i=1;i<=12;i++){const m=`2026-${String(i).padStart(2,'0')}`; const active=m===moisActif?'style="background:#7c3aed;color:#fff"':''; h+=`<th ${active}>${m.slice(5)}</th>`}
+  h+='<th style="background:#0A2F5E;color:#FFB81C">Total</th>';
+  thead.innerHTML=h;
+  tbody.innerHTML='';
+  // body rows
+  list.forEach(it=>{
+    const d=autresData[it.id]||{};
+    let tot=0;
+    let row=`<tr ${d.applicable?'':'style="opacity:0.5"'}><td style="min-width:180px;background:#fff;position:sticky;left:0;z-index:1;border-right:1px solid #eef2f6"><span style="font-weight:700;font-size:10px;color:#0A2F5E">${it.libelle.split('—')[0].trim()}</span> <span class="badge bg-light text-dark border" style="font-size:8px">${it.article}</span> ${d.applicable?'<span class="badge" style="background:#7c3aed;color:#fff;font-size:8px">●</span>':''}</td>`;
+    for(let i=1;i<=12;i++){const m=`2026-${String(i).padStart(2,'0')}`; const v=d[m]||0; tot+=v; row+=`<td><input type="number" value="${v||''}" placeholder="0" onchange="updateAutreCell('${it.id}','${m}',this.value)" ${d.applicable?'':'disabled'}></td>`}
+    row+=`<td style="font-weight:700;background:#f5f3ff;text-align:right">${formatF(tot)}</td></tr>`;
+    tbody.innerHTML+=row;
+  });
+  // footer totals per month
+  let foot='<td style="text-align:right">Total mois</td>';
+  let grand=0;
+  for(let i=1;i<=12;i++){const m=`2026-${String(i).padStart(2,'0')}`; let sum=0; list.forEach(it=>{const d=autresData[it.id]||{}; if(d.applicable) sum+= (d[m]||0);}); grand+=sum; const active=m===moisActif?'style="background:#fff;color:#7c3aed"':''; foot+=`<td ${active} style="text-align:right">${formatF(sum)}</td>`}
+  foot+=`<td style="text-align:right">${formatF(grand)}</td>`;
+  tfoot.innerHTML=foot;
+  const badge=document.getElementById('autresTotalBadge');
+  if(badge) badge.textContent=`Total isolé 2026 : ${formatF(grand)} F (10 déclarations non courantes cochées)`;
+}
+function updateAutreRefMois(id, val){
+  const v=parseInt(val)||0;
+  if(!autresData[id]) autresData[id]={applicable:true};
+  autresData[id][moisActif]=v;
+  if(v>0) autresData[id].applicable=true;
+  renderAutresRef();
+  renderAutresMatrice();
+}
+function updateAutreCell(id, mois, val){
+  const v=parseInt(val)||0;
+  if(!autresData[id]) autresData[id]={applicable:true};
+  autresData[id][mois]=v;
+  if(v>0) autresData[id].applicable=true;
+  // update ref if same mois
+  if(mois===moisActif) renderAutresRef();
+  renderAutresMatrice();
+}
+function toggleAutreApplicable(id, checked){
+  if(!autresData[id]) autresData[id]={};
+  autresData[id].applicable=checked;
+  renderAutresRef();
+  renderAutresMatrice();
+}
+function toggleAllAutres(checked){
+  Object.keys(autresData).forEach(id=>autresData[id].applicable=checked);
+  renderAutresRef();
+  renderAutresMatrice();
+}
+function effacerAutresMois(){
+  Object.keys(autresData).forEach(id=>{autresData[id][moisActif]=0});
+  renderAutresRef(); renderAutresMatrice(); toast('Isolé','Mois '+moisActif+' effacé (non courant)','warning')
+}
+function effacerTousAutres(){
+  if(!confirm('Effacer tous les montants non courants (10 déclarations × 12 mois) ?')) return;
+  Object.keys(autresData).forEach(id=>{for(let i=1;i<=12;i++){const m=`2026-${String(i).padStart(2,'0')}`; autresData[id][m]=0;} autresData[id].applicable=false;});
+  renderAutresRef(); renderAutresMatrice(); toast('Isolé','Tableau non courant réinitialisé','warning')
+}
+function exportAutresCSV(){
+  let j; try{ j=JSON.parse(document.getElementById('embeddedMensuel').textContent)}catch(e){return}
+  const list=j.declarations_mensuelles_non_courantes||[];
+  let csv='Declaration,Article,Echeance,Applicable,'+Array.from({length:12},(_,i)=>`2026-${String(i+1).padStart(2,'0')}`).join(',')+',Total\n';
+  list.forEach(it=>{
+    const d=autresData[it.id]||{};
+    let tot=0; let cols=[]; for(let i=1;i<=12;i++){const m=`2026-${String(i).padStart(2,'0')}`; const v=d[m]||0; tot+=v; cols.push(v);}
+    csv+=`"${it.libelle}","${it.article}","${it.echeance}",${d.applicable?'Oui':'Non'},${cols.join(',')},${tot}\n`;
+  });
+  const blob=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`Autres-declarations-mensuelles-non-courantes-2026-isole-${selDossierMensuel||'GOBEX'}.csv`; a.click(); toast('CSV isolé','Export 10×12 non courant','success')
+}
+function exportAutresJSON(){
+  const blob=new Blob([JSON.stringify(autresData,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='autres-mensuel-non-courant-2026.json'; a.click();
+}
+function genererPDFAutresMois(){
+  let j; try{ j=JSON.parse(document.getElementById('embeddedMensuel').textContent)}catch(e){return}
+  const list=j.declarations_mensuelles_non_courantes||[];
+  const cli=getClients().find(c=>c.name===getDossiers().find(x=>x.id===selDossierMensuel)?.clientName);
+  let rows=list.filter(it=> (autresData[it.id]||{}).applicable).map(it=>{
+    const d=autresData[it.id]||{}; const v=d[moisActif]||0;
+    return `<tr><td style="padding:6px;border:1px solid #e2e8f0">${it.libelle}<br><small style="color:#64748b">${it.article} • ${it.secteur}</small></td><td style="padding:6px;border:1px solid #e2e8f0;text-align:center">${it.echeance}</td><td style="padding:6px;border:1px solid #e2e8f0;text-align:right">${formatF(v)} F</td><td style="padding:6px;border:1px solid #e2e8f0;font-size:10px">${it.base}<br><small>${it.taux}</small></td></tr>`;
+  }).join('');
+  if(!rows) rows='<tr><td colspan="4" style="padding:12px;text-align:center;color:#64748b">Aucune déclaration non courante cochée pour '+moisActif+'</td></tr>';
+  let tot=0; list.forEach(it=>{if((autresData[it.id]||{}).applicable) tot+= (autresData[it.id][moisActif]||0)});
+  const html=`<div style="font-family:Roboto;padding:16px;background:#fff">
+    <div style="display:flex;justify-content:space-between;border-bottom:3px solid #7c3aed;padding-bottom:10px;margin-bottom:12px">
+      <div><div style="font-family:Exo;font-weight:800;font-size:16px;color:#0A2F5E">GOBEX <span style="color:#7c3aed">— Autres déclarations mensuelles (non courantes)</span></div><div style="font-size:11px;color:#64748b">Tableau isolé • Mois ${moisActif} • Échéance 10 N+1 • CGI 2026 Art.128-145 + 293-1</div><div style="font-size:10px;color:#64748b">Dossier ${selDossierMensuel||'—'} • ${cli?.name||''} • IFU ${cli?.ifu||'—'}</div></div>
+      <div style="text-align:right"><span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:50px;font-size:10px">ISOLÉ • NON COURANT</span><br><small style="font-size:9px;color:#64748b">RuleBase ${document.getElementById('ruleBadge')?.textContent||'2026.30.0'}</small></div>
+    </div>
+    <h6 style="font-family:Exo;font-weight:800;text-align:center;color:#0A2F5E">Autres déclarations mensuelles — ${moisActif} — non courantes (isolé)</h6>
+    <p style="font-size:10px;color:#5b21b6;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;padding:8px">Ce tableau est <strong>isolé</strong> des déclarations courantes (TVA/AIB/ITS/VPS/IRCM/IRF). Il recense uniquement les taxes sectorielles mensuelles (TAFA, jeux, télécoms, accise, séjour, CDL, spectacles, boissons, pub, énergie) dues <strong>seulement si activité concernée</strong>.</p>
+    <table style="width:100%;font-size:11px;border-collapse:collapse;margin-top:8px"><thead style="background:#0A2F5E;color:#FFB81C"><tr><th style="padding:6px;border:1px solid #0A2F5E">Déclaration</th><th style="padding:6px;border:1px solid #0A2F5E">Échéance</th><th style="padding:6px;border:1px solid #0A2F5E">Montant ${moisActif}</th><th style="padding:6px;border:1px solid #0A2F5E">Assiette</th></tr></thead><tbody>${rows}</tbody><tfoot style="background:#7c3aed;color:#fff;font-weight:700"><tr><td colspan="2" style="padding:6px;border:1px solid #7c3aed;text-align:right">TOTAL ISOLÉ ${moisActif}</td><td style="padding:6px;border:1px solid #7c3aed;text-align:right">${formatF(tot)} F</td><td style="padding:6px;border:1px solid #7c3aed"></td></tr></tfoot></table>
+    <div style="margin-top:10px;padding:8px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:10px"><strong>Traçabilité isolée :</strong> ${moisActif} — 10 déclarations Art.128-145 + 293-1 — Source manuel/FEC — Totals séparés du récap courant.</div>
+    <div style="margin-top:12px;display:flex;gap:12px"><div style="flex:1;border:1px solid #e2e8f0;border-top:3px solid #0A2F5E;padding:8px;text-align:center;border-radius:8px;background:#f8fafc"><strong>GOBEX</strong><br><small>Cachet</small><div style="height:40px"></div></div><div style="flex:1;border:1px solid #e2e8f0;border-top:3px solid #7c3aed;padding:8px;text-align:center;border-radius:8px;background:#f8fafc"><strong>Entreprise</strong><br><small>Signature</small><div style="height:40px"></div></div></div>
+  </div>`;
+  const cont=document.getElementById('autresPrintable');
+  cont.innerHTML=`<div class="fiche-decl">${html}</div>`;
+  cont.classList.remove('d-none');
+  if(typeof window.html2pdf==='function'){
+    const opt={margin:[6,6,6,6],filename:`Autres-non-courantes-${moisActif}-${selDossierMensuel||'GOBEX'}.pdf`,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}};
+    window.html2pdf().set(opt).from(cont.querySelector('.fiche-decl')).save().catch(e=>{console.error(e); toast('PDF',e.message,'warning')});
+  } else {
+    const w=window.open('','_blank'); w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Autres ${moisActif}</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"></head><body>${html}<script>window.onload=()=>setTimeout(()=>window.print(),400)<\/script></body></html>`); w.document.close();
+  }
+  toast('PDF isolé','Autres déclarations '+moisActif,'success');
+}
+
 // ===== Fichiers mensuels =====
+
 function handleFileMensuel(input, type){const f=input.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{const txt=reader.result;if(type==='fec'){parseFECMensuel(txt,f)} else if(type==='balance'){parseBalanceMensuel(txt,f)} else if(type==='paie'){parsePaieMensuel(txt,f)} else if(type==='mecef'){parseMecefMensuel(txt,f)};input.value=''};if(f.name.endsWith('.txt')||f.name.endsWith('.csv')) reader.readAsText(f); else reader.readAsBinaryString(f)}
 function detectSep(txt){const cands=['|',';','\t',','];let best='|',max=0;for(const s of cands){const c=(txt.split(s).length-1);if(c>max){max=c;best=s}}return best}
 function parseFECMensuel(txt, file){try{txt=txt.replace(/^\uFEFF/,'');const lines=txt.split(/\r?\n/).filter(l=>l.trim());if(lines.length<2){toast('FEC','Fichier vide','warning');return}const sep=detectSep(lines[0]);const header=lines[0].split(sep).map(s=>s.trim().replace(/^"|"$/g,''));const hNorm=header.map(h=>h.toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g,''));function findIdx(syns){for(const syn of syns){const ns=syn.toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g,'');const idx=hNorm.findIndex(h=>h.includes(ns)||ns.includes(h));if(idx>=0)return idx}return -1}
@@ -252,7 +494,7 @@ function genererDeclarationMensuelle(type, mois){const d=mensuelData[mois]||{};c
 <div style="font-family:Roboto;padding:16px;background:#fff">
 <div style="display:flex;justify-content:space-between;border-bottom:3px solid #0A2F5E;padding-bottom:10px;margin-bottom:12px">
   <div><div style="font-family:Exo;font-weight:800;font-size:18px;color:#0A2F5E">GOBEX <span style="color:#7c3aed">— Déclaration mensuelle</span></div><div style="font-size:11px;color:#64748b">${type.toUpperCase()} • ${mois} • Échéance 10-15 ${mois.slice(0,4)}/${String(parseInt(mois.slice(5))+1).padStart(2,'0')}</div><div style="font-size:10px;color:#64748b">Dossier ${selDossierMensuel||'—'} • ${cli?.name||''} • IFU ${cli?.ifu||'—'}</div></div>
-  <div style="text-align:right"><span style="background:#0A2F5E;color:#FFB81C;padding:4px 10px;border-radius:50px;font-size:10px">CGI 2026 • ${document.getElementById('ruleBadge')?.textContent||'2026.29.0'}</span><br><small style="font-size:9px;color:#64748b">Source: ${d.source||'manuel'} • FEC 70* / 44* État</small></div>
+  <div style="text-align:right"><span style="background:#0A2F5E;color:#FFB81C;padding:4px 10px;border-radius:50px;font-size:10px">CGI 2026 • ${document.getElementById('ruleBadge')?.textContent||'2026.30.0'}</span><br><small style="font-size:9px;color:#64748b">Source: ${d.source||'manuel'} • FEC 70* / 44* État</small></div>
 </div>
 <h6 style="font-family:Exo;font-weight:800;text-align:center;color:#0A2F5E">${type==='tva'?'TVA — Art.241 18%': type==='aib'?'AIB — Art.130-134': type==='its'?'ITS — Art.125': type==='vps'?'VPS — Art.191': type==='ircm'?'IRCM — Art.68': type==='irf'?'IRF — Art.101': type.toUpperCase()} — ${mois}</h6>
 <table style="width:100%;font-size:11px;border-collapse:collapse;margin-top:8px">
@@ -272,7 +514,7 @@ function imprimerDeclarationsMois(){genererToutesDeclarationsMois();const html=d
 function telechargerMensuelPDF(){genererToutesDeclarationsMois();const cont=document.getElementById('mensuelPrintable');let el=cont.querySelector('.fiche-decl');if(!el){cont.classList.remove('d-none');el=cont.querySelector('.fiche-decl')}if(typeof window.html2pdf!=='function'){toast('PDF','html2pdf non chargé','warning');imprimerDeclarationsMois();return}const opt={margin:[6,6,6,6],filename:`Declarations-${moisActif}-${selDossierMensuel||'GOBEX'}.pdf`,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}};window.html2pdf().set(opt).from(el).save().catch(e=>{console.error(e);toast('PDF',e.message,'warning')})}
 
 // ===== Init =====
-document.addEventListener('DOMContentLoaded',()=>{try{const j=JSON.parse(document.getElementById('embeddedMensuel').textContent);ruleMensuel=j;document.getElementById('ruleBadge').textContent=j.version+' • '+j.annee}catch(e){};initMensuelData();initMensuelDossiers();onMoisChange();});
+document.addEventListener('DOMContentLoaded',()=>{try{const j=JSON.parse(document.getElementById('embeddedMensuel').textContent);ruleMensuel=j;document.getElementById('ruleBadge').textContent=j.version+' • '+j.annee}catch(e){};initMensuelData();initMensuelDossiers();onMoisChange();try{initAutresData();}catch(e){console.error(e)} });
 </script>
 <script src="../assets/js/bibliotheque-chat.js"></script>
 </body></html>

@@ -1,9 +1,9 @@
 {
-  "version": "2026.29.0-Mensuel",
+  "version": "2026.30.0-Mensuel",
   "annee": 2026,
   "loiFinances": "2021-15 + 2023 + 2024 + 2025-22 + CGI 2026",
-  "source": "CGI Bénin 2026 — Déclarations mensuelles",
-  "principe": "Données mensuelles extraites du FEC/balance/livres (groupBy YYYY-MM via DateEcriture) + saisie manuelle mensuelle. Chaque moteur mensuel réutilise la formule annuelle mais sur base mensuelle. Traçabilité Art. par Art.",
+  "source": "CGI Bénin 2026 — Déclarations mensuelles (courantes + non courantes isolées)",
+  "principe": "Données mensuelles extraites du FEC/balance/livres (groupBy YYYY-MM via DateEcriture) + saisie manuelle mensuelle. Chaque moteur mensuel réutilise la formule annuelle mais sur base mensuelle. Traçabilité Art. par Art. Tableau non courant isolé.",
   "declarations_mensuelles": [
     {
       "id": "decl_tva_mensuelle",
@@ -12,7 +12,7 @@
       "periodicite": "mensuelle",
       "echeance": "15 du mois N+1 (10 si retenue source)",
       "base": "Mois M : CA HT total, CA taxable HT, CA export, TVA collectée (443), TVA achats déductibles (445), exclusions Art.247",
-      "formule": "TVA_due_M = TVA_collectee_M (443) - TVA_deductible_M(445) × prorata_M ; prorata_M = ceil((CA_taxable + export)/CA_total ×100) hors Art.249 §2 ; si affectation exclusive → 100% ou 0% (Art.248)",
+      "formule": "TVA_due_M = TVA_collectee_M (443) - TVA_deductible_M(445) × prorata_M ; prorata_M = ceil((CA_taxable + export)/CA_total ×100) hors Art.249 paragraphe 2 ; si affectation exclusive → 100% ou 0% (Art.248)",
       "sources": ["FEC 443/445/70*", "Balance 443/445", "Facturier MECeF"],
       "champs_mensuels": ["ca_total_ht", "ca_taxable_ht", "ca_export_ht", "tva_collectee", "tva_achats", "exclusions_247", "affectation"],
       "taux": 0.18,
@@ -80,5 +80,127 @@
       "sortie": "PDF déclaration unique officielle (reproduction) + CSV"
     }
   ],
-  "notes": "TPS acomptes 10/02-10/06 non mensuels — hors scope. Données mensuelles extraites via DateEcriture AAAAMMJJ → YYYY-MM. Si pas de FEC mensuel, saisie manuelle 12 mois. 44* État prioritaire pour détection."
+  "declarations_mensuelles_non_courantes": [
+    {
+      "id": "tafa",
+      "libelle": "TAFA — Taxe sur Activités Financières et Assurances",
+      "article": "Art.293-1 à 293-5",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Intérêts, commissions, primes assurance, agios (banques, IMF, assurances)",
+      "taux": "10% à 15% selon nature (Art.293-3) — exonérations Art.293-2",
+      "secteur": "Banques, assurances, IMF, établissements financiers",
+      "source_cgi": "L2 — T1 — CA — TAFA (125)",
+      "non_courant": true
+    },
+    {
+      "id": "taxe_jeux",
+      "libelle": "Taxe sur les Jeux de Hasard",
+      "article": "Art.128",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Produit brut des jeux (loterie, paris, casino)",
+      "taux": "Selon catégorie (fixe + proportionnel, barème Art.128)",
+      "secteur": "Opérateurs jeux, loterie nationale, casinos",
+      "source_cgi": "L2 — T1 — CA — Jeux (128)",
+      "non_courant": true
+    },
+    {
+      "id": "taxe_com",
+      "libelle": "Contribution sur Vente de Services de Communications",
+      "article": "Art.129",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Chiffre d'affaires télécom / services communications électroniques",
+      "taux": "5% (Art.129) — assise CA HT communications",
+      "secteur": "Opérateurs GSM, FAI, télécoms",
+      "source_cgi": "L2 — T1 — CA — Com (129)",
+      "non_courant": true
+    },
+    {
+      "id": "taxe_accise",
+      "libelle": "Taxe sur Produits Spécifiques (accise)",
+      "article": "Art.131",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Boissons alcoolisées, tabacs, produits pétroliers, cosmétiques de luxe (quantités/valeurs)",
+      "taux": "Barème spécifique (forfaitaire + ad valorem Art.131)",
+      "secteur": "Brasseries, importateurs alcools/tabacs, pétroliers",
+      "source_cgi": "L2 — T2 — Accises — Accise (131)",
+      "non_courant": true
+    },
+    {
+      "id": "taxe_sejour",
+      "libelle": "Taxe de Séjour",
+      "article": "Art.135",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Nuitée × catégorie hôtel (1* à 5*, résidence, auberge)",
+      "taux": "500F à 2 000F par nuitée selon classement (Art.135 bis)",
+      "secteur": "Hôtels, résidences, maisons d'hôtes, campements",
+      "source_cgi": "L2 — T3 — Autres — Séjour (135)",
+      "non_courant": true
+    },
+    {
+      "id": "cdl",
+      "libelle": "Contribution au Développement Local (CDL)",
+      "article": "Art.136",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "CA HT extrait / commercialisation produits locaux (selon délibération communale Art.136)",
+      "taux": "Forfait ou proportionnel selon commune (barème communal)",
+      "secteur": "Carrières, exploitants ressources locales, producteurs",
+      "source_cgi": "L2 — T3 — Autres — CDL (136)",
+      "non_courant": true
+    },
+    {
+      "id": "taxe_spectacles",
+      "libelle": "Taxe sur Spectacles, Jeux et Divertissements",
+      "article": "Art.141",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Recettes spectacles, concerts, cinéma, manifestations, jeux",
+      "taux": "5% à 15% des recettes brutes (Art.141) + droits fixes",
+      "secteur": "Organisateurs spectacles, cinémas, parcs, promoteurs",
+      "source_cgi": "L2 — T3 — Autres — Spectacles (141)",
+      "non_courant": true
+    },
+    {
+      "id": "taxe_boissons",
+      "libelle": "Taxe sur Vente de Boissons Fermentées de Préparation Artisanale",
+      "article": "Art.142",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Volume / CA boissons fermentées artisanales (tchoukoutou, sodabi, etc.)",
+      "taux": "Barème communal (forfait mensuel ou % Art.142)",
+      "secteur": "Producteurs, débits artisanaux, bars traditionnels",
+      "source_cgi": "L2 — T3 — Autres — Boissons (142)",
+      "non_courant": true
+    },
+    {
+      "id": "taxe_pub",
+      "libelle": "Taxe sur la Publicité",
+      "article": "Art.143",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1",
+      "base": "Surface affichage, enseignes, écrans, distribution prospectus",
+      "taux": "2 000F à 25 000F /m²/an selon support et zone (Art.143)",
+      "secteur": "Régies pub, annonceurs avec enseignes, panneaux",
+      "source_cgi": "L2 — T3 — Autres — Pub (143)",
+      "non_courant": true
+    },
+    {
+      "id": "taxe_energie",
+      "libelle": "Taxe sur Consommation d'Électricité et d'Eau",
+      "article": "Art.145",
+      "periodicite": "mensuelle",
+      "echeance": "10 du mois N+1 (retenue à la source SBEE/SONEB)",
+      "base": "kWh consommés / m³ eau — retenue par distributeur",
+      "taux": "Barème kWh (Art.145) : 5F à 50F/kWh selon tranche + eau",
+      "secteur": "Distributeurs SBEE/SONEB, gros consommateurs (retenue)",
+      "source_cgi": "L2 — T3 — Autres — Énergie (145)",
+      "non_courant": true
+    }
+  ],
+  "notes": "Courantes (M1-M6) = 80% dossiers. Non courantes (10) = secteurs spécifiques, tableau isolé séparé — totals non agrégés au récap courant. TPS acomptes 10/02-10/06 non mensuels — hors scope. Données mensuelles extraites via DateEcriture AAAAMMJJ → YYYY-MM. Si pas de FEC mensuel, saisie manuelle 12 mois. 44* État prioritaire pour détection."
 }

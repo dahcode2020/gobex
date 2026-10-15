@@ -50,6 +50,16 @@
   </div>
 </div>
 
+
+<div class="alert d-flex align-items-center gap-3 py-2 px-3 mb-2" style="background:linear-gradient(135deg,#0A2F5E 0%, #143d75 100%);color:#fff;border:1px solid #FFB81C;border-radius:12px">
+  <div class="d-flex align-items-center justify-content-center" style="width:36px;height:36px;border-radius:10px;background:#FFB81C;color:#0A2F5E;font-size:18px"><i class="bi bi-arrows-fullscreen"></i></div>
+  <div class="flex-grow-1">
+    <strong style="color:#FFB81C">Nouveau — Vue push plein largeur</strong> <span class="badge bg-warning text-dark ms-1" style="font-size:9px">VISIBILITÉ</span><br>
+    <small style="color:rgba(255,255,255,.85);font-size:11px">Les fiches DGI (26/11/9 colonnes) et Autres (10×12) s’ouvrent désormais en <strong>push 94% largeur</strong> — toutes colonnes visibles, scroll fluide, headers sticky. Cliquez sur <em>Push Fiches DGI</em> ou <em>Push 26/11/9 col</em> dans chaque fiche.</small>
+  </div>
+  <button class="btn btn-sm" style="background:#FFB81C;color:#0A2F5E;font-weight:800;white-space:nowrap" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDgiPush"><i class="bi bi-box-arrow-up-right me-1"></i>Ouvrir push</button>
+</div>
+
 <!-- ===== SOUS-MENU DÉCLARATIONS MENSUELLES ===== -->
 <div class="stat-card p-2 mb-3" style="border:1px solid #e2e8f0;background:#fff;position:sticky;top:10px;z-index:30;box-shadow:0 4px 20px rgba(0,0,0,.06)">
   <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -62,6 +72,9 @@
     <div class="ms-auto d-flex align-items-center gap-2">
       <small class="text-muted d-none d-lg-inline" style="font-size:10px"><span id="sousMenuMoisLabel" class="badge bg-light text-dark border">2026-01</span> • CGI 2026</small>
       <span class="badge" style="background:#f8fafc;color:#64748b;border:1px solid #e2e8f0;font-size:9px">3 vues • 1 mois</span>
+      <div class="vr d-none d-md-block" style="height:20px"></div>
+      <button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C;border:1px solid #FFB81C;font-weight:700;font-size:11px" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDgiPush" onclick="try{switchPushTab('dgicnss')}catch(e){}"><i class="bi bi-arrows-fullscreen me-1"></i>Push Fiches DGI <span class="badge bg-warning text-dark ms-1" style="font-size:8px">26 col</span></button>
+      <button class="btn btn-sm d-none d-lg-inline-flex" style="background:#fff;color:#7c3aed;border:1px solid #7c3aed;font-weight:700;font-size:11px" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAutresPush"><i class="bi bi-collection me-1"></i>Push Autres</button>
     </div>
   </div>
   <div id="sousMenuHelp" class="small mt-2 px-2 py-2 rounded-3" style="background:#f8fafc;border:1px dashed #e2e8f0;color:#475569;font-size:11px;line-height:1.5"></div>

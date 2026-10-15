@@ -16,7 +16,7 @@
 <div class="alert small d-flex align-items-start gap-2" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e">
   <i class="bi bi-info-circle mt-1" style="color:#d97706"></i>
   <div>
-    <strong>Précisions 2026-10-03 appliquées en mensuel :</strong> (1) CA annuel ≤50M → TPS d’office, TVA mensuelle non assujettie toute l’année ; (2) CA mensuel constaté FEC (70* du mois) fait foi vs CA dossier ; (3) IS/IBA exclusifs — société IS → associés IBA/IRCM perso ; (4) comptes État 44*/443/445/447/441 prioritaires pour détection mensuelle. <span class="badge bg-light text-dark border" style="font-size:9px">RuleBase 2026.30.0-Mensuel</span>
+    <strong>Précisions 2026-10-03 appliquées en mensuel :</strong> (1) CA annuel ≤50M → TPS d’office, TVA mensuelle non assujettie toute l’année ; (2) CA mensuel constaté FEC (70* du mois) fait foi vs CA dossier ; (3) IS/IBA exclusifs — société IS → associés IBA/IRCM perso ; (4) comptes État 44*/443/445/447/441 prioritaires pour détection mensuelle. <span class="badge bg-light text-dark border" style="font-size:9px">RuleBase 2026.31.0-DGI-Excel</span>
     <br><small><strong>Source mensuelle :</strong> FEC → <code>DateEcriture AAAAMMJJ → YYYY-MM</code> (groupBy). Si pas de FEC mensuel → table 12 mois manuelle.</small>
   </div>
 </div>
@@ -208,17 +208,163 @@
   <div id="autresPrintable" class="d-none"></div>
 </div>
 
+
+<!-- ===== FICHES DGI OFFICIELLES — PRÉ-REMPLISSAGE AUTO (Excel + XML) — VÉRIFIABLE ===== -->
+<div class="stat-card" style="border:2px solid #0A2F5E;background:linear-gradient(135deg,#f8fafc 0%, #eff6ff 100%);position:relative;overflow:hidden">
+  <div style="position:absolute;top:0;right:0;background:#0A2F5E;color:#FFB81C;padding:4px 12px;border-radius:0 16px 0 12px;font-size:10px;font-weight:800;letter-spacing:0.8px"><i class="bi bi-file-earmark-excel me-1"></i>DGI OFFICIEL • EXCEL + XML • VÉRIFIABLE</div>
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+    <div>
+      <h6 class="mb-1" style="font-family:Exo;font-weight:800;color:#0A2F5E"><i class="bi bi-file-earmark-spreadsheet me-2" style="color:#0A2F5E"></i>Fiches DGI officielles — Pré-remplissage automatique des cases</h6>
+      <p class="small mb-1" style="color:#334155">Les moteurs remplissent <strong>automatiquement les cases jaunes</strong> des 3 fichiers Excel officiels DGI à macros (DGICNSS / TVA / AIB) à partir du <strong>FEC/balance/paie/MECeF du mois sélectionné</strong>. <strong>Vous vérifiez</strong> (cases éditables, jaune = remplissable, vert = calculé) puis vous cochez <em>Je certifie avoir vérifié</em> → <strong>Excel rempli + XML EDI</strong> prêts à importer sur <code>impots.bj → Transmission des annexes détaillées par EDI</code>.</p>
+      <div class="d-flex gap-1 flex-wrap">
+        <span class="badge" style="background:#0A2F5E;color:#FFB81C">3 annexes détaillées</span>
+        <span class="badge bg-light text-dark border">IFU 13c • Année • Mois</span>
+        <span class="badge" style="background:#7c3aed;color:#fff">Mois <span id="dgiMoisLabel">2026-01</span></span>
+        <span class="badge bg-warning text-dark">Vérification obligatoire</span>
+      </div>
+    </div>
+    <div class="d-flex gap-2 align-items-center flex-wrap">
+      <a href="../docs/modeles-dgi/dgi-cnss-2026.xlsx" class="btn btn-sm btn-light" download><i class="bi bi-download me-1"></i>Modèle DGICNSS vierge</a>
+      <a href="../docs/modeles-dgi/dgi-tva-annexe-2026.xlsx" class="btn btn-sm btn-light" download><i class="bi bi-download me-1"></i>Modèle TVA vierge</a>
+      <a href="../docs/modeles-dgi/dgi-aib-annexe-2026.xlsx" class="btn btn-sm btn-light" download><i class="bi bi-download me-1"></i>Modèle AIB vierge</a>
+    </div>
+  </div>
+
+  <div class="alert small mt-3 mb-2 d-flex gap-2" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e">
+    <i class="bi bi-shield-check mt-1"></i>
+    <div>
+      <strong>Workflow vérifiable :</strong> <code>Calculé (moteur)</code> → <code>Pré-rempli (jaune)</code> → <code>Vérifié (vous)</code> → <code>Généré (Excel + XML)</code>. Les totaux calculés (vert) sont recalculés en live si vous modifiez une case jaune. <strong>Les fichiers générés conservent les formules Excel</strong> — vous pouvez encore cliquer sur le bouton macro <em>Génération du XML</em> dans Excel si vous préférez, ou utiliser le XML généré directement par GOBEX (même format EDI).
+      <br><small><strong>Sources :</strong> DGICNSS = paie/FEC 64* + barème ITS Art.125 + CNSS 9%/2%/6.4%/3.6% • TVA = FEC 445/60* + MECeF • AIB = FEC 60* + 447 • IFU/Année/Mois = dossier sélectionné.</small>
+    </div>
+  </div>
+
+  <!-- 3 colonnes -->
+  <div class="row g-3 mt-1">
+    <!-- DGICNSS -->
+    <div class="col-lg-4">
+      <div class="p-3 border rounded-3 h-100" style="background:#fff;border-color:#0A2F5E !important">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h6 class="mb-0" style="font-family:Exo;font-weight:800;font-size:13px;color:#0A2F5E"><i class="bi bi-people me-1"></i>DGICNSS — DGI-CNSS</h6>
+          <span class="badge bg-success" style="font-size:9px">ITS + CNSS</span>
+        </div>
+        <small class="text-muted" style="font-size:11px">Annexe détaillée salariés — Code <strong>DGICNSS</strong> — 26 colonnes — Génère XML à importer en EDI</small>
+        <div class="mt-2 p-2 rounded-3" style="background:#f8fafc;border:1px solid #e2e8f0;font-size:11px">
+          <div><strong id="dgiDgicnssCount">0 salarié(s)</strong></div>
+          <small class="text-muted">Source: livre paie / FEC 64* du mois <span class="dgiMoisLabel2">2026-01</span></small>
+        </div>
+        <div class="d-grid gap-2 mt-3">
+          <button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C" onclick="dgiPreRemplir('dgicnss')"><i class="bi bi-magic me-1"></i>Pré-remplir DGICNSS</button>
+          <div id="dgiPreviewDgicnss" class="mt-2"></div>
+          <div id="dgiCard-dgicnss" class="d-none mt-2">
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-light flex-grow-1" onclick="dgiAddRow('dgicnss')"><i class="bi bi-plus-lg me-1"></i>Ajouter salarié</button>
+              <span class="badge bg-light text-dark border align-self-center" style="font-size:9px">Éditable</span>
+            </div>
+            <div class="form-check mt-2 p-2 border rounded-3" style="background:#fffbeb;border-color:#fde68a">
+              <input class="form-check-input" type="checkbox" id="chkDgiVerify-dgicnss" onchange="dgiToggleVerified('dgicnss', this.checked)">
+              <label class="form-check-label small" for="chkDgiVerify-dgicnss" style="font-size:11px"><strong>Je certifie avoir vérifié</strong> les cases jaunes le <span class="text-muted" id="dgiVerifyDate-dgicnss"></span> — autoriser génération</label>
+            </div>
+            <div class="d-grid gap-2 mt-2">
+              <button id="btnDgiExcel-dgicnss" class="btn btn-sm" style="background:#107C41;color:#fff" disabled onclick="dgiGenererExcel('dgicnss')"><i class="bi bi-file-earmark-excel me-1"></i>Télécharger Excel rempli</button>
+              <button id="btnDgiXml-dgicnss" class="btn btn-sm btn-outline-dark" disabled onclick="dgiGenererXML('dgicnss')"><i class="bi bi-code me-1"></i>Télécharger XML EDI</button>
+              <button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C" disabled id="btnDgiBoth-dgicnss" onclick="dgiGenererTout('dgicnss')"><i class="bi bi-download me-1"></i>Excel + XML</button>
+            </div>
+            <pre id="dgiXmlPreview-dgicnss" class="small mt-2 p-2 bg-dark text-white rounded-3 d-none" style="max-height:160px;overflow:auto;font-size:9px"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- TVA -->
+    <div class="col-lg-4">
+      <div class="p-3 border rounded-3 h-100" style="background:#fff;border-color:#7c3aed !important">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h6 class="mb-0" style="font-family:Exo;font-weight:800;font-size:13px;color:#0A2F5E"><i class="bi bi-receipt me-1" style="color:#7c3aed"></i>TVA — Annexe déductible</h6>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:9px">11 colonnes</span>
+        </div>
+        <small class="text-muted" style="font-size:11px">Annexe détaillée TVA — Code <strong>TVA</strong> — 11 colonnes — Factures déductibles</small>
+        <div class="mt-2 p-2 rounded-3" style="background:#f8fafc;border:1px solid #e2e8f0;font-size:11px">
+          <div><strong id="dgiTvaCount">0 facture(s)</strong></div>
+          <small class="text-muted">Source: FEC 445 / MECeF du mois <span class="dgiMoisLabel2">2026-01</span></small>
+        </div>
+        <div class="d-grid gap-2 mt-3">
+          <button class="btn btn-sm" style="background:#7c3aed;color:#fff" onclick="dgiPreRemplir('tva')"><i class="bi bi-magic me-1"></i>Pré-remplir TVA</button>
+          <div id="dgiPreviewTva" class="mt-2"></div>
+          <div id="dgiCard-tva" class="d-none mt-2">
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-light flex-grow-1" onclick="dgiAddRow('tva')"><i class="bi bi-plus-lg me-1"></i>Ajouter facture</button>
+              <span class="badge bg-light text-dark border align-self-center" style="font-size:9px">Éditable</span>
+            </div>
+            <div class="form-check mt-2 p-2 border rounded-3" style="background:#fffbeb;border-color:#fde68a">
+              <input class="form-check-input" type="checkbox" id="chkDgiVerify-tva" onchange="dgiToggleVerified('tva', this.checked)">
+              <label class="form-check-label small" for="chkDgiVerify-tva" style="font-size:11px"><strong>Je certifie avoir vérifié</strong> les cases jaunes</label>
+            </div>
+            <div class="d-grid gap-2 mt-2">
+              <button id="btnDgiExcel-tva" class="btn btn-sm" style="background:#107C41;color:#fff" disabled onclick="dgiGenererExcel('tva')"><i class="bi bi-file-earmark-excel me-1"></i>Télécharger Excel rempli</button>
+              <button id="btnDgiXml-tva" class="btn btn-sm btn-outline-dark" disabled onclick="dgiGenererXML('tva')"><i class="bi bi-code me-1"></i>Télécharger XML EDI</button>
+            </div>
+            <pre id="dgiXmlPreview-tva" class="small mt-2 p-2 bg-dark text-white rounded-3 d-none" style="max-height:160px;overflow:auto;font-size:9px"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- AIB -->
+    <div class="col-lg-4">
+      <div class="p-3 border rounded-3 h-100" style="background:#fff;border-color:#198754 !important">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h6 class="mb-0" style="font-family:Exo;font-weight:800;font-size:13px;color:#0A2F5E"><i class="bi bi-cart me-1" style="color:#198754"></i>AIB — Acomptes Bénéfices</h6>
+          <span class="badge bg-success" style="font-size:9px">9 colonnes</span>
+        </div>
+        <small class="text-muted" style="font-size:11px">Annexe détaillée AIB — Code <strong>AIB</strong> — 9 colonnes — Retenues à la source</small>
+        <div class="mt-2 p-2 rounded-3" style="background:#f8fafc;border:1px solid #e2e8f0;font-size:11px">
+          <div><strong id="dgiAibCount">0 ligne(s)</strong></div>
+          <small class="text-muted">Source: FEC 60* / 447 du mois <span class="dgiMoisLabel2">2026-01</span></small>
+        </div>
+        <div class="d-grid gap-2 mt-3">
+          <button class="btn btn-sm" style="background:#198754;color:#fff" onclick="dgiPreRemplir('aib')"><i class="bi bi-magic me-1"></i>Pré-remplir AIB</button>
+          <div id="dgiPreviewAib" class="mt-2"></div>
+          <div id="dgiCard-aib" class="d-none mt-2">
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-light flex-grow-1" onclick="dgiAddRow('aib')"><i class="bi bi-plus-lg me-1"></i>Ajouter ligne</button>
+              <span class="badge bg-light text-dark border align-self-center" style="font-size:9px">Éditable</span>
+            </div>
+            <div class="form-check mt-2 p-2 border rounded-3" style="background:#fffbeb;border-color:#fde68a">
+              <input class="form-check-input" type="checkbox" id="chkDgiVerify-aib" onchange="dgiToggleVerified('aib', this.checked)">
+              <label class="form-check-label small" for="chkDgiVerify-aib" style="font-size:11px"><strong>Je certifie avoir vérifié</strong> les cases jaunes</label>
+            </div>
+            <div class="d-grid gap-2 mt-2">
+              <button id="btnDgiExcel-aib" class="btn btn-sm" style="background:#107C41;color:#fff" disabled onclick="dgiGenererExcel('aib')"><i class="bi bi-file-earmark-excel me-1"></i>Télécharger Excel rempli</button>
+              <button id="btnDgiXml-aib" class="btn btn-sm btn-outline-dark" disabled onclick="dgiGenererXML('aib')"><i class="bi bi-code me-1"></i>Télécharger XML EDI</button>
+            </div>
+            <pre id="dgiXmlPreview-aib" class="small mt-2 p-2 bg-dark text-white rounded-3 d-none" style="max-height:160px;overflow:auto;font-size:9px"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3 p-3 rounded-3" style="background:#0A2F5E;color:#fff">
+    <div class="d-flex gap-2 align-items-center flex-wrap">
+      <span class="badge bg-warning text-dark">Workflow vérifiable</span>
+      <small style="color:rgba(255,255,255,0.8)">Après <strong>Pré-remplir</strong> → vérifiez les tableaux jaunes → cochez → <strong>Excel + XML</strong> → importez le XML dans <code>impots.bj → Déclaration → Annexes détaillées → Transmission par EDI</code> → le PDF récapitulatif DGI s'affiche automatiquement après import.</small>
+      <button class="btn btn-sm ms-auto" style="background:#FFB81C;color:#0A2F5E" onclick="dgiPreRemplir('dgicnss');dgiPreRemplir('tva');dgiPreRemplir('aib')"><i class="bi bi-lightning me-1"></i>Pré-remplir les 3</button>
+    </div>
+  </div>
+</div>
+
 <div class="text-center small text-muted mt-3" style="font-size:10px">
 
-  GOBEX • RB/ABC/15A3265 • IFU 1201502844807 • Tel +229 97 739 046 • RuleBase 2026.30.0-Mensuel • Offline • <a href="../docs/declarations-mensuelles-2026.json" target="_blank">JSON mensuel</a> • <a href="../docs/RuleBase-README.md" target="_blank">MAJ LF ?</a>
+
+  GOBEX • RB/ABC/15A3265 • IFU 1201502844807 • Tel +229 97 739 046 • RuleBase 2026.31.0-DGI-Excel • Offline • <a href="../docs/declarations-mensuelles-2026.json" target="_blank">JSON mensuel</a> • <a href="../docs/RuleBase-README.md" target="_blank">MAJ LF ?</a>
 </div>
 
 </div>
 
-<script id="embeddedMensuel" type="application/json">{"version": "2026.30.0-Mensuel", "annee": 2026, "declarations_mensuelles": [{"id": "decl_tva_mensuelle", "libelle": "Déclaration TVA mensuelle", "article": "Art.223-263 + Art.241 18% + Art.248-249 prorata", "periodicite": "mensuelle", "echeance": "15 du mois N+1 (10 si retenue source)", "base": "Mois M : CA HT total, CA taxable HT, CA export, TVA collectée (443), TVA achats déductibles (445), exclusions Art.247", "formule": "TVA_due_M = TVA_collectee_M (443) - TVA_deductible_M(445) × prorata_M ; prorata_M = ceil((CA_taxable + export)/CA_total ×100) hors Art.249 paragraphe 2 ; si affectation exclusive → 100% ou 0% (Art.248)", "sources": ["FEC 443/445/70*", "Balance 443/445", "Facturier MECeF"], "champs_mensuels": ["ca_total_ht", "ca_taxable_ht", "ca_export_ht", "tva_collectee", "tva_achats", "exclusions_247", "affectation"], "taux": 0.18, "sortie": "PDF déclaration TVA mensuelle + CSV récap"}, {"id": "decl_aib_mensuelle", "libelle": "AIB mensuel (achats/imports/prestations)", "article": "Art.130-134", "periodicite": "mensuelle", "echeance": "10 du mois N+1, imputation 31/12", "base": "Mois M : achats HT avec IFU (1%), prestations HT avec IFU (3%), opérations sans IFU (5%)", "formule": "AIB_M = Σ achats_avecIFU_M×1% + prestations_avecIFU_M×3% + sansIFU_M×5% (base douane/prix TTC hors TVA)", "sources": ["FEC 60*/61*/62* + 447/443", "Balance 60*", "Registre achats"], "champs_mensuels": ["achats_avec_ifu", "prestations_avec_ifu", "sans_ifu"], "taux": {"avec_ifu_achat": 0.01, "avec_ifu_prestation": 0.03, "sans_ifu": 0.05}, "sortie": "PDF AIB"}, {"id": "decl_its_vps_mensuelle", "libelle": "ITS + VPS mensuels (salaires)", "article": "Art.119-129 (ITS) + Art.191-195 (VPS)", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Mois M : salaires bruts par salarié (ou masse salariale), effectif", "formule": "ITS_M = Σ barème Art.125 par salarié (0-60k 0%, 60-150k 10%, 150-250k 15%, 250-500k 19%, >500k 30%) + 1000F mars/3000F juin si >60k ; VPS_M = base ITS ×4% (2% enseignement privé Art.194)", "sources": ["FEC 641/661/664", "Livre paie", "Balance 64*"], "champs_mensuels": ["salaires_bruts_list", "masse_salariale", "effectif", "enseignement_prive"], "sortie": "PDF ITS/VPS + annexe par salarié"}, {"id": "decl_ircm_mensuelle", "libelle": "IRCM mensuel (dividendes, intérêts)", "article": "Art.68-93", "periodicite": "mensuelle (mois de distribution)", "echeance": "10 du mois N+1", "base": "Mois M : dividendes, intérêts, jetons, avances dirigeants", "formule": "IRCM_M = Σ revenus mobiliers × taux (5% titres État, 10% dividendes, 15% autres, obligations 6%/3%/0%/5% Art.86-89)", "sources": ["FEC 76*/761/764", "Registre distributions"], "champs_mensuels": ["dividendes", "interets", "jetons", "category"], "sortie": "PDF IRCM"}, {"id": "decl_irf_mensuelle", "libelle": "IRF / Retenue locative mensuelle", "article": "Art.101-107", "periodicite": "mensuelle", "echeance": "10 du mois N+1 (4 acomptes Trésor)", "base": "Mois M : loyers bruts encaissés (bâtis/non bâtis, meublée), dépenses", "formule": "IRF_M = (loyers_bruts - dépenses) ×12% + 4000 ORTB (10% si IBA/IS) ; retenue locataire 12% si >3 ans", "sources": ["FEC 75*/752/758", "Contrats baux"], "champs_mensuels": ["loyers_bruts", "depenses", "duree_bail"], "sortie": "PDF IRF"}, {"id": "decl_retenues_mensuelle", "libelle": "Déclaration mensuelle unique des retenues (ITS/VPS/AIB/IRCM/IRF + 10%/20%)", "article": "Art.130-144 groupé + Art.134/140/143", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Mois M : agrégat M1-M6 + prélèvements 10% non connus, 20% non-résidents, 0,30F/L hydro", "formule": "Total_retenues_M = Σ (AIB_M + ITS_M + VPS_M + IRCM_M + IRF_M + 10%_M + 20%_M + hydro_M)", "sources": ["Agrégat des 6 moteurs mensuels"], "champs_mensuels": ["total_retenues"], "sortie": "PDF déclaration unique officielle (reproduction) + CSV"}], "declarations_mensuelles_non_courantes": [{"id": "tafa", "libelle": "TAFA — Taxe sur Activités Financières et Assurances", "article": "Art.293-1 à 293-5", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Intérêts, commissions, primes assurance, agios (banques, IMF, assurances)", "taux": "10% à 15% selon nature (Art.293-3) — exonérations Art.293-2", "secteur": "Banques, assurances, IMF, établissements financiers", "source_cgi": "L2 — T1 — CA — TAFA (125)", "non_courant": true}, {"id": "taxe_jeux", "libelle": "Taxe sur les Jeux de Hasard", "article": "Art.128", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Produit brut des jeux (loterie, paris, casino)", "taux": "Selon catégorie (fixe + proportionnel, barème Art.128)", "secteur": "Opérateurs jeux, loterie nationale, casinos", "source_cgi": "L2 — T1 — CA — Jeux (128)", "non_courant": true}, {"id": "taxe_com", "libelle": "Contribution sur Vente de Services de Communications", "article": "Art.129", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Chiffre d'affaires télécom / services communications électroniques", "taux": "5% (Art.129) — assise CA HT communications", "secteur": "Opérateurs GSM, FAI, télécoms", "source_cgi": "L2 — T1 — CA — Com (129)", "non_courant": true}, {"id": "taxe_accise", "libelle": "Taxe sur Produits Spécifiques (accise)", "article": "Art.131", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Boissons alcoolisées, tabacs, produits pétroliers, cosmétiques de luxe (quantités/valeurs)", "taux": "Barème spécifique (forfaitaire + ad valorem Art.131)", "secteur": "Brasseries, importateurs alcools/tabacs, pétroliers", "source_cgi": "L2 — T2 — Accises — Accise (131)", "non_courant": true}, {"id": "taxe_sejour", "libelle": "Taxe de Séjour", "article": "Art.135", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Nuitée × catégorie hôtel (1* à 5*, résidence, auberge)", "taux": "500F à 2 000F par nuitée selon classement (Art.135 bis)", "secteur": "Hôtels, résidences, maisons d'hôtes, campements", "source_cgi": "L2 — T3 — Autres — Séjour (135)", "non_courant": true}, {"id": "cdl", "libelle": "Contribution au Développement Local (CDL)", "article": "Art.136", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "CA HT extrait / commercialisation produits locaux (selon délibération communale Art.136)", "taux": "Forfait ou proportionnel selon commune (barème communal)", "secteur": "Carrières, exploitants ressources locales, producteurs", "source_cgi": "L2 — T3 — Autres — CDL (136)", "non_courant": true}, {"id": "taxe_spectacles", "libelle": "Taxe sur Spectacles, Jeux et Divertissements", "article": "Art.141", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Recettes spectacles, concerts, cinéma, manifestations, jeux", "taux": "5% à 15% des recettes brutes (Art.141) + droits fixes", "secteur": "Organisateurs spectacles, cinémas, parcs, promoteurs", "source_cgi": "L2 — T3 — Autres — Spectacles (141)", "non_courant": true}, {"id": "taxe_boissons", "libelle": "Taxe sur Vente de Boissons Fermentées de Préparation Artisanale", "article": "Art.142", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Volume / CA boissons fermentées artisanales (tchoukoutou, sodabi, etc.)", "taux": "Barème communal (forfait mensuel ou % Art.142)", "secteur": "Producteurs, débits artisanaux, bars traditionnels", "source_cgi": "L2 — T3 — Autres — Boissons (142)", "non_courant": true}, {"id": "taxe_pub", "libelle": "Taxe sur la Publicité", "article": "Art.143", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Surface affichage, enseignes, écrans, distribution prospectus", "taux": "2 000F à 25 000F /m²/an selon support et zone (Art.143)", "secteur": "Régies pub, annonceurs avec enseignes, panneaux", "source_cgi": "L2 — T3 — Autres — Pub (143)", "non_courant": true}, {"id": "taxe_energie", "libelle": "Taxe sur Consommation d'Électricité et d'Eau", "article": "Art.145", "periodicite": "mensuelle", "echeance": "10 du mois N+1 (retenue à la source SBEE/SONEB)", "base": "kWh consommés / m³ eau — retenue par distributeur", "taux": "Barème kWh (Art.145) : 5F à 50F/kWh selon tranche + eau", "secteur": "Distributeurs SBEE/SONEB, gros consommateurs (retenue)", "source_cgi": "L2 — T3 — Autres — Énergie (145)", "non_courant": true}]}</script>
+<script id="embeddedMensuel" type="application/json">{"version": "2026.31.0-DGI-Excel", "annee": 2026, "declarations_mensuelles": [{"id": "decl_tva_mensuelle", "libelle": "Déclaration TVA mensuelle", "article": "Art.223-263 + Art.241 18% + Art.248-249 prorata", "periodicite": "mensuelle", "echeance": "15 du mois N+1 (10 si retenue source)", "base": "Mois M : CA HT total, CA taxable HT, CA export, TVA collectée (443), TVA achats déductibles (445), exclusions Art.247", "formule": "TVA_due_M = TVA_collectee_M (443) - TVA_deductible_M(445) × prorata_M ; prorata_M = ceil((CA_taxable + export)/CA_total ×100) hors Art.249 paragraphe 2 ; si affectation exclusive → 100% ou 0% (Art.248)", "sources": ["FEC 443/445/70*", "Balance 443/445", "Facturier MECeF"], "champs_mensuels": ["ca_total_ht", "ca_taxable_ht", "ca_export_ht", "tva_collectee", "tva_achats", "exclusions_247", "affectation"], "taux": 0.18, "sortie": "PDF déclaration TVA mensuelle + CSV récap"}, {"id": "decl_aib_mensuelle", "libelle": "AIB mensuel (achats/imports/prestations)", "article": "Art.130-134", "periodicite": "mensuelle", "echeance": "10 du mois N+1, imputation 31/12", "base": "Mois M : achats HT avec IFU (1%), prestations HT avec IFU (3%), opérations sans IFU (5%)", "formule": "AIB_M = Σ achats_avecIFU_M×1% + prestations_avecIFU_M×3% + sansIFU_M×5% (base douane/prix TTC hors TVA)", "sources": ["FEC 60*/61*/62* + 447/443", "Balance 60*", "Registre achats"], "champs_mensuels": ["achats_avec_ifu", "prestations_avec_ifu", "sans_ifu"], "taux": {"avec_ifu_achat": 0.01, "avec_ifu_prestation": 0.03, "sans_ifu": 0.05}, "sortie": "PDF AIB"}, {"id": "decl_its_vps_mensuelle", "libelle": "ITS + VPS mensuels (salaires)", "article": "Art.119-129 (ITS) + Art.191-195 (VPS)", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Mois M : salaires bruts par salarié (ou masse salariale), effectif", "formule": "ITS_M = Σ barème Art.125 par salarié (0-60k 0%, 60-150k 10%, 150-250k 15%, 250-500k 19%, >500k 30%) + 1000F mars/3000F juin si >60k ; VPS_M = base ITS ×4% (2% enseignement privé Art.194)", "sources": ["FEC 641/661/664", "Livre paie", "Balance 64*"], "champs_mensuels": ["salaires_bruts_list", "masse_salariale", "effectif", "enseignement_prive"], "sortie": "PDF ITS/VPS + annexe par salarié"}, {"id": "decl_ircm_mensuelle", "libelle": "IRCM mensuel (dividendes, intérêts)", "article": "Art.68-93", "periodicite": "mensuelle (mois de distribution)", "echeance": "10 du mois N+1", "base": "Mois M : dividendes, intérêts, jetons, avances dirigeants", "formule": "IRCM_M = Σ revenus mobiliers × taux (5% titres État, 10% dividendes, 15% autres, obligations 6%/3%/0%/5% Art.86-89)", "sources": ["FEC 76*/761/764", "Registre distributions"], "champs_mensuels": ["dividendes", "interets", "jetons", "category"], "sortie": "PDF IRCM"}, {"id": "decl_irf_mensuelle", "libelle": "IRF / Retenue locative mensuelle", "article": "Art.101-107", "periodicite": "mensuelle", "echeance": "10 du mois N+1 (4 acomptes Trésor)", "base": "Mois M : loyers bruts encaissés (bâtis/non bâtis, meublée), dépenses", "formule": "IRF_M = (loyers_bruts - dépenses) ×12% + 4000 ORTB (10% si IBA/IS) ; retenue locataire 12% si >3 ans", "sources": ["FEC 75*/752/758", "Contrats baux"], "champs_mensuels": ["loyers_bruts", "depenses", "duree_bail"], "sortie": "PDF IRF"}, {"id": "decl_retenues_mensuelle", "libelle": "Déclaration mensuelle unique des retenues (ITS/VPS/AIB/IRCM/IRF + 10%/20%)", "article": "Art.130-144 groupé + Art.134/140/143", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Mois M : agrégat M1-M6 + prélèvements 10% non connus, 20% non-résidents, 0,30F/L hydro", "formule": "Total_retenues_M = Σ (AIB_M + ITS_M + VPS_M + IRCM_M + IRF_M + 10%_M + 20%_M + hydro_M)", "sources": ["Agrégat des 6 moteurs mensuels"], "champs_mensuels": ["total_retenues"], "sortie": "PDF déclaration unique officielle (reproduction) + CSV"}], "declarations_mensuelles_non_courantes": [{"id": "tafa", "libelle": "TAFA — Taxe sur Activités Financières et Assurances", "article": "Art.293-1 à 293-5", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Intérêts, commissions, primes assurance, agios (banques, IMF, assurances)", "taux": "10% à 15% selon nature (Art.293-3) — exonérations Art.293-2", "secteur": "Banques, assurances, IMF, établissements financiers", "source_cgi": "L2 — T1 — CA — TAFA (125)", "non_courant": true}, {"id": "taxe_jeux", "libelle": "Taxe sur les Jeux de Hasard", "article": "Art.128", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Produit brut des jeux (loterie, paris, casino)", "taux": "Selon catégorie (fixe + proportionnel, barème Art.128)", "secteur": "Opérateurs jeux, loterie nationale, casinos", "source_cgi": "L2 — T1 — CA — Jeux (128)", "non_courant": true}, {"id": "taxe_com", "libelle": "Contribution sur Vente de Services de Communications", "article": "Art.129", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Chiffre d'affaires télécom / services communications électroniques", "taux": "5% (Art.129) — assise CA HT communications", "secteur": "Opérateurs GSM, FAI, télécoms", "source_cgi": "L2 — T1 — CA — Com (129)", "non_courant": true}, {"id": "taxe_accise", "libelle": "Taxe sur Produits Spécifiques (accise)", "article": "Art.131", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Boissons alcoolisées, tabacs, produits pétroliers, cosmétiques de luxe (quantités/valeurs)", "taux": "Barème spécifique (forfaitaire + ad valorem Art.131)", "secteur": "Brasseries, importateurs alcools/tabacs, pétroliers", "source_cgi": "L2 — T2 — Accises — Accise (131)", "non_courant": true}, {"id": "taxe_sejour", "libelle": "Taxe de Séjour", "article": "Art.135", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Nuitée × catégorie hôtel (1* à 5*, résidence, auberge)", "taux": "500F à 2 000F par nuitée selon classement (Art.135 bis)", "secteur": "Hôtels, résidences, maisons d'hôtes, campements", "source_cgi": "L2 — T3 — Autres — Séjour (135)", "non_courant": true}, {"id": "cdl", "libelle": "Contribution au Développement Local (CDL)", "article": "Art.136", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "CA HT extrait / commercialisation produits locaux (selon délibération communale Art.136)", "taux": "Forfait ou proportionnel selon commune (barème communal)", "secteur": "Carrières, exploitants ressources locales, producteurs", "source_cgi": "L2 — T3 — Autres — CDL (136)", "non_courant": true}, {"id": "taxe_spectacles", "libelle": "Taxe sur Spectacles, Jeux et Divertissements", "article": "Art.141", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Recettes spectacles, concerts, cinéma, manifestations, jeux", "taux": "5% à 15% des recettes brutes (Art.141) + droits fixes", "secteur": "Organisateurs spectacles, cinémas, parcs, promoteurs", "source_cgi": "L2 — T3 — Autres — Spectacles (141)", "non_courant": true}, {"id": "taxe_boissons", "libelle": "Taxe sur Vente de Boissons Fermentées de Préparation Artisanale", "article": "Art.142", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Volume / CA boissons fermentées artisanales (tchoukoutou, sodabi, etc.)", "taux": "Barème communal (forfait mensuel ou % Art.142)", "secteur": "Producteurs, débits artisanaux, bars traditionnels", "source_cgi": "L2 — T3 — Autres — Boissons (142)", "non_courant": true}, {"id": "taxe_pub", "libelle": "Taxe sur la Publicité", "article": "Art.143", "periodicite": "mensuelle", "echeance": "10 du mois N+1", "base": "Surface affichage, enseignes, écrans, distribution prospectus", "taux": "2 000F à 25 000F /m²/an selon support et zone (Art.143)", "secteur": "Régies pub, annonceurs avec enseignes, panneaux", "source_cgi": "L2 — T3 — Autres — Pub (143)", "non_courant": true}, {"id": "taxe_energie", "libelle": "Taxe sur Consommation d'Électricité et d'Eau", "article": "Art.145", "periodicite": "mensuelle", "echeance": "10 du mois N+1 (retenue à la source SBEE/SONEB)", "base": "kWh consommés / m³ eau — retenue par distributeur", "taux": "Barème kWh (Art.145) : 5F à 50F/kWh selon tranche + eau", "secteur": "Distributeurs SBEE/SONEB, gros consommateurs (retenue)", "source_cgi": "L2 — T3 — Autres — Énergie (145)", "non_courant": true}]}</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="../assets/js/dgi-excel-fill.js"></script>
 <script>
 // ===== Helpers =====
 function toast(t,m,type='info'){const c=document.getElementById('toastContainer');if(!c)return;const bg=type==='success'?'#16a34a':type==='warning'?'#f59e0b':type==='danger'?'#dc2626':'#0A2F5E';const el=document.createElement('div');el.className='toast show align-items-center text-white border-0 mb-2';el.style.background=bg;el.innerHTML=`<div class="d-flex"><div class="toast-body" style="font-size:12px"><strong>${t}</strong><br><small>${m}</small></div><button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="this.parentElement.parentElement.remove()"></button></div>`;c.appendChild(el);setTimeout(()=>el.remove(),4000)}
@@ -235,7 +381,7 @@ function initMensuelDossiers(){ensureDemoDossiers();const sel=document.getElemen
 function onDossierMensuelChange(){selDossierMensuel=document.getElementById('selDossierMensuel').value;const d=getDossiers().find(x=>x.id===selDossierMensuel);const c=getClients().find(x=>x.name===d?.clientName);document.getElementById('dossierMensuelInfo').innerHTML=d?`<strong>${d.clientName}</strong> <span class="badge bg-light text-dark border">${d.ref}</span><br><small>CA annuel: ${c?.ca? (c.ca/1e6).toFixed(1)+'M':'—'} • ${c?.type||''} ${c?.catPersonne||''}</small>`:'Sélectionnez un dossier.';updateRegimeBadge();renderMensuelTable();renderDeclarationsMois()}
 function prevMois(){const d=new Date(moisActif+'-01');d.setMonth(d.getMonth()-1);moisActif=d.toISOString().slice(0,7);document.getElementById('moisInput').value=moisActif;onMoisChange()}
 function nextMois(){const d=new Date(moisActif+'-01');d.setMonth(d.getMonth()+1);moisActif=d.toISOString().slice(0,7);document.getElementById('moisInput').value=moisActif;onMoisChange()}
-function onMoisChange(){moisActif=document.getElementById('moisInput').value||'2026-01';document.getElementById('declMoisLabel').textContent=moisActif;const echeance=new Date(moisActif+'-01');echeance.setMonth(echeance.getMonth()+1);echeance.setDate(15);document.getElementById('declMoisEcheance').textContent=echeance.toLocaleDateString('fr-FR');document.getElementById('moisEcheanceInfo').innerHTML=`Échéance : <strong>15/${String(echeance.getMonth()+1).padStart(2,'0')}/${echeance.getFullYear()}</strong> (TVA) / <strong>10/${String(echeance.getMonth()+1).padStart(2,'0')}</strong> (retenues) — Mois <strong>${moisActif}</strong>`;highlightMoisPills();renderDeclarationsMois();updateRegimeBadge();try{updateAutresMoisLabel(); renderAutresRef(); renderAutresMatrice();}catch(e){}}
+function onMoisChange(){moisActif=document.getElementById('moisInput').value||'2026-01';document.getElementById('declMoisLabel').textContent=moisActif;const echeance=new Date(moisActif+'-01');echeance.setMonth(echeance.getMonth()+1);echeance.setDate(15);document.getElementById('declMoisEcheance').textContent=echeance.toLocaleDateString('fr-FR');document.getElementById('moisEcheanceInfo').innerHTML=`Échéance : <strong>15/${String(echeance.getMonth()+1).padStart(2,'0')}/${echeance.getFullYear()}</strong> (TVA) / <strong>10/${String(echeance.getMonth()+1).padStart(2,'0')}</strong> (retenues) — Mois <strong>${moisActif}</strong>`;highlightMoisPills();renderDeclarationsMois();updateRegimeBadge();try{updateAutresMoisLabel(); renderAutresRef(); renderAutresMatrice();}catch(e){} try{ document.querySelectorAll('#dgiMoisLabel, .dgiMoisLabel2').forEach(el=>el.textContent=moisActif); const d=document.getElementById('dgiVerifyDate-dgicnss'); if(d) d.textContent=new Date().toLocaleDateString('fr-FR'); }catch(e){}}
 function updateRegimeBadge(){const caAnnuel=Object.values(mensuelData).reduce((s,m)=>s+(m.ca||0),0) || (getClients().find(c=>c.name===getDossiers().find(d=>d.id===selDossierMensuel)?.clientName)?.ca||0);const isTPS=caAnnuel>0 && caAnnuel<=50000000;const el=document.getElementById('regimeMensuelBadge');if(!el)return;if(caAnnuel===0) el.innerHTML='<span class="badge bg-light text-dark border">CA annuel —</span>'; else if(isTPS) el.innerHTML=`<span class="badge bg-success">TPS d'office ≤50M — TVA mensuelle non assujettie toute l'année (Art.223)</span> <small style="font-size:10px;color:#065f46">CA annuel ${(caAnnuel/1e6).toFixed(1)}M</small>`; else el.innerHTML=`<span class="badge" style="background:#0A2F5E;color:#FFB81C">Hors TPS >50M — IS/IBA + TVA mensuelle due</span> <small style="font-size:10px">CA ${(caAnnuel/1e6).toFixed(1)}M</small>`;}
 
 // ===== Mensuel Data Init (12 mois) =====
@@ -439,7 +585,7 @@ function genererPDFAutresMois(){
   const html=`<div style="font-family:Roboto;padding:16px;background:#fff">
     <div style="display:flex;justify-content:space-between;border-bottom:3px solid #7c3aed;padding-bottom:10px;margin-bottom:12px">
       <div><div style="font-family:Exo;font-weight:800;font-size:16px;color:#0A2F5E">GOBEX <span style="color:#7c3aed">— Autres déclarations mensuelles (non courantes)</span></div><div style="font-size:11px;color:#64748b">Tableau isolé • Mois ${moisActif} • Échéance 10 N+1 • CGI 2026 Art.128-145 + 293-1</div><div style="font-size:10px;color:#64748b">Dossier ${selDossierMensuel||'—'} • ${cli?.name||''} • IFU ${cli?.ifu||'—'}</div></div>
-      <div style="text-align:right"><span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:50px;font-size:10px">ISOLÉ • NON COURANT</span><br><small style="font-size:9px;color:#64748b">RuleBase ${document.getElementById('ruleBadge')?.textContent||'2026.30.0'}</small></div>
+      <div style="text-align:right"><span style="background:#7c3aed;color:#fff;padding:4px 10px;border-radius:50px;font-size:10px">ISOLÉ • NON COURANT</span><br><small style="font-size:9px;color:#64748b">RuleBase ${document.getElementById('ruleBadge')?.textContent||'2026.31.0'}</small></div>
     </div>
     <h6 style="font-family:Exo;font-weight:800;text-align:center;color:#0A2F5E">Autres déclarations mensuelles — ${moisActif} — non courantes (isolé)</h6>
     <p style="font-size:10px;color:#5b21b6;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;padding:8px">Ce tableau est <strong>isolé</strong> des déclarations courantes (TVA/AIB/ITS/VPS/IRCM/IRF). Il recense uniquement les taxes sectorielles mensuelles (TAFA, jeux, télécoms, accise, séjour, CDL, spectacles, boissons, pub, énergie) dues <strong>seulement si activité concernée</strong>.</p>
@@ -494,7 +640,7 @@ function genererDeclarationMensuelle(type, mois){const d=mensuelData[mois]||{};c
 <div style="font-family:Roboto;padding:16px;background:#fff">
 <div style="display:flex;justify-content:space-between;border-bottom:3px solid #0A2F5E;padding-bottom:10px;margin-bottom:12px">
   <div><div style="font-family:Exo;font-weight:800;font-size:18px;color:#0A2F5E">GOBEX <span style="color:#7c3aed">— Déclaration mensuelle</span></div><div style="font-size:11px;color:#64748b">${type.toUpperCase()} • ${mois} • Échéance 10-15 ${mois.slice(0,4)}/${String(parseInt(mois.slice(5))+1).padStart(2,'0')}</div><div style="font-size:10px;color:#64748b">Dossier ${selDossierMensuel||'—'} • ${cli?.name||''} • IFU ${cli?.ifu||'—'}</div></div>
-  <div style="text-align:right"><span style="background:#0A2F5E;color:#FFB81C;padding:4px 10px;border-radius:50px;font-size:10px">CGI 2026 • ${document.getElementById('ruleBadge')?.textContent||'2026.30.0'}</span><br><small style="font-size:9px;color:#64748b">Source: ${d.source||'manuel'} • FEC 70* / 44* État</small></div>
+  <div style="text-align:right"><span style="background:#0A2F5E;color:#FFB81C;padding:4px 10px;border-radius:50px;font-size:10px">CGI 2026 • ${document.getElementById('ruleBadge')?.textContent||'2026.31.0'}</span><br><small style="font-size:9px;color:#64748b">Source: ${d.source||'manuel'} • FEC 70* / 44* État</small></div>
 </div>
 <h6 style="font-family:Exo;font-weight:800;text-align:center;color:#0A2F5E">${type==='tva'?'TVA — Art.241 18%': type==='aib'?'AIB — Art.130-134': type==='its'?'ITS — Art.125': type==='vps'?'VPS — Art.191': type==='ircm'?'IRCM — Art.68': type==='irf'?'IRF — Art.101': type.toUpperCase()} — ${mois}</h6>
 <table style="width:100%;font-size:11px;border-collapse:collapse;margin-top:8px">

@@ -1,5 +1,9 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Déclarations Mensuelles — CGI 2026 • GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--calc:#7c3aed;--light:#f4f7fb}body{font-family:Roboto;background:var(--light);min-height:100vh}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px;z-index:1000;overflow-y:auto}.main{margin-left:280px;padding:20px}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:16px;border:1px solid #eef2f6;margin-bottom:12px}.dropzone{border:2px dashed #cbd5e1;border-radius:12px;padding:14px;text-align:center;background:#f8fafc;cursor:pointer;transition:.2s}.dropzone:hover{border-color:var(--calc);background:#f5f3ff}.dropzone.filled{border-color:#86efac;background:#f0fdf4;border-style:solid}.badge-rule{background:var(--primary);color:var(--accent);border:1px solid var(--accent);font-size:10px;padding:3px 8px;border-radius:50px}.table-mensuelle{font-size:11px}.table-mensuelle th{font-size:10px;white-space:nowrap;background:#f8fafc;position:sticky;top:0;z-index:2}.table-mensuelle td{vertical-align:middle;padding:4px 6px}.table-mensuelle input{font-size:11px;padding:2px 6px;height:28px;border:1px solid #e2e8f0;border-radius:6px;width:100%}.table-mensuelle input:focus{border-color:var(--calc);box-shadow:0 0 0 2px rgba(124,58,237,.12);outline:none}.month-pill{border-radius:50px;padding:6px 12px;font-size:11px;font-weight:600;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;white-space:nowrap}.month-pill.active{background:var(--primary);color:var(--accent);border-color:var(--primary)}.month-pill.has-data{border-color:#86efac;background:#f0fdf4}.decl-card{border:1px solid #e2e8f0;border-radius:12px;padding:12px;background:#fff;transition:.15s}.decl-card.has-amount{border-color:var(--calc);background:#f5f3ff}.decl-card.exonere{border-color:#86efac;background:#f0fdf4;opacity:.85}.fiche-decl{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}#tableAutresMatrice input{font-size:10px;padding:2px 4px;height:24px;border:1px solid #ddd6fe;border-radius:6px;width:90px}#tableAutresMatrice input:focus{border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.15);outline:none}
-.legende-para{font-size:10px;color:#64748b;background:#f8fafc;border:1px dashed #e2e8f0;border-radius:8px;padding:8px;margin-top:10px}.abbr-para{cursor:help;border-bottom:1px dotted #7c3aed}</style></head><body>
+.legende-para{font-size:10px;color:#64748b;background:#f8fafc;border:1px dashed #e2e8f0;border-radius:8px;padding:8px;margin-top:10px}.abbr-para{cursor:help;border-bottom:1px dotted #7c3aed}/* DGI tabs */
+#dgiTabs .nav-link{color:#0A2F5E;border:1px solid #e2e8f0;background:#fff}
+#dgiTabs .nav-link.active{background:#0A2F5E !important;color:#FFB81C !important;border-color:#0A2F5E}
+#dgiTabContent .table-responsive{max-width:100%}
+</style></head><body>
 <div class="sidebar" id="sidebar"><div style="padding:20px;border-bottom:1px solid rgba(255,255,255,.1)"><div style="font-family:Exo;font-weight:800;font-size:20px;">GOBEX <span style="color:#FFB81C;">MENSUEL</span></div><div style="font-size:10px;letter-spacing:1.2px;color:rgba(255,255,255,.5)">DÉCLARATIONS • CGI 2026</div><div class="mt-2"><span class="badge" style="background:#7c3aed">MENSUEL</span> <span class="badge bg-warning text-dark">6 moteurs</span> <span class="badge bg-info text-dark">FEC → mois</span></div><small style="color:rgba(255,255,255,.5)">RB/ABC/15A3265 • CGI 2026</small></div>
 <div style="padding:12px 20px;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.45);font-weight:700">WORKFLOW</div>
 <a href="index.html" class="menu-item" style="display:flex;gap:12px;padding:10px 20px;color:rgba(255,255,255,.7);text-decoration:none"><i class="bi bi-diagram-3"></i> Hub</a>
@@ -117,7 +121,147 @@
   <!-- Zone d'impression -->
   <div id="mensuelPrintable" class="d-none"></div>
 
-  <!-- Récap annuel -->
+  <!-- ===== FICHES DGI OFFICIELLES — PRÉ-REMPLISSAGE AUTO — NOUVEL AFFICHAGE TABS ===== -->
+<div class="stat-card" style="border:1.5px solid #0A2F5E;background:#fff;overflow:visible">
+  <div class="d-flex align-items-center gap-3 flex-wrap mb-3">
+    <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center justify-content-center" style="width:44px;height:44px;border-radius:12px;background:#0A2F5E;color:#FFB81C;font-size:20px"><i class="bi bi-file-earmark-excel"></i></div>
+      <div>
+        <h6 class="mb-0" style="font-family:Exo;font-weight:800;color:#0A2F5E;letter-spacing:-0.3px">Fiches DGI officielles — Pré-remplissage automatique</h6>
+        <small class="text-muted">3 annexes détaillées • Cases jaunes pré-remplies depuis FEC/paie/MECeF • <span style="color:#0A2F5E;font-weight:600">Vous vérifiez</span> puis Excel + XML</small>
+      </div>
+    </div>
+    <div class="ms-auto d-flex gap-2 align-items-center flex-wrap">
+      <span class="badge" style="background:#0A2F5E;color:#FFB81C"><i class="bi bi-shield-check me-1"></i>VÉRIFIABLE</span>
+      <span class="badge" style="background:#7c3aed;color:#fff">Mois <span id="dgiMoisLabel">2026-01</span></span>
+      <div class="btn-group btn-group-sm">
+        <a href="../docs/modeles-dgi/dgi-cnss-2026.xlsx" class="btn btn-light border" download title="Modèle vierge DGICNSS"><i class="bi bi-download me-1"></i>CNSS</a>
+        <a href="../docs/modeles-dgi/dgi-tva-annexe-2026.xlsx" class="btn btn-light border" download title="Modèle vierge TVA"><i class="bi bi-download me-1"></i>TVA</a>
+        <a href="../docs/modeles-dgi/dgi-aib-annexe-2026.xlsx" class="btn btn-light border" download title="Modèle vierge AIB"><i class="bi bi-download me-1"></i>AIB</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert small d-flex gap-2 align-items-start py-2 px-3 mb-3" style="background:#f0f9ff;border:1px solid #bae6fd;color:#0c4a6e">
+    <i class="bi bi-info-circle mt-1" style="color:#0284c7"></i>
+    <div style="line-height:1.5">
+      <strong>Comment ça marche :</strong> <span class="badge bg-light text-dark border" style="font-size:10px">1. Pré-remplir</span> → vérifiez les <span style="background:#FFFACD;padding:1px 6px;border-radius:4px;border:1px solid #fde68a">cases jaunes</span> (éditables) → <span style="background:#F0FDF4;padding:1px 6px;border-radius:4px;border:1px solid #86efac">vert = calculé</span> → cochez <em>Je certifie</em> → <strong>Excel + XML</strong> → import EDI sur <code>impots.bj</code>.
+      <br><small><strong>Sources :</strong> DGICNSS = paie/FEC 64* + barème ITS Art.125 + CNSS 9%/2%/6.4%/3.6% • TVA = FEC 445/60* + MECeF • AIB = FEC 60*/447 • IFU/Année/Mois = dossier.</small>
+    </div>
+  </div>
+
+  <!-- Onglets -->
+  <ul class="nav nav-pills mb-3" id="dgiTabs" role="tablist" style="gap:8px">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="tab-dgicnss" data-bs-toggle="pill" data-bs-target="#pane-dgicnss" type="button" role="tab" style="font-weight:700;font-size:13px;background:#0A2F5E;color:#FFB81C"><i class="bi bi-people me-1"></i>DGICNSS <span class="badge bg-warning text-dark ms-1" style="font-size:9px">ITS+CNSS</span></button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab-tva" data-bs-toggle="pill" data-bs-target="#pane-tva" type="button" role="tab" style="font-weight:700;font-size:13px"><i class="bi bi-receipt me-1"></i>TVA <span class="badge bg-light text-dark border ms-1" style="font-size:9px">11 col</span></button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tab-aib" data-bs-toggle="pill" data-bs-target="#pane-aib" type="button" role="tab" style="font-weight:700;font-size:13px"><i class="bi bi-cart me-1"></i>AIB <span class="badge bg-light text-dark border ms-1" style="font-size:9px">9 col</span></button>
+    </li>
+    <li class="ms-auto d-flex align-items-center">
+      <button class="btn btn-sm" style="background:#FFB81C;color:#0A2F5E;font-weight:700" onclick="dgiPreRemplir('dgicnss');dgiPreRemplir('tva');dgiPreRemplir('aib')"><i class="bi bi-lightning me-1"></i>Pré-remplir les 3</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="dgiTabContent" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px">
+    <!-- DGICNSS Pane -->
+    <div class="tab-pane fade show active" id="pane-dgicnss" role="tabpanel">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+        <div>
+          <strong style="color:#0A2F5E;font-size:13px"><i class="bi bi-people me-1"></i>DGICNSS — Déclaration commune DGI-CNSS</strong>
+          <small class="text-muted ms-2">26 colonnes • Code <strong>DGICNSS</strong> • Annexe salariés</small>
+        </div>
+        <span class="badge bg-light text-dark border" style="font-size:11px" id="dgiDgicnssCount">0 salarié(s)</span>
+      </div>
+      <small class="text-muted d-block mb-2" style="font-size:11px">Source : livre paie / FEC 64* du mois <span class="dgiMoisLabel2 fw-bold" style="color:#0A2F5E">2026-01</span> • <span style="background:#FFFACD;padding:1px 4px;border-radius:4px">jaune = à vérifier</span> • <span style="background:#F0FDF4;padding:1px 4px;border-radius:4px">vert = calculé</span></small>
+      <div class="d-flex gap-2 mb-2">
+        <button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C" onclick="dgiPreRemplir('dgicnss')"><i class="bi bi-magic me-1"></i>Pré-remplir DGICNSS</button>
+        <button class="btn btn-sm btn-light border" onclick="dgiAddRow('dgicnss')"><i class="bi bi-plus-lg me-1"></i>Ajouter salarié</button>
+        <span class="ms-auto small text-muted align-self-center">Éditable • scroll horizontal →</span>
+      </div>
+      <div id="dgiPreviewDgicnss" class="bg-white rounded-3 border" style="min-height:80px;padding:8px"></div>
+      <div id="dgiCard-dgicnss" class="d-none mt-3 p-3 bg-white border rounded-3">
+        <div class="form-check p-3 border rounded-3" style="background:#fffbeb;border-color:#fde68a !important">
+          <input class="form-check-input" type="checkbox" id="chkDgiVerify-dgicnss" onchange="dgiToggleVerified('dgicnss', this.checked)">
+          <label class="form-check-label" for="chkDgiVerify-dgicnss" style="font-size:13px"><strong>Je certifie avoir vérifié</strong> les cases jaunes le <span class="text-muted" id="dgiVerifyDate-dgicnss"></span> — autoriser génération</label>
+          <small class="d-block text-muted" style="font-size:11px">En cochant, vous confirmez que les montants correspondent à votre paie/FEC.</small>
+        </div>
+        <div class="row g-2 mt-3">
+          <div class="col-md-4"><button id="btnDgiExcel-dgicnss" class="btn w-100" style="background:#107C41;color:#fff" disabled onclick="dgiGenererExcel('dgicnss')"><i class="bi bi-file-earmark-excel me-1"></i>Excel rempli</button></div>
+          <div class="col-md-4"><button id="btnDgiXml-dgicnss" class="btn btn-outline-dark w-100" disabled onclick="dgiGenererXML('dgicnss')"><i class="bi bi-code me-1"></i>XML EDI</button></div>
+          <div class="col-md-4"><button id="btnDgiBoth-dgicnss" class="btn w-100" style="background:#0A2F5E;color:#FFB81C" disabled onclick="dgiGenererTout('dgicnss')"><i class="bi bi-download me-1"></i>Excel + XML</button></div>
+        </div>
+        <pre id="dgiXmlPreview-dgicnss" class="small mt-3 p-3 bg-dark text-white rounded-3 d-none" style="max-height:180px;overflow:auto;font-size:10px"></pre>
+      </div>
+    </div>
+    <!-- TVA Pane -->
+    <div class="tab-pane fade" id="pane-tva" role="tabpanel">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+        <div>
+          <strong style="color:#0A2F5E;font-size:13px"><i class="bi bi-receipt me-1" style="color:#7c3aed"></i>TVA — Annexe déductible</strong>
+          <small class="text-muted ms-2">11 colonnes • Code <strong>TVA</strong> • Factures déductibles</small>
+        </div>
+        <span class="badge bg-light text-dark border" style="font-size:11px" id="dgiTvaCount">0 facture(s)</span>
+      </div>
+      <small class="text-muted d-block mb-2" style="font-size:11px">Source : FEC 445 / MECeF du mois <span class="dgiMoisLabel2 fw-bold" style="color:#0A2F5E">2026-01</span> • Prorata 0-1 (Art.248-249)</small>
+      <div class="d-flex gap-2 mb-2">
+        <button class="btn btn-sm" style="background:#7c3aed;color:#fff" onclick="dgiPreRemplir('tva')"><i class="bi bi-magic me-1"></i>Pré-remplir TVA</button>
+        <button class="btn btn-sm btn-light border" onclick="dgiAddRow('tva')"><i class="bi bi-plus-lg me-1"></i>Ajouter facture</button>
+      </div>
+      <div id="dgiPreviewTva" class="bg-white rounded-3 border" style="min-height:80px;padding:8px"></div>
+      <div id="dgiCard-tva" class="d-none mt-3 p-3 bg-white border rounded-3">
+        <div class="form-check p-3 border rounded-3" style="background:#fffbeb;border-color:#fde68a !important">
+          <input class="form-check-input" type="checkbox" id="chkDgiVerify-tva" onchange="dgiToggleVerified('tva', this.checked)">
+          <label class="form-check-label" for="chkDgiVerify-tva" style="font-size:13px"><strong>Je certifie avoir vérifié</strong> les cases jaunes</label>
+        </div>
+        <div class="row g-2 mt-3">
+          <div class="col-md-6"><button id="btnDgiExcel-tva" class="btn w-100" style="background:#107C41;color:#fff" disabled onclick="dgiGenererExcel('tva')"><i class="bi bi-file-earmark-excel me-1"></i>Excel rempli</button></div>
+          <div class="col-md-6"><button id="btnDgiXml-tva" class="btn btn-outline-dark w-100" disabled onclick="dgiGenererXML('tva')"><i class="bi bi-code me-1"></i>XML EDI</button></div>
+        </div>
+        <pre id="dgiXmlPreview-tva" class="small mt-3 p-3 bg-dark text-white rounded-3 d-none" style="max-height:180px;overflow:auto;font-size:10px"></pre>
+      </div>
+    </div>
+    <!-- AIB Pane -->
+    <div class="tab-pane fade" id="pane-aib" role="tabpanel">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+        <div>
+          <strong style="color:#0A2F5E;font-size:13px"><i class="bi bi-cart me-1" style="color:#198754"></i>AIB — Acomptes Bénéfices</strong>
+          <small class="text-muted ms-2">9 colonnes • Code <strong>AIB</strong> • Retenues à la source</small>
+        </div>
+        <span class="badge bg-light text-dark border" style="font-size:11px" id="dgiAibCount">0 ligne(s)</span>
+      </div>
+      <small class="text-muted d-block mb-2" style="font-size:11px">Source : FEC 60* / 447 du mois <span class="dgiMoisLabel2 fw-bold" style="color:#0A2F5E">2026-01</span> • Taux 1%/3%/5% Art.130</small>
+      <div class="d-flex gap-2 mb-2">
+        <button class="btn btn-sm" style="background:#198754;color:#fff" onclick="dgiPreRemplir('aib')"><i class="bi bi-magic me-1"></i>Pré-remplir AIB</button>
+        <button class="btn btn-sm btn-light border" onclick="dgiAddRow('aib')"><i class="bi bi-plus-lg me-1"></i>Ajouter ligne</button>
+      </div>
+      <div id="dgiPreviewAib" class="bg-white rounded-3 border" style="min-height:80px;padding:8px"></div>
+      <div id="dgiCard-aib" class="d-none mt-3 p-3 bg-white border rounded-3">
+        <div class="form-check p-3 border rounded-3" style="background:#fffbeb;border-color:#fde68a !important">
+          <input class="form-check-input" type="checkbox" id="chkDgiVerify-aib" onchange="dgiToggleVerified('aib', this.checked)">
+          <label class="form-check-label" for="chkDgiVerify-aib" style="font-size:13px"><strong>Je certifie avoir vérifié</strong> les cases jaunes</label>
+        </div>
+        <div class="row g-2 mt-3">
+          <div class="col-md-6"><button id="btnDgiExcel-aib" class="btn w-100" style="background:#107C41;color:#fff" disabled onclick="dgiGenererExcel('aib')"><i class="bi bi-file-earmark-excel me-1"></i>Excel rempli</button></div>
+          <div class="col-md-6"><button id="btnDgiXml-aib" class="btn btn-outline-dark w-100" disabled onclick="dgiGenererXML('aib')"><i class="bi bi-code me-1"></i>XML EDI</button></div>
+        </div>
+        <pre id="dgiXmlPreview-aib" class="small mt-3 p-3 bg-dark text-white rounded-3 d-none" style="max-height:180px;overflow:auto;font-size:10px"></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3 p-3 rounded-3 d-flex align-items-center gap-3 flex-wrap" style="background:#0A2F5E;color:#fff">
+    <i class="bi bi-lightbulb" style="font-size:20px;color:#FFB81C"></i>
+    <small style="color:rgba(255,255,255,0.9)">Après génération, importez le <strong>XML</strong> dans <code style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;color:#FFB81C">impots.bj → Déclaration → Annexes détaillées → Transmission par EDI</code>. Le PDF récapitulatif DGI s'affiche automatiquement après import. L'Excel conserve les formules : vous pouvez aussi cliquer sur <em>Génération du XML</em> dans Excel.</small>
+  </div>
+</div>
+
+
+
+<!-- Récap annuel -->
   <div class="stat-card">
     <h6 style="font-family:Exo;font-weight:800"><i class="bi bi-graph-up me-1" style="color:#198754"></i>Récap annuel 2026 — 12 mois</h6>
     <div class="table-responsive" style="border:1px solid #eef2f6;border-radius:10px">
@@ -209,147 +353,7 @@
 </div>
 
 
-<!-- ===== FICHES DGI OFFICIELLES — PRÉ-REMPLISSAGE AUTO (Excel + XML) — VÉRIFIABLE ===== -->
-<div class="stat-card" style="border:2px solid #0A2F5E;background:linear-gradient(135deg,#f8fafc 0%, #eff6ff 100%);position:relative;overflow:hidden">
-  <div style="position:absolute;top:0;right:0;background:#0A2F5E;color:#FFB81C;padding:4px 12px;border-radius:0 16px 0 12px;font-size:10px;font-weight:800;letter-spacing:0.8px"><i class="bi bi-file-earmark-excel me-1"></i>DGI OFFICIEL • EXCEL + XML • VÉRIFIABLE</div>
-  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
-    <div>
-      <h6 class="mb-1" style="font-family:Exo;font-weight:800;color:#0A2F5E"><i class="bi bi-file-earmark-spreadsheet me-2" style="color:#0A2F5E"></i>Fiches DGI officielles — Pré-remplissage automatique des cases</h6>
-      <p class="small mb-1" style="color:#334155">Les moteurs remplissent <strong>automatiquement les cases jaunes</strong> des 3 fichiers Excel officiels DGI à macros (DGICNSS / TVA / AIB) à partir du <strong>FEC/balance/paie/MECeF du mois sélectionné</strong>. <strong>Vous vérifiez</strong> (cases éditables, jaune = remplissable, vert = calculé) puis vous cochez <em>Je certifie avoir vérifié</em> → <strong>Excel rempli + XML EDI</strong> prêts à importer sur <code>impots.bj → Transmission des annexes détaillées par EDI</code>.</p>
-      <div class="d-flex gap-1 flex-wrap">
-        <span class="badge" style="background:#0A2F5E;color:#FFB81C">3 annexes détaillées</span>
-        <span class="badge bg-light text-dark border">IFU 13c • Année • Mois</span>
-        <span class="badge" style="background:#7c3aed;color:#fff">Mois <span id="dgiMoisLabel">2026-01</span></span>
-        <span class="badge bg-warning text-dark">Vérification obligatoire</span>
-      </div>
-    </div>
-    <div class="d-flex gap-2 align-items-center flex-wrap">
-      <a href="../docs/modeles-dgi/dgi-cnss-2026.xlsx" class="btn btn-sm btn-light" download><i class="bi bi-download me-1"></i>Modèle DGICNSS vierge</a>
-      <a href="../docs/modeles-dgi/dgi-tva-annexe-2026.xlsx" class="btn btn-sm btn-light" download><i class="bi bi-download me-1"></i>Modèle TVA vierge</a>
-      <a href="../docs/modeles-dgi/dgi-aib-annexe-2026.xlsx" class="btn btn-sm btn-light" download><i class="bi bi-download me-1"></i>Modèle AIB vierge</a>
-    </div>
-  </div>
 
-  <div class="alert small mt-3 mb-2 d-flex gap-2" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e">
-    <i class="bi bi-shield-check mt-1"></i>
-    <div>
-      <strong>Workflow vérifiable :</strong> <code>Calculé (moteur)</code> → <code>Pré-rempli (jaune)</code> → <code>Vérifié (vous)</code> → <code>Généré (Excel + XML)</code>. Les totaux calculés (vert) sont recalculés en live si vous modifiez une case jaune. <strong>Les fichiers générés conservent les formules Excel</strong> — vous pouvez encore cliquer sur le bouton macro <em>Génération du XML</em> dans Excel si vous préférez, ou utiliser le XML généré directement par GOBEX (même format EDI).
-      <br><small><strong>Sources :</strong> DGICNSS = paie/FEC 64* + barème ITS Art.125 + CNSS 9%/2%/6.4%/3.6% • TVA = FEC 445/60* + MECeF • AIB = FEC 60* + 447 • IFU/Année/Mois = dossier sélectionné.</small>
-    </div>
-  </div>
-
-  <!-- 3 colonnes -->
-  <div class="row g-3 mt-1">
-    <!-- DGICNSS -->
-    <div class="col-lg-4">
-      <div class="p-3 border rounded-3 h-100" style="background:#fff;border-color:#0A2F5E !important">
-        <div class="d-flex justify-content-between align-items-start mb-2">
-          <h6 class="mb-0" style="font-family:Exo;font-weight:800;font-size:13px;color:#0A2F5E"><i class="bi bi-people me-1"></i>DGICNSS — DGI-CNSS</h6>
-          <span class="badge bg-success" style="font-size:9px">ITS + CNSS</span>
-        </div>
-        <small class="text-muted" style="font-size:11px">Annexe détaillée salariés — Code <strong>DGICNSS</strong> — 26 colonnes — Génère XML à importer en EDI</small>
-        <div class="mt-2 p-2 rounded-3" style="background:#f8fafc;border:1px solid #e2e8f0;font-size:11px">
-          <div><strong id="dgiDgicnssCount">0 salarié(s)</strong></div>
-          <small class="text-muted">Source: livre paie / FEC 64* du mois <span class="dgiMoisLabel2">2026-01</span></small>
-        </div>
-        <div class="d-grid gap-2 mt-3">
-          <button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C" onclick="dgiPreRemplir('dgicnss')"><i class="bi bi-magic me-1"></i>Pré-remplir DGICNSS</button>
-          <div id="dgiPreviewDgicnss" class="mt-2"></div>
-          <div id="dgiCard-dgicnss" class="d-none mt-2">
-            <div class="d-flex gap-2">
-              <button class="btn btn-sm btn-light flex-grow-1" onclick="dgiAddRow('dgicnss')"><i class="bi bi-plus-lg me-1"></i>Ajouter salarié</button>
-              <span class="badge bg-light text-dark border align-self-center" style="font-size:9px">Éditable</span>
-            </div>
-            <div class="form-check mt-2 p-2 border rounded-3" style="background:#fffbeb;border-color:#fde68a">
-              <input class="form-check-input" type="checkbox" id="chkDgiVerify-dgicnss" onchange="dgiToggleVerified('dgicnss', this.checked)">
-              <label class="form-check-label small" for="chkDgiVerify-dgicnss" style="font-size:11px"><strong>Je certifie avoir vérifié</strong> les cases jaunes le <span class="text-muted" id="dgiVerifyDate-dgicnss"></span> — autoriser génération</label>
-            </div>
-            <div class="d-grid gap-2 mt-2">
-              <button id="btnDgiExcel-dgicnss" class="btn btn-sm" style="background:#107C41;color:#fff" disabled onclick="dgiGenererExcel('dgicnss')"><i class="bi bi-file-earmark-excel me-1"></i>Télécharger Excel rempli</button>
-              <button id="btnDgiXml-dgicnss" class="btn btn-sm btn-outline-dark" disabled onclick="dgiGenererXML('dgicnss')"><i class="bi bi-code me-1"></i>Télécharger XML EDI</button>
-              <button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C" disabled id="btnDgiBoth-dgicnss" onclick="dgiGenererTout('dgicnss')"><i class="bi bi-download me-1"></i>Excel + XML</button>
-            </div>
-            <pre id="dgiXmlPreview-dgicnss" class="small mt-2 p-2 bg-dark text-white rounded-3 d-none" style="max-height:160px;overflow:auto;font-size:9px"></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- TVA -->
-    <div class="col-lg-4">
-      <div class="p-3 border rounded-3 h-100" style="background:#fff;border-color:#7c3aed !important">
-        <div class="d-flex justify-content-between align-items-start mb-2">
-          <h6 class="mb-0" style="font-family:Exo;font-weight:800;font-size:13px;color:#0A2F5E"><i class="bi bi-receipt me-1" style="color:#7c3aed"></i>TVA — Annexe déductible</h6>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:9px">11 colonnes</span>
-        </div>
-        <small class="text-muted" style="font-size:11px">Annexe détaillée TVA — Code <strong>TVA</strong> — 11 colonnes — Factures déductibles</small>
-        <div class="mt-2 p-2 rounded-3" style="background:#f8fafc;border:1px solid #e2e8f0;font-size:11px">
-          <div><strong id="dgiTvaCount">0 facture(s)</strong></div>
-          <small class="text-muted">Source: FEC 445 / MECeF du mois <span class="dgiMoisLabel2">2026-01</span></small>
-        </div>
-        <div class="d-grid gap-2 mt-3">
-          <button class="btn btn-sm" style="background:#7c3aed;color:#fff" onclick="dgiPreRemplir('tva')"><i class="bi bi-magic me-1"></i>Pré-remplir TVA</button>
-          <div id="dgiPreviewTva" class="mt-2"></div>
-          <div id="dgiCard-tva" class="d-none mt-2">
-            <div class="d-flex gap-2">
-              <button class="btn btn-sm btn-light flex-grow-1" onclick="dgiAddRow('tva')"><i class="bi bi-plus-lg me-1"></i>Ajouter facture</button>
-              <span class="badge bg-light text-dark border align-self-center" style="font-size:9px">Éditable</span>
-            </div>
-            <div class="form-check mt-2 p-2 border rounded-3" style="background:#fffbeb;border-color:#fde68a">
-              <input class="form-check-input" type="checkbox" id="chkDgiVerify-tva" onchange="dgiToggleVerified('tva', this.checked)">
-              <label class="form-check-label small" for="chkDgiVerify-tva" style="font-size:11px"><strong>Je certifie avoir vérifié</strong> les cases jaunes</label>
-            </div>
-            <div class="d-grid gap-2 mt-2">
-              <button id="btnDgiExcel-tva" class="btn btn-sm" style="background:#107C41;color:#fff" disabled onclick="dgiGenererExcel('tva')"><i class="bi bi-file-earmark-excel me-1"></i>Télécharger Excel rempli</button>
-              <button id="btnDgiXml-tva" class="btn btn-sm btn-outline-dark" disabled onclick="dgiGenererXML('tva')"><i class="bi bi-code me-1"></i>Télécharger XML EDI</button>
-            </div>
-            <pre id="dgiXmlPreview-tva" class="small mt-2 p-2 bg-dark text-white rounded-3 d-none" style="max-height:160px;overflow:auto;font-size:9px"></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- AIB -->
-    <div class="col-lg-4">
-      <div class="p-3 border rounded-3 h-100" style="background:#fff;border-color:#198754 !important">
-        <div class="d-flex justify-content-between align-items-start mb-2">
-          <h6 class="mb-0" style="font-family:Exo;font-weight:800;font-size:13px;color:#0A2F5E"><i class="bi bi-cart me-1" style="color:#198754"></i>AIB — Acomptes Bénéfices</h6>
-          <span class="badge bg-success" style="font-size:9px">9 colonnes</span>
-        </div>
-        <small class="text-muted" style="font-size:11px">Annexe détaillée AIB — Code <strong>AIB</strong> — 9 colonnes — Retenues à la source</small>
-        <div class="mt-2 p-2 rounded-3" style="background:#f8fafc;border:1px solid #e2e8f0;font-size:11px">
-          <div><strong id="dgiAibCount">0 ligne(s)</strong></div>
-          <small class="text-muted">Source: FEC 60* / 447 du mois <span class="dgiMoisLabel2">2026-01</span></small>
-        </div>
-        <div class="d-grid gap-2 mt-3">
-          <button class="btn btn-sm" style="background:#198754;color:#fff" onclick="dgiPreRemplir('aib')"><i class="bi bi-magic me-1"></i>Pré-remplir AIB</button>
-          <div id="dgiPreviewAib" class="mt-2"></div>
-          <div id="dgiCard-aib" class="d-none mt-2">
-            <div class="d-flex gap-2">
-              <button class="btn btn-sm btn-light flex-grow-1" onclick="dgiAddRow('aib')"><i class="bi bi-plus-lg me-1"></i>Ajouter ligne</button>
-              <span class="badge bg-light text-dark border align-self-center" style="font-size:9px">Éditable</span>
-            </div>
-            <div class="form-check mt-2 p-2 border rounded-3" style="background:#fffbeb;border-color:#fde68a">
-              <input class="form-check-input" type="checkbox" id="chkDgiVerify-aib" onchange="dgiToggleVerified('aib', this.checked)">
-              <label class="form-check-label small" for="chkDgiVerify-aib" style="font-size:11px"><strong>Je certifie avoir vérifié</strong> les cases jaunes</label>
-            </div>
-            <div class="d-grid gap-2 mt-2">
-              <button id="btnDgiExcel-aib" class="btn btn-sm" style="background:#107C41;color:#fff" disabled onclick="dgiGenererExcel('aib')"><i class="bi bi-file-earmark-excel me-1"></i>Télécharger Excel rempli</button>
-              <button id="btnDgiXml-aib" class="btn btn-sm btn-outline-dark" disabled onclick="dgiGenererXML('aib')"><i class="bi bi-code me-1"></i>Télécharger XML EDI</button>
-            </div>
-            <pre id="dgiXmlPreview-aib" class="small mt-2 p-2 bg-dark text-white rounded-3 d-none" style="max-height:160px;overflow:auto;font-size:9px"></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mt-3 p-3 rounded-3" style="background:#0A2F5E;color:#fff">
-    <div class="d-flex gap-2 align-items-center flex-wrap">
-      <span class="badge bg-warning text-dark">Workflow vérifiable</span>
-      <small style="color:rgba(255,255,255,0.8)">Après <strong>Pré-remplir</strong> → vérifiez les tableaux jaunes → cochez → <strong>Excel + XML</strong> → importez le XML dans <code>impots.bj → Déclaration → Annexes détaillées → Transmission par EDI</code> → le PDF récapitulatif DGI s'affiche automatiquement après import.</small>
-      <button class="btn btn-sm ms-auto" style="background:#FFB81C;color:#0A2F5E" onclick="dgiPreRemplir('dgicnss');dgiPreRemplir('tva');dgiPreRemplir('aib')"><i class="bi bi-lightning me-1"></i>Pré-remplir les 3</button>
-    </div>
-  </div>
-</div>
 
 <div class="text-center small text-muted mt-3" style="font-size:10px">
 
@@ -656,7 +660,11 @@ function genererDeclarationMensuelle(type, mois){const d=mensuelData[mois]||{};c
 <div style="margin-top:12px;display:flex;gap:12px"><div style="flex:1;border:1px solid #e2e8f0;border-top:3px solid #0A2F5E;padding:8px;text-align:center;border-radius:8px;background:#f8fafc"><strong>GOBEX</strong><br><small>Cachet</small><div style="height:40px"></div></div><div style="flex:1;border:1px solid #e2e8f0;border-top:3px solid #7c3aed;padding:8px;text-align:center;border-radius:8px;background:#f8fafc"><strong>Entreprise</strong><br><small>Signature</small><div style="height:40px"></div></div></div>
 </div>`;return html}
 function genererToutesDeclarationsMois(){const html=['tva','aib','its','vps','ircm','irf'].map(id=>genererDeclarationMensuelle(id,moisActif)).join('<div style="page-break-after:always"></div>');const cont=document.getElementById('mensuelPrintable');cont.innerHTML=`<div class="fiche-decl">${html}</div>`;cont.classList.remove('d-none');toast('Déclarations','6 déclarations générées pour '+moisActif,'success');cont.scrollIntoView({behavior:'smooth'})}
-function imprimerDeclarationsMois(){genererToutesDeclarationsMois();const html=document.getElementById('mensuelPrintable').innerHTML;const w=window.open('','_blank');w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Déclarations ${moisActif}</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><style>body{padding:16px}</style></head><body>${html}<script>window.onload=()=>setTimeout(()=>window.print(),400)<\/script></body></html>`);w.document.close()}
+function imprimerDeclarationsMois(){genererToutesDeclarationsMois();const html=document.getElementById('mensuelPrintable').innerHTML;const w=window.open('','_blank');w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Déclarations ${moisActif}</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><style>body{padding:16px}/* DGI tabs */
+#dgiTabs .nav-link{color:#0A2F5E;border:1px solid #e2e8f0;background:#fff}
+#dgiTabs .nav-link.active{background:#0A2F5E !important;color:#FFB81C !important;border-color:#0A2F5E}
+#dgiTabContent .table-responsive{max-width:100%}
+</style></head><body>${html}<script>window.onload=()=>setTimeout(()=>window.print(),400)<\/script></body></html>`);w.document.close()}
 function telechargerMensuelPDF(){genererToutesDeclarationsMois();const cont=document.getElementById('mensuelPrintable');let el=cont.querySelector('.fiche-decl');if(!el){cont.classList.remove('d-none');el=cont.querySelector('.fiche-decl')}if(typeof window.html2pdf!=='function'){toast('PDF','html2pdf non chargé','warning');imprimerDeclarationsMois();return}const opt={margin:[6,6,6,6],filename:`Declarations-${moisActif}-${selDossierMensuel||'GOBEX'}.pdf`,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}};window.html2pdf().set(opt).from(el).save().catch(e=>{console.error(e);toast('PDF',e.message,'warning')})}
 
 // ===== Init =====

@@ -165,86 +165,207 @@
     return rows;
   }
 
-  // Render preview tables (editable)
+  // Render preview tables (editable) — inline + push plein largeur
   function renderDgiPreview(type){
     const {moisActif} = getMoisParts();
     let rows, container, html='';
     if(type==='dgicnss'){
       rows = buildDgiPreviewDGICNSS();
       container = document.getElementById('dgiPreviewDgicnss');
-      if(!container) return;
-      html = `<div class="table-responsive" style="max-height:360px;overflow:auto;border:1px solid #0A2F5E;border-radius:10px">
-      <table class="table table-sm mb-0" style="font-size:10px"><thead style="position:sticky;top:0;z-index:2;background:#0A2F5E;color:#FFB81C"><tr>
-        <th>#</th><th>N° Employeur</th><th>N° Sécu</th><th>IFU</th><th>Nom</th><th>Prénoms</th><th>Type</th><th>Taux</th><th>Jours</th><th>Rémun (1)</th><th>Total (7)</th><th>ITS</th><th>CNSS (12)</th>
-      </tr></thead><tbody>`;
-      rows.forEach((r,i)=>{
-        html+=`<tr>
-          <td>${i+1}</td>
-          <td><input value="${r.nEmployeur}" onchange="dgiUpdateCell('dgicnss',${i},'nEmployeur',this.value)" style="width:80px;font-size:10px"></td>
-          <td><input value="${r.nSecu}" onchange="dgiUpdateCell('dgicnss',${i},'nSecu',this.value)" style="width:80px;font-size:10px"></td>
-          <td><input value="${r.nIFU}" onchange="dgiUpdateCell('dgicnss',${i},'nIFU',this.value)" style="width:90px;font-size:10px"></td>
-          <td><input value="${r.nom}" onchange="dgiUpdateCell('dgicnss',${i},'nom',this.value)" style="width:80px;font-size:10px"></td>
-          <td><input value="${r.prenoms}" onchange="dgiUpdateCell('dgicnss',${i},'prenoms',this.value)" style="width:60px;font-size:10px"></td>
-          <td><input value="${r.typeContrat}" onchange="dgiUpdateCell('dgicnss',${i},'typeContrat',this.value)" style="width:50px;font-size:10px"></td>
-          <td><input value="${r.tauxRisque}" onchange="dgiUpdateCell('dgicnss',${i},'tauxRisque',this.value)" style="width:50px;font-size:10px"></td>
-          <td><input type="number" value="${r.jours}" onchange="dgiUpdateCell('dgicnss',${i},'jours',this.value)" style="width:50px;font-size:10px"></td>
-          <td><input type="number" value="${r.remuneration}" onchange="dgiUpdateCell('dgicnss',${i},'remuneration',this.value)" style="width:90px;font-size:10px;background:#FFFACD"></td>
-          <td style="background:#F0FDF4;text-align:right">${formatF(r.total)}</td>
-          <td><input type="number" value="${r.its}" onchange="dgiUpdateCell('dgicnss',${i},'its',this.value)" style="width:70px;font-size:10px;background:#FFFACD"></td>
-          <td style="background:#F0FDF4;text-align:right">${formatF(r.totalCNSS)}</td>
-        </tr>`;
-      });
-      html+=`</tbody></table></div><small class="text-muted" style="font-size:10px">Cases jaunes = remplissables (obligatoires) • Vert = calculé (formule Excel conservée) • Modifiez puis cochez vérification.</small>`;
-      container.innerHTML = html;
-      document.getElementById('dgiDgicnssCount').textContent = `${rows.length} salarié(s) • Masse ${formatF(rows.reduce((s,r)=>s+r.remuneration,0))} F • ITS ${formatF(rows.reduce((s,r)=>s+r.its,0))} F`;
+      if(container){
+        html = `<div class="table-responsive" style="max-height:360px;overflow:auto;border:1px solid #0A2F5E;border-radius:10px">
+        <table class="table table-sm mb-0" style="font-size:10px"><thead style="position:sticky;top:0;z-index:2;background:#0A2F5E;color:#FFB81C"><tr>
+          <th>#</th><th>N° Employeur</th><th>N° Sécu</th><th>IFU</th><th>Nom</th><th>Prénoms</th><th>Type</th><th>Taux</th><th>Jours</th><th>Rémun (1)</th><th>Total (7)</th><th>ITS</th><th>CNSS (12)</th>
+        </tr></thead><tbody>`;
+        rows.forEach((r,i)=>{
+          html+=`<tr>
+            <td>${i+1}</td>
+            <td><input value="${r.nEmployeur}" onchange="dgiUpdateCell('dgicnss',${i},'nEmployeur',this.value)" style="width:80px;font-size:10px"></td>
+            <td><input value="${r.nSecu}" onchange="dgiUpdateCell('dgicnss',${i},'nSecu',this.value)" style="width:80px;font-size:10px"></td>
+            <td><input value="${r.nIFU}" onchange="dgiUpdateCell('dgicnss',${i},'nIFU',this.value)" style="width:90px;font-size:10px"></td>
+            <td><input value="${r.nom}" onchange="dgiUpdateCell('dgicnss',${i},'nom',this.value)" style="width:80px;font-size:10px"></td>
+            <td><input value="${r.prenoms}" onchange="dgiUpdateCell('dgicnss',${i},'prenoms',this.value)" style="width:60px;font-size:10px"></td>
+            <td><input value="${r.typeContrat}" onchange="dgiUpdateCell('dgicnss',${i},'typeContrat',this.value)" style="width:50px;font-size:10px"></td>
+            <td><input value="${r.tauxRisque}" onchange="dgiUpdateCell('dgicnss',${i},'tauxRisque',this.value)" style="width:50px;font-size:10px"></td>
+            <td><input type="number" value="${r.jours}" onchange="dgiUpdateCell('dgicnss',${i},'jours',this.value)" style="width:50px;font-size:10px"></td>
+            <td><input type="number" value="${r.remuneration}" onchange="dgiUpdateCell('dgicnss',${i},'remuneration',this.value)" style="width:90px;font-size:10px;background:#FFFACD"></td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.total)}</td>
+            <td><input type="number" value="${r.its}" onchange="dgiUpdateCell('dgicnss',${i},'its',this.value)" style="width:70px;font-size:10px;background:#FFFACD"></td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.totalCNSS)}</td>
+          </tr>`;
+        });
+        html+=`</tbody></table></div><small class="text-muted" style="font-size:10px">Cases jaunes = remplissables • Vert = calculé • <a href="#" onclick="try{new bootstrap.Offcanvas(document.getElementById('offcanvasDgiPush')).show(); switchPushTab('dgicnss')}catch(e){} return false;" style="color:#0A2F5E;font-weight:700">Ouvrir en push → 26 col</a></small>`;
+        container.innerHTML = html;
+        const cntEl=document.getElementById('dgiDgicnssCount'); if(cntEl) cntEl.textContent = `${rows.length} salarié(s) • Masse ${formatF(rows.reduce((s,r)=>s+r.remuneration,0))} F • ITS ${formatF(rows.reduce((s,r)=>s+r.its,0))} F`;
+      }
+      // Push — 26 colonnes plein largeur
+      const pushC = document.getElementById('dgiPreviewDgicnssPush');
+      if(pushC){
+        let hp = `<div class="table-responsive" style="max-height:70vh;overflow:auto;border:2px solid #0A2F5E;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.08)">
+        <table class="table table-sm table-push mb-0"><thead><tr>
+          <th style="min-width:40px">#</th>
+          <th style="min-width:110px">N° Employeur<br><small>A</small></th>
+          <th style="min-width:110px">N° Sécu<br><small>B</small></th>
+          <th style="min-width:120px">IFU<br><small>C</small></th>
+          <th style="min-width:120px">Nom<br><small>D</small></th>
+          <th style="min-width:100px">Prénoms<br><small>E</small></th>
+          <th style="min-width:80px">Type<br><small>F</small></th>
+          <th style="min-width:80px">Taux<br><small>G</small></th>
+          <th style="min-width:110px">Date embauche<br><small>H</small></th>
+          <th style="min-width:110px">Date débauch.<br><small>I</small></th>
+          <th style="min-width:70px">Jours<br><small>J</small></th>
+          <th style="min-width:70px">J. assim<br><small>K</small></th>
+          <th style="min-width:120px;background:#FFB81C;color:#0A2F5E">Rémun (1)<br><small>L</small></th>
+          <th style="min-width:100px">Rappel (2)<br><small>M</small></th>
+          <th style="min-width:90px">Période rappel<br><small>N</small></th>
+          <th style="min-width:100px">IDR (3)<br><small>O</small></th>
+          <th style="min-width:100px">Licenciement (4)<br><small>P</small></th>
+          <th style="min-width:100px">Autres primes<br><small>Q</small></th>
+          <th style="min-width:100px">Avantages nat.<br><small>R</small></th>
+          <th style="min-width:120px;background:#F0FDF4;color:#0A2F5E">Total (7)<br><small>S</small></th>
+          <th style="min-width:110px;background:#FFB81C;color:#0A2F5E">ITS<br><small>T</small></th>
+          <th style="min-width:100px">Prest fam 9%<br><small>U</small></th>
+          <th style="min-width:100px">Risques 2%<br><small>V</small></th>
+          <th style="min-width:110px">Vieill. pat 6.4%<br><small>W</small></th>
+          <th style="min-width:110px">Vieill. ouv 3.6%<br><small>X</small></th>
+          <th style="min-width:120px;background:#F0FDF4;color:#0A2F5E">Total CNSS (12)<br><small>Y</small></th>
+          <th style="min-width:100px">Ass. maladie<br><small>Z</small></th>
+        </tr></thead><tbody>`;
+        rows.forEach((r,i)=>{
+          hp+=`<tr>
+            <td class="col-sticky" style="background:#f8fafc;font-weight:700">${i+1}</td>
+            <td><input value="${r.nEmployeur}" onchange="dgiUpdateCell('dgicnss',${i},'nEmployeur',this.value)" style="width:110px"></td>
+            <td><input value="${r.nSecu}" onchange="dgiUpdateCell('dgicnss',${i},'nSecu',this.value)" style="width:110px"></td>
+            <td><input value="${r.nIFU}" onchange="dgiUpdateCell('dgicnss',${i},'nIFU',this.value)" style="width:120px"></td>
+            <td><input value="${r.nom}" onchange="dgiUpdateCell('dgicnss',${i},'nom',this.value)" style="width:120px"></td>
+            <td><input value="${r.prenoms}" onchange="dgiUpdateCell('dgicnss',${i},'prenoms',this.value)" style="width:100px"></td>
+            <td><input value="${r.typeContrat}" onchange="dgiUpdateCell('dgicnss',${i},'typeContrat',this.value)" style="width:80px"></td>
+            <td><input value="${r.tauxRisque}" onchange="dgiUpdateCell('dgicnss',${i},'tauxRisque',this.value)" style="width:80px"></td>
+            <td><input type="date" value="${r.dateEmbauche}" onchange="dgiUpdateCell('dgicnss',${i},'dateEmbauche',this.value)" style="width:110px"></td>
+            <td><input type="date" value="${r.dateDebauchage}" onchange="dgiUpdateCell('dgicnss',${i},'dateDebauchage',this.value)" style="width:110px"></td>
+            <td><input type="number" value="${r.jours}" onchange="dgiUpdateCell('dgicnss',${i},'jours',this.value)" style="width:70px"></td>
+            <td><input type="number" value="${r.joursAssim}" onchange="dgiUpdateCell('dgicnss',${i},'joursAssim',this.value)" style="width:70px"></td>
+            <td><input type="number" value="${r.remuneration}" onchange="dgiUpdateCell('dgicnss',${i},'remuneration',this.value)" style="width:120px;background:#FFFACD"></td>
+            <td><input type="number" value="${r.rappel}" onchange="dgiUpdateCell('dgicnss',${i},'rappel',this.value)" style="width:100px;background:#FFFACD"></td>
+            <td><input value="${r.periodeRappel}" onchange="dgiUpdateCell('dgicnss',${i},'periodeRappel',this.value)" style="width:90px"></td>
+            <td><input type="number" value="${r.idr}" onchange="dgiUpdateCell('dgicnss',${i},'idr',this.value)" style="width:100px;background:#FFFACD"></td>
+            <td><input type="number" value="${r.licenciement}" onchange="dgiUpdateCell('dgicnss',${i},'licenciement',this.value)" style="width:100px;background:#FFFACD"></td>
+            <td><input type="number" value="${r.autresPrimes}" onchange="dgiUpdateCell('dgicnss',${i},'autresPrimes',this.value)" style="width:100px;background:#FFFACD"></td>
+            <td><input type="number" value="${r.avantagesNature}" onchange="dgiUpdateCell('dgicnss',${i},'avantagesNature',this.value)" style="width:100px;background:#FFFACD"></td>
+            <td style="background:#F0FDF4;text-align:right;font-weight:700">${formatF(r.total)}</td>
+            <td><input type="number" value="${r.its}" onchange="dgiUpdateCell('dgicnss',${i},'its',this.value)" style="width:110px;background:#FFFACD"></td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.prestFam)}</td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.risquesPro)}</td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.vieillessePat)}</td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.vieillesseOuv)}</td>
+            <td style="background:#0A2F5E;color:#FFB81C;text-align:right;font-weight:700">${formatF(r.totalCNSS)}</td>
+            <td><input type="number" value="${r.assuranceMaladie}" onchange="dgiUpdateCell('dgicnss',${i},'assuranceMaladie',this.value)" style="width:100px"></td>
+          </tr>`;
+        });
+        hp+=`</tbody></table></div><small class="text-muted mt-2 d-block" style="font-size:10px">26 colonnes A-Z complètes • <span style="background:#FFFACD;padding:1px 6px;border-radius:4px">jaune = modifiable</span> <span style="background:#F0FDF4;padding:1px 6px;border-radius:4px">vert = calculé</span> • Formules Excel identiques au fichier DGI. Sticky 1ère col, scroll horizontal.</small>`;
+        pushC.innerHTML = hp;
+        const pc=document.getElementById('pushDgicnssCount'); if(pc) pc.textContent = `${rows.length} salarié(s) • Masse ${formatF(rows.reduce((s,r)=>s+r.remuneration,0))} F`;
+      }
     } else if(type==='tva'){
       rows = buildDgiPreviewTVA();
       container = document.getElementById('dgiPreviewTva');
-      if(!container) return;
-      html = `<div class="table-responsive" style="max-height:360px;overflow:auto;border:1px solid #0A2F5E;border-radius:10px">
-      <table class="table table-sm mb-0" style="font-size:10px"><thead style="position:sticky;top:0;z-index:2;background:#0A2F5E;color:#FFB81C"><tr>
-        <th>#</th><th>IFU fournisseur</th><th>Nom</th><th>Réf facture</th><th>Date</th><th>Prix HT</th><th>TVA déductible</th><th>Prorata</th><th>TVA déduite</th>
-      </tr></thead><tbody>`;
-      rows.forEach((r,i)=>{
-        html+=`<tr>
-          <td>${i+1}</td>
-          <td><input value="${r.ifuFournisseur}" onchange="dgiUpdateCell('tva',${i},'ifuFournisseur',this.value)" style="width:110px;font-size:10px;background:#FFFACD"></td>
-          <td><input value="${r.nom}" onchange="dgiUpdateCell('tva',${i},'nom',this.value)" style="width:100px;font-size:10px"></td>
-          <td><input value="${r.refFacture}" onchange="dgiUpdateCell('tva',${i},'refFacture',this.value)" style="width:90px;font-size:10px"></td>
-          <td><input type="date" value="${r.dateFacture}" onchange="dgiUpdateCell('tva',${i},'dateFacture',this.value)" style="width:120px;font-size:10px"></td>
-          <td><input type="number" value="${r.prixHT}" onchange="dgiUpdateCell('tva',${i},'prixHT',this.value)" style="width:90px;font-size:10px;background:#FFFACD"></td>
-          <td style="background:#F0FDF4;text-align:right">${formatF(r.tvaDeductible)}</td>
-          <td><input type="number" step="0.01" min="0" max="1" value="${r.prorata}" onchange="dgiUpdateCell('tva',${i},'prorata',this.value)" style="width:60px;font-size:10px"></td>
-          <td style="background:#F0FDF4;text-align:right">${formatF(r.tvaDeduite)}</td>
-        </tr>`;
-      });
-      html+=`</tbody></table></div><small class="text-muted" style="font-size:10px">Prorata 0-1 (Art.248-249) • TVA déduite = TVA déductible × prorata • Source FEC 445 / MECeF.</small>`;
-      container.innerHTML = html;
-      document.getElementById('dgiTvaCount').textContent = `${rows.length} facture(s) • HT ${formatF(rows.reduce((s,r)=>s+r.prixHT,0))} F • TVA déduite ${formatF(rows.reduce((s,r)=>s+r.tvaDeduite,0))} F`;
+      if(container){
+        html = `<div class="table-responsive" style="max-height:360px;overflow:auto;border:1px solid #0A2F5E;border-radius:10px">
+        <table class="table table-sm mb-0" style="font-size:10px"><thead style="position:sticky;top:0;z-index:2;background:#0A2F5E;color:#FFB81C"><tr>
+          <th>#</th><th>IFU fournisseur</th><th>Nom</th><th>Réf facture</th><th>Date</th><th>Prix HT</th><th>TVA déductible</th><th>Prorata</th><th>TVA déduite</th>
+        </tr></thead><tbody>`;
+        rows.forEach((r,i)=>{
+          html+=`<tr>
+            <td>${i+1}</td>
+            <td><input value="${r.ifuFournisseur}" onchange="dgiUpdateCell('tva',${i},'ifuFournisseur',this.value)" style="width:110px;font-size:10px;background:#FFFACD"></td>
+            <td><input value="${r.nom}" onchange="dgiUpdateCell('tva',${i},'nom',this.value)" style="width:100px;font-size:10px"></td>
+            <td><input value="${r.refFacture}" onchange="dgiUpdateCell('tva',${i},'refFacture',this.value)" style="width:90px;font-size:10px"></td>
+            <td><input type="date" value="${r.dateFacture}" onchange="dgiUpdateCell('tva',${i},'dateFacture',this.value)" style="width:120px;font-size:10px"></td>
+            <td><input type="number" value="${r.prixHT}" onchange="dgiUpdateCell('tva',${i},'prixHT',this.value)" style="width:90px;font-size:10px;background:#FFFACD"></td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.tvaDeductible)}</td>
+            <td><input type="number" step="0.01" min="0" max="1" value="${r.prorata}" onchange="dgiUpdateCell('tva',${i},'prorata',this.value)" style="width:60px;font-size:10px"></td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.tvaDeduite)}</td>
+          </tr>`;
+        });
+        html+=`</tbody></table></div><small class="text-muted" style="font-size:10px">Prorata 0-1 (Art.248-249) • TVA déduite = TVA déductible × prorata • <a href="#" onclick="try{new bootstrap.Offcanvas(document.getElementById('offcanvasDgiPush')).show(); switchPushTab('tva')}catch(e){} return false;" style="color:#7c3aed;font-weight:700">Push 11 col →</a></small>`;
+        container.innerHTML = html;
+        const ct=document.getElementById('dgiTvaCount'); if(ct) ct.textContent = `${rows.length} facture(s) • HT ${formatF(rows.reduce((s,r)=>s+r.prixHT,0))} F • TVA déduite ${formatF(rows.reduce((s,r)=>s+r.tvaDeduite,0))} F`;
+      }
+      const pushC2 = document.getElementById('dgiPreviewTvaPush');
+      if(pushC2){
+        let hp2 = `<div class="table-responsive" style="max-height:70vh;overflow:auto;border:2px solid #0A2F5E;border-radius:12px">
+        <table class="table table-sm table-push mb-0"><thead><tr>
+          <th>#</th><th style="min-width:140px">IFU fournisseur<br><small>A</small></th><th style="min-width:160px">Nom<br><small>B</small></th><th style="min-width:130px">Réf facture<br><small>C</small></th><th style="min-width:130px">Date<br><small>D</small></th><th style="min-width:220px">Nature déduction<br><small>E</small></th><th style="min-width:120px">Nature bien<br><small>F</small></th><th style="min-width:140px;background:#FFB81C;color:#0A2F5E">Prix HT<br><small>G</small></th><th style="min-width:130px">TVA facturée<br><small>H</small></th><th style="min-width:130px;background:#F0FDF4;color:#0A2F5E">TVA déductible<br><small>I</small></th><th style="min-width:100px">Prorata 0-1<br><small>J</small></th><th style="min-width:140px;background:#0A2F5E;color:#FFB81C">TVA déduite<br><small>K</small></th>
+        </tr></thead><tbody>`;
+        rows.forEach((r,i)=>{
+          hp2+=`<tr>
+            <td>${i+1}</td>
+            <td><input value="${r.ifuFournisseur}" onchange="dgiUpdateCell('tva',${i},'ifuFournisseur',this.value)" style="width:140px;background:#FFFACD"></td>
+            <td><input value="${r.nom}" onchange="dgiUpdateCell('tva',${i},'nom',this.value)" style="width:160px"></td>
+            <td><input value="${r.refFacture}" onchange="dgiUpdateCell('tva',${i},'refFacture',this.value)" style="width:130px"></td>
+            <td><input type="date" value="${r.dateFacture}" onchange="dgiUpdateCell('tva',${i},'dateFacture',this.value)" style="width:130px"></td>
+            <td><input value="${r.natureDeduction}" onchange="dgiUpdateCell('tva',${i},'natureDeduction',this.value)" style="width:220px"></td>
+            <td><input value="${r.natureBien}" onchange="dgiUpdateCell('tva',${i},'natureBien',this.value)" style="width:120px"></td>
+            <td><input type="number" value="${r.prixHT}" onchange="dgiUpdateCell('tva',${i},'prixHT',this.value)" style="width:140px;background:#FFFACD"></td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.tvaFacturee)}</td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.tvaDeductible)}</td>
+            <td><input type="number" step="0.01" min="0" max="1" value="${r.prorata}" onchange="dgiUpdateCell('tva',${i},'prorata',this.value)" style="width:100px"></td>
+            <td style="background:#0A2F5E;color:#FFB81C;text-align:right;font-weight:700">${formatF(r.tvaDeduite)}</td>
+          </tr>`;
+        });
+        hp2+=`</tbody></table></div><small class="text-muted mt-2 d-block" style="font-size:10px">11 colonnes A-K complètes • Prix HT jaune, TVA déduite = TVA déductible × prorata (Art.248-249).</small>`;
+        pushC2.innerHTML = hp2;
+        const pc2=document.getElementById('pushTvaCount'); if(pc2) pc2.textContent = `${rows.length} facture(s) • HT ${formatF(rows.reduce((s,r)=>s+r.prixHT,0))} F`;
+      }
     } else if(type==='aib'){
       rows = buildDgiPreviewAIB();
       container = document.getElementById('dgiPreviewAib');
-      if(!container) return;
-      html = `<div class="table-responsive" style="max-height:360px;overflow:auto;border:1px solid #0A2F5E;border-radius:10px">
-      <table class="table table-sm mb-0" style="font-size:10px"><thead style="position:sticky;top:0;z-index:2;background:#0A2F5E;color:#FFB81C"><tr>
-        <th>#</th><th>IFU fournisseur</th><th>Nom</th><th>Réf facture</th><th>Date</th><th>Nature retenue</th><th>Montant HT</th><th>Taux</th><th>Montant AIB</th>
-      </tr></thead><tbody>`;
-      rows.forEach((r,i)=>{
-        html+=`<tr>
-          <td>${i+1}</td>
-          <td><input value="${r.ifuFournisseur}" onchange="dgiUpdateCell('aib',${i},'ifuFournisseur',this.value)" style="width:110px;font-size:10px"></td>
-          <td><input value="${r.nom}" onchange="dgiUpdateCell('aib',${i},'nom',this.value)" style="width:100px;font-size:10px"></td>
-          <td><input value="${r.refFacture}" onchange="dgiUpdateCell('aib',${i},'refFacture',this.value)" style="width:90px;font-size:10px"></td>
-          <td><input type="date" value="${r.dateFacture}" onchange="dgiUpdateCell('aib',${i},'dateFacture',this.value)" style="width:120px;font-size:10px"></td>
-          <td><input value="${r.natureRetenue}" onchange="dgiUpdateCell('aib',${i},'natureRetenue',this.value)" style="width:120px;font-size:10px"></td>
-          <td><input type="number" value="${r.montantHT}" onchange="dgiUpdateCell('aib',${i},'montantHT',this.value)" style="width:90px;font-size:10px;background:#FFFACD"></td>
-          <td><input type="number" step="0.01" value="${r.tauxAIB}" onchange="dgiUpdateCell('aib',${i},'tauxAIB',this.value)" style="width:60px;font-size:10px"></td>
-          <td style="background:#F0FDF4;text-align:right">${formatF(r.montantAIB)}</td>
-        </tr>`;
-      });
-      html+=`</tbody></table></div>`;
-      container.innerHTML = html;
-      document.getElementById('dgiAibCount').textContent = `${rows.length} ligne(s) • HT ${formatF(rows.reduce((s,r)=>s+r.montantHT,0))} F • AIB ${formatF(rows.reduce((s,r)=>s+r.montantAIB,0))} F`;
+      if(container){
+        html = `<div class="table-responsive" style="max-height:360px;overflow:auto;border:1px solid #0A2F5E;border-radius:10px">
+        <table class="table table-sm mb-0" style="font-size:10px"><thead style="position:sticky;top:0;z-index:2;background:#0A2F5E;color:#FFB81C"><tr>
+          <th>#</th><th>IFU fournisseur</th><th>Nom</th><th>Réf facture</th><th>Date</th><th>Nature retenue</th><th>Montant HT</th><th>Taux</th><th>Montant AIB</th>
+        </tr></thead><tbody>`;
+        rows.forEach((r,i)=>{
+          html+=`<tr>
+            <td>${i+1}</td>
+            <td><input value="${r.ifuFournisseur}" onchange="dgiUpdateCell('aib',${i},'ifuFournisseur',this.value)" style="width:110px;font-size:10px"></td>
+            <td><input value="${r.nom}" onchange="dgiUpdateCell('aib',${i},'nom',this.value)" style="width:100px;font-size:10px"></td>
+            <td><input value="${r.refFacture}" onchange="dgiUpdateCell('aib',${i},'refFacture',this.value)" style="width:90px;font-size:10px"></td>
+            <td><input type="date" value="${r.dateFacture}" onchange="dgiUpdateCell('aib',${i},'dateFacture',this.value)" style="width:120px;font-size:10px"></td>
+            <td><input value="${r.natureRetenue}" onchange="dgiUpdateCell('aib',${i},'natureRetenue',this.value)" style="width:120px;font-size:10px"></td>
+            <td><input type="number" value="${r.montantHT}" onchange="dgiUpdateCell('aib',${i},'montantHT',this.value)" style="width:90px;font-size:10px;background:#FFFACD"></td>
+            <td><input type="number" step="0.01" value="${r.tauxAIB}" onchange="dgiUpdateCell('aib',${i},'tauxAIB',this.value)" style="width:60px;font-size:10px"></td>
+            <td style="background:#F0FDF4;text-align:right">${formatF(r.montantAIB)}</td>
+          </tr>`;
+        });
+        html+=`</tbody></table></div>`;
+        container.innerHTML = html;
+        const ca=document.getElementById('dgiAibCount'); if(ca) ca.textContent = `${rows.length} ligne(s) • HT ${formatF(rows.reduce((s,r)=>s+r.montantHT,0))} F • AIB ${formatF(rows.reduce((s,r)=>s+r.montantAIB,0))} F`;
+      }
+      const pushC3 = document.getElementById('dgiPreviewAibPush');
+      if(pushC3){
+        let hp3 = `<div class="table-responsive" style="max-height:70vh;overflow:auto;border:2px solid #0A2F5E;border-radius:12px">
+        <table class="table table-sm table-push mb-0"><thead><tr>
+          <th>#</th><th style="min-width:140px">IFU fournisseur<br><small>A</small></th><th style="min-width:160px">Nom<br><small>B</small></th><th style="min-width:130px">Réf facture<br><small>C</small></th><th style="min-width:130px">Date<br><small>D</small></th><th style="min-width:200px">Nature retenue<br><small>E</small></th><th style="min-width:140px;background:#FFB81C;color:#0A2F5E">Montant HT<br><small>F</small></th><th style="min-width:100px">Taux<br><small>G</small></th><th style="min-width:140px;background:#0A2F5E;color:#FFB81C">Montant AIB<br><small>H</small></th><th style="min-width:120px">Période<br><small>I</small></th>
+        </tr></thead><tbody>`;
+        rows.forEach((r,i)=>{
+          hp3+=`<tr>
+            <td>${i+1}</td>
+            <td><input value="${r.ifuFournisseur}" onchange="dgiUpdateCell('aib',${i},'ifuFournisseur',this.value)" style="width:140px"></td>
+            <td><input value="${r.nom}" onchange="dgiUpdateCell('aib',${i},'nom',this.value)" style="width:160px"></td>
+            <td><input value="${r.refFacture}" onchange="dgiUpdateCell('aib',${i},'refFacture',this.value)" style="width:130px"></td>
+            <td><input type="date" value="${r.dateFacture}" onchange="dgiUpdateCell('aib',${i},'dateFacture',this.value)" style="width:130px"></td>
+            <td><input value="${r.natureRetenue}" onchange="dgiUpdateCell('aib',${i},'natureRetenue',this.value)" style="width:200px"></td>
+            <td><input type="number" value="${r.montantHT}" onchange="dgiUpdateCell('aib',${i},'montantHT',this.value)" style="width:140px;background:#FFFACD"></td>
+            <td><input type="number" step="0.01" value="${r.tauxAIB}" onchange="dgiUpdateCell('aib',${i},'tauxAIB',this.value)" style="width:100px"></td>
+            <td style="background:#0A2F5E;color:#FFB81C;text-align:right;font-weight:700">${formatF(r.montantAIB)}</td>
+            <td><input value="${r.periode}" onchange="dgiUpdateCell('aib',${i},'periode',this.value)" style="width:120px"></td>
+          </tr>`;
+        });
+        hp3+=`</tbody></table></div><small class="text-muted mt-2 d-block" style="font-size:10px">9 colonnes A-I • Montant AIB = HT × Taux (1%/3%/5% Art.130).</small>`;
+        pushC3.innerHTML = hp3;
+        const pc3=document.getElementById('pushAibCount'); if(pc3) pc3.textContent = `${rows.length} ligne(s) • HT ${formatF(rows.reduce((s,r)=>s+r.montantHT,0))} F`;
+      }
     }
   }
 
@@ -486,7 +607,7 @@
     if(card) card.classList.remove('d-none');
     // Scroll to preview
     const preview = document.getElementById('dgiPreview'+type.charAt(0).toUpperCase()+type.slice(1));
-    if(preview) preview.scrollIntoView({behavior:'smooth', block:'start'});
+    if(preview && typeof preview.scrollIntoView==='function') try{ preview.scrollIntoView({behavior:'smooth', block:'start'});}catch(e){}
     toast('Pré-rempli', type.toUpperCase()+' pré-rempli depuis FEC/paie/moteurs — vérifiez les cases jaunes', 'success');
   };
 

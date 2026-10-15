@@ -7,6 +7,18 @@
 .submenu-item.active{background:rgba(255,255,255,.14) !important;color:#FFB81C !important;border-left-color:#FFB81C !important;font-weight:700}
 #vueDGI, #vueAutres, #vueCourantes{animation:fadeIn .18s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Push offcanvas — plein largeur */
+.offcanvas-push{width:94% !important;max-width:1500px;background:#f8fafc}
+.offcanvas-push .offcanvas-header{background:#0A2F5E;color:#FFB81C;border-bottom:2px solid #FFB81C}
+.offcanvas-push .table-push{font-size:11px}
+.offcanvas-push .table-push th{font-size:10px;white-space:nowrap;background:#0A2F5E;color:#FFB81C;position:sticky;top:0;z-index:3;padding:6px 8px}
+.offcanvas-push .table-push td{padding:2px 4px;vertical-align:middle}
+.offcanvas-push .table-push input{font-size:11px;padding:3px 6px;height:30px;border:1px solid #e2e8f0;border-radius:6px;width:100%}
+.offcanvas-push .table-push input:focus{border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.15);outline:none}
+.offcanvas-push .table-push .col-sticky{position:sticky;left:0;background:#fff;z-index:2;border-right:2px solid #e2e8f0;box-shadow:2px 0 6px rgba(0,0,0,.06)}
+.offcanvas-push .table-push thead .col-sticky{z-index:4;background:#0A2F5E}
+.btn-push{border-radius:50px;font-weight:700;font-size:11px;padding:6px 12px}
 /* DGI tabs */
 #dgiTabs .nav-link{color:#0A2F5E;border:1px solid #e2e8f0;background:#fff}
 #dgiTabs .nav-link.active{background:#0A2F5E !important;color:#FFB81C !important;border-color:#0A2F5E}
@@ -185,10 +197,13 @@
     <div class="ms-auto d-flex gap-2 align-items-center flex-wrap">
       <span class="badge" style="background:#0A2F5E;color:#FFB81C"><i class="bi bi-shield-check me-1"></i>VÉRIFIABLE</span>
       <span class="badge" style="background:#7c3aed;color:#fff">Mois <span id="dgiMoisLabel">2026-01</span></span>
+      <div class="d-flex gap-2 align-items-center">
       <div class="btn-group btn-group-sm">
         <a href="../docs/modeles-dgi/dgi-cnss-2026.xlsx" class="btn btn-light border" download title="Modèle vierge DGICNSS"><i class="bi bi-download me-1"></i>CNSS</a>
         <a href="../docs/modeles-dgi/dgi-tva-annexe-2026.xlsx" class="btn btn-light border" download title="Modèle vierge TVA"><i class="bi bi-download me-1"></i>TVA</a>
         <a href="../docs/modeles-dgi/dgi-aib-annexe-2026.xlsx" class="btn btn-light border" download title="Modèle vierge AIB"><i class="bi bi-download me-1"></i>AIB</a>
+      </div>
+      <button class="btn btn-sm btn-push" style="background:#0A2F5E;color:#FFB81C;border:1px solid #FFB81C" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDgiPush" onclick="try{switchPushTab('dgicnss')}catch(e){}"><i class="bi bi-arrows-fullscreen me-1"></i>Ouvrir en push</button>
       </div>
     </div>
   </div>
@@ -231,7 +246,8 @@
       <div class="d-flex gap-2 mb-2">
         <button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C" onclick="dgiPreRemplir('dgicnss')"><i class="bi bi-magic me-1"></i>Pré-remplir DGICNSS</button>
         <button class="btn btn-sm btn-light border" onclick="dgiAddRow('dgicnss')"><i class="bi bi-plus-lg me-1"></i>Ajouter salarié</button>
-        <span class="ms-auto small text-muted align-self-center">Éditable • scroll horizontal →</span>
+        <button class="btn btn-sm btn-push ms-1" style="background:#fff;color:#0A2F5E;border:1px solid #0A2F5E" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDgiPush" onclick="try{switchPushTab('dgicnss')}catch(e){}"><i class="bi bi-box-arrow-up-right me-1"></i>Push 26 colonnes</button>
+        <span class="ms-auto small text-muted align-self-center">Éditable • scroll → push pour 100% largeur</span>
       </div>
       <div id="dgiPreviewDgicnss" class="bg-white rounded-3 border" style="min-height:80px;padding:8px"></div>
       <div id="dgiCard-dgicnss" class="d-none mt-3 p-3 bg-white border rounded-3">
@@ -261,6 +277,7 @@
       <div class="d-flex gap-2 mb-2">
         <button class="btn btn-sm" style="background:#7c3aed;color:#fff" onclick="dgiPreRemplir('tva')"><i class="bi bi-magic me-1"></i>Pré-remplir TVA</button>
         <button class="btn btn-sm btn-light border" onclick="dgiAddRow('tva')"><i class="bi bi-plus-lg me-1"></i>Ajouter facture</button>
+        <button class="btn btn-sm btn-push ms-1" style="background:#fff;color:#0A2F5E;border:1px solid #0A2F5E" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDgiPush" onclick="try{switchPushTab('tva')}catch(e){}"><i class="bi bi-box-arrow-up-right me-1"></i>Push 11 colonnes</button>
       </div>
       <div id="dgiPreviewTva" class="bg-white rounded-3 border" style="min-height:80px;padding:8px"></div>
       <div id="dgiCard-tva" class="d-none mt-3 p-3 bg-white border rounded-3">
@@ -288,6 +305,7 @@
       <div class="d-flex gap-2 mb-2">
         <button class="btn btn-sm" style="background:#198754;color:#fff" onclick="dgiPreRemplir('aib')"><i class="bi bi-magic me-1"></i>Pré-remplir AIB</button>
         <button class="btn btn-sm btn-light border" onclick="dgiAddRow('aib')"><i class="bi bi-plus-lg me-1"></i>Ajouter ligne</button>
+        <button class="btn btn-sm btn-push ms-1" style="background:#fff;color:#0A2F5E;border:1px solid #0A2F5E" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDgiPush" onclick="try{switchPushTab('aib')}catch(e){}"><i class="bi bi-box-arrow-up-right me-1"></i>Push 9 colonnes</button>
       </div>
       <div id="dgiPreviewAib" class="bg-white rounded-3 border" style="min-height:80px;padding:8px"></div>
       <div id="dgiCard-aib" class="d-none mt-3 p-3 bg-white border rounded-3">
@@ -332,6 +350,7 @@
     </div>
     <div class="d-flex gap-2 align-items-center flex-wrap">
       <button class="btn btn-sm" style="background:#7c3aed;color:#fff" onclick="toggleAutresCollapse()"><i class="bi bi-eye me-1"></i><span id="btnAutresToggleLbl">Afficher le tableau</span></button>
+      <button class="btn btn-sm btn-push" style="background:#0A2F5E;color:#FFB81C;border:1px solid #FFB81C" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAutresPush"><i class="bi bi-arrows-fullscreen me-1"></i>Push plein largeur</button>
       <button class="btn btn-sm btn-light" onclick="exportAutresCSV()"><i class="bi bi-download me-1"></i>CSV isolé</button>
       <button class="btn btn-sm btn-outline-dark" onclick="exportAutresJSON()"><i class="bi bi-code me-1"></i>JSON</button>
     </div>
@@ -398,6 +417,24 @@
 </div>
 </div>
 
+
+<!-- OFFCANVAS PUSH DGI -->
+<div class="offcanvas offcanvas-end offcanvas-push" tabindex="-1" id="offcanvasDgiPush" aria-labelledby="offcanvasDgiPushLabel" style="width:94%;max-width:1500px">
+  <div class="offcanvas-header"><div><h6 class="mb-0" id="offcanvasDgiPushLabel" style="font-family:Exo;font-weight:800"><i class="bi bi-file-earmark-excel me-2" style="color:#FFB81C"></i>Fiches DGI — Vue push <span class="badge bg-warning text-dark ms-2">plein largeur</span></h6><small style="color:rgba(255,255,255,.75)">DGICNSS 26 col • TVA 11 col • AIB 9 col — plein largeur</small></div><div class="d-flex gap-2"><span class="badge bg-light text-dark border" id="pushDgiMoisLabel">2026-01</span><button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button></div></div>
+  <div class="offcanvas-body"><div class="alert small" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e">Vue push : même données — jaune à vérifier, vert calculé. <span class="badge bg-light text-dark border">ESC</span></div>
+    <ul class="nav nav-pills mb-3" id="pushDgiTabs" style="gap:8px"><li class="nav-item"><button class="nav-link active" id="push-tab-dgicnss" data-bs-toggle="pill" data-bs-target="#push-pane-dgicnss" type="button" role="tab" style="background:#0A2F5E;color:#FFB81C">DGICNSS <span class="badge bg-warning text-dark ms-1">26 col</span></button></li><li class="nav-item"><button class="nav-link" id="push-tab-tva" data-bs-toggle="pill" data-bs-target="#push-pane-tva" type="button" role="tab">TVA <span class="badge bg-light text-dark border ms-1">11 col</span></button></li><li class="nav-item"><button class="nav-link" id="push-tab-aib" data-bs-toggle="pill" data-bs-target="#push-pane-aib" type="button" role="tab">AIB <span class="badge bg-light text-dark border ms-1">9 col</span></button></li><li class="ms-auto"><button class="btn btn-sm" style="background:#FFB81C;color:#0A2F5E" onclick="dgiPreRemplir('dgicnss');dgiPreRemplir('tva');dgiPreRemplir('aib'); try{renderDgiPushAll()}catch(e){}">Pré-remplir les 3</button></li></ul>
+    <div class="tab-content" id="pushDgiTabContent" style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px">
+      <div class="tab-pane fade show active" id="push-pane-dgicnss"><div class="d-flex justify-content-between mb-2"><strong>DGICNSS — 26 colonnes</strong><span class="badge bg-light border" id="pushDgicnssCount">0</span></div><div class="d-flex gap-2 mb-2"><button class="btn btn-sm" style="background:#0A2F5E;color:#FFB81C" onclick="dgiPreRemplir('dgicnss')">Pré-remplir</button><button class="btn btn-sm btn-light border" onclick="dgiAddRow('dgicnss')">Ajouter salarié</button></div><div id="dgiPreviewDgicnssPush" class="bg-white border rounded-3" style="min-height:120px;padding:8px"></div><div class="mt-3 p-3 bg-white border rounded-3"><div class="form-check p-3 border rounded-3" style="background:#fffbeb;border-color:#fde68a"><input class="form-check-input" type="checkbox" id="chkDgiVerify-dgicnss-push" onchange="dgiToggleVerifiedPush('dgicnss', this.checked)"><label class="form-check-label" for="chkDgiVerify-dgicnss-push"><strong>Je certifie (push)</strong></label></div><div class="row g-2 mt-3"><div class="col-md-4"><button id="btnDgiExcel-dgicnss-push" class="btn w-100" style="background:#107C41;color:#fff" onclick="dgiGenererExcelPush('dgicnss')">Excel</button></div><div class="col-md-4"><button id="btnDgiXml-dgicnss-push" class="btn btn-outline-dark w-100" onclick="dgiGenererXMLPush('dgicnss')">XML</button></div><div class="col-md-4"><button class="btn w-100" style="background:#0A2F5E;color:#FFB81C" onclick="dgiGenererExcel('dgicnss');dgiGenererXML('dgicnss')">Excel+XML inline</button></div></div><pre id="dgiXmlPreview-dgicnss-push" class="small mt-3 p-3 bg-dark text-white rounded-3 d-none" style="max-height:180px;overflow:auto;font-size:10px"></pre></div></div>
+      <div class="tab-pane fade" id="push-pane-tva"><div class="d-flex justify-content-between mb-2"><strong>TVA — 11 colonnes</strong><span class="badge bg-light border" id="pushTvaCount">0</span></div><div class="d-flex gap-2 mb-2"><button class="btn btn-sm" style="background:#7c3aed;color:#fff" onclick="dgiPreRemplir('tva')">Pré-remplir TVA</button><button class="btn btn-sm btn-light border" onclick="dgiAddRow('tva')">Ajouter facture</button></div><div id="dgiPreviewTvaPush" class="bg-white border rounded-3" style="min-height:120px;padding:8px"></div><div class="mt-3 p-3 bg-white border rounded-3"><div class="form-check p-3 border rounded-3" style="background:#fffbeb;border-color:#fde68a"><input class="form-check-input" type="checkbox" id="chkDgiVerify-tva-push" onchange="dgiToggleVerifiedPush('tva', this.checked)"><label class="form-check-label" for="chkDgiVerify-tva-push"><strong>Je certifie (push)</strong></label></div><div class="row g-2 mt-3"><div class="col-md-6"><button id="btnDgiExcel-tva-push" class="btn w-100" style="background:#107C41;color:#fff" onclick="dgiGenererExcelPush('tva')">Excel</button></div><div class="col-md-6"><button id="btnDgiXml-tva-push" class="btn btn-outline-dark w-100" onclick="dgiGenererXMLPush('tva')">XML</button></div></div><pre id="dgiXmlPreview-tva-push" class="small mt-3 p-3 bg-dark text-white rounded-3 d-none" style="max-height:180px;overflow:auto;font-size:10px"></pre></div></div>
+      <div class="tab-pane fade" id="push-pane-aib"><div class="d-flex justify-content-between mb-2"><strong>AIB — 9 colonnes</strong><span class="badge bg-light border" id="pushAibCount">0</span></div><div class="d-flex gap-2 mb-2"><button class="btn btn-sm" style="background:#198754;color:#fff" onclick="dgiPreRemplir('aib')">Pré-remplir AIB</button><button class="btn btn-sm btn-light border" onclick="dgiAddRow('aib')">Ajouter ligne</button></div><div id="dgiPreviewAibPush" class="bg-white border rounded-3" style="min-height:120px;padding:8px"></div><div class="mt-3 p-3 bg-white border rounded-3"><div class="form-check p-3 border rounded-3" style="background:#fffbeb;border-color:#fde68a"><input class="form-check-input" type="checkbox" id="chkDgiVerify-aib-push" onchange="dgiToggleVerifiedPush('aib', this.checked)"><label class="form-check-label" for="chkDgiVerify-aib-push"><strong>Je certifie (push)</strong></label></div><div class="row g-2 mt-3"><div class="col-md-6"><button id="btnDgiExcel-aib-push" class="btn w-100" style="background:#107C41;color:#fff" onclick="dgiGenererExcelPush('aib')">Excel</button></div><div class="col-md-6"><button id="btnDgiXml-aib-push" class="btn btn-outline-dark w-100" onclick="dgiGenererXMLPush('aib')">XML</button></div></div><pre id="dgiXmlPreview-aib-push" class="small mt-3 p-3 bg-dark text-white rounded-3 d-none" style="max-height:180px;overflow:auto;font-size:10px"></pre></div></div>
+    </div>
+  </div>
+</div>
+<!-- OFFCANVAS AUTRES PUSH -->
+<div class="offcanvas offcanvas-end offcanvas-push" tabindex="-1" id="offcanvasAutresPush" aria-labelledby="offcanvasAutresPushLabel" style="width:94%;max-width:1500px">
+  <div class="offcanvas-header"><div><h6 class="mb-0" id="offcanvasAutresPushLabel" style="font-family:Exo;font-weight:800"><i class="bi bi-collection me-2" style="color:#FFB81C"></i>Autres déclarations — Push <span class="badge bg-warning text-dark ms-2">10 isolées</span></h6><small style="color:rgba(255,255,255,.75)">10 taxes × 12 mois — plein largeur</small></div><div class="d-flex gap-2"><span class="badge bg-light text-dark border" id="pushAutresMois">2026-01</span><button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button></div></div>
+  <div class="offcanvas-body"><div class="d-flex gap-2 mb-3 flex-wrap"><button class="btn btn-sm" style="background:#7c3aed;color:#fff" onclick="toggleAutresCollapse(); try{renderAutresMatrice()}catch(e){}">Afficher/Masquer</button><button class="btn btn-sm btn-light" onclick="exportAutresCSV()">CSV isolé</button><button class="btn btn-sm btn-outline-dark" onclick="exportAutresJSON()">JSON</button><span class="ms-auto badge" style="background:#f5f3ff;color:#5b21b6;border:1px solid #ddd6fe" id="pushAutresTotalBadge">Total isolé 0 F</span></div><div id="pushAutresContainer"></div></div>
+</div>
 
 <div class="text-center small text-muted mt-3" style="font-size:10px">
 
@@ -467,6 +504,103 @@ function switchVue(vue){
     if(sc) sc.scrollIntoView({behavior:'smooth', block:'nearest'});
   }catch(e){}
 }
+
+
+// ===== PUSH — Helpers =====
+function switchPushTab(type){
+  try{
+    const map={dgicnss:'push-tab-dgicnss', tva:'push-tab-tva', aib:'push-tab-aib'};
+    const btn=document.getElementById(map[type]);
+    if(btn && typeof bootstrap !== 'undefined' && bootstrap.Tab) new bootstrap.Tab(btn).show();
+    else if(btn) btn.click();
+    const m=document.getElementById('pushDgiMoisLabel');
+    if(m) m.textContent=moisActif;
+    const ma=document.getElementById('pushAutresMois');
+    if(ma) ma.textContent=moisActif;
+  }catch(e){ console.error(e); }
+}
+function renderDgiPushAll(){
+  try{ if(typeof DGI!=='undefined' && DGI.renderDgiPreview){ DGI.renderDgiPreview('dgicnss'); DGI.renderDgiPreview('tva'); DGI.renderDgiPreview('aib'); } }catch(e){}
+  try{ updatePushMoisLabels(); }catch(e){}
+}
+function updatePushMoisLabels(){
+  try{ document.querySelectorAll('#pushDgiMoisLabel, #pushDgiMois, #pushAutresMois').forEach(el=>el.textContent=moisActif); }catch(e){}
+}
+function dgiToggleVerifiedPush(type, checked){
+  const chk=document.getElementById('chkDgiVerify-'+type);
+  if(chk) chk.checked=checked;
+  if(typeof dgiToggleVerified==='function') dgiToggleVerified(type, checked);
+  const btnExcelPush=document.getElementById('btnDgiExcel-'+type+'-push');
+  const btnXmlPush=document.getElementById('btnDgiXml-'+type+'-push');
+  if(btnExcelPush) btnExcelPush.disabled=!checked;
+  if(btnXmlPush) btnXmlPush.disabled=!checked;
+  const chkPush=document.getElementById('chkDgiVerify-'+type+'-push');
+  if(chkPush) chkPush.checked=checked;
+}
+function dgiGenererExcelPush(type){
+  const chk=document.getElementById('chkDgiVerify-'+type+'-push');
+  if(chk && !chk.checked){ if(typeof toast==='function') toast('Vérification requise','Cochez Je certifie (push) avant Excel','warning'); return; }
+  const chkInline=document.getElementById('chkDgiVerify-'+type);
+  if(chkInline) chkInline.checked=true;
+  if(typeof dgiToggleVerified==='function') dgiToggleVerified(type, true);
+  if(typeof dgiGenererExcel==='function') dgiGenererExcel(type);
+}
+function dgiGenererXMLPush(type){
+  const chk=document.getElementById('chkDgiVerify-'+type+'-push');
+  if(chk && !chk.checked){ if(typeof toast==='function') toast('Vérification requise','Cochez Je certifie (push) avant XML','warning'); return; }
+  const chkInline=document.getElementById('chkDgiVerify-'+type);
+  if(chkInline) chkInline.checked=true;
+  if(typeof dgiToggleVerified==='function') dgiToggleVerified(type, true);
+  if(typeof dgiGenererXML==='function') dgiGenererXML(type);
+  setTimeout(()=>{
+    const src=document.getElementById('dgiXmlPreview-'+type);
+    const dst=document.getElementById('dgiXmlPreview-'+type+'-push');
+    if(src && dst && src.textContent){ dst.textContent=src.textContent; dst.classList.remove('d-none'); }
+  },400);
+}
+
+
+(function(){
+  const origToggle = window.dgiToggleVerified;
+  if(origToggle){
+    window.dgiToggleVerified = function(type, checked){
+      origToggle(type, checked);
+      const chkPush=document.getElementById('chkDgiVerify-'+type+'-push');
+      if(chkPush) chkPush.checked=checked;
+      const btnExcelPush=document.getElementById('btnDgiExcel-'+type+'-push');
+      const btnXmlPush=document.getElementById('btnDgiXml-'+type+'-push');
+      if(btnExcelPush) btnExcelPush.disabled=!checked;
+      if(btnXmlPush) btnXmlPush.disabled=!checked;
+    };
+  }
+})();
+
+
+document.addEventListener('shown.bs.offcanvas', function(e){
+  if(e.target && e.target.id==='offcanvasDgiPush'){
+    try{ renderDgiPushAll(); 
+      const srcBadge=document.getElementById('autresTotalBadge');
+      const dstBadge=document.getElementById('pushAutresTotalBadge');
+      if(srcBadge && dstBadge) dstBadge.textContent=srcBadge.textContent;
+      updatePushMoisLabels();
+    }catch(err){}
+  }
+  if(e.target && e.target.id==='offcanvasAutresPush'){
+    try{
+      const src=document.getElementById('autresCollapse');
+      const dst=document.getElementById('pushAutresContainer');
+      if(src && dst){
+        // clone if dst empty
+        if(!dst.innerHTML.trim()){
+          dst.innerHTML = src.innerHTML;
+          dst.querySelectorAll('.d-none').forEach(el=>el.classList.remove('d-none'));
+        }
+        try{ renderAutresRef(); renderAutresMatrice(); }catch(err){}
+        updatePushMoisLabels();
+      }
+    }catch(err){ console.error(err); }
+  }
+});
 
 // ===== Helpers =====
 function toast(t,m,type='info'){const c=document.getElementById('toastContainer');if(!c)return;const bg=type==='success'?'#16a34a':type==='warning'?'#f59e0b':type==='danger'?'#dc2626':'#0A2F5E';const el=document.createElement('div');el.className='toast show align-items-center text-white border-0 mb-2';el.style.background=bg;el.innerHTML=`<div class="d-flex"><div class="toast-body" style="font-size:12px"><strong>${t}</strong><br><small>${m}</small></div><button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="this.parentElement.parentElement.remove()"></button></div>`;c.appendChild(el);setTimeout(()=>el.remove(),4000)}
@@ -775,6 +909,18 @@ function imprimerDeclarationsMois(){genererToutesDeclarationsMois();const html=d
 .submenu-item.active{background:rgba(255,255,255,.14) !important;color:#FFB81C !important;border-left-color:#FFB81C !important;font-weight:700}
 #vueDGI, #vueAutres, #vueCourantes{animation:fadeIn .18s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Push offcanvas — plein largeur */
+.offcanvas-push{width:94% !important;max-width:1500px;background:#f8fafc}
+.offcanvas-push .offcanvas-header{background:#0A2F5E;color:#FFB81C;border-bottom:2px solid #FFB81C}
+.offcanvas-push .table-push{font-size:11px}
+.offcanvas-push .table-push th{font-size:10px;white-space:nowrap;background:#0A2F5E;color:#FFB81C;position:sticky;top:0;z-index:3;padding:6px 8px}
+.offcanvas-push .table-push td{padding:2px 4px;vertical-align:middle}
+.offcanvas-push .table-push input{font-size:11px;padding:3px 6px;height:30px;border:1px solid #e2e8f0;border-radius:6px;width:100%}
+.offcanvas-push .table-push input:focus{border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.15);outline:none}
+.offcanvas-push .table-push .col-sticky{position:sticky;left:0;background:#fff;z-index:2;border-right:2px solid #e2e8f0;box-shadow:2px 0 6px rgba(0,0,0,.06)}
+.offcanvas-push .table-push thead .col-sticky{z-index:4;background:#0A2F5E}
+.btn-push{border-radius:50px;font-weight:700;font-size:11px;padding:6px 12px}
 /* DGI tabs */
 #dgiTabs .nav-link{color:#0A2F5E;border:1px solid #e2e8f0;background:#fff}
 #dgiTabs .nav-link.active{background:#0A2F5E !important;color:#FFB81C !important;border-color:#0A2F5E}

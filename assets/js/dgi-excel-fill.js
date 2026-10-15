@@ -610,6 +610,18 @@
     if(preview && typeof preview.scrollIntoView==='function') try{ preview.scrollIntoView({behavior:'smooth', block:'start'});}catch(e){}
     toast('Pré-rempli', type.toUpperCase()+' pré-rempli depuis FEC/paie/moteurs — vérifiez les cases jaunes', 'success');
   };
+  window.dgiPreRemplirAll = function(){
+    let ok=0, err='';
+    try{ window.dgiPreRemplir('dgicnss'); ok++; }catch(e){ err+= 'DGICNSS:'+e.message+' '; console.error(e); }
+    try{ window.dgiPreRemplir('tva'); ok++; }catch(e){ err+= 'TVA:'+e.message+' '; console.error(e); }
+    try{ window.dgiPreRemplir('aib'); ok++; }catch(e){ err+= 'AIB:'+e.message+' '; console.error(e); }
+    try{ if(typeof renderDgiPushAll==='function') renderDgiPushAll(); }catch(e){}
+    try{ if(typeof switchPushTab==='function') switchPushTab('dgicnss'); }catch(e){}
+    if(ok===3) toast('Pré-rempli','Les 3 fiches DGI pré-remplies — vérifiez les cases jaunes (26/11/9 col)','success');
+    else if(ok>0) toast('Pré-rempli partiel', ok+'/3 fiches remplies. Erreurs: '+err,'warning');
+    else toast('Erreur pré-remplissage', err || 'Vérifiez les données mensuelles (FEC/paie) et le mois sélectionné','danger');
+    return ok;
+  };
 
   window.dgiGenererExcel = function(type){
     const chk = document.getElementById('chkDgiVerify-'+type);

@@ -1,5 +1,13 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Déclarations Mensuelles — CGI 2026 • GOBEX</title><link href="https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><style>:root{--primary:#0A2F5E;--accent:#FFB81C;--calc:#7c3aed;--light:#f4f7fb}body{font-family:Roboto;background:var(--light);min-height:100vh}.sidebar{background:var(--primary);min-height:100vh;color:#fff;position:fixed;left:0;top:0;width:280px;z-index:1000;overflow-y:auto}.main{margin-left:280px;padding:20px}@media(max-width:991px){.sidebar{transform:translateX(-100%);position:fixed}.sidebar.show{transform:translateX(0)}.main{margin-left:0}}.topbar{background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.05);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.stat-card{background:#fff;border-radius:16px;padding:16px;border:1px solid #eef2f6;margin-bottom:12px}.dropzone{border:2px dashed #cbd5e1;border-radius:12px;padding:14px;text-align:center;background:#f8fafc;cursor:pointer;transition:.2s}.dropzone:hover{border-color:var(--calc);background:#f5f3ff}.dropzone.filled{border-color:#86efac;background:#f0fdf4;border-style:solid}.badge-rule{background:var(--primary);color:var(--accent);border:1px solid var(--accent);font-size:10px;padding:3px 8px;border-radius:50px}.table-mensuelle{font-size:11px}.table-mensuelle th{font-size:10px;white-space:nowrap;background:#f8fafc;position:sticky;top:0;z-index:2}.table-mensuelle td{vertical-align:middle;padding:4px 6px}.table-mensuelle input{font-size:11px;padding:2px 6px;height:28px;border:1px solid #e2e8f0;border-radius:6px;width:100%}.table-mensuelle input:focus{border-color:var(--calc);box-shadow:0 0 0 2px rgba(124,58,237,.12);outline:none}.month-pill{border-radius:50px;padding:6px 12px;font-size:11px;font-weight:600;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;white-space:nowrap}.month-pill.active{background:var(--primary);color:var(--accent);border-color:var(--primary)}.month-pill.has-data{border-color:#86efac;background:#f0fdf4}.decl-card{border:1px solid #e2e8f0;border-radius:12px;padding:12px;background:#fff;transition:.15s}.decl-card.has-amount{border-color:var(--calc);background:#f5f3ff}.decl-card.exonere{border-color:#86efac;background:#f0fdf4;opacity:.85}.fiche-decl{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}#tableAutresMatrice input{font-size:10px;padding:2px 4px;height:24px;border:1px solid #ddd6fe;border-radius:6px;width:90px}#tableAutresMatrice input:focus{border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.15);outline:none}
-.legende-para{font-size:10px;color:#64748b;background:#f8fafc;border:1px dashed #e2e8f0;border-radius:8px;padding:8px;margin-top:10px}.abbr-para{cursor:help;border-bottom:1px dotted #7c3aed}/* DGI tabs */
+.legende-para{font-size:10px;color:#64748b;background:#f8fafc;border:1px dashed #e2e8f0;border-radius:8px;padding:8px;margin-top:10px}.abbr-para{cursor:help;border-bottom:1px dotted #7c3aed}/* Sous-menu mensuel */
+#sousMenuMensuel .nav-link{font-weight:700;font-size:13px;padding:8px 14px;border:1px solid #e2e8f0;background:#fff;color:#0A2F5E;border-radius:50px}
+#sousMenuMensuel .nav-link.active{background:#0A2F5E !important;color:#FFB81C !important;border-color:#0A2F5E;box-shadow:0 4px 12px rgba(10,47,94,.18)}
+#sousMenuMensuel .nav-link .badge{font-size:9px;vertical-align:middle}
+.submenu-item{transition:.15s}
+.submenu-item.active{background:rgba(255,255,255,.14) !important;color:#FFB81C !important;border-left-color:#FFB81C !important;font-weight:700}
+#vueDGI, #vueAutres, #vueCourantes{animation:fadeIn .18s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+/* DGI tabs */
 #dgiTabs .nav-link{color:#0A2F5E;border:1px solid #e2e8f0;background:#fff}
 #dgiTabs .nav-link.active{background:#0A2F5E !important;color:#FFB81C !important;border-color:#0A2F5E}
 #dgiTabContent .table-responsive{max-width:100%}
@@ -10,6 +18,11 @@
 <a href="fiscalite.html" class="menu-item" style="display:flex;gap:12px;padding:10px 20px;color:rgba(255,255,255,.7);text-decoration:none"><i class="bi bi-calculator"></i> Fiscalité 5 étapes</a>
 <a href="calcul-impots.html" class="menu-item" style="display:flex;gap:12px;padding:10px 20px;color:rgba(255,255,255,.7);text-decoration:none"><i class="bi bi-cpu"></i> Moteurs annuels</a>
 <a href="declarations-mensuelles.html" class="menu-item active" style="display:flex;gap:12px;padding:10px 20px;color:#fff;background:rgba(124,58,237,.15);border-left:3px solid #7c3aed"><i class="bi bi-calendar3"></i> Déclarations mensuelles <span class="badge bg-success ms-auto" style="font-size:9px">NEW</span></a>
+<div id="submenuMensuelSidebar" style="margin:0 0 8px 0;background:rgba(124,58,237,.10);border-left:3px solid #7c3aed">
+  <a href="#courantes" onclick="switchVue('courantes');return false" data-vue-link="courantes" class="menu-item submenu-item active" style="display:flex;align-items:center;gap:8px;padding:7px 20px 7px 44px;color:rgba(255,255,255,.85);text-decoration:none;font-size:12px;border-left:3px solid transparent"><i class="bi bi-grid-3x3-gap" style="font-size:11px"></i> Courantes <span class="badge bg-light text-dark ms-auto" style="font-size:8px">6 moteurs</span></a>
+  <a href="#dgi" onclick="switchVue('dgi');return false" data-vue-link="dgi" class="menu-item submenu-item" style="display:flex;align-items:center;gap:8px;padding:7px 20px 7px 44px;color:rgba(255,255,255,.7);text-decoration:none;font-size:12px;border-left:3px solid transparent"><i class="bi bi-file-earmark-excel" style="font-size:11px"></i> Fiches DGI <span class="badge ms-auto" style="font-size:8px;background:#0A2F5E;color:#FFB81C;border:1px solid #FFB81C">3 annexes</span></a>
+  <a href="#autres" onclick="switchVue('autres');return false" data-vue-link="autres" class="menu-item submenu-item" style="display:flex;align-items:center;gap:8px;padding:7px 20px 7px 44px;color:rgba(255,255,255,.7);text-decoration:none;font-size:12px;border-left:3px solid transparent"><i class="bi bi-collection" style="font-size:11px"></i> Autres <span class="badge bg-light text-dark ms-auto" style="font-size:8px;border:1px solid #e2e8f0">10 non courantes</span></a>
+</div>
 <a href="../admin/index.html" class="menu-item" style="display:flex;gap:12px;padding:10px 20px;color:rgba(255,255,255,.7);text-decoration:none"><i class="bi bi-shield-check"></i> Portail Manager</a>
 <div style="padding:12px 20px"><small style="color:rgba(255,255,255,.5);font-size:11px">M1 TVA • M2 AIB • M3 ITS/VPS • M4 IRCM • M5 IRF • M6 Retenues uniques<br>Offline • RuleBase • Traçable</small></div>
 </div>
@@ -23,6 +36,23 @@
     <strong>Précisions 2026-10-03 appliquées en mensuel :</strong> (1) CA annuel ≤50M → TPS d’office, TVA mensuelle non assujettie toute l’année ; (2) CA mensuel constaté FEC (70* du mois) fait foi vs CA dossier ; (3) IS/IBA exclusifs — société IS → associés IBA/IRCM perso ; (4) comptes État 44*/443/445/447/441 prioritaires pour détection mensuelle. <span class="badge bg-light text-dark border" style="font-size:9px">RuleBase 2026.31.0-DGI-Excel</span>
     <br><small><strong>Source mensuelle :</strong> FEC → <code>DateEcriture AAAAMMJJ → YYYY-MM</code> (groupBy). Si pas de FEC mensuel → table 12 mois manuelle.</small>
   </div>
+</div>
+
+<!-- ===== SOUS-MENU DÉCLARATIONS MENSUELLES ===== -->
+<div class="stat-card p-2 mb-3" style="border:1px solid #e2e8f0;background:#fff;position:sticky;top:10px;z-index:30;box-shadow:0 4px 20px rgba(0,0,0,.06)">
+  <div class="d-flex align-items-center gap-2 flex-wrap">
+    <small class="text-muted" style="font-size:11px;font-weight:700;letter-spacing:.3px"><i class="bi bi-layers me-1" style="color:#7c3aed"></i>Vue :</small>
+    <ul class="nav nav-pills" id="sousMenuMensuel" role="tablist" style="gap:6px">
+      <li class="nav-item"><button class="nav-link active" data-vue="courantes" onclick="switchVue('courantes')"><i class="bi bi-grid-3x3-gap me-1"></i>Courantes <span class="badge bg-light text-dark border ms-1" style="font-size:9px">6 moteurs</span><span class="badge ms-1 d-none d-md-inline" style="font-size:8px;background:#f5f3ff;color:#5b21b6;border:1px solid #ddd6fe">mensuel</span></button></li>
+      <li class="nav-item"><button class="nav-link" data-vue="dgi" onclick="switchVue('dgi')"><i class="bi bi-file-earmark-excel me-1"></i>Fiches DGI officielles <span class="badge ms-1" style="font-size:9px;background:#0A2F5E;color:#FFB81C">Pré-remplissage</span></button></li>
+      <li class="nav-item"><button class="nav-link" data-vue="autres" onclick="switchVue('autres')"><i class="bi bi-collection me-1"></i>Autres — non courantes <span class="badge bg-light text-dark border ms-1" style="font-size:9px">10 isolées</span></button></li>
+    </ul>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <small class="text-muted d-none d-lg-inline" style="font-size:10px"><span id="sousMenuMoisLabel" class="badge bg-light text-dark border">2026-01</span> • CGI 2026</small>
+      <span class="badge" style="background:#f8fafc;color:#64748b;border:1px solid #e2e8f0;font-size:9px">3 vues • 1 mois</span>
+    </div>
+  </div>
+  <div id="sousMenuHelp" class="small mt-2 px-2 py-2 rounded-3" style="background:#f8fafc;border:1px dashed #e2e8f0;color:#475569;font-size:11px;line-height:1.5"></div>
 </div>
 
 <div class="row g-3">
@@ -79,6 +109,9 @@
 
 <!-- Col droite : Table mensuelle + Déclarations du mois -->
 <div class="col-lg-8">
+  <!-- Vue Courantes : 6 moteurs mensuels -->
+  <div id="vueCourantes">
+    
   <!-- Sélecteur mois pills -->
   <div class="stat-card">
     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -121,7 +154,25 @@
   <!-- Zone d'impression -->
   <div id="mensuelPrintable" class="d-none"></div>
 
-  <!-- ===== FICHES DGI OFFICIELLES — PRÉ-REMPLISSAGE AUTO — NOUVEL AFFICHAGE TABS ===== -->
+  
+    <!-- Récap annuel -->
+  <div class="stat-card">
+    <h6 style="font-family:Exo;font-weight:800"><i class="bi bi-graph-up me-1" style="color:#198754"></i>Récap annuel 2026 — 12 mois</h6>
+    <div class="table-responsive" style="border:1px solid #eef2f6;border-radius:10px">
+      <table class="table table-sm mb-0" style="font-size:11px">
+        <thead style="background:#f8fafc"><tr><th>Mois</th><th>TVA due</th><th>AIB</th><th>ITS</th><th>VPS</th><th>IRCM</th><th>IRF</th><th>Total retenues</th></tr></thead>
+        <tbody id="tbodyRecap"></tbody>
+        <tfoot style="background:#0A2F5E;color:#FFB81C;font-weight:700"><tr><td>TOTAL 2026</td><td id="totalTva">0</td><td id="totalAib">0</td><td id="totalIts">0</td><td id="totalVps">0</td><td id="totalIrcm">0</td><td id="totalIrf">0</td><td id="totalRet">0</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="mt-2 d-flex gap-2"><button class="btn btn-sm btn-light" onclick="exportMensuelCSV()"><i class="bi bi-download me-1"></i>CSV récap</button><button class="btn btn-sm btn-light" onclick="exportMensuelJSON()"><i class="bi bi-code me-1"></i>JSON</button></div>
+  </div>
+
+
+  </div>
+  <!-- Vue DGI : Fiches officielles -->
+  <div id="vueDGI" class="d-none">
+    <!-- ===== FICHES DGI OFFICIELLES — PRÉ-REMPLISSAGE AUTO — NOUVEL AFFICHAGE TABS ===== -->
 <div class="stat-card" style="border:1.5px solid #0A2F5E;background:#fff;overflow:visible">
   <div class="d-flex align-items-center gap-3 flex-wrap mb-3">
     <div class="d-flex align-items-center gap-3">
@@ -261,23 +312,10 @@
 
 
 
-<!-- Récap annuel -->
-  <div class="stat-card">
-    <h6 style="font-family:Exo;font-weight:800"><i class="bi bi-graph-up me-1" style="color:#198754"></i>Récap annuel 2026 — 12 mois</h6>
-    <div class="table-responsive" style="border:1px solid #eef2f6;border-radius:10px">
-      <table class="table table-sm mb-0" style="font-size:11px">
-        <thead style="background:#f8fafc"><tr><th>Mois</th><th>TVA due</th><th>AIB</th><th>ITS</th><th>VPS</th><th>IRCM</th><th>IRF</th><th>Total retenues</th></tr></thead>
-        <tbody id="tbodyRecap"></tbody>
-        <tfoot style="background:#0A2F5E;color:#FFB81C;font-weight:700"><tr><td>TOTAL 2026</td><td id="totalTva">0</td><td id="totalAib">0</td><td id="totalIts">0</td><td id="totalVps">0</td><td id="totalIrcm">0</td><td id="totalIrf">0</td><td id="totalRet">0</td></tr></tfoot>
-      </table>
-    </div>
-    <div class="mt-2 d-flex gap-2"><button class="btn btn-sm btn-light" onclick="exportMensuelCSV()"><i class="bi bi-download me-1"></i>CSV récap</button><button class="btn btn-sm btn-light" onclick="exportMensuelJSON()"><i class="bi bi-code me-1"></i>JSON</button></div>
+
   </div>
-
-</div>
-</div>
-
-
+  <!-- Vue Autres : non courantes (déplacée depuis footer) -->
+  <div id="vueAutres" class="d-none">
 <!-- ===== AUTRES DÉCLARATIONS MENSUELLES — NON COURANTES — TABLEAU ISOLÉ ===== -->
 <div class="stat-card" style="border:2px dashed #7c3aed;background:linear-gradient(135deg,#ffffff 0%, #f5f3ff 100%);position:relative;overflow:hidden">
   <div style="position:absolute;top:0;right:0;background:#7c3aed;color:#fff;padding:4px 12px;border-radius:0 16px 0 12px;font-size:10px;font-weight:800;letter-spacing:0.8px"><i class="bi bi-layers me-1"></i>ISOLÉ • NON COURANT</div>
@@ -355,6 +393,12 @@
 
 
 
+
+  </div>
+</div>
+</div>
+
+
 <div class="text-center small text-muted mt-3" style="font-size:10px">
 
 
@@ -370,6 +414,60 @@
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script src="../assets/js/dgi-excel-fill.js"></script>
 <script>
+
+// ===== SOUS-MENU VUES — Déclarations mensuelles =====
+let vueActiveMensuel = localStorage.getItem('gobex_vue_mensuelle') || (location.hash.replace('#','') || 'courantes');
+if(!['courantes','dgi','autres'].includes(vueActiveMensuel)) vueActiveMensuel='courantes';
+function updateSousMenuHelp(vue){
+  const el=document.getElementById('sousMenuHelp');
+  if(!el) return;
+  const mois = moisActif || '2026-01';
+  const help={
+    courantes: `<strong>Courantes</strong> — 6 moteurs mensuels (TVA 18% • AIB 1%/3%/5% • ITS/VPS 0-30% • IRCM 10% • IRF 12%) sur <strong>${mois}</strong>. Données mensuelles FEC (DateEcriture → YYYY-MM) ou saisie 12 mois. <span class="badge bg-light text-dark border" style="font-size:9px">PDF • CSV</span> <span style="color:#7c3aed">→ Remplissez la table 12 mois puis vérifiez les cartes du mois.</span>`,
+    dgi: `<strong>Fiches DGI officielles</strong> — 3 annexes détaillées <em>pré-remplissage auto</em> depuis FEC / paie / MECeF : <strong>DGICNSS</strong> (26 col ITS+CNSS), <strong>TVA</strong> (11 col déductible + prorata Art.248-249), <strong>AIB</strong> (9 col 1%/3%/5%). <span style="background:#FFFACD;padding:1px 6px;border-radius:4px;border:1px solid #fde68a">jaune = à vérifier</span> → cochez <em>Je certifie</em> → <strong>Excel + XML EDI</strong> pour <code>impots.bj</code>.`,
+    autres: `<strong>Autres — non courantes</strong> — 10 taxes sectorielles <strong>isolées</strong> (TAFA, jeux, télécoms, accise, séjour, CDL, spectacles, boissons, pub, énergie) — à remplir <strong>uniquement si activité concernée</strong>. <span class="badge" style="background:#7c3aed;color:#fff;font-size:9px">isolé</span> Totaux séparés du récap courant, n’impacte pas TVA/AIB/ITS/VPS/IRCM/IRF.`
+  };
+  el.innerHTML = help[vue] || help.courantes;
+}
+function switchVue(vue){
+  if(!['courantes','dgi','autres'].includes(vue)) vue='courantes';
+  vueActiveMensuel=vue;
+  localStorage.setItem('gobex_vue_mensuelle', vue);
+  // update top pills
+  document.querySelectorAll('#sousMenuMensuel .nav-link').forEach(btn=>{
+    const isActive = btn.dataset.vue===vue;
+    btn.classList.toggle('active', isActive);
+    if(isActive){ btn.setAttribute('aria-current','page'); } else { btn.removeAttribute('aria-current'); }
+  });
+  // sidebar
+  document.querySelectorAll('#submenuMensuelSidebar .submenu-item').forEach(a=>{
+    const isActive = a.dataset.vueLink===vue;
+    a.classList.toggle('active', isActive);
+    a.style.background = isActive ? 'rgba(255,255,255,.14)' : '';
+    a.style.color = isActive ? '#FFB81C' : 'rgba(255,255,255,.7)';
+    a.style.borderLeftColor = isActive ? '#FFB81C' : 'transparent';
+    a.style.fontWeight = isActive ? '700' : '400';
+  });
+  // vues
+  const vC=document.getElementById('vueCourantes');
+  const vD=document.getElementById('vueDGI');
+  const vA=document.getElementById('vueAutres');
+  if(vC) vC.classList.toggle('d-none', vue!=='courantes');
+  if(vD) vD.classList.toggle('d-none', vue!=='dgi');
+  if(vA) vA.classList.toggle('d-none', vue!=='autres');
+  // hash without jump
+  try{ history.replaceState(null,'','#'+vue); }catch(e){ location.hash=vue; }
+  updateSousMenuHelp(vue);
+  // update mois label in submenu
+  const sm=document.getElementById('sousMenuMoisLabel');
+  if(sm) sm.textContent=moisActif;
+  // scroll to top of submenu on switch (smooth)
+  try{
+    const sc=document.getElementById('sousMenuMensuel');
+    if(sc) sc.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }catch(e){}
+}
+
 // ===== Helpers =====
 function toast(t,m,type='info'){const c=document.getElementById('toastContainer');if(!c)return;const bg=type==='success'?'#16a34a':type==='warning'?'#f59e0b':type==='danger'?'#dc2626':'#0A2F5E';const el=document.createElement('div');el.className='toast show align-items-center text-white border-0 mb-2';el.style.background=bg;el.innerHTML=`<div class="d-flex"><div class="toast-body" style="font-size:12px"><strong>${t}</strong><br><small>${m}</small></div><button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="this.parentElement.parentElement.remove()"></button></div>`;c.appendChild(el);setTimeout(()=>el.remove(),4000)}
 function formatF(n){return (n||0).toLocaleString('fr-FR')}
@@ -385,7 +483,7 @@ function initMensuelDossiers(){ensureDemoDossiers();const sel=document.getElemen
 function onDossierMensuelChange(){selDossierMensuel=document.getElementById('selDossierMensuel').value;const d=getDossiers().find(x=>x.id===selDossierMensuel);const c=getClients().find(x=>x.name===d?.clientName);document.getElementById('dossierMensuelInfo').innerHTML=d?`<strong>${d.clientName}</strong> <span class="badge bg-light text-dark border">${d.ref}</span><br><small>CA annuel: ${c?.ca? (c.ca/1e6).toFixed(1)+'M':'—'} • ${c?.type||''} ${c?.catPersonne||''}</small>`:'Sélectionnez un dossier.';updateRegimeBadge();renderMensuelTable();renderDeclarationsMois()}
 function prevMois(){const d=new Date(moisActif+'-01');d.setMonth(d.getMonth()-1);moisActif=d.toISOString().slice(0,7);document.getElementById('moisInput').value=moisActif;onMoisChange()}
 function nextMois(){const d=new Date(moisActif+'-01');d.setMonth(d.getMonth()+1);moisActif=d.toISOString().slice(0,7);document.getElementById('moisInput').value=moisActif;onMoisChange()}
-function onMoisChange(){moisActif=document.getElementById('moisInput').value||'2026-01';document.getElementById('declMoisLabel').textContent=moisActif;const echeance=new Date(moisActif+'-01');echeance.setMonth(echeance.getMonth()+1);echeance.setDate(15);document.getElementById('declMoisEcheance').textContent=echeance.toLocaleDateString('fr-FR');document.getElementById('moisEcheanceInfo').innerHTML=`Échéance : <strong>15/${String(echeance.getMonth()+1).padStart(2,'0')}/${echeance.getFullYear()}</strong> (TVA) / <strong>10/${String(echeance.getMonth()+1).padStart(2,'0')}</strong> (retenues) — Mois <strong>${moisActif}</strong>`;highlightMoisPills();renderDeclarationsMois();updateRegimeBadge();try{updateAutresMoisLabel(); renderAutresRef(); renderAutresMatrice();}catch(e){} try{ document.querySelectorAll('#dgiMoisLabel, .dgiMoisLabel2').forEach(el=>el.textContent=moisActif); const d=document.getElementById('dgiVerifyDate-dgicnss'); if(d) d.textContent=new Date().toLocaleDateString('fr-FR'); }catch(e){}}
+function onMoisChange(){moisActif=document.getElementById('moisInput').value||'2026-01';document.getElementById('declMoisLabel').textContent=moisActif;const echeance=new Date(moisActif+'-01');echeance.setMonth(echeance.getMonth()+1);echeance.setDate(15);document.getElementById('declMoisEcheance').textContent=echeance.toLocaleDateString('fr-FR');document.getElementById('moisEcheanceInfo').innerHTML=`Échéance : <strong>15/${String(echeance.getMonth()+1).padStart(2,'0')}/${echeance.getFullYear()}</strong> (TVA) / <strong>10/${String(echeance.getMonth()+1).padStart(2,'0')}</strong> (retenues) — Mois <strong>${moisActif}</strong>`;highlightMoisPills();renderDeclarationsMois();updateRegimeBadge();try{updateAutresMoisLabel(); renderAutresRef(); renderAutresMatrice();}catch(e){} try{ document.querySelectorAll('#dgiMoisLabel, .dgiMoisLabel2').forEach(el=>el.textContent=moisActif); const d=document.getElementById('dgiVerifyDate-dgicnss'); if(d) d.textContent=new Date().toLocaleDateString('fr-FR'); }catch(e){} try{ const sm=document.getElementById('sousMenuMoisLabel'); if(sm) sm.textContent=moisActif; updateSousMenuHelp(vueActiveMensuel); }catch(e){}
 function updateRegimeBadge(){const caAnnuel=Object.values(mensuelData).reduce((s,m)=>s+(m.ca||0),0) || (getClients().find(c=>c.name===getDossiers().find(d=>d.id===selDossierMensuel)?.clientName)?.ca||0);const isTPS=caAnnuel>0 && caAnnuel<=50000000;const el=document.getElementById('regimeMensuelBadge');if(!el)return;if(caAnnuel===0) el.innerHTML='<span class="badge bg-light text-dark border">CA annuel —</span>'; else if(isTPS) el.innerHTML=`<span class="badge bg-success">TPS d'office ≤50M — TVA mensuelle non assujettie toute l'année (Art.223)</span> <small style="font-size:10px;color:#065f46">CA annuel ${(caAnnuel/1e6).toFixed(1)}M</small>`; else el.innerHTML=`<span class="badge" style="background:#0A2F5E;color:#FFB81C">Hors TPS >50M — IS/IBA + TVA mensuelle due</span> <small style="font-size:10px">CA ${(caAnnuel/1e6).toFixed(1)}M</small>`;}
 
 // ===== Mensuel Data Init (12 mois) =====
@@ -660,7 +758,15 @@ function genererDeclarationMensuelle(type, mois){const d=mensuelData[mois]||{};c
 <div style="margin-top:12px;display:flex;gap:12px"><div style="flex:1;border:1px solid #e2e8f0;border-top:3px solid #0A2F5E;padding:8px;text-align:center;border-radius:8px;background:#f8fafc"><strong>GOBEX</strong><br><small>Cachet</small><div style="height:40px"></div></div><div style="flex:1;border:1px solid #e2e8f0;border-top:3px solid #7c3aed;padding:8px;text-align:center;border-radius:8px;background:#f8fafc"><strong>Entreprise</strong><br><small>Signature</small><div style="height:40px"></div></div></div>
 </div>`;return html}
 function genererToutesDeclarationsMois(){const html=['tva','aib','its','vps','ircm','irf'].map(id=>genererDeclarationMensuelle(id,moisActif)).join('<div style="page-break-after:always"></div>');const cont=document.getElementById('mensuelPrintable');cont.innerHTML=`<div class="fiche-decl">${html}</div>`;cont.classList.remove('d-none');toast('Déclarations','6 déclarations générées pour '+moisActif,'success');cont.scrollIntoView({behavior:'smooth'})}
-function imprimerDeclarationsMois(){genererToutesDeclarationsMois();const html=document.getElementById('mensuelPrintable').innerHTML;const w=window.open('','_blank');w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Déclarations ${moisActif}</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><style>body{padding:16px}/* DGI tabs */
+function imprimerDeclarationsMois(){genererToutesDeclarationsMois();const html=document.getElementById('mensuelPrintable').innerHTML;const w=window.open('','_blank');w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Déclarations ${moisActif}</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><style>body{padding:16px}/* Sous-menu mensuel */
+#sousMenuMensuel .nav-link{font-weight:700;font-size:13px;padding:8px 14px;border:1px solid #e2e8f0;background:#fff;color:#0A2F5E;border-radius:50px}
+#sousMenuMensuel .nav-link.active{background:#0A2F5E !important;color:#FFB81C !important;border-color:#0A2F5E;box-shadow:0 4px 12px rgba(10,47,94,.18)}
+#sousMenuMensuel .nav-link .badge{font-size:9px;vertical-align:middle}
+.submenu-item{transition:.15s}
+.submenu-item.active{background:rgba(255,255,255,.14) !important;color:#FFB81C !important;border-left-color:#FFB81C !important;font-weight:700}
+#vueDGI, #vueAutres, #vueCourantes{animation:fadeIn .18s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+/* DGI tabs */
 #dgiTabs .nav-link{color:#0A2F5E;border:1px solid #e2e8f0;background:#fff}
 #dgiTabs .nav-link.active{background:#0A2F5E !important;color:#FFB81C !important;border-color:#0A2F5E}
 #dgiTabContent .table-responsive{max-width:100%}
@@ -668,7 +774,7 @@ function imprimerDeclarationsMois(){genererToutesDeclarationsMois();const html=d
 function telechargerMensuelPDF(){genererToutesDeclarationsMois();const cont=document.getElementById('mensuelPrintable');let el=cont.querySelector('.fiche-decl');if(!el){cont.classList.remove('d-none');el=cont.querySelector('.fiche-decl')}if(typeof window.html2pdf!=='function'){toast('PDF','html2pdf non chargé','warning');imprimerDeclarationsMois();return}const opt={margin:[6,6,6,6],filename:`Declarations-${moisActif}-${selDossierMensuel||'GOBEX'}.pdf`,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}};window.html2pdf().set(opt).from(el).save().catch(e=>{console.error(e);toast('PDF',e.message,'warning')})}
 
 // ===== Init =====
-document.addEventListener('DOMContentLoaded',()=>{try{const j=JSON.parse(document.getElementById('embeddedMensuel').textContent);ruleMensuel=j;document.getElementById('ruleBadge').textContent=j.version+' • '+j.annee}catch(e){};initMensuelData();initMensuelDossiers();onMoisChange();try{initAutresData();}catch(e){console.error(e)} });
+document.addEventListener('DOMContentLoaded',()=>{try{const j=JSON.parse(document.getElementById('embeddedMensuel').textContent);ruleMensuel=j;document.getElementById('ruleBadge').textContent=j.version+' • '+j.annee}catch(e){};initMensuelData();initMensuelDossiers();onMoisChange();try{initAutresData();}catch(e){console.error(e)} try{ if(location.hash){ const h=location.hash.replace('#',''); if(['courantes','dgi','autres'].includes(h)) vueActiveMensuel=h; } switchVue(vueActiveMensuel); updateSousMenuHelp(vueActiveMensuel); window.addEventListener('hashchange',()=>{ const h=location.hash.replace('#',''); if(['courantes','dgi','autres'].includes(h)) switchVue(h); }); }catch(e){} });
 </script>
 <script src="../assets/js/bibliotheque-chat.js"></script>
 </body></html>
